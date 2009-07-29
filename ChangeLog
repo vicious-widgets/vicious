@@ -1,3 +1,21 @@
+commit 76b8978ef2d75ba8930ef263afb4a2d583c629c4
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 22:20:32 2009 +0200
+
+    Battery widget moved to batat.lua in preparation for a new bat widget.
+    
+    It's time for a standalone battery widget that reads
+    /proc/acpi/battery/*/{info,state} alone. However the old battery
+    widget that uses 'acpitool' will not be deleted, let it serve as an
+    alternative widget as a convenience. Some might also prefer it over
+    reading multiple files in /proc
+
+commit 9da374da4dbb53af6f01638410f3e2b8bd3763a7
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 20:51:56 2009 +0200
+
+    Updated the ChangeLog file.
+
 commit 1f31527e8964dbf6407495370ceca37553c2f56f
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Wed Jul 29 20:13:40 2009 +0200
