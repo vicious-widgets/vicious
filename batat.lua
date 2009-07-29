@@ -9,8 +9,8 @@ local table = { insert = table.insert }
 -- }}}
 
 
--- Bat: provides state, charge, and remaining time for all batteries
-module("vicious.bat")
+-- Bat: provides state, charge, and remaining time for all batteries using acpitool
+module("vicious.batat")
 
 
 -- {{{ Battery widget type
