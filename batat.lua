@@ -9,7 +9,7 @@ local table = { insert = table.insert }
 -- }}}
 
 
--- Bat: provides state, charge, and remaining time for all batteries using acpitool
+-- Batat: provides state, charge, and remaining time for all batteries using acpitool
 module("vicious.batat")
 
 
@@ -18,7 +18,9 @@ function worker(format)
     -- Initialise tables
     local battery_info  = {}
     local battery_state = {
-        ["charged"]     = "+",
+        ["full"]        = "*",
+        ["unknown"]     = " "
+        ["charged"]     = "*",
         ["charging"]    = "+",
         ["discharging"] = "-"
     }
