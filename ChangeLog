@@ -1,3 +1,15 @@
+commit 1f31527e8964dbf6407495370ceca37553c2f56f
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 20:13:40 2009 +0200
+
+    Next release, version 1.0.1.
+
+commit 11baa09ab240e604929c0375cc9345e18e54d744
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 20:12:34 2009 +0200
+
+    Added the ChangeLog file.
+
 commit 3eefddf8ab4ef32f2db34c4769609322063c6bb5
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Wed Jul 29 18:46:43 2009 +0200
