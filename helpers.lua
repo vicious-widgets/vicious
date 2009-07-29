@@ -27,7 +27,7 @@ module("vicious.helpers")
 -- {{{ Helper functions
 -- {{{ Format a string with args
 function format(format, args)
-    -- TODO: Find a more efficient way to do this
+    -- Todo: Find a more efficient way to do this
 
     -- Format a string
     for var, val in pairs(args) do
