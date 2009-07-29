@@ -53,6 +53,7 @@ require("vicious.org")
 require("vicious.pacman")
 require("vicious.mpd")
 require("vicious.volume")
+require("vicious.weather")
 require("vicious.date")
 -- }}}
 
