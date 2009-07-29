@@ -1,0 +1,44 @@
+commit 3eefddf8ab4ef32f2db34c4769609322063c6bb5
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 18:46:43 2009 +0200
+
+    Weather widget written and included, by request.
+    
+    The widget uses 'wget' to grab the information. The Lua socket library
+    would be nicer, of course, but let's not introduce external libraries
+    at this point. Wget will write to stdout with a timeout of 5s. This
+    has the potential to block everything else in case of problems... But
+    let's not introduce temporary files at this point. Besides having to
+    handle files, operations while running on battery power are to be
+    avoided.
+
+commit 95dd8de34d404e10a05169e381f382881097af89
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 18:06:19 2009 +0200
+
+    Make git ignore backup files and lua binaries.
+
+commit 98e26ee0436822b00d4a6e707d86cf33d24bc00f
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 17:59:32 2009 +0200
+
+    Import of vicious source tree.
+    
+    Vicious is a modular widget library for 'awesome' window manager,
+    derived from the 'Wicked' widget library.
+    
+    Summary of changes:
+      * Original wicked code modularized
+      * Widgets ported from Wicked:
+        - CPU, MEM, FS, NET, Date, Uptime, MPD
+          * CPU widget rewritten, uses pattern matching
+          * MEM widget rewritten, uses pattern matching
+            - Swap widget merged with MEM widget type
+          * FS widget rewritten, uses pattern matching
+            - Also fixed padding in the process
+          * NET widget rewritten, uses pattern matching
+          * MPD widget rewritten, a bit more versatile
+          * Removed deprecated helper functions
+      * Widgets written for Vicious:
+        - Thermal, Battery, Mbox, OrgMode, Volume, Entropy,
+          Disk I/O, System Load, Wireless, Pacman, Maildir
