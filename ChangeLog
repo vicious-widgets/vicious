@@ -1,3 +1,36 @@
+commit 0471c6a7dedf067857a2d30a818ff80bc8398da0
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 04:49:22 2009 +0200
+
+    Next release, version 1.0.3.
+
+commit a8dc5c6f6d2f8572f7a7a5458ab969defdb47ded
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 04:44:22 2009 +0200
+
+    Added basic documentation as a README file.
+    
+    The README explains some basics. Also fixed a typo in the dio
+    widget description, that I noticed while writing documentation.
+
+commit b06a5b6e15953d05405d3831c1008a10b6b779f2
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 02:57:51 2009 +0200
+
+    Make git ignore org-mode files and archives.
+
+commit 87d895f81824f289e52004d9696fd152f92a514a
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 02:11:54 2009 +0200
+
+    Next release, version 1.0.2.
+
+commit 5ff480ddf3146ceaf98ea71563a6b66e0106b312
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 02:08:46 2009 +0200
+
+    Updated the ChangeLog file in preparation for a new version.
+
 commit 2921200d0f1dbf36ae885d0898849a31e646f372
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Jul 30 02:05:22 2009 +0200
