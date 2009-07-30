@@ -1,7 +1,6 @@
 ----------------------------------------------------------------
 -- Vicious widgets for the awesome window manager
---   * FAQ: http://sysphere.org/~anrxc/local/scr/sources/vicious
-----------------------------------------------------------------
+--
 -- Licensed under the GNU General Public License version 2
 --   * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
 --
