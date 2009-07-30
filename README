@@ -1,0 +1,256 @@
+Description
+-----------
+
+Vicious is a modular widget library for "awesome" window manager,
+derived from the "Wicked" widget library. It has some of the old
+Wicked widget types, a few of them rewritten, and a good number of new
+widgets. You can read more about why and how it was written, here:
+
+  http://sysphere.org/~anrxc/j/archives/2009/07/09/vicious_widgets_for_awesome_wm
+
+
+Usage
+-----
+
+To use vicious, edit init.lua and comment out all the widgets you
+don't need, from the "Configure widgets" list. Then add:
+
+  require("vicious")
+
+... to the top of your rc.lua. Once you create a widget (as a:
+textbox, graph or a progressbar) call vicious.register() to register
+it with vicious:
+
+  vicious.register(widget, type, format, interval, field, argument or padding)
+
+widget   - widget created with widget()
+type     - one of the available widget types (see below for a list)
+format   - a string argument or a function
+         - string: $1, $2, $3... will be replaced by their respective value
+           returned from the widget type, some widget types return
+	   tables with keys, in that case use: ${key}
+         - function: function(widget, args) can be used to manipulate
+           data returned by the widget type, more below
+interval - number of seconds between updates of the widget
+field    - used to feed graphs or progressbars, by their name
+padding  - minimum amount of numbers the widget will output, if
+           available for that widget type
+argument - some widgets require an argument to be passed, like the
+           battery ID
+
+
+Other Functions
+---------------
+
+Unregister
+  vicious.unregister(widget, keep)
+
+  keep   - if true the widget will be suspended, waiting to be activated
+
+Suspend  - suspend all widgets, used when running on battery power
+  vicious.suspend()
+
+Activate - restart all suspended, or unregistered but kept, widgets
+  vicious.activate(widget)
+
+  widget - if provided, only that widget will be activated
+
+Regregister 
+  vicious.regregister(reg)
+
+  - vicious.register() and vicious.unregister() both return a reg object, this
+    contains information about the widget and the updates that should be sent to
+    it, you can pass this reg object into regregister after unregistering it, and
+    it will be reregistered (or activated if it was only suspended).
+
+Caching
+  vicious.enable_caching(type)
+
+  - by default caching is enabled for all widget types, with caching
+    you can have multiple widgets using the same (widget type)function
+    and it gets executed only once
+
+
+Widget types
+------------
+
+Widget types consist of worker functions that take the "format"
+argument given to vicious.register as the first argument, "padding" or
+"argument" the as the second, and return a table of values to insert
+in the format string.
+
+vicious.widgets.cpu
+  - provides CPU usage for all available CPUs/cores
+
+vicious.widgets.thermal
+  - provides temperature levels of ACPI thermal zones
+  - takes the thermal zone as an argument, i.e. "TZS0"
+
+vicious.widgets.load
+  - provides system load averages for the past 1, 5, and 15 minutes
+
+vicious.widgets.uptime
+  - provides system uptime information
+
+vicious.widgets.bat
+  - provides state, charge, and remaining time for a requested battery
+  - takes battery ID as an argument, i.e. "BAT0"
+
+vicious.widgets.batat
+  - provides state, charge, and remaining time for all batteries using
+    acpitool
+
+vicious.widgets.mem
+  - provides RAM and Swap usage statistics
+
+vicious.widgets.fs
+  - provides usage statistics for requested mount points
+
+vicious.widgets.dio
+  - provides I/O statistics for requested storage devices
+  - takes the disk as an argument, i.e. "/dev/hda"
+
+vicious.widgets.net
+  - provides usage statistics for all network interfaces
+
+vicious.widgets.wifi
+  - provides wireless information for a requested interface
+  - takes the network interface as an argument, i.e. "wlan0"
+
+vicious.widgets.mbox
+  - provides the subject of last e-mail in a mbox file
+  - takes the full path to the mbox as an argument
+
+vicious.widgets.mdir
+  - provides a number of new and unread messages in a Maildir
+    structure
+  - takes the full path to the Maildir structure as an argument
+
+vicious.widgets.entropy
+  - provides available system entropy
+
+vicious.widgets.org
+  - provides agenda statistics for Emacs org-mode
+  - takes a table with full paths to agenda files, that will be
+    included, as an argument
+
+vicious.widgets.pacman
+  - provides number of pending updates on Arch Linux
+
+vicious.widgets.mpd
+  - provides the currently playing song in MPD
+
+vicious.widgets.volume
+  - provides volume levels of requested ALSA mixers
+  - takes the ALSA channel as an argument, i.e. "Master"
+
+vicious.widgets.weather
+  - provides weather information for a requested station
+  - takes the weather station ID as an argument, i.e. "LDRI"
+
+vicious.widgets.date
+  - provides access to os.date, with optional custom formatting;
+    provided as the format string
+
+
+Custom widget types
+-------------------
+
+Use any of the existing widgets as a starting point for your own. I
+created vicious so we can focus on the number crunching and nothing
+else. You write a quick worker function that does the work and plug it
+in. How the data will be formatted, will it be red or blue, should be
+defined in rc.lua.
+
+
+Format functions
+----------------
+
+You can use a function instead of a string as the format parameter, so
+you are able to check the value returned by the widget type and change
+it. You can change the color of a widget, i.e. on low battery, or hide
+widgets when they return a certain value or...
+
+The format function will get the widget as its first argument, and a
+table with the values otherwise inserted into the format string as its
+second argument, and should return the text to be used for the widget.
+
+Example widget
+  mpdwidget = widget({ type = 'textbox',name = 'mpdwidget'})
+  vicious.register(mpdwidget,vicious.widgets.mpd, 
+    function (widget, args)
+      if args[1] == "Stopped" then
+        return ''
+      else
+        return ' <span color="white">MPD:</span> '..args[1]
+      end
+  end)
+
+  - hides the mpd widget when there is no song playing
+
+
+Usage examples
+--------------
+
+Remember, besides creating and registering widgets you have to add them
+to a statusbar in order to display them.
+
+MPD widget
+  mpdwidget = widget({type = 'textbox',name = 'mpdwidget')
+  vicious.register(mpdwidget,vicious.widgets.mpd,'$1',30)
+
+  - executed every 30 seconds, takes no arguments
+
+Memory widget
+  memwidget = widget({type = 'textbox',name = 'memwidget'})
+  vicious.register(memwidget,vicious.widgets.mem,'$1 ($2MB/$3MB)',1,nil,{2, 4, 4})
+
+  - executed every second, appends "MB" to 2nd and 3rd argument, uses
+    padding
+
+File system widget
+  fswidget = widget({type = 'progressbar',name = 'fswidget'})
+  -- configure the progressbar and bar properties, then register with:
+  vicious.register(fswidget,vicious.widgets.fs,'${/home usep}',120,fswidget)
+
+  - executed every 120 seconds, requests the value of the ${home usep}
+    key and feeds the "fswidget" progressbar
+
+Battery widget
+  batwidget = widget({type = 'progressbar',name = 'batwidget'})
+  -- configure the progressbar and bar properties, then register with:
+  vicious.register(batwidget,vicious.widgets.bat,'$1',60,fswidget,'BAT0')
+
+  - executed every 60 seconds, feeds the "batwidget" progressbar,
+    provides "BAT0" battery ID as an argument
+
+Mbox widget
+  mboxwidget = widget({type = 'textbox',name = 'mboxwidget'})
+  vicious.register(mboxwidget,vicious.widgets.mbox,'$1',240,nil,'/home/user/mail/Inbox')
+
+  - executed every 240 seconds, provides full path to the mbox as an
+    argument
+
+
+All other widgets are used in the same manner. You can check the
+authors rc.lua as a reference:
+
+  http://sysphere.org/~anrxc/local/scr/dotfiles/awesomerc.lua.html
+
+
+Other
+-----
+
+You should read "awesome" manual pages:
+
+  awesome(1) awesomerc(5) 
+
+
+Authors
+-------
+
+Vicious, written by:
+  Adrian C. (anrxc) <anrxc@sysphere.org>
+
+Wicked, authored by:
+  Lucas de Vries <lucas@glacicle.com>

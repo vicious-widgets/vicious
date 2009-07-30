@@ -12,7 +12,7 @@ local table = { insert = table.insert }
 -- }}}
 
 
--- Disk I/O: provides I/O statistics for requsted storage devices
+-- Disk I/O: provides I/O statistics for requested storage devices
 module("vicious.dio")
 
 
