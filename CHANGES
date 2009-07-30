@@ -1,3 +1,21 @@
+commit bc637062d7518988884c36762d3d257c1c8d0aad
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 20:47:02 2009 +0200
+
+    Coding style fixes in battery widgets.
+
+commit 052748a2cb671b5b9e85c4e4aefb76a58e88a520
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 20:33:54 2009 +0200
+
+    Fix the key reference to custom keys in the README
+
+commit 9c973a5a7481a8b644f0d81d07730879013747cd
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 17:36:21 2009 +0200
+
+    Updated the CHANGES file.
+
 commit 51770fe3e5fa03e0bf49a8d062d98fd11707766e
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Jul 30 17:15:21 2009 +0200
