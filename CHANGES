@@ -1,3 +1,15 @@
+commit 51770fe3e5fa03e0bf49a8d062d98fd11707766e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 17:15:21 2009 +0200
+
+    Fixed README and moved the ChangeLog to CHANGES.
+
+commit 2ab90dec9764f0aa496fa6dbde8b81d70a0fc717
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 04:50:30 2009 +0200
+
+    Updated the ChangeLog file, for v1.0.3.
+
 commit 0471c6a7dedf067857a2d30a818ff80bc8398da0
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Jul 30 04:49:22 2009 +0200
