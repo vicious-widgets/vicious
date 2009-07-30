@@ -37,7 +37,7 @@ function worker(format, batid)
 
     -- Check if the file wasn't found or the battery isn't present
     if infofile == nil or string.find(infofile, "present:[%s]+no") then
-        return { "/", "/", "/" }
+        return {"/", "/", "/"}
     else
         -- Get capacity information
         local capacity = string.match(infofile, "last full capacity:[%s]+([%d]+).*")
@@ -73,7 +73,7 @@ function worker(format, batid)
         local minutesleft = math.floor((timeleft - hoursleft) * 60 )
         local time = string.format("%02d:%02d", hoursleft, minutesleft)
 
-        return { state, percent, time }
+        return {state, percent, time}
     end
 end
 -- }}}

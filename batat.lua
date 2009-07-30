@@ -38,7 +38,7 @@ function worker(format)
             -- Store remaining time information
             table.insert(battery_info, (line:match("%%,%s(.*)") or "/"))
         else
-            return { "/", "/", "/" }
+            return {"/", "/", "/"}
         end
     end
     f:close()
