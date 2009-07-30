@@ -29,7 +29,7 @@ type     - one of the available widget types (see below for a list)
 format   - a string argument or a function
          - string: $1, $2, $3... will be replaced by their respective value
            returned from the widget type, some widget types return
-	   tables with keys, in that case use: ${key}
+	   tables with custom keys, in that case use: ${key}
          - function: function(widget, args) can be used to manipulate
            data returned by the widget type, more below
 interval - number of seconds between updates of the widget
