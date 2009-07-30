@@ -19,7 +19,7 @@ function worker(format)
     local battery_info  = {}
     local battery_state = {
         ["full"]        = "*",
-        ["unknown"]     = " "
+        ["unknown"]     = " ",
         ["charged"]     = "*",
         ["charging"]    = "+",
         ["discharging"] = "-"
@@ -33,10 +33,12 @@ function worker(format)
         -- Check if the battery is present
         if line:match("^[%s]+Battery.*") then
             -- Store state and charge information
-            table.insert(battery_info, battery_state[line:match("([%a]*),")])
-            table.insert(battery_info, line:match("([%d]?[%d]?[%d])%."))
-            -- Store remaining time information if the battery supports it
+            table.insert(battery_info, (battery_state[line:match("([%a]*),")] or "/"))
+            table.insert(battery_info, (line:match("([%d]?[%d]?[%d])%.") or "/"))
+            -- Store remaining time information
             table.insert(battery_info, (line:match("%%,%s(.*)") or "/"))
+        else
+            return { "/", "/", "/" }
         end
     end
     f:close()
