@@ -1,3 +1,42 @@
+commit 2921200d0f1dbf36ae885d0898849a31e646f372
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 02:05:22 2009 +0200
+
+    Added handlers to batat and fixed the battery_state table.
+    
+    Batat now returns "/" in situations where the battery is not
+    present. Last commit broke the battery_state table, fixed that.
+
+commit e2d503ee36d0e3f0d20f7f888ab03caac68c32bb
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 01:48:07 2009 +0200
+
+    Added a new, standalone, battery widget.
+    
+    The widget reads /proc/acpi/battery/*/{info,state} and doesn't require
+    an external utility like 'acpi' or 'acpitool'. It returns state,
+    charge and remaining time information, just like the old bat (now
+    batat) widget. Using /sys/class/power_supply we would need to open
+    much more file descriptors so we use /proc for now.
+
+commit 19ca7b5a038508179b2e195d223ecaa2299f14a1
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 23:40:50 2009 +0200
+
+    Replaced TODO with Todo in helpers.
+
+commit 9cd250be0b046cf4692df077e9e1db1d050345d0
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 23:13:24 2009 +0200
+
+    Fixed batat module name and expanded bat states and symbols.
+
+commit b331cb15707055190d2485ad492eabda6cece03b
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Jul 29 22:22:17 2009 +0200
+
+    Updated the ChangeLog file.
+
 commit 76b8978ef2d75ba8930ef263afb4a2d583c629c4
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Wed Jul 29 22:20:32 2009 +0200
