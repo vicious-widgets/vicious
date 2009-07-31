@@ -26,6 +26,9 @@ function worker(format, station)
 
     -- Setup tables
     local weather = {
+        -- Some of the weather symbols would look nice if prepended to
+        -- the final output, but it is up to the user to do that
+        --  * http://www.alanwood.net/unicode/miscellaneous_symbols.html
         ["{city}"]    = "N/A",
         ["{wind}"]    = "N/A",
         ["{windmph}"] = "N/A",
