@@ -23,10 +23,10 @@ module("vicious.bat")
 function worker(format, batid)
     -- Initialise tables
     local battery_state = {
-        ["full"]        = "*",
-        ["unknown"]     = " ",
-        ["charged"]     = "*",
-        ["charging"]    = "+",
+        ["full"] = "↯",
+        ["unknown"] = "⌁",
+        ["charged"] = "↯",
+        ["charging"] = "+",
         ["discharging"] = "-"
     }
 

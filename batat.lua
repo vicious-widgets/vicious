@@ -18,10 +18,10 @@ function worker(format)
     -- Initialise tables
     local battery_info  = {}
     local battery_state = {
-        ["full"]        = "*",
-        ["unknown"]     = " ",
-        ["charged"]     = "*",
-        ["charging"]    = "+",
+        ["full"] = "↯",
+        ["unknown"] = "⌁",
+        ["charged"] = "↯",
+        ["charging"] = "+",
         ["discharging"] = "-"
     }
 
