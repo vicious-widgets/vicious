@@ -122,6 +122,10 @@ vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
   - takes the full path to the mbox as an argument
 
+vicious.widgets.mboxc
+  - provides the count of total, old and new messages in a mbox
+  - takes the full path to the mbox as an argument
+
 vicious.widgets.mdir
   - provides a number of new and unread messages in a Maildir
     structure
