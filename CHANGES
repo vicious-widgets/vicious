@@ -1,3 +1,21 @@
+commit 3f851ff5893c31d81eab244f6caeb6132f69ea69
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Jul 31 21:53:14 2009 +0200
+
+    Added a note about weather symbols to the weather widget.
+
+commit 1b9906165de561b9db3157719265c910c41ed9ff
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Jul 31 20:40:36 2009 +0200
+
+    Use utf symbols for some bat states. Mention LuaFileSystem in mdir.lua
+
+commit f00558cb966f8c49149c8c2ffc7f160c40dca229
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Jul 31 08:00:07 2009 +0200
+
+    Next release, version 1.0.4.
+
 commit 475da04ed1199d87121be886e1636a1cbbf7f0d2
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Fri Jul 31 07:49:28 2009 +0200
