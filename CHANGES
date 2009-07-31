@@ -1,3 +1,24 @@
+commit 475da04ed1199d87121be886e1636a1cbbf7f0d2
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Jul 31 07:49:28 2009 +0200
+
+    Mbox mail count widget included.
+    
+    The, mboxc, widget supplements the mbox widget. The mbox widget
+    returns the subject of the last e-mail in a mbox, while the mboxc
+    widget returns the count of total, old and new messages. Dealing with
+    potentially *HUGE* files is not easy, I tried to find some middle
+    ground for now, comments in the file discuss it in detail. Having the
+    LuaFileSystem lib would be nice, so we could do caching and avoid 90%
+    of the reads, but I didn't rely on external libraries to this point so
+    I'm not going to start now.
+
+commit dad393b94b508e4ce94b66c4c209e29f89830472
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Jul 30 20:47:32 2009 +0200
+
+    Updated the CHANGES file.
+
 commit bc637062d7518988884c36762d3d257c1c8d0aad
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Jul 30 20:47:02 2009 +0200
