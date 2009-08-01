@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local table = { insert = table.insert }
 -- }}}
 
@@ -46,3 +47,5 @@ function worker(format)
     return battery_info
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

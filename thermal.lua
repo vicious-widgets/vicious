@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 -- }}}
 
 
@@ -25,3 +26,5 @@ function worker(format, thermal_zone)
     return {temperature}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local type = type
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -54,3 +55,5 @@ function worker(format, padding)
     return args
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

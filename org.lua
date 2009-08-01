@@ -6,6 +6,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 local string = { find = string.find }
 local os = {
     time = os.time,
@@ -68,3 +69,5 @@ function worker(format, files)
     return {count.past, count.today, count.soon, count.future}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

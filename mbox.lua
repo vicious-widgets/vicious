@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 local string = { gfind = string.gfind }
 local helpers = require("vicious.helpers")
 -- }}}
@@ -43,3 +44,5 @@ function worker(format, mbox)
     end
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

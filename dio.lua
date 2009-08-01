@@ -7,6 +7,7 @@
 local type = type
 local ipairs = ipairs
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
 -- }}}
@@ -71,3 +72,5 @@ function worker(format, disk)
     return disk_usage
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

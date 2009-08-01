@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = {
     find = string.find,
@@ -77,3 +78,5 @@ function worker(format, batid)
     end
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

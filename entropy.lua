@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { format = string.format }
 -- }}}
@@ -35,3 +36,5 @@ function worker(format, poolsize)
     return {ent_avail, ent_avail_percent}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

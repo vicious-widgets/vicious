@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local string = {
     find = string.find,
     match = string.match
@@ -60,3 +61,5 @@ function worker(format, iface)
     return winfo
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

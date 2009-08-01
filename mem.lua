@@ -7,6 +7,7 @@
 local type = type
 local tonumber = tonumber
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local helpers = require("vicious.helpers")
 -- }}}
@@ -74,3 +75,5 @@ function worker(format, padding)
             swap_usepercent, swap_inuse, swap_total, swap_free}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

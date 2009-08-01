@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 local string = { find = string.find }
 -- }}}
 
@@ -55,3 +56,5 @@ function worker(format, mbox)
     return {total, old, new}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

@@ -6,6 +6,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 -- }}}
 
 
@@ -42,3 +43,5 @@ function worker(format, mdir)
     return {newcount, curcount}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

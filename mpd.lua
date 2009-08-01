@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -14,7 +15,7 @@ module("vicious.mpd")
 
 
 -- {{{ MPD widget type
-function worker()
+function worker(format)
     -- This one is as simple as they come. Using sockets or expanding
     -- it is a lost cause since there are already a few MPD Lua libs
     -- written for awesome. Use them.
@@ -40,3 +41,5 @@ function worker()
     return {nowplaying}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

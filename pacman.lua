@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 -- }}}
 
 
@@ -36,3 +37,5 @@ function worker(format)
     return {updates}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

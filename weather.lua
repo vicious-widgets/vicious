@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { match = string.match }
 -- }}}
@@ -73,3 +74,5 @@ function worker(format, station)
     return weather
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

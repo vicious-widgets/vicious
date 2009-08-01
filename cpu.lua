@@ -8,6 +8,7 @@ local type = type
 local pairs = pairs
 local ipairs = ipairs
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
 local helpers = require("vicious.helpers")
@@ -93,3 +94,5 @@ function worker(format, padding)
     return cpu_usage
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

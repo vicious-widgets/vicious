@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local io = { open = io.open }
+local setmetatable = setmetatable
 local math = { floor = math.floor }
 local helpers = require("vicious.helpers")
 -- }}}
@@ -49,3 +50,5 @@ function worker(format, padding)
     return {total_uptime, uptime_days, uptime_hours, uptime_minutes, uptime_seconds}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

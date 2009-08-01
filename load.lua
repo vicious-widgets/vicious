@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { open = io.open }
+local setmetatable = setmetatable
 -- }}}
 
 
@@ -26,3 +27,5 @@ function worker(format)
     return {avg1, avg5, avg15}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

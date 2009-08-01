@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local os = { date = os.date }
+local setmetatable = setmetatable
 -- }}}
 
 
@@ -22,3 +23,5 @@ function worker(format)
     end
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })

@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
+local setmetatable = setmetatable
 local string = { match = string.match }
 -- }}}
 
@@ -31,3 +32,5 @@ function worker(format, channel)
     return {volume_level}
 end
 -- }}}
+
+setmetatable(_M, { __call = function(_, ...) return worker(...) end })
