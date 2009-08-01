@@ -1,3 +1,21 @@
+commit 418151f57ebe56b84e35169e73912fe244871db5
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 1 23:11:41 2009 +0200
+
+    Make all widgets return their worker functions when called.
+
+commit 1630b786d4028a8075695c026391ee80cc9b9aca
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 1 06:20:31 2009 +0200
+
+    Added wind speed in km/h to the weather widget.
+
+commit f841c540d41507f37e907482fe467c3e0b3c285d
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Jul 31 21:53:58 2009 +0200
+
+    Updated the CHANGES file.
+
 commit 3f851ff5893c31d81eab244f6caeb6132f69ea69
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Fri Jul 31 21:53:14 2009 +0200
