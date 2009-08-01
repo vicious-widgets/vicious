@@ -76,10 +76,10 @@ for w, i in pairs(_M) do
     if i and i ~= _M and type(i) == "table" then
         -- Ignore the function table and helpers
         if w ~= "widgets" and w ~= "helpers" then
-            -- Place functions in the namespace table
-            widgets[w] = i.worker
+            -- Place widgets in the namespace table
+            widgets[w] = i
             -- Enable caching for all widget types
-            widget_cache[i.worker] = {}
+            widget_cache[i] = {}
         end
     end
 end
