@@ -83,6 +83,10 @@ in the format string.
 vicious.widgets.cpu
   - provides CPU usage for all available CPUs/cores
 
+vicious.widgets.cpufreq
+  - provides freq, voltage and governor info for a requested CPU
+  - takes the CPU ID as an argument, i.e. "cpu0"
+
 vicious.widgets.thermal
   - provides temperature levels of ACPI thermal zones
   - takes the thermal zone as an argument, i.e. "TZS0"
