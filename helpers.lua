@@ -31,7 +31,7 @@ function format(format, args)
 
     -- Format a string
     for var, val in pairs(args) do
-        format = string.gsub(format, "$"..var, val)
+        format = string.gsub(format, "$" .. var, val)
     end
 
     -- Return formatted string
@@ -49,7 +49,7 @@ function padd(number, padding)
 
     for i=1, padding do
         if math.floor(number/math.pow(10,(i-1))) == 0 then
-            s = "0"..s
+            s = "0" .. s
         end
     end
 
@@ -88,28 +88,28 @@ function bytes_to_string(bytes, sec, padding)
 
     if padding then
         bytes = padd(bytes*10, padding+1)
-        bytes = bytes:sub(1, bytes:len()-1).."."..bytes:sub(bytes:len())
+        bytes = bytes:sub(1, bytes:len()-1) .. "." .. bytes:sub(bytes:len())
     end
 
     if sec then
-        return tostring(bytes)..signs[sign].."ps"
+        return tostring(bytes) .. signs[sign] .. "ps"
     else
-        return tostring(bytes)..signs[sign]
+        return tostring(bytes) .. signs[sign]
     end
 end
 -- }}}
 
 --{{{ Escape a string
 function escape(text)
-    if text then
-        text = text:gsub("&", "&amp;")
-        text = text:gsub("<", "&lt;")
-        text = text:gsub(">", "&gt;")
-        text = text:gsub("'", "&apos;")
-        text = text:gsub("\"", "&quot;")
-    end
+    local xml_entities = {
+        ["\""] = "&quot;",
+        ["&"]  = "&amp;",
+        ["'"]  = "&apos;",
+        ["<"]  = "&lt;",
+        [">"]  = "&gt;"
+    }
 
-    return text
+    return text and text:gsub("[\"&'<>]", xml_entities)
 end
 -- }}}
 -- }}}
