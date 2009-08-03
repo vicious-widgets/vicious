@@ -20,7 +20,7 @@ module("vicious.uptime")
 function worker(format, padding)
     -- Get /proc/uptime
     local f = io.open("/proc/uptime")
-    local line = f:read()
+    local line = f:read("*line")
     f:close()
 
     -- Format data

@@ -25,7 +25,7 @@ function worker(format, poolsize)
 
     -- Get available entropy
     local f = io.open("/proc/sys/kernel/random/entropy_avail")
-    local ent_avail = f:read()
+    local ent_avail = f:read("*line")
     f:close()
 
     -- Calculate percentage
