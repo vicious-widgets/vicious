@@ -36,6 +36,7 @@ local capi = {
 
 -- {{{ Configure widgets
 require("vicious.cpu")
+require("vicious.cpufreq")
 require("vicious.thermal")
 require("vicious.load")
 require("vicious.uptime")
