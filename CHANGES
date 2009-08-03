@@ -1,3 +1,43 @@
+commit cef569b6f17cb18bf11b453dcf1887ff81fe0974
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 3 04:40:55 2009 +0200
+
+    CPU frequency widget included.
+    
+    The cpufreq widget supplements the cpu widget. It returns the current
+    CPU scaling frequency (in MHz and GHz), voltage (in mV and V) and
+    governor information for a requested CPU. If supported by the
+    processor and correct kernel modules are loaded.
+
+commit 3fe67d4311f1f099da9ff13849c70a97d5078228
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 3 04:33:18 2009 +0200
+
+    Coding style changes in entropy, load, thermal, uptime.
+
+commit 09fda0ab05c066a8f630e1d7a36f401bbc0ca68e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 3 04:29:06 2009 +0200
+
+    Rewrite of the escape helper.
+    
+    It is simillar to the awful.util.escape now, using a table which we
+    could expand (and rename) with other unwated characters if it comes to
+    that. I saw awesome break on many occasions because of encoding
+    problems.
+
+commit 047dba0e5d3aeedd7498c05135a924b980660d3e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 1 23:15:09 2009 +0200
+
+    Next release, version/tag 1.0.5.
+
+commit cad950a838f027af7d1a569d25932f587f9ee040
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 1 23:13:29 2009 +0200
+
+    Updated the CHANGES file in preparation for tag v1.0.5.
+
 commit 418151f57ebe56b84e35169e73912fe244871db5
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Sat Aug 1 23:11:41 2009 +0200
