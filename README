@@ -183,13 +183,13 @@ table with the values otherwise inserted into the format string as its
 second argument, and should return the text to be used for the widget.
 
 Example widget
-  mpdwidget = widget({ type = 'textbox',name = 'mpdwidget'})
+  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget'})
   vicious.register(mpdwidget,vicious.widgets.mpd, 
     function (widget, args)
       if args[1] == "Stopped" then
         return ''
       else
-        return ' <span color="white">MPD:</span> '..args[1]
+        return ' <span color="white">MPD:</span> ' .. args[1]
       end
   end)
 
@@ -203,43 +203,43 @@ Remember, besides creating and registering widgets you have to add them
 to a statusbar in order to display them.
 
 MPD widget
-  mpdwidget = widget({type = 'textbox',name = 'mpdwidget')
-  vicious.register(mpdwidget,vicious.widgets.mpd,'$1',30)
+  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
+  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 30)
 
   - executed every 30 seconds, takes no arguments
 
 Memory widget
-  memwidget = widget({type = 'textbox',name = 'memwidget'})
-  vicious.register(memwidget,vicious.widgets.mem,'$1 ($2MB/$3MB)',1)
+  memwidget = widget({ type = 'textbox', name = 'memwidget' })
+  vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 1)
 
   - executed every second, appends "MB" to 2nd and 3rd argument
 
 File system widget
-  fswidget = widget({type = 'progressbar',name = 'fswidget'})
+  fswidget = widget({ type = 'progressbar',name = 'fswidget' })
   -- configure the progressbar and bar properties, then register with:
-  vicious.register(fswidget,vicious.widgets.fs,'${/home usep}',120,fswidget)
+  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120, fswidget)
 
   - executed every 120 seconds, requests the value of the ${home usep}
     key and feeds the "fswidget" progressbar
 
 Battery widget
-  batwidget = widget({type = 'progressbar',name = 'batwidget'})
+  batwidget = widget({ type = 'progressbar', name = 'batwidget' })
   -- configure the progressbar and bar properties, then register with:
-  vicious.register(batwidget,vicious.widgets.bat,'$2',60,batwidget,'BAT0')
+  vicious.register(batwidget, vicious.widgets.bat, '$2', 60, batwidget, 'BAT0')
 
   - executed every 60 seconds, feeds the "batwidget" progressbar,
     provides "BAT0" battery ID as an argument
 
 Mbox widget
-  mboxwidget = widget({type = 'textbox',name = 'mboxwidget'})
-  vicious.register(mboxwidget,vicious.widgets.mbox,'$1',240,nil,'/home/user/mail/Inbox')
+  mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
+  vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 240, nil, '/home/user/mail/Inbox')
 
   - executed every 240 seconds, provides full path to the mbox as an
     argument
 
 
-All other widgets are used in the same manner. You can check the
-authors rc.lua as a reference:
+All other widgets are used in the same manner. You can use authors
+rc.lua as a reference:
 
   http://sysphere.org/~anrxc/local/scr/dotfiles/awesomerc.lua.html
 
