@@ -110,11 +110,6 @@ function register(widget, wtype, format, timer, field, padd)
         reg.timer = 1
     end
 
-    -- Allow using a string widget type
-    if type(reg.type) == "string" then
-        reg.type = widgets[reg.type]
-    end
-
     -- Register reg object
     regregister(reg)
 
