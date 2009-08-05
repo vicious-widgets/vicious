@@ -20,17 +20,23 @@ function worker(format)
     local f = io.popen("pacman -Qu")
 
     -- Initialise updates
-    local updates = nil
+    local updates = 0
 
     -- Get data
     for line in f:lines() do
-        -- If there are 'Targets:' then updates are available,
-        -- number is provided, we don't have to count packages
-        updates = line:match("^Targets[%s]%(([%d]+)%)") or 0
+        -- Pacman 3.3 returns one package on a line, without any extra
+        -- information
+        updates = updates + 1
+
+        -- Pacman 3.2 returns 'Targets:' followed by a number of
+        -- available updates and a list of packages all on one
+        -- line. Since the number is provided we don't have to count
+        -- them
+        --updates = line:match("^Targets[%s]%(([%d]+)%)") or 0
         -- If the count changed then break out of the loop
-        if tonumber(updates) > 0 then
-            break
-        end
+        --if tonumber(updates) > 0 then
+        --    break
+        --end
     end
     f:close()
 
