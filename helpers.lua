@@ -5,7 +5,10 @@
 
 -- {{{ Grab environment
 local pairs = pairs
-local string = { gsub = string.gsub }
+local string = {
+    sub = string.sub,
+    gsub = string.gsub
+}
 -- }}}
 
 
@@ -36,6 +39,18 @@ function escape(text)
     }
 
     return text and text:gsub("[\"&'<>]", xml_entities)
+end
+-- }}}
+
+--{{{ Truncate a string
+function truncate(text, maxlen)
+    txtlen = text:len()
+
+    if txtlen > maxlen then
+        text = text:sub(1, maxlen - 3) .. "..."
+    end
+
+    return text
 end
 -- }}}
 -- }}}

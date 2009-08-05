@@ -34,12 +34,22 @@ function worker(format)
     nowplaying = helpers.escape(np)
 
     -- Don't abuse the wibox, truncate
-    if nowplaying:len() > 30 then
-        nowplaying = nowplaying:sub(1, 27) .. "..."
-    end
+    nowplaying = helpers.truncate(nowplaying, 30)
 
     return {nowplaying}
 end
 -- }}}
 
 setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+
+
+
+
+
+
+
+
+
+
+
+

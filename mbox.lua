@@ -36,9 +36,7 @@ function worker(format, mbox)
         subject = helpers.escape(subject)
 
         -- Don't abuse the wibox, truncate
-        if subject:len() > 22 then
-            subject = subject:sub(1, 19) .. "..."
-        end
+        subject = helpers.truncate(subject, 22)
 
         return {subject}
     end
