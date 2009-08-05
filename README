@@ -22,7 +22,7 @@ init.lua to comment out all the widgets you don't need, from the
 textbox, graph or a progressbar) call vicious.register() to register
 it with vicious:
 
-  vicious.register(widget, type, format, interval, field, argument or padding)
+  vicious.register(widget, type, format, interval, field, warg)
 
 widget   - widget created with widget()
 type     - one of the available widget types (see below for a list)
@@ -34,9 +34,7 @@ format   - a string argument or a function
            data returned by the widget type, more below
 interval - number of seconds between updates of the widget
 field    - used to feed graphs or progressbars, by their name
-padding  - minimum amount of numbers the widget will output, if
-           available for that widget type
-argument - some widgets require an argument to be passed, like the
+warg     - some widgets require an argument to be passed, like the
            battery ID
 
 
@@ -76,9 +74,9 @@ Widget types
 ------------
 
 Widget types consist of worker functions that take the "format"
-argument given to vicious.register as the first argument, "padding" or
-"argument" the as the second, and return a table of values to insert
-in the format string.
+argument given to vicious.register as the first argument, "warg" as
+the second, and return a table of values to insert in the format
+string.
 
 vicious.widgets.cpu
   - provides CPU usage for all available CPUs/cores
@@ -212,10 +210,9 @@ MPD widget
 
 Memory widget
   memwidget = widget({type = 'textbox',name = 'memwidget'})
-  vicious.register(memwidget,vicious.widgets.mem,'$1 ($2MB/$3MB)',1,nil,{2, 4, 4})
+  vicious.register(memwidget,vicious.widgets.mem,'$1 ($2MB/$3MB)',1)
 
-  - executed every second, appends "MB" to 2nd and 3rd argument, uses
-    padding
+  - executed every second, appends "MB" to 2nd and 3rd argument
 
 File system widget
   fswidget = widget({type = 'progressbar',name = 'fswidget'})

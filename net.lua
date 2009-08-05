@@ -9,7 +9,6 @@ local os = { time = os.time }
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -21,7 +20,7 @@ module("vicious.net")
 local nets = {}
 
 -- {{{ Net widget type
-function worker(format, padding)
+function worker(format)
     -- Get /proc/net/dev
     local f = io.open("/proc/net/dev")
     local args = {}
@@ -35,14 +34,6 @@ function worker(format, padding)
             recv = tonumber(line:match(":[%s]*([%d]+)"))
             -- Transmited bytes, 7 fields from end of the line
             send = tonumber(line:match("([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
-
-            if padding then
-                args["{"..name.." rx}"] = helpers.bytes_to_string(recv, nil, padding)
-                args["{"..name.." tx}"] = helpers.bytes_to_string(send, nil, padding)
-            else
-                args["{"..name.." rx}"] = helpers.bytes_to_string(recv)
-                args["{"..name.." tx}"] = helpers.bytes_to_string(send)
-            end
 
             args["{"..name.." rx_b}"]  = math.floor(recv*10)/10
             args["{"..name.." tx_b}"]  = math.floor(send*10)/10
@@ -82,14 +73,6 @@ function worker(format, padding)
 
                 down = (recv - nets[name][1])/interval
                 up   = (send - nets[name][2])/interval
-
-                if padding then
-                    args["{"..name.." down}"] = helpers.bytes_to_string(down, true, padding)
-                    args["{"..name.." up}"] = helpers.bytes_to_string(up, true, padding)
-                else
-                    args["{"..name.." down}"] = helpers.bytes_to_string(down, true)
-                    args["{"..name.." up}"] = helpers.bytes_to_string(up, true)
-                end
 
                 args["{"..name.." down_b}"] = math.floor(down*10)/10
                 args["{"..name.." up_b}"] = math.floor(up*10)/10

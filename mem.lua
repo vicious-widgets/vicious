@@ -4,12 +4,10 @@
 ----------------------------------------------------------
 
 -- {{{ Grab environment
-local type = type
 local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -18,7 +16,7 @@ module("vicious.mem")
 
 
 -- {{{ Memory widget type
-function worker(format, padding)
+function worker(format)
     -- Get meminfo
     local f = io.open("/proc/meminfo")
 
@@ -48,28 +46,6 @@ function worker(format, padding)
     -- Calculate swap percentage
     swap_inuse = swap_total - swap_free
     swap_usepercent = math.floor(swap_inuse/swap_total*100)
-
-    if padding then
-        if type(padding) == "table" then
-            mem_usepercent = helpers.padd(mem_usepercent, padding[1])
-            mem_inuse = helpers.padd(mem_inuse, padding[2])
-            mem_total = helpers.padd(mem_total, padding[3])
-            mem_free  = helpers.padd(mem_free,  padding[4])
-            swap_usepercent = helpers.padd(swap_usepercent, padding[1])
-            swap_inuse = helpers.padd(swap_inuse, padding[2])
-            swap_total = helpers.padd(swap_total, padding[3])
-            swap_free = helpers.padd(swap_free, padding[4])
-        else
-            mem_usepercent = helpers.padd(mem_usepercent, padding)
-            mem_inuse = helpers.padd(mem_inuse, padding)
-            mem_total = helpers.padd(mem_total, padding)
-            mem_free  = helpers.padd(mem_free,  padding)
-            swap_usepercent = helpers.padd(swap_usepercent, padding)
-            swap_inuse = helpers.padd(swap_inuse, padding)
-            swap_total = helpers.padd(swap_total, padding)
-            swap_free = helpers.padd(swap_free, padding)
-        end
-    end
 
     return {mem_usepercent,  mem_inuse,  mem_total,  mem_free,
             swap_usepercent, swap_inuse, swap_total, swap_free}

@@ -4,14 +4,11 @@
 ----------------------------------------------------------
 
 -- {{{ Grab environment
-local type = type
-local pairs = pairs
 local ipairs = ipairs
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
-local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -25,7 +22,7 @@ local cpu_total  = {}
 local cpu_active = {}
 
 -- {{{ CPU widget type
-function worker(format, padding)
+function worker(format)
     -- Get /proc/stat
     local f = io.open("/proc/stat")
     local cpu_lines = {}
@@ -77,18 +74,6 @@ function worker(format, padding)
         -- Store totals
         cpu_total[i]   = total_new[i]
         cpu_active[i]  = active_new[i]
-    end
-
-    if padding ~= nil then
-        for k, v in pairs(cpu_usage) do
-            if type(padding) == "table" then
-                p = padding[k]
-            else
-                p = padding
-            end
-
-            cpu_usage[k] = helpers.padd(cpu_usage[k], p)
-        end
     end
 
     return cpu_usage

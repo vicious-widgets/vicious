@@ -88,7 +88,7 @@ end
 
 -- {{{ Main functions
 -- {{{ Register widget
-function register(widget, wtype, format, timer, field, padd)
+function register(widget, wtype, format, timer, field, warg)
     local reg = {}
     local widget = widget
 
@@ -97,7 +97,7 @@ function register(widget, wtype, format, timer, field, padd)
     reg.format = format
     reg.timer  = timer
     reg.field  = field
-    reg.padd   = padd
+    reg.warg   = warg
     reg.widget = widget
 
     -- Update function
@@ -242,12 +242,12 @@ function update(widget, reg, disablecache)
 
         if c.time == nil or c.time <= t - reg.timer or disablecache then
             c.time = t
-            c.data = reg.type(reg.format, reg.padd)
+            c.data = reg.type(reg.format, reg.warg)
         end
         
         data = c.data
     else
-        data = reg.type(reg.format, reg.padd)
+        data = reg.type(reg.format, reg.warg)
     end
 
     if type(data) == "table" then

@@ -8,7 +8,6 @@ local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -17,7 +16,7 @@ module("vicious.uptime")
 
 
 -- {{{ Uptime widget type
-function worker(format, padding)
+function worker(format)
     -- Get /proc/uptime
     local f = io.open("/proc/uptime")
     local line = f:read("*line")
@@ -30,22 +29,6 @@ function worker(format, padding)
     local uptime_hours   = math.floor((total_uptime  % (3600 * 24)) / 3600)
     local uptime_minutes = math.floor(((total_uptime % (3600 * 24)) % 3600) / 60)
     local uptime_seconds = math.floor(((total_uptime % (3600 * 24)) % 3600) % 60)
-
-    if padding then
-        if type(padding) == "table" then
-            total_uptime   = helpers.padd(total_uptime,   padding[1])
-            uptime_days    = helpers.padd(uptime_days,    padding[2])
-            uptime_hours   = helpers.padd(uptime_hours,   padding[3])
-            uptime_minutes = helpers.padd(uptime_minutes, padding[4])
-            uptime_seconds = helpers.padd(uptime_seconds, padding[5])
-        else
-            total_uptime   = helpers.padd(total_uptime,   padding)
-            uptime_days    = helpers.padd(uptime_days,    padding)
-            uptime_hours   = helpers.padd(uptime_hours,   padding)
-            uptime_minutes = helpers.padd(uptime_minutes, padding)
-            uptime_seconds = helpers.padd(uptime_seconds, padding)
-        end
-    end
 
     return {total_uptime, uptime_days, uptime_hours, uptime_minutes, uptime_seconds}
 end
