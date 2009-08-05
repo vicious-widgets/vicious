@@ -65,10 +65,11 @@ function worker(format, station)
           string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
         weather["{press}"]   = -- Pressure in hPa
           string.match(ws, "Pressure[%s].+%((.+)[%s]hPa%)") or weather["{press}"]
-        weather["{windkmh}"] = -- Wind speed in KMH if MPH was available
-          if weather["{windmph}"] ~= "N/A" then
-             weather["{windkmh}"] = math.floor(weather["{windmph}"] * 1.6)
-          end
+
+        -- Wind speed in KMH if MPH was available
+        if weather["{windmph}"] ~= "N/A" then
+           weather["{windkmh}"] = math.floor(weather["{windmph}"] * 1.6)
+        end
     end
 
     return weather
