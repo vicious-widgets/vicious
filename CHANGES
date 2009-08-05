@@ -1,3 +1,82 @@
+commit f14280bf9c60bac3dd024c0967690780ecf13fcf
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 22:53:42 2009 +0200
+
+    Pacman widget updated for pacman 3.3.
+    
+    Pacman 3.3 returns one package on a line, without any other
+    information. So now we count lines, while before the list of packages
+    was provided on one line along with the number of updates - so we
+    didn't have to count them. Old code was commented out, and is waiting
+    for removal.
+
+commit b46278a7467b1ebe2cd2cd16ef400f927987524f
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 22:44:47 2009 +0200
+
+    Lower the wget timeout to 3s in weather.lua
+
+commit eaf847011169a9f7b3ff33f5b995467be9ff71fa
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 22:33:44 2009 +0200
+
+    Cleaned up sample widgets in the README
+
+commit 44aea404c792d1991563e8e924ffbebf14094151
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 22:21:37 2009 +0200
+
+    Remove a spurious comment from helpers.lua
+
+commit 3c76e0ddd2083db5074e3cce644270cb84098c60
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 22:11:11 2009 +0200
+
+    Introduced the truncate helper.
+    
+    Function takes two arguments, the text to be truncated and the max
+    lenght. Last three characters will be replaced by "...". Mbox and MPD
+    widgets that previously did it them selves are now using this helper.
+
+commit 2d0cbf562ed19b4d68dd4d7325d912d104ed71aa
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 21:58:04 2009 +0200
+
+    Fixed the weather widget, wind km/h was broken.
+
+commit 4c74de711f564d26ebefef7f9422289bd76ef8c2
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 21:50:41 2009 +0200
+
+    Padding removed, along with deprecated helper functions.
+    
+    If you have any use for it then continue using an older vicious tag,
+    or keep maintaining it in your local vicious copy.
+
+commit 2d4efa6893a582a7bc6a15b4840a116c0547b534
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 21:19:41 2009 +0200
+
+    Minor cleanup in init.lua
+
+commit 22033bae53409d280782aff375f5ceebeaa83c1e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 19:20:32 2009 +0200
+
+    Disallow using a string widget type.
+
+commit 756215f020915ab7e80e65674e063c699d480da4
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 3 04:43:53 2009 +0200
+
+    Next release, tag 1.0.6.
+
+commit 5909d9eacb9114fa44623663510e44d93b21348b
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 3 04:42:08 2009 +0200
+
+    Updated the CHANGES file in preparation for tag v1.0.6.
+
 commit cef569b6f17cb18bf11b453dcf1887ff81fe0974
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Mon Aug 3 04:40:55 2009 +0200
