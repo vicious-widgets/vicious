@@ -105,7 +105,7 @@ function register(widget, wtype, format, timer, field, padd)
         update(widget, reg)
     end
 
-    -- Default to timer=1
+    -- Default to 1s timer
     if reg.timer == nil then
         reg.timer = 1
     end
@@ -240,7 +240,7 @@ function update(widget, reg, disablecache)
     if widget_cache[reg.type] ~= nil then
         local c = widget_cache[reg.type]
 
-        if c.time == nil or c.time <= t-reg.timer or disablecache then
+        if c.time == nil or c.time <= t - reg.timer or disablecache then
             c.time = t
             c.data = reg.type(reg.format, reg.padd)
         end
