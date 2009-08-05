@@ -22,7 +22,7 @@ function worker(format, station)
     local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
 
     -- Get info from a weather station
-    local f = io.popen("wget --timeout=5 -o /dev/null -O - "..noaa..station..".TXT")
+    local f = io.popen("wget --timeout=3 -o /dev/null -O - "..noaa..station..".TXT")
     local ws = f:read("*all")
     f:close()
 
