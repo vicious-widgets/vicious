@@ -19,7 +19,6 @@ module("vicious.helpers")
 -- {{{ Helper functions
 -- {{{ Format a string with args
 function format(format, args)
-    -- Format a string
     for var, val in pairs(args) do
         format = string.gsub(format, "$" .. var, val)
     end
