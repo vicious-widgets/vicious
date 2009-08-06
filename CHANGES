@@ -1,3 +1,29 @@
+commit 013dd08225ed70010ef983172873766aa9a5d9fb
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 02:26:23 2009 +0200
+
+    HDD Temperature widget included.
+    
+    Widget uses the hddtemp daemon to return the temperatures for all
+    available hard drives. It uses curl and connects to the daemon over
+    telnet.
+
+commit 515cc0dd6bc24d56e85803f626e60fa70bb73b4e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 01:50:50 2009 +0200
+
+    Weather widget switched to curl.
+    
+    It is somewhat lighter, faster and simpler than wget. It is as common
+    as wget these days... from GnuPG to Git and Gimp, they all depend on
+    it, and we all have it installed.
+
+commit 477b8d284ad3ab84f4990cbba4570910e3ffa522
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 5 23:08:47 2009 +0200
+
+    CHANGES file updated before the next push.
+
 commit f14280bf9c60bac3dd024c0967690780ecf13fcf
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Wed Aug 5 22:53:42 2009 +0200

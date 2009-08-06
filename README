@@ -113,6 +113,11 @@ vicious.widgets.dio
   - provides I/O statistics for requested storage devices
   - takes the disk as an argument, i.e. "/dev/hda"
 
+vicious.widgets.hddtemp
+  - provides hard drive temperatures using the hddtemp daemon
+  - takes the hddtemp listening port as an argument, or fallbacks to
+    default port 7634
+
 vicious.widgets.net
   - provides usage statistics for all network interfaces
 
@@ -221,6 +226,14 @@ File system widget
 
   - executed every 120 seconds, requests the value of the ${home usep}
     key and feeds the "fswidget" progressbar
+
+HDD temperature widget
+  hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
+  vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 240)
+
+  - executed every 240 seconds, requests the temperature level of the
+    ${/dev/sda} disk/key and appends "°C" to the returned value, does
+    not provide the port argument so it fallbacks to default
 
 Battery widget
   batwidget = widget({ type = 'progressbar', name = 'batwidget' })
