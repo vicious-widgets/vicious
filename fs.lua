@@ -9,7 +9,7 @@ local setmetatable = setmetatable
 -- }}}
 
 
--- FS: provides usage statistics for requested mount points
+-- FS: provides file system disk space usage
 module("vicious.fs")
 
 

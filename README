@@ -110,7 +110,7 @@ vicious.widgets.mem
   - provides RAM and Swap usage statistics
 
 vicious.widgets.fs
-  - provides usage statistics for requested mount points
+  - provides file system disk space usage
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
@@ -191,7 +191,7 @@ table with the values otherwise inserted into the format string as its
 second argument, and should return the text to be used for the widget.
 
 Example widget
-  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget'})
+  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
   vicious.register(mpdwidget,vicious.widgets.mpd, 
     function (widget, args)
       if args[1] == "Stopped" then
@@ -218,24 +218,24 @@ MPD widget
 
 Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
-  vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 1)
+  vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 10)
 
-  - executed every second, appends "MB" to 2nd and 3rd argument
+  - executed every 10 seconds, appends "MB" to 2nd and 3rd argument
 
 File system widget
   fswidget = widget({ type = 'progressbar',name = 'fswidget' })
   -- configure the progressbar and bar properties, then register with:
   vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120, fswidget)
 
-  - executed every 120 seconds, requests the value of the ${home usep}
-    key and feeds the "fswidget" progressbar
+  - executed every 120 seconds, requests the value of the ${/home usep}
+    key (/home usage in percent) and feeds the "fswidget" progressbar
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
   vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 240)
 
   - executed every 240 seconds, requests the temperature level of the
-    ${/dev/sda} disk/key and appends "°C" to the returned value, does
+    ${/dev/sda} key/disk and appends "°C" to the returned value, does
     not provide the port argument so it fallbacks to default
 
 Battery widget

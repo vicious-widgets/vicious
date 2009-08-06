@@ -246,7 +246,7 @@ function update(widget, reg, disablecache)
             c.time = t
             c.data = reg.type(reg.format, reg.warg)
         end
-        
+
         data = c.data
     else
         data = reg.type(reg.format, reg.warg)
@@ -259,7 +259,7 @@ function update(widget, reg, disablecache)
             data = reg.format(widget, data)
         end
     end
-    
+
     if reg.field == nil then
         widget.text = data
     elseif widget.plot_data_add ~= nil then
