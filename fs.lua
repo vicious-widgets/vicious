@@ -17,7 +17,7 @@ module("vicious.fs")
 function worker(format)
     -- Get data from df
     local f = io.popen("df -hP")
-    local args = {}
+    local fs_info = {}
 
     -- Format data
     for line in f:lines() do
@@ -28,15 +28,15 @@ function worker(format)
              -- Instead match all at once, including network file systems
              line:match("^[%w/-:%.]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([-/%w]+)$")
 
-            args["{"..mount.." size}"]  = size
-            args["{"..mount.." used}"]  = used
-            args["{"..mount.." avail}"] = avail
-            args["{"..mount.." usep}"]  = usep
+            fs_info["{"..mount.." size}"]  = size
+            fs_info["{"..mount.." used}"]  = used
+            fs_info["{"..mount.." avail}"] = avail
+            fs_info["{"..mount.." usep}"]  = usep
         end
     end
     f:close()
 
-    return args
+    return fs_info
 end
 -- }}}
 

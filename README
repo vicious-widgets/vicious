@@ -143,6 +143,8 @@ vicious.widgets.mdir
 
 vicious.widgets.entropy
   - provides available system entropy
+  - takes the poolsize as an argument, or fallbacks to Linux 2.6
+    default entropy pool of 4096-bits
 
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode

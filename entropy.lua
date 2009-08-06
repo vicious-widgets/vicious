@@ -19,9 +19,7 @@ module("vicious.entropy")
 function worker(format, poolsize)
     -- Don't waste time opening the poolsize, Linux 2.6 has a default
     -- entropy pool of 4096-bits, if needed specify otherwise
-    if poolsize == nil then
-        poolsize = 4096
-    end
+    if poolsize == nil then poolsize = 4096 end
 
     -- Get available entropy
     local f = io.open("/proc/sys/kernel/random/entropy_avail")
