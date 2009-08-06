@@ -1,3 +1,21 @@
+commit d2d244f3aa69ff0ca76022d929c2c71001af0bcd
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 18:18:45 2009 +0200
+
+    CPU Information widget included.
+    
+    Widget returns speed and cache information for all available
+    CPUs/cores. It stores cpu speed in mhz and ghz in a table as well as
+    cpu cache in kb and mb. Values are retrieved using the CPU ID, i.e. we
+    would retrieve speed in ghz for CPU or core 1 with this format string:
+    ${1 ghz}.
+
+commit cbd9a53fbc5c6978352fd921a8d652f36fd6adf3
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 02:41:46 2009 +0200
+
+    Next release, tag 1.0.7.
+
 commit 013dd08225ed70010ef983172873766aa9a5d9fb
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Aug 6 02:26:23 2009 +0200
