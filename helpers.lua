@@ -16,7 +16,6 @@ local string = {
 module("vicious.helpers")
 
 
--- {{{ Helper functions
 -- {{{ Format a string with args
 function format(format, args)
     for var, val in pairs(args) do
@@ -51,5 +50,4 @@ function truncate(text, maxlen)
 
     return text
 end
--- }}}
 -- }}}
