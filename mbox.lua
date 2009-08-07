@@ -16,7 +16,7 @@ module("vicious.mbox")
 
 
 -- {{{ Mailbox widget type
-function worker(format, mbox)
+local function worker(format, mbox)
     local f = io.open(mbox)
     -- mbox could be huge, get a 15kb chunk from EOF
     --  * attachments could be much bigger than this

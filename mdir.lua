@@ -15,7 +15,7 @@ module("vicious.mdir")
 
 
 -- {{{ Maildir widget type
-function worker(format, mdir)
+local function worker(format, mdir)
     -- Like with the mbox count widget, we would benefit from the
     -- LuaFileSystem library. However, we didn't rely on extra
     -- libraries to this point so we won't start now. Widgets like

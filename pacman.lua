@@ -15,7 +15,7 @@ module("vicious.pacman")
 
 
 -- {{{ Pacman widget type
-function worker(format)
+local function worker(format)
     -- Check if updates are available
     local f = io.popen("pacman -Qu")
 

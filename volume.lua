@@ -15,7 +15,7 @@ module("vicious.volume")
 
 
 -- {{{ Volume widget type
-function worker(format, channel)
+local function worker(format, channel)
     -- Get mixer data
     local f = io.popen("amixer get " .. channel)
     local mixer = f:read("*all")

@@ -16,7 +16,7 @@ module("vicious.uptime")
 
 
 -- {{{ Uptime widget type
-function worker(format)
+local function worker(format)
     -- Get /proc/uptime
     local f = io.open("/proc/uptime")
     local line = f:read("*line")

@@ -14,7 +14,7 @@ module("vicious.hddtemp")
 
 
 -- {{{ HDD Temperature widget type
-function worker(format, port)
+local function worker(format, port)
     -- Fallback to default hddtemp port
     if port == nil then port = 7634 end
 

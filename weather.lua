@@ -16,7 +16,7 @@ module("vicious.weather")
 
 
 -- {{{ Weather widget type
-function worker(format, station)
+local function worker(format, station)
     -- US National Oceanic and Atmospheric Administration
     --   * Station codes: http://www.rap.ucar.edu/weather/surface/stations.txt
     local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"

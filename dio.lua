@@ -22,7 +22,7 @@ local disk_usage = {}
 local disk_total = {}
 
 -- {{{ Disk I/O widget type
-function worker(format, disk)
+local function worker(format, disk)
     -- Get /proc/diskstats
     local f = io.open("/proc/diskstats")
     local disk_lines = {}

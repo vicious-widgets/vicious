@@ -16,7 +16,7 @@ module("vicious.mem")
 
 
 -- {{{ Memory widget type
-function worker(format)
+local function worker(format)
     -- Get meminfo
     local f = io.open("/proc/meminfo")
 

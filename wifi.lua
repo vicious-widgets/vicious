@@ -18,7 +18,7 @@ module("vicious.wifi")
 
 
 -- {{{ Wireless widget type
-function worker(format, iface)
+local function worker(format, iface)
     -- Get data from iwconfig, on distributions where it is executable
     -- by users, and /sbin or /usr/sbin is in their path
     local f = io.popen("iwconfig " .. iface)

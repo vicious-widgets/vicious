@@ -22,7 +22,7 @@ local cpu_total  = {}
 local cpu_active = {}
 
 -- {{{ CPU widget type
-function worker(format)
+local function worker(format)
     -- Get /proc/stat
     local f = io.open("/proc/stat")
     local cpu_lines = {}

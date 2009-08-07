@@ -14,7 +14,7 @@ module("vicious.fs")
 
 
 -- {{{ Filesystem widget type
-function worker(format)
+local function worker(format)
     -- Get data from df
     local f = io.popen("df -hP")
     local fs_info = {}

@@ -15,7 +15,7 @@ module("vicious.cpuinf")
 
 
 -- {{{ CPU Information widget type
-function worker(format)
+local function worker(format)
     -- Initialise variables
     cpu_id = nil
 

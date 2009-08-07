@@ -18,7 +18,7 @@ module("vicious.cpufreq")
 
 
 -- {{{ CPU frequency widget type
-function worker(format, cpuid)
+local function worker(format, cpuid)
     -- Initialise tables
     --local governor_state = {
     --    ["ondemand"] = "↯",

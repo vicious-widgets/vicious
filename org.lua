@@ -20,7 +20,7 @@ module("vicious.org")
 
 
 -- {{{ OrgMode widget type
-function worker(format, files)
+local function worker(format, files)
     -- Compute delays
     local today  = os.time{ year=os.date("%Y"), month=os.date("%m"), day=os.date("%d") }
     local soon   = today + 24 * 3600 * 3 -- 3 days ahead is close

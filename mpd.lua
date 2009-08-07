@@ -15,7 +15,7 @@ module("vicious.mpd")
 
 
 -- {{{ MPD widget type
-function worker(format)
+local function worker(format)
     -- This one is as simple as they come. Using sockets or expanding
     -- it is a lost cause since there are already a few MPD Lua libs
     -- written for awesome. Use them.

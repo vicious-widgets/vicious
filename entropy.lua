@@ -16,7 +16,7 @@ module("vicious.entropy")
 
 
 -- {{{ Entropy widget type
-function worker(format, poolsize)
+local function worker(format, poolsize)
     -- Don't waste time opening the poolsize, Linux 2.6 has a default
     -- entropy pool of 4096-bits, if needed specify otherwise
     if poolsize == nil then poolsize = 4096 end

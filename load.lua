@@ -14,7 +14,7 @@ module("vicious.load")
 
 
 -- {{{ Load widget type
-function worker(format)
+local function worker(format)
     -- Get load averages
     local f = io.open('/proc/loadavg')
     local line = f:read("*line")

@@ -14,7 +14,7 @@ module("vicious.thermal")
 
 
 -- {{{ Thermal widget type
-function worker(format, thermal_zone)
+local function worker(format, thermal_zone)
     -- Get thermal zone
     local f = io.open("/proc/acpi/thermal_zone/" .. thermal_zone .. "/temperature")
     local line = f:read("*line")

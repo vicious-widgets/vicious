@@ -15,7 +15,7 @@ module("vicious.batat")
 
 
 -- {{{ Battery widget type
-function worker(format)
+local function worker(format)
     -- Initialise tables
     local battery_info  = {}
     local battery_state = {

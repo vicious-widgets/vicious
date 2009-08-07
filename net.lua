@@ -20,7 +20,7 @@ module("vicious.net")
 local nets = {}
 
 -- {{{ Net widget type
-function worker(format)
+local function worker(format)
     -- Get /proc/net/dev
     local f = io.open("/proc/net/dev")
     local args = {}
