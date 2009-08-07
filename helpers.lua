@@ -43,7 +43,7 @@ end
 
 --{{{ Truncate a string
 function truncate(text, maxlen)
-    txtlen = text:len()
+    local txtlen = text:len()
 
     if txtlen > maxlen then
         text = text:sub(1, maxlen - 3) .. "..."
