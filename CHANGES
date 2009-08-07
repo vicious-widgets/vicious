@@ -1,3 +1,27 @@
+commit d4595bb00f1365c65fddf11efd7d8d091b453482
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 7 17:41:10 2009 +0200
+
+    All worker functions are local.
+
+commit 8b38567d751848d93b18e96de1cddde339ebdbf0
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 22:03:21 2009 +0200
+
+    Added missing poolsize info to the README + minor change in fs.lua
+
+commit 798036e4452cbd1001fec48d27777dc697c42971
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 21:59:12 2009 +0200
+
+    Changed fs widget type description.
+
+commit 8d59a01cf663d576a79a0092312756d221725633
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 6 18:21:13 2009 +0200
+
+    Next release, tag 1.0.8.
+
 commit d2d244f3aa69ff0ca76022d929c2c71001af0bcd
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Thu Aug 6 18:18:45 2009 +0200
