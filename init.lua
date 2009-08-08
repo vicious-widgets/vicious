@@ -132,7 +132,7 @@ function regregister(reg)
 
             for w, i in pairs(registered) do
                 if w == reg.widget then
-                    for k, v in pairs(i) do
+                    for _, v in pairs(i) do
                         if v == reg then
                             already = true
                             break
@@ -169,7 +169,7 @@ function unregister(widget, keep, reg)
     if reg == nil then
         for w, i in pairs(registered) do
             if w == widget then
-                for k, v in pairs(i) do
+                for _, v in pairs(i) do
                     reg = unregister(w, keep, v)
                 end
             end
@@ -200,7 +200,7 @@ end
 -- {{{ Suspend vicious, halt all widget updates
 function suspend()
     for w, i in pairs(registered) do
-        for k, v in pairs(i) do
+        for _, v in pairs(i) do
             unregister(w, true, v)
         end
     end
@@ -211,7 +211,7 @@ end
 function activate(widget)
     for w, i in pairs(registered) do
         if widget == nil or w == widget then
-            for k, v in pairs(i) do
+            for _, v in pairs(i) do
                 regregister(v)
             end
         end
@@ -225,7 +225,7 @@ function update(widget, reg, disablecache)
     if reg == nil then
         for w, i in pairs(registered) do
             if w == widget then
-                for k, v in pairs(i) do
+                for _, v in pairs(i) do
                     update(w, v, disablecache)
                 end
             end
