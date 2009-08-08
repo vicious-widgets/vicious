@@ -1,3 +1,27 @@
+commit 03693e7aa1f680110a15d40289c2b2be421579ac
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 8 17:42:28 2009 +0200
+
+    Renamed unused loop identifiers to _
+
+commit 9f75b0dc9db53d18ef30390c183beedd7d24c07a
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 7 23:23:07 2009 +0200
+
+    Spurious folds removed from helpers.
+
+commit 41d4acb7a2b34b3364c1c6a57441b9fc9f3106ab
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 7 23:19:50 2009 +0200
+
+    Truncate helper, txtlen is local.
+
+commit 3b3e0dc7cf182bfaba4784e8020ec8f3e7646bce
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 7 17:50:06 2009 +0200
+
+    CHANGES file updated. Will probably switch to shortlog.
+
 commit d4595bb00f1365c65fddf11efd7d8d091b453482
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Fri Aug 7 17:41:10 2009 +0200
