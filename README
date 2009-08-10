@@ -49,6 +49,10 @@ Unregister
 Suspend  - suspend all widgets, used when running on battery power
   vicious.suspend()
 
+  - if you want it to happen automatically, see the example script for
+    the laptop-mode-tools start-stop programs module:
+  - http://sysphere.org/~anrxc/local/scr/sources/lmt-vicious.sh
+
 Activate - restart all suspended, or unregistered but kept, widgets
   vicious.activate(widget)
 
