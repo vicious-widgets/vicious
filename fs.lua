@@ -16,7 +16,7 @@ module("vicious.fs")
 -- {{{ Filesystem widget type
 local function worker(format)
     -- Get data from df
-    local f = io.popen("df -hP")
+    local f = io.popen("LANG=C df -hP")
     local fs_info = {}
 
     -- Format data
@@ -26,7 +26,7 @@ local function worker(format)
             -- table for each mount point with gmatch
             local size, used, avail, usep, mount =
              -- Instead match all at once, including network file systems
-             line:match("^[%w/-:%.]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([-/%w]+)$")
+             line:match('^[/%w:%.-]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([/%w:%.-]+)$')
 
             fs_info["{"..mount.." size}"]  = size
             fs_info["{"..mount.." used}"]  = used
