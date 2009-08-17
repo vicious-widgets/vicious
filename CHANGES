@@ -1,3 +1,13 @@
+commit 44cd53f3884e044818e8d56edce7e41c50bbdeab
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 17 21:34:36 2009 +0200
+
+    Updated the CHANGES file in preparation for a new tag.
+    
+    There were not many changes recently, but much more people are taking
+    the tarball instead of the development code so they will benefit from
+    the recent fixes and extended documentation.
+
 commit 7ad474bcbc8554dfba32c641dc8969239dcff7da
 Author: Joerg Jaspert <joerg@debian.org>
 Date:   Sun Aug 16 13:10:39 2009 +0200
