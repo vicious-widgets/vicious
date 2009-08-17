@@ -1,3 +1,35 @@
+commit 7ad474bcbc8554dfba32c641dc8969239dcff7da
+Author: Joerg Jaspert <joerg@debian.org>
+Date:   Sun Aug 16 13:10:39 2009 +0200
+
+    Use of LANG=C and improved matching in fs.lua.
+    
+    - Prepend LANG=C to the df call, so it always gets the information in a way
+      it understands. Other languages do have other namings for "Filesystem" and
+      some use , instead of . for the number seperator.
+    
+    - Adapt the line.match line so it actually matches values. (Have the - last
+      in the first match and teach it that mount targets can also have dots and colons
+      in it)
+
+commit f8eb93a656d66b0195d35de4673253229f4df30e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 12 23:34:55 2009 +0200
+
+    Mention ICAO as the wanted code in the weather widget.
+
+commit 376591ecc19ca9f9fa7818b7d95ac1669df8079e
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 10 02:33:16 2009 +0200
+
+    Added laptop-mode note to the README.
+
+commit e5181cc09bed7641856018fe133ed605b8009364
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Sat Aug 8 17:58:29 2009 +0200
+
+    Next release, tag 1.0.9.
+
 commit 03693e7aa1f680110a15d40289c2b2be421579ac
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Sat Aug 8 17:42:28 2009 +0200
