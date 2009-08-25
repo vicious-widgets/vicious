@@ -8,7 +8,7 @@
 --   * http://creativecommons.org/licenses/GPL/2.0/
 ----------------------------------------------------------------
 -- Derived from Wicked, by Lucas de Vries <lucas_glacicle_com>
---   * http://git.glacicle.com/?p=awesome/wicked.git
+--   * http://git.glacicle.com/cgit.cgi/wicked
 --   * Wicked is licensed under the WTFPL v2
 ----------------------------------------------------------------
 
