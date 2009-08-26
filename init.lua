@@ -27,11 +27,7 @@ local table = {
 }
 
 -- Grab C API
-local capi = {
-    hooks = hooks,
-    widget = widget,
-    awesome = awesome,
-}
+local capi = { timer = timer }
 -- }}}
 
 
@@ -67,6 +63,7 @@ module("vicious")
 
 
 -- {{{ Initialise variables
+local timers       = {}
 local registered   = {}
 local widget_cache = {}
 
@@ -153,7 +150,11 @@ function regregister(reg)
 
         -- Start timer
         if reg.timer > 0 then
-            awful.hooks.timer.register(reg.timer, reg.update)
+            timers[reg.update] = {
+                timer = capi.timer({ timeout = reg.timer })
+            }
+            timers[reg.update].timer:add_signal("timeout", reg.update)
+            timers[reg.update].timer:start()
         end
 
         -- Initial update
@@ -191,7 +192,10 @@ function unregister(widget, keep, reg)
         end
     end
 
-    awful.hooks.timer.unregister(reg.update)
+    -- Stop timer
+    if timers[reg.update].timer.started then
+        timers[reg.update].timer:stop()
+    end
     reg.running = false
 
     return reg
