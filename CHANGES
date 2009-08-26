@@ -1,3 +1,27 @@
+commit c283edc6cc8de73360a98a055de45d5c87429fb4
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Tue Aug 25 15:14:40 2009 +0200
+
+    Updated link to wicked home.
+
+commit 0067dca898f45bcc88a4a7f8ac93e8b8f6a14881
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 21 17:16:50 2009 +0200
+
+    Removed emtpy lines from mpd.lua
+
+commit 5e3b95317561ccc199e8fd2028351d1ea5dd3376
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Fri Aug 21 17:09:06 2009 +0200
+
+    Link to wicked and add Joerg as contributor.
+
+commit 4330375cb7ce3495c90817856d3c3dc320c6bd25
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Mon Aug 17 21:38:03 2009 +0200
+
+    Next release, tag 1.0.10.
+
 commit 44cd53f3884e044818e8d56edce7e41c50bbdeab
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Mon Aug 17 21:34:36 2009 +0200
