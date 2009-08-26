@@ -88,7 +88,7 @@ end
 
 -- {{{ Main functions
 -- {{{ Register widget
-function register(widget, wtype, format, timer, field, warg)
+function register(widget, wtype, format, timer, warg)
     local reg = {}
     local widget = widget
 
@@ -96,7 +96,6 @@ function register(widget, wtype, format, timer, field, warg)
     reg.type   = wtype
     reg.format = format
     reg.timer  = timer
-    reg.field  = field
     reg.warg   = warg
     reg.widget = widget
 
