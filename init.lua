@@ -265,12 +265,12 @@ function update(widget, reg, disablecache)
         end
     end
 
-    if reg.field == nil then
+    if widget.add_value ~= nil then
+        widget:add_value(tonumber(data))
+    elseif widget.set_value ~= nil then
+        widget:set_value(tonumber(data) / 100)
+    else
         widget.text = data
-    elseif widget.plot_data_add ~= nil then
-        widget:plot_data_add(reg.field, tonumber(data))
-    elseif widget.bar_data_add ~= nil then
-        widget:bar_data_add(reg.field, tonumber(data))
     end
 
     return data
