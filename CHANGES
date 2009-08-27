@@ -1,3 +1,40 @@
+commit 11b433c73be5234f8112202cc4c52e463426d56b
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 27 03:37:34 2009 +0200
+
+    README updated in preparation for release 1.0.12.
+    
+    Vicious tags from 1.0.12 will not be compatibile with awesome versions
+    prior to 3.4, tag 1.0.11 was the last one. Vicious was ported to the
+    new timer signals infrastructure and there is no backward
+    compatibility with hooks. In 1.0.12 even those C widgets that are
+    deprecated in awesome 3.4 (to be removed in 3.5) will not be
+    supported. Use awful.widget.progressbar and awful.widget.graph.
+
+commit 2cc4e9701c1b2110fbdb7a3e20e541a62481c827
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 27 00:46:10 2009 +0200
+
+    Removed deprecated data field.
+
+commit e7c2e2c2a8e51781b1111f53fc3faad687fe4dbb
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 27 00:44:25 2009 +0200
+
+    Updated graphs and pbars for the upcoming awesome 3.4
+
+commit 853fafcdd37cbb1c6439e444805cb0d3e37fe068
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Wed Aug 26 03:27:18 2009 +0200
+
+    Updated timers for the upcoming awesome 3.4
+
+commit 53b2799cad716b079201daf5a16a6a47a5dc45be
+Author: Adrian C. (anrxc) <anrxc@sysphere.org>
+Date:   Thu Aug 27 00:49:18 2009 +0200
+
+    Next release, tag 1.0.11.
+
 commit c283edc6cc8de73360a98a055de45d5c87429fb4
 Author: Adrian C. (anrxc) <anrxc@sysphere.org>
 Date:   Tue Aug 25 15:14:40 2009 +0200
