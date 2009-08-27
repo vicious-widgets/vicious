@@ -22,18 +22,21 @@ init.lua to comment out all the widgets you don't need, from the
 textbox, graph or a progressbar) call vicious.register() to register
 it with vicious:
 
-  vicious.register(widget, type, format, interval, field, warg)
+  vicious.register(widget, type, format, interval, warg)
 
-widget   - widget created with widget()
+widget   - widget created with widget() or awful.widget (in case of a
+           graph or a progressbar)
 type     - one of the available widget types (see below for a list)
 format   - a string argument or a function
-         - string: $1, $2, $3... will be replaced by their respective value
-           returned from the widget type, some widget types return
-	   tables with custom keys, in that case use: ${key}
-         - function: function(widget, args) can be used to manipulate
-           data returned by the widget type, more below
+         - string
+           - $1, $2, $3... will be replaced by their respective value
+             returned from the widget type
+             - some widget types return tables with custom keys, in that
+               case use: ${key}
+         - function
+           - function(widget, args) can be used to manipulate data
+             returned by the widget type, more below
 interval - number of seconds between updates of the widget
-field    - used to feed graphs or progressbars, by their name
 warg     - some widgets require an argument to be passed, like the
            battery ID
 
@@ -190,7 +193,7 @@ Format functions
 You can use a function instead of a string as the format parameter, so
 you are able to check the value returned by the widget type and change
 it. You can change the color of a widget, i.e. on low battery, or hide
-widgets when they return a certain value or...
+widgets when they return a certain value, or...
 
 The format function will get the widget as its first argument, and a
 table with the values otherwise inserted into the format string as its
@@ -229,12 +232,12 @@ Memory widget
   - executed every 10 seconds, appends "MB" to 2nd and 3rd argument
 
 File system widget
-  fswidget = widget({ type = 'progressbar',name = 'fswidget' })
-  -- configure the progressbar and bar properties, then register with:
-  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120, fswidget)
+  fswidget = awful.widget.progressbar({ layout = awful.widget.layout.horizontal.rightleft })
+  -- after setting progressbar properties, you can register with:
+  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120)
 
   - executed every 120 seconds, requests the value of the ${/home usep}
-    key (/home usage in percent) and feeds the "fswidget" progressbar
+    key (/home usage in percent)
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
@@ -245,16 +248,24 @@ HDD temperature widget
     not provide the port argument so it fallbacks to default
 
 Battery widget
-  batwidget = widget({ type = 'progressbar', name = 'batwidget' })
-  -- configure the progressbar and bar properties, then register with:
-  vicious.register(batwidget, vicious.widgets.bat, '$2', 60, batwidget, 'BAT0')
+  batwidget = awful.widget.progressbar({ layout = awful.widget.layout.horizontal.rightleft })
+  -- after setting progressbar properties, you can register with:
+  vicious.register(batwidget, vicious.widgets.bat, '$2', 60, 'BAT0')
 
-  - executed every 60 seconds, feeds the "batwidget" progressbar,
-    provides "BAT0" battery ID as an argument
+  - executed every 60 seconds, provides "BAT0" battery ID as an
+    argument
+
+CPU usage widget
+  cpuwidget = awful.widget.graph({ layout = awful.widget.layout.horizontal.rightleft })
+  -- after setting graph properties, you can register with:
+  vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 2)
+
+  - executed every 2 seconds, feeds the graph with usage level of the
+    first CPU/core
 
 Mbox widget
   mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
-  vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 240, nil, '/home/user/mail/Inbox')
+  vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 240, '/home/user/mail/Inbox')
 
   - executed every 240 seconds, provides full path to the mbox as an
     argument
