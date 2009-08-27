@@ -43,7 +43,7 @@ local function worker(format, iface)
         -- The output differs from system to system, some stats can
         -- be separated by =, and not all drivers report all stats
         winfo["{ssid}"] =  -- SSID can have almost anything in it
-          string.match(iw, 'ESSID[=:]"([%w]+[%s]*[%w]*]*)"') or winfo["{ssid}"]
+          string.match(iw, 'ESSID[=:]"([%w%p]+[%s]*[%w%p]*]*)"') or winfo["{ssid}"]
         winfo["{mode}"] =  -- Modes are simple, but also match the "-" in Ad-Hoc
           string.match(iw, "Mode[=:]([%w%-]*)") or winfo["{mode}"]
         winfo["{chan}"] =  -- Channels are plain digits
