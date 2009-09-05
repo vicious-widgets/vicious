@@ -54,7 +54,7 @@ Suspend  - suspend all widgets, used when running on battery power
 
   - if you want it to happen automatically, see the example script for
     the laptop-mode-tools start-stop programs module:
-  - http://sysphere.org/~anrxc/local/scr/sources/lmt-vicious.sh
+  - http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
 
 Activate - restart all suspended, or unregistered but kept, widgets
   vicious.activate(widget)
@@ -274,7 +274,7 @@ Mbox widget
 All other widgets are used in the same manner. You can use authors
 rc.lua as a reference:
 
-  http://sysphere.org/~anrxc/local/scr/dotfiles/awesomerc.lua.html
+  http://git.sysphere.org/awesome-configs/
 
 
 Other
