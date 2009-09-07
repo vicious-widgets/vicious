@@ -1,7 +1,6 @@
-Description
------------
-
-Vicious is a modular widget library for "awesome" window manager,
+vicious
+=======
+vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
 Wicked widget types, a few of them rewritten, and a good number of new
 widgets. You can read more about why and how it was written, here:
@@ -11,7 +10,6 @@ widgets. You can read more about why and how it was written, here:
 
 Usage
 -----
-
 To use vicious, copy it to the ~/.config/awesome directory and edit
 init.lua to comment out all the widgets you don't need, from the
 "Configure widgets" list. Then add:
@@ -28,22 +26,21 @@ widget   - widget created with widget() or awful.widget (in case of a
            graph or a progressbar)
 type     - one of the available widget types (see below for a list)
 format   - a string argument or a function
-         - string
+         + string
            - $1, $2, $3... will be replaced by their respective value
              returned from the widget type
              - some widget types return tables with custom keys, in that
                case use: ${key}
-         - function
+         + function
            - function(widget, args) can be used to manipulate data
              returned by the widget type, more below
 interval - number of seconds between updates of the widget
-warg     - some widgets require an argument to be passed, like the
+warg     - some widgets require an argument to be passed, i.e. the
            battery ID
 
 
 Other Functions
 ---------------
-
 Unregister
   vicious.unregister(widget, keep)
 
@@ -54,7 +51,8 @@ Suspend  - suspend all widgets, used when running on battery power
 
   - if you want it to happen automatically, see the example script for
     the laptop-mode-tools start-stop programs module:
-  - http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
+
+      http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
 
 Activate - restart all suspended, or unregistered but kept, widgets
   vicious.activate(widget)
@@ -79,7 +77,6 @@ Caching
 
 Widget types
 ------------
-
 Widget types consist of worker functions that take the "format"
 argument given to vicious.register as the first argument, "warg" as
 the second, and return a table of values to insert in the format
@@ -179,17 +176,15 @@ vicious.widgets.date
 
 Custom widget types
 -------------------
-
 Use any of the existing widgets as a starting point for your own. I
 created vicious so we can focus on the number crunching and nothing
 else. You write a quick worker function that does the work and plug it
-in. How the data will be formatted, will it be red or blue, should be
+in. How data will be formatted, will it be red or blue, should be
 defined in rc.lua.
 
 
 Format functions
 ----------------
-
 You can use a function instead of a string as the format parameter, so
 you are able to check the value returned by the widget type and change
 it. You can change the color of a widget, i.e. on low battery, or hide
@@ -215,9 +210,8 @@ Example widget
 
 Usage examples
 --------------
-
 Remember, besides creating and registering widgets you have to add them
-to a statusbar in order to display them.
+to a wibox in order to display them.
 
 MPD widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
@@ -271,25 +265,25 @@ Mbox widget
     argument
 
 
-All other widgets are used in the same manner. You can use authors
-rc.lua as a reference:
+All other widgets are used in the same manner, read each widget you
+are interested in to see what data it returns. You can also use
+authors rc.lua as a reference to see how it all fits into the big
+picture:
 
   http://git.sysphere.org/awesome-configs/
 
 
 Other
 -----
-
 You should read "awesome" manual pages:
 
-  awesome(1) awesomerc(5) 
+  awesome(1)  awesomerc(5) 
 
 
 Authors
 -------
-
 Vicious, written by:
   Adrian C. (anrxc) <anrxc@sysphere.org>
 
-Wicked, authored by:
+Wicked, written by:
   Lucas de Vries <lucas@glacicle.com>
