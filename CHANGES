@@ -1,3 +1,5 @@
+161607e Gmail widget included
+e5c980e CHANGES file switched to 'oneline' short format
 fbc3f14 Updated links in the README
 13527a3 Match all punctuation chars in fs partitions and mount points.
 0ca1fd3 Match punctuation characters in wifi SSID.
