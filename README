@@ -145,6 +145,10 @@ vicious.widgets.mdir
     structure
   - takes the full path to the Maildir structure as an argument
 
+vicious.widgets.gmail
+  - provides count of new and subject of last e-mail in a Gmail inbox
+  - takes a table with Gmail login information as an argument
+
 vicious.widgets.entropy
   - provides available system entropy
   - takes the poolsize as an argument, or fallbacks to Linux 2.6
@@ -153,7 +157,7 @@ vicious.widgets.entropy
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode
   - takes a table with full paths to agenda files, that will be
-    included, as an argument
+    parsed, as an argument
 
 vicious.widgets.pacman
   - provides number of pending updates on Arch Linux
@@ -187,8 +191,12 @@ Format functions
 ----------------
 You can use a function instead of a string as the format parameter, so
 you are able to check the value returned by the widget type and change
-it. You can change the color of a widget, i.e. on low battery, or hide
-widgets when they return a certain value, or...
+it. You can change the color of the battery widget when it goes below
+a certain point, or hide widgets when they return a certain value,
+or...
+
+  - do not confuse this with just coloring the widget, in those cases
+    standard markup can be inserted into the format string
 
 The format function will get the widget as its first argument, and a
 table with the values otherwise inserted into the format string as its
@@ -263,6 +271,13 @@ Mbox widget
 
   - executed every 240 seconds, provides full path to the mbox as an
     argument
+
+Gmail widget
+  gmailwidget = widget({ type = 'textbox', name = 'gmailwidget' })
+  vicious.register(gmailwidget, vicious.widgets.gmail, 'Mail: ${count}', 600, {'user', 'pass'})
+
+  - executed every 10 minutes, provides a table with login information
+    as an argument, prepends "Mail: " to the returned value
 
 
 All other widgets are used in the same manner, read each widget you
