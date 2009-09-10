@@ -25,7 +25,7 @@ local function worker(format, login)
     local auth = login[1] .. ":" .. login[2]
 
     -- Get info from the Gmail atom feed
-    local f = io.popen("curl --max-time 3 -fsu "..auth.." https://mail.google.com/mail/feed/atom")
+    local f = io.popen("curl --connect-timeout 1 -m 3 -fsu "..auth.." https://mail.google.com/mail/feed/atom")
 
     -- Could be huge don't read it all at once, info we are after is at the top
     for line in f:lines() do

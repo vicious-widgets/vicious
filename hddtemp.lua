@@ -19,7 +19,7 @@ local function worker(format, port)
     if port == nil then port = 7634 end
 
     -- Get info from the hddtemp daemon
-    local f = io.popen("curl --max-time 3 -f -s telnet://127.0.0.1:" .. port)
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:" .. port)
     local hdd_temp = {}
 
     -- Get temperature data
