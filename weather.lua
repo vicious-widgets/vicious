@@ -22,7 +22,7 @@ local function worker(format, station)
     local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
 
     -- Get info from a weather station
-    local f = io.popen("curl --max-time 3 -f -s "..noaa..station..".TXT")
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..station..".TXT")
     local ws = f:read("*all")
     f:close()
 
