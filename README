@@ -262,8 +262,8 @@ CPU usage widget
   -- after setting graph properties, you can register with:
   vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 2)
 
-  - executed every 2 seconds, feeds the graph with usage level of the
-    first CPU/core
+  - executed every 2 seconds, feeds the graph with total usage
+    percentage of all CPUs/cores
 
 Mbox widget
   mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
