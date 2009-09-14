@@ -3,28 +3,27 @@ vicious
 vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
 Wicked widget types, a few of them rewritten, and a good number of new
-widgets. You can read more about why and how it was written, here:
-
-  http://sysphere.org/~anrxc/j/archives/2009/07/09/vicious_widgets_for_awesome_wm
+widgets.
 
 
 Usage
 -----
-To use vicious, copy it to the ~/.config/awesome directory and edit
-init.lua to comment out all the widgets you don't need, from the
+To use vicious, copy it to the ~/.config/awesome directory, edit
+init.lua and comment out all the widgets you don't need, from the
 "Configure widgets" list. Then add:
 
   require("vicious")
 
-...to the top of your rc.lua. Once you create a widget (as a:
-textbox, graph or a progressbar) call vicious.register() to register
-it with vicious:
+...to the top of your rc.lua.
+
+Once you create a widget (as a: textbox, graph or a progressbar) call
+vicious.register() to register it with vicious:
 
   vicious.register(widget, type, format, interval, warg)
 
 widget   - widget created with widget() or awful.widget (in case of a
            graph or a progressbar)
-type     - one of the available widget types (see below for a list)
+type     - one of the available widget types (a list is below)
 format   - a string argument or a function
          + string
            - $1, $2, $3... will be replaced by their respective value
@@ -115,6 +114,8 @@ vicious.widgets.mem
 
 vicious.widgets.fs
   - provides file system disk space usage
+  - takes an (optional) argument which, if true, includes remote file
+    systems, only local file systems are included by default
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
@@ -180,11 +181,10 @@ vicious.widgets.date
 
 Custom widget types
 -------------------
-Use any of the existing widgets as a starting point for your own. I
-created vicious so we can focus on the number crunching and nothing
-else. You write a quick worker function that does the work and plug it
+Use any of the existing widgets as a starting point for your
+own. Write a quick worker function that does the work and plug it
 in. How data will be formatted, will it be red or blue, should be
-defined in rc.lua.
+defined in rc.lua (or somewhere else, outside the actual widget).
 
 
 Format functions
@@ -236,10 +236,10 @@ Memory widget
 File system widget
   fswidget = awful.widget.progressbar({ layout = awful.widget.layout.horizontal.rightleft })
   -- after setting progressbar properties, you can register with:
-  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120)
+  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120, true)
 
   - executed every 120 seconds, requests the value of the ${/home usep}
-    key (/home usage in percent)
+    key (/home usage in percent), enables support for remote file systems
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })

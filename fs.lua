@@ -15,17 +15,18 @@ module("vicious.fs")
 
 
 -- {{{ Filesystem widget type
-local function worker(format)
+local function worker(format, nfs)
+    -- Fallback to listing only local file systems
+    if nfs then nfs = "" else nfs = "--local" end
+
     -- Get data from df
-    local f = io.popen("LANG=C df -hP")
+    local f = io.popen("LANG=C df -hP " .. nfs)
     local fs_info = {}
 
     for line in f:lines() do
         if not line:match("^Filesystem.*") then
-            -- Format helper can't deal with matrices, so don't setup a
-            -- table for each mount point, with gmatch
             local size, used, avail, usep, mount =
-             -- Instead match all at once, including network file systems
+             -- Match all at once, including network file systems
              line:match("^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
             fs_info["{"..mount.." size}"]  = size
