@@ -6,8 +6,7 @@
 -- {{{ Grab environment
 local io = { open = io.open }
 local setmetatable = setmetatable
-local math = { floor = math.floor }
-local string = { format = string.format }
+local math = { ceil = math.ceil }
 -- }}}
 
 
@@ -17,8 +16,7 @@ module("vicious.entropy")
 
 -- {{{ Entropy widget type
 local function worker(format, poolsize)
-    -- Don't waste time opening the poolsize, Linux 2.6 has a default
-    -- entropy pool of 4096-bits, if needed specify otherwise
+    -- Linux 2.6 has a default entropy pool of 4096-bits
     if poolsize == nil then poolsize = 4096 end
 
     -- Get available entropy
@@ -27,9 +25,7 @@ local function worker(format, poolsize)
     f:close()
 
     -- Calculate percentage
-    ent_avail_percent = math.floor(ent_avail * 100 / poolsize)
-    -- This data is intended for a progressbar
-    ent_avail_percent = string.format("%0d", ent_avail_percent)
+    ent_avail_percent = math.ceil(ent_avail * 100 / poolsize)
 
     return {ent_avail, ent_avail_percent}
 end
