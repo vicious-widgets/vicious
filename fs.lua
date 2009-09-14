@@ -20,11 +20,10 @@ local function worker(format)
     local f = io.popen("LANG=C df -hP")
     local fs_info = {}
 
-    -- Format data
     for line in f:lines() do
         if not line:match("^Filesystem.*") then
             -- Format helper can't deal with matrices, so don't setup a
-            -- table for each mount point with gmatch
+            -- table for each mount point, with gmatch
             local size, used, avail, usep, mount =
              -- Instead match all at once, including network file systems
              line:match("^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")

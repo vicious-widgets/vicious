@@ -18,7 +18,7 @@ module("vicious.weather")
 -- {{{ Weather widget type
 local function worker(format, station)
     -- US National Oceanic and Atmospheric Administration
-    --   * Station (ICAO) codes: http://www.rap.ucar.edu/weather/surface/stations.txt
+    --   * ICAO codes: http://www.rap.ucar.edu/weather/surface/stations.txt
     local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
 
     -- Get info from a weather station
@@ -26,11 +26,8 @@ local function worker(format, station)
     local ws = f:read("*all")
     f:close()
 
-    -- Setup tables
+    -- Default values
     local weather = {
-        -- Some of the weather symbols would look nice if prepended to
-        -- the final output, but it is up to the user to do that
-        --  * http://www.alanwood.net/unicode/miscellaneous_symbols.html
         ["{city}"]    = "N/A",
         ["{wind}"]    = "N/A",
         ["{windmph}"] = "N/A",

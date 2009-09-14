@@ -16,7 +16,6 @@ module("vicious.batat")
 
 -- {{{ Battery widget type
 local function worker(format)
-    -- Initialise tables
     local battery_info  = {}
     local battery_state = {
         ["full"] = "↯",
@@ -29,7 +28,6 @@ local function worker(format)
     -- Get data from acpitool
     local f = io.popen("acpitool -b")
 
-    -- Format data
     for line in f:lines() do
         -- Check if the battery is present
         if line:match("^[%s]+Battery.*") then

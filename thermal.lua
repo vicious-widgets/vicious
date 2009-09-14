@@ -20,7 +20,6 @@ local function worker(format, thermal_zone)
     local line = f:read("*line")
     f:close()
 
-    -- Get temperature data
     local temperature = line:match("[%d]?[%d]?[%d]")
 
     return {temperature}

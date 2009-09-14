@@ -19,13 +19,12 @@ module("vicious.wifi")
 
 -- {{{ Wireless widget type
 local function worker(format, iface)
-    -- Get data from iwconfig, on distributions where it is executable
-    -- by users, and /sbin or /usr/sbin is in their path
+    -- Get data from iwconfig (where available)
     local f = io.popen("iwconfig " .. iface)
     local iw = f:read("*all")
     f:close()
 
-    -- Setup tables
+    -- Default values
     local winfo = {
         ["{ssid}"] = "N/A",
         ["{mode}"] = "N/A",

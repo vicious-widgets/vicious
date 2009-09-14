@@ -16,7 +16,6 @@ module("vicious.gmail")
 
 -- {{{ Gmail widget type
 local function worker(format, login)
-    -- Initialise tables
     local mail = {
         ["{count}"]   = "0",
         ["{subject}"] = "N/A"

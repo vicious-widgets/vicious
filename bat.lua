@@ -22,7 +22,6 @@ module("vicious.bat")
 
 -- {{{ Battery widget type
 local function worker(format, batid)
-    -- Initialise tables
     local battery_state = {
         ["full"] = "↯",
         ["unknown"] = "⌁",

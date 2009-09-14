@@ -22,9 +22,7 @@ local function worker(format)
     local line = f:read("*line")
     f:close()
 
-    -- Format data
     local total_uptime   = math.floor(tonumber(line:match("[%d%.]+")))
-
     local uptime_days    = math.floor(total_uptime   / (3600 * 24))
     local uptime_hours   = math.floor((total_uptime  % (3600 * 24)) / 3600)
     local uptime_minutes = math.floor(((total_uptime % (3600 * 24)) % 3600) / 60)

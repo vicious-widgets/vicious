@@ -21,12 +21,9 @@ local function worker(format, mbox)
     -- mbox could be huge, get a 15kb chunk from EOF
     --  * attachments could be much bigger than this
     f:seek("end", -15360)
-
-    -- Get data
     local text = f:read("*all")
     f:close()
 
-    -- Find subject lines
     for match in string.gfind(text, "Subject: ([^\n]*)") do
         subject = match
     end

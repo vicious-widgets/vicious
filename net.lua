@@ -25,7 +25,6 @@ local function worker(format)
     local f = io.open("/proc/net/dev")
     local args = {}
 
-    -- Format data
     for line in f:lines() do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
         if line:match("^[%s]?[%s]?[%s]?[%s]?[%w]+:") then
@@ -48,7 +47,7 @@ local function worker(format)
             args["{"..name.." tx_gb}"] = math.floor(send/1024/1024/1024*10)/10
 
             if nets[name] == nil then 
-                -- Default values on our first run
+                -- Default values on the first run
                 nets[name] = {}
                 args["{"..name.." down}"] = "n/a"
                 args["{"..name.." up}"] = "n/a"
