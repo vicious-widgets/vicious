@@ -206,14 +206,13 @@ Example widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
   vicious.register(mpdwidget,vicious.widgets.mpd, 
     function (widget, args)
-      if args[1] == "Stopped" then
-        return ''
-      else
-        return ' <span color="white">MPD:</span> ' .. args[1]
+      if   args[1] == "Stopped" then return ''
+      else return '<span color="white">MPD:</span> '..args[1]
       end
-  end)
+    end)
 
-  - hides the mpd widget when there is no song playing
+  - hides the mpd widget when there is no song playing, executed every
+    second (the default interval)
 
 
 Usage examples
@@ -223,9 +222,9 @@ to a wibox in order to display them.
 
 MPD widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
-  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 30)
+  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 15)
 
-  - executed every 30 seconds, takes no arguments
+  - executed every 15 seconds, takes no arguments
 
 Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
