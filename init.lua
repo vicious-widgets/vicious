@@ -102,9 +102,9 @@ function register(widget, wtype, format, timer, warg)
         update(widget, reg)
     end
 
-    -- Default to 1s timer
+    -- Default to 2s timer
     if reg.timer == nil then
-        reg.timer = 1
+        reg.timer = 2
     end
 
     -- Register a reg object
