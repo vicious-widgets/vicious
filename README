@@ -2,89 +2,97 @@ vicious
 =======
 vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
-Wicked widget types, a few of them rewritten, and a good number of new
-widgets.
+Wicked widget types, a few of them rewritten, and a good number of
+new widgets:
+
+  http://git.sysphere.org/vicious/
 
 
 Usage
 -----
-To use vicious, copy it to the ~/.config/awesome directory, edit
-init.lua and comment out all the widgets you don't need, from the
+To use vicious copy it to the ~/.config/awesome directory, edit
+init.lua and comment out all the widgets you don't need from the
 "Configure widgets" list. Then add:
 
   require("vicious")
 
 ...to the top of your rc.lua.
 
+
 Once you create a widget (as a: textbox, graph or a progressbar) call
 vicious.register() to register it with vicious:
 
   vicious.register(widget, type, format, interval, warg)
 
+    widget
+      - widget created with widget() or awful.widget() (in case of a
+        graph or a progressbar)
 
-widget   - widget created with widget() or awful.widget() (in case of a
-           graph or a progressbar)
+    type
+      - one of the available widget types, see below for a list
 
-type     - one of the available widget types, see below for a list
+    format
+      - string argument or a function
+        - $1, $2, $3... will be replaced by their respective value
+          returned by the widget type, some widget types return tables
+          with custom keys, in that case use: ${key}
+      - function
+        - function(widget, args) can be used to manipulate data
+          returned by the widget type, more about this below
 
-format   - a string argument or a function
+    interval
+      - number of seconds between updates of the widget, 2s by
+        default, also read the "Power" section below
 
-  string   - $1, $2, $3... will be replaced by their respective value
-             returned by the widget type
-
-           - some widget types return tables with custom keys, in that
-             case use: ${key}
-
-  function - function(widget, args) can be used to manipulate data
-             returned by the widget type, more about this below
-
-interval - number of seconds between updates of the widget, 2s by
-           default
-
-         - you should avoid intervals like: 5, 10, 30, 60 ...  because
-           at the 60 seconds mark all of them would be executed at the
-           same time, instead think only about prime numbers, using
-           them you will have only a few widgets executed at any given
-           time interval
-
-warg     - some widgets require an argument to be passed, i.e. the
-           battery ID
+    warg
+      - some widget types require an argument to be passed, for example
+        the battery ID
 
 
 Other Functions
 ---------------
-Unregister
+Unregister a widget:
+
   vicious.unregister(widget, keep)
 
-  keep   - if true the widget will be suspended, waiting to be activated
+    keep
+      - if true widget will be suspended, waiting to be activated
 
-Suspend  - suspend all widgets, useful when running on battery power
+Suspend all widgets:
+
   vicious.suspend()
 
-  - if you want it to happen automatically, see the example script for
-    the laptop-mode-tools start-stop programs module:
+    - example automation script for the "laptop-mode-tools" start-stop
+      module: http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
 
-      http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
+Restart suspended widgets:
 
-Activate - restart all suspended, or unregistered but kept, widgets
   vicious.activate(widget)
 
-  widget - if provided, only that widget will be activated
+    widget
+      - if provided, only that widget will be activated
 
-Regregister 
-  vicious.regregister(reg)
 
-  - vicious.register() and vicious.unregister() both return a reg object, this
-    contains information about the widget and the updates that should be sent to
-    it, you can pass this reg object into regregister after unregistering it, and
-    it will be reregistered (or activated if it was only suspended)
+Power
+-----
+When a lot of widgets are in use they, and awesome, can generate a lot
+of wake-ups and also be very expensive for system resources. This is
+especially important when running on battery power. Suspending widgets
+is one way to prevent widgets from draining your battery.
 
-Caching
-  vicious.enable_caching(type)
+Vicious also caches all widget types. Caching enables you to have
+multiple widgets using the same widget type and its worker function
+will be executed only once.
 
-  - by default caching is enabled for all widget types, with caching
-    you can have multiple widgets using the same (widget type)function
-    and it gets executed only once
+Update intervals also play a big role, and you can save a lot of power
+with a smart approach to intervals. You should avoid intervals like:
+5, 10, 30, 60... to avoid harmonics. If you take the 60-second mark as
+an example, all of your widgets would be executed at that
+point. Instead think about using only prime numbers, in that case you
+will have only a few widgets executed at any given time interval. When
+choosing intervals also consider what a widget actually does. Some
+widgets read files that reside in memory, others call external
+utilities and some, like the mbox widget, read very big files.
 
 
 Widget types
@@ -185,7 +193,7 @@ vicious.widgets.volume
 
 vicious.widgets.weather
   - provides weather information for a requested station
-  - takes the weather station ID as an argument, i.e. "LDRI"
+  - takes the ICAO station code as an argument, i.e. "LDRI"
 
 vicious.widgets.date
   - provides access to os.date, with optional custom formatting;
@@ -230,7 +238,7 @@ Example widget
 
 Usage examples
 --------------
-Remember, besides creating and registering widgets you have to add them
+Remember, beside creating and registering widgets you have to add them
 to a wibox in order to display them.
 
 MPD widget
@@ -303,7 +311,7 @@ picture:
 
 Other
 -----
-You should read "awesome" manual pages:
+Also read "awesome" manual pages:
 
   awesome(1)  awesomerc(5) 
 
