@@ -1,13 +1,10 @@
---------------------------------------------------------------
+---------------------------------------------------------------------------
 -- Vicious widgets for the awesome window manager
---------------------------------------------------------------
+---------------------------------------------------------------------------
 -- Licensed under the GNU General Public License version 2
---   * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
---------------------------------------------------------------
--- Derived from Wicked, by Lucas de Vries <lucas_glacicle_com>
---   * http://git.glacicle.com/cgit.cgi/wicked
---   * Wicked is licensed under the WTFPL v2
---------------------------------------------------------------
+--  * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
+--  * Derived from Wicked, copyright of Lucas de Vries <lucas_glacicle_com>
+---------------------------------------------------------------------------
 
 -- {{{ Grab environment
 require("awful")
