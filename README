@@ -251,7 +251,8 @@ Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
   vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
-  - executed every 13 seconds, appends "MB" to 2nd and 3rd argument
+  - executed every 13 seconds, appends "MB" to 2nd and 3rd returned
+    values
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
