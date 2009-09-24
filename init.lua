@@ -1,16 +1,10 @@
-----------------------------------------------------------------
+---------------------------------------------------------------------------
 -- Vicious widgets for the awesome window manager
---
+---------------------------------------------------------------------------
 -- Licensed under the GNU General Public License version 2
---   * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
---
--- To view a human-readable summary of the license, visit:
---   * http://creativecommons.org/licenses/GPL/2.0/
-----------------------------------------------------------------
--- Derived from Wicked, by Lucas de Vries <lucas_glacicle_com>
---   * http://git.glacicle.com/cgit.cgi/wicked
---   * Wicked is licensed under the WTFPL v2
-----------------------------------------------------------------
+--  * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
+--  * Derived from Wicked, copyright of Lucas de Vries <lucas_glacicle_com>
+---------------------------------------------------------------------------
 
 -- {{{ Grab environment
 require("awful")
@@ -191,6 +185,7 @@ function unregister(widget, keep, reg)
         end
     end
 
+    -- Unregister the timer
     awful.hooks.timer.unregister(reg.update)
     reg.running = false
 
