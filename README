@@ -1,82 +1,104 @@
-Description
------------
-
-Vicious is a modular widget library for "awesome" window manager,
+vicious
+=======
+vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
-Wicked widget types, a few of them rewritten, and a good number of new
-widgets. You can read more about why and how it was written, here:
+Wicked widget types, a few of them rewritten, and a good number of
+new widgets:
 
-  http://sysphere.org/~anrxc/j/archives/2009/07/09/vicious_widgets_for_awesome_wm
+  http://git.sysphere.org/vicious/
 
 
 Usage
 -----
-
-To use vicious, copy it to the ~/.config/awesome directory and edit
-init.lua to comment out all the widgets you don't need, from the
+To use vicious copy it to the ~/.config/awesome directory, edit
+init.lua and comment out all the widgets you don't need from the
 "Configure widgets" list. Then add:
 
   require("vicious")
 
-...to the top of your rc.lua. Once you create a widget (as a:
-textbox, graph or a progressbar) call vicious.register() to register
-it with vicious:
+...to the top of your rc.lua.
+
+
+Once you create a widget (as a: textbox, graph or a progressbar) call
+vicious.register() to register it with vicious:
 
   vicious.register(widget, type, format, interval, field, warg)
 
-widget   - widget created with widget()
-type     - one of the available widget types (see below for a list)
-format   - a string argument or a function
-         - string: $1, $2, $3... will be replaced by their respective value
-           returned from the widget type, some widget types return
-	   tables with custom keys, in that case use: ${key}
-         - function: function(widget, args) can be used to manipulate
-           data returned by the widget type, more below
-interval - number of seconds between updates of the widget
-field    - used to feed graphs or progressbars, by their name
-warg     - some widgets require an argument to be passed, like the
-           battery ID
+    widget
+      - widget created with widget()
+
+    type
+      - one of the available widget types, see below for a list
+
+    format
+      - string argument or a function
+        - $1, $2, $3... will be replaced by their respective value
+          returned by the widget type, some widget types return tables
+          with custom keys, in that case use: ${key}
+      - function
+        - function(widget, args) can be used to manipulate data
+          returned by the widget type, more about this below
+
+    interval
+      - number of seconds between updates of the widget, 2s by
+        default, also read the "Power" section below
+
+    field
+      - used to feed graphs and progressbars, by their name
+
+    warg
+      - some widget types require an argument to be passed, for example
+        the battery ID
 
 
 Other Functions
 ---------------
+Unregister a widget:
 
-Unregister
   vicious.unregister(widget, keep)
 
-  keep   - if true the widget will be suspended, waiting to be activated
+    keep
+      - if true widget will be suspended, waiting to be activated
 
-Suspend  - suspend all widgets, used when running on battery power
+Suspend all widgets:
+
   vicious.suspend()
 
-  - if you want it to happen automatically, see the example script for
-    the laptop-mode-tools start-stop programs module:
-  - http://sysphere.org/~anrxc/local/scr/sources/lmt-vicious.sh
+    - example automation script for the "laptop-mode-tools" start-stop
+      module: http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
 
-Activate - restart all suspended, or unregistered but kept, widgets
+Restart suspended widgets:
+
   vicious.activate(widget)
 
-  widget - if provided, only that widget will be activated
+    widget
+      - if provided, only that widget will be activated
 
-Regregister 
-  vicious.regregister(reg)
 
-  - vicious.register() and vicious.unregister() both return a reg object, this
-    contains information about the widget and the updates that should be sent to
-    it, you can pass this reg object into regregister after unregistering it, and
-    it will be reregistered (or activated if it was only suspended).
+Power
+-----
+When a lot of widgets are in use they, and awesome, can generate a lot
+of wake-ups and also be very expensive for system resources. This is
+especially important when running on battery power. Suspending widgets
+is one way to prevent widgets from draining your battery.
 
-Caching
-  vicious.enable_caching(type)
+Vicious also caches all widget types. Caching enables you to have
+multiple widgets using the same widget type and its worker function
+will be executed only once.
 
-  - by default caching is enabled for all widget types, with caching
-    you can have multiple widgets using the same (widget type)function
-    and it gets executed only once
+Update intervals also play a big role, and you can save a lot of power
+with a smart approach to intervals. You should avoid intervals like:
+5, 10, 30, 60... to avoid harmonics. If you take the 60-second mark as
+an example, all of your widgets would be executed at that
+point. Instead think about using only prime numbers, in that case you
+will have only a few widgets executed at any given time interval. When
+choosing intervals also consider what a widget actually does. Some
+widgets read files that reside in memory, others call external
+utilities and some, like the mbox widget, read very big files.
 
 
 Widget types
 ------------
-
 Widget types consist of worker functions that take the "format"
 argument given to vicious.register as the first argument, "warg" as
 the second, and return a table of values to insert in the format
@@ -115,6 +137,8 @@ vicious.widgets.mem
 
 vicious.widgets.fs
   - provides file system disk space usage
+  - takes an (optional) argument which, if true, includes remote file
+    systems, only local file systems are included by default
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
@@ -122,8 +146,8 @@ vicious.widgets.dio
 
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
-  - takes the hddtemp listening port as an argument, or fallbacks to
-    default port 7634
+  - takes the hddtemp listening port as an argument, or defaults to
+    port 7634
 
 vicious.widgets.net
   - provides usage statistics for all network interfaces
@@ -145,15 +169,19 @@ vicious.widgets.mdir
     structure
   - takes the full path to the Maildir structure as an argument
 
+vicious.widgets.gmail
+  - provides count of new and subject of last e-mail in a Gmail inbox
+  - takes a table with Gmail login information as an argument
+
 vicious.widgets.entropy
   - provides available system entropy
-  - takes the poolsize as an argument, or fallbacks to Linux 2.6
+  - takes the poolsize as an argument, or defaults to Linux 2.6
     default entropy pool of 4096-bits
 
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode
   - takes a table with full paths to agenda files, that will be
-    included, as an argument
+    parsed, as an argument
 
 vicious.widgets.pacman
   - provides number of pending updates on Arch Linux
@@ -167,7 +195,7 @@ vicious.widgets.volume
 
 vicious.widgets.weather
   - provides weather information for a requested station
-  - takes the weather station ID as an argument, i.e. "LDRI"
+  - takes the ICAO station code as an argument, i.e. "LDRI"
 
 vicious.widgets.date
   - provides access to os.date, with optional custom formatting;
@@ -176,21 +204,22 @@ vicious.widgets.date
 
 Custom widget types
 -------------------
-
-Use any of the existing widgets as a starting point for your own. I
-created vicious so we can focus on the number crunching and nothing
-else. You write a quick worker function that does the work and plug it
-in. How the data will be formatted, will it be red or blue, should be
-defined in rc.lua.
+Use any of the existing widgets as a starting point for your
+own. Write a quick worker function that does the work and plug it
+in. How data will be formatted, will it be red or blue, should be
+defined in rc.lua (or somewhere else, outside the actual widget).
 
 
 Format functions
 ----------------
-
 You can use a function instead of a string as the format parameter, so
 you are able to check the value returned by the widget type and change
-it. You can change the color of a widget, i.e. on low battery, or hide
-widgets when they return a certain value or...
+it. You can change the color of the battery widget when it goes below
+a certain point, or hide widgets when they return a certain value,
+or...
+
+  - do not confuse this with just coloring the widget, in those cases
+    standard markup can be inserted into the format string
 
 The format function will get the widget as its first argument, and a
 table with the values otherwise inserted into the format string as its
@@ -200,85 +229,118 @@ Example widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
   vicious.register(mpdwidget,vicious.widgets.mpd, 
     function (widget, args)
-      if args[1] == "Stopped" then
-        return ''
-      else
-        return ' <span color="white">MPD:</span> ' .. args[1]
+      if   args[1] == "Stopped" then return ''
+      else return '<span color="white">MPD:</span> '..args[1]
       end
-  end)
+    end)
 
-  - hides the mpd widget when there is no song playing
+  - hides the mpd widget when there is no song playing, executed every
+    2 seconds (the default interval)
 
 
 Usage examples
 --------------
-
-Remember, besides creating and registering widgets you have to add them
-to a statusbar in order to display them.
+Remember, beside creating and registering widgets you have to add them
+to a wibox in order to display them.
 
 MPD widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
-  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 30)
+  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 11)
 
-  - executed every 30 seconds, takes no arguments
+  - executed every 11 seconds, takes no arguments
 
 Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
-  vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 10)
+  vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
-  - executed every 10 seconds, appends "MB" to 2nd and 3rd argument
-
-File system widget
-  fswidget = widget({ type = 'progressbar',name = 'fswidget' })
-  -- configure the progressbar and bar properties, then register with:
-  vicious.register(fswidget, vicious.widgets.fs, '${/home usep}', 120, fswidget)
-
-  - executed every 120 seconds, requests the value of the ${/home usep}
-    key (/home usage in percent) and feeds the "fswidget" progressbar
+  - executed every 13 seconds, appends "MB" to 2nd and 3rd returned
+    values
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
-  vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 240)
+  vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 19)
 
-  - executed every 240 seconds, requests the temperature level of the
+  - executed every 19 seconds, requests the temperature level of the
     ${/dev/sda} key/disk and appends "°C" to the returned value, does
-    not provide the port argument so it fallbacks to default
-
-Battery widget
-  batwidget = widget({ type = 'progressbar', name = 'batwidget' })
-  -- configure the progressbar and bar properties, then register with:
-  vicious.register(batwidget, vicious.widgets.bat, '$2', 60, batwidget, 'BAT0')
-
-  - executed every 60 seconds, feeds the "batwidget" progressbar,
-    provides "BAT0" battery ID as an argument
+    not provide the port argument so default port is used
 
 Mbox widget
   mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
-  vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 240, nil, '/home/user/mail/Inbox')
+  vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 5, nil, '/home/user/mail/Inbox')
 
-  - executed every 240 seconds, provides full path to the mbox as an
+  - executed every 5 seconds, provides full path to the mbox as an
     argument
 
+Gmail widget
+  gmailwidget = widget({ type = 'textbox', name = 'gmailwidget' })
+  vicious.register(gmailwidget, vicious.widgets.gmail, 'Mail: ${count}', 601, nil, {'user', 'pass'})
 
-All other widgets are used in the same manner. You can use authors
-rc.lua as a reference:
+  - executed every 10 minutes, provides a table with login information
+    as an argument, prepends "Mail: " to the returned value
 
-  http://sysphere.org/~anrxc/local/scr/dotfiles/awesomerc.lua.html
+Battery widget
+  batwidget = widget({ type = 'progressbar', name = 'batwidget' })
+  batwidget.width          = 10
+  batwidget.height         = 0.9
+  batwidget.gap            = 0
+  batwidget.border_padding = 1
+  batwidget.border_width   = 0
+  batwidget.ticks_count    = 4
+  batwidget.ticks_gap      = 1
+  batwidget.vertical       = true
+  batwidget:bar_properties_set('batbar', {
+      bg        = '#3F3F3F',
+      fg        = '#AECF96',
+      fg_center = '#88A175',
+      fg_end    = '#FF5656',
+      fg_off    = '#494B4F',
+      min_value = 0,
+      max_value = 100
+  })
+  vicious.register(batwidget, vicious.widgets.bat, '$2', 61, 'batbar', 'BAT0')
+
+  - executed every 61 seconds, requests the current battery charge
+    level and feeds that data to a progressbar named "batbar",
+    provides "BAT0" battery ID as an argument
+
+CPU usage widget
+  cpuwidget = widget({ type = 'graph', name = 'cpuwidget', align = 'right' })
+  cpuwidget.width        = 50
+  cpuwidget.height       = 0.90
+  cpuwidget.grow         = 'left'
+  cpuwidget.bg           = '#494B4F'
+  cpuwidget.border_color = '#3F3F3F'
+  cpuwidget:plot_properties_set('cpuplot', {
+      fg        = '#AECF96',
+      fg_center = '#88A175',
+      fg_end    = '#FF5656',
+      vertical_gradient = false
+  })
+  vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 3, 'cpuplot')
+
+  - executed every 3 seconds, feeds the graph named "cpuplot" with
+    total usage percentage of all CPUs/cores
+
+
+All other widgets are used in the same manner, read each widget you
+are interested in to see what data it returns. You can also use
+authors rc.lua as a reference to see how it all fits into the big
+picture:
+
+  http://git.sysphere.org/awesome-configs/tree/rc.lua?id=9abcf6c
 
 
 Other
 -----
+Also read "awesome" manual pages:
 
-You should read "awesome" manual pages:
-
-  awesome(1) awesomerc(5) 
+  awesome(1)  awesomerc(5) 
 
 
 Authors
 -------
-
 Vicious, written by:
   Adrian C. (anrxc) <anrxc@sysphere.org>
 
-Wicked, authored by:
+Wicked, written by:
   Lucas de Vries <lucas@glacicle.com>
