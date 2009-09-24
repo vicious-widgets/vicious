@@ -1,510 +1,80 @@
-commit c283edc6cc8de73360a98a055de45d5c87429fb4
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Tue Aug 25 15:14:40 2009 +0200
-
-    Updated link to wicked home.
-
-commit 0067dca898f45bcc88a4a7f8ac93e8b8f6a14881
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 21 17:16:50 2009 +0200
-
-    Removed emtpy lines from mpd.lua
-
-commit 5e3b95317561ccc199e8fd2028351d1ea5dd3376
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 21 17:09:06 2009 +0200
-
-    Link to wicked and add Joerg as contributor.
-
-commit 4330375cb7ce3495c90817856d3c3dc320c6bd25
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 17 21:38:03 2009 +0200
-
-    Next release, tag 1.0.10.
-
-commit 44cd53f3884e044818e8d56edce7e41c50bbdeab
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 17 21:34:36 2009 +0200
-
-    Updated the CHANGES file in preparation for a new tag.
-    
-    There were not many changes recently, but much more people are taking
-    the tarball instead of the development code so they will benefit from
-    the recent fixes and extended documentation.
-
-commit 7ad474bcbc8554dfba32c641dc8969239dcff7da
-Author: Joerg Jaspert <joerg@debian.org>
-Date:   Sun Aug 16 13:10:39 2009 +0200
-
-    Use of LANG=C and improved matching in fs.lua.
-    
-    - Prepend LANG=C to the df call, so it always gets the information in a way
-      it understands. Other languages do have other namings for "Filesystem" and
-      some use , instead of . for the number seperator.
-    
-    - Adapt the line.match line so it actually matches values. (Have the - last
-      in the first match and teach it that mount targets can also have dots and colons
-      in it)
-
-commit f8eb93a656d66b0195d35de4673253229f4df30e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 12 23:34:55 2009 +0200
-
-    Mention ICAO as the wanted code in the weather widget.
-
-commit 376591ecc19ca9f9fa7818b7d95ac1669df8079e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 10 02:33:16 2009 +0200
-
-    Added laptop-mode note to the README.
-
-commit e5181cc09bed7641856018fe133ed605b8009364
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 8 17:58:29 2009 +0200
-
-    Next release, tag 1.0.9.
-
-commit 03693e7aa1f680110a15d40289c2b2be421579ac
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 8 17:42:28 2009 +0200
-
-    Renamed unused loop identifiers to _
-
-commit 9f75b0dc9db53d18ef30390c183beedd7d24c07a
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 7 23:23:07 2009 +0200
-
-    Spurious folds removed from helpers.
-
-commit 41d4acb7a2b34b3364c1c6a57441b9fc9f3106ab
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 7 23:19:50 2009 +0200
-
-    Truncate helper, txtlen is local.
-
-commit 3b3e0dc7cf182bfaba4784e8020ec8f3e7646bce
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 7 17:50:06 2009 +0200
-
-    CHANGES file updated. Will probably switch to shortlog.
-
-commit d4595bb00f1365c65fddf11efd7d8d091b453482
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Aug 7 17:41:10 2009 +0200
-
-    All worker functions are local.
-
-commit 8b38567d751848d93b18e96de1cddde339ebdbf0
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 22:03:21 2009 +0200
-
-    Added missing poolsize info to the README + minor change in fs.lua
-
-commit 798036e4452cbd1001fec48d27777dc697c42971
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 21:59:12 2009 +0200
-
-    Changed fs widget type description.
-
-commit 8d59a01cf663d576a79a0092312756d221725633
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 18:21:13 2009 +0200
-
-    Next release, tag 1.0.8.
-
-commit d2d244f3aa69ff0ca76022d929c2c71001af0bcd
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 18:18:45 2009 +0200
-
-    CPU Information widget included.
-    
-    Widget returns speed and cache information for all available
-    CPUs/cores. It stores cpu speed in mhz and ghz in a table as well as
-    cpu cache in kb and mb. Values are retrieved using the CPU ID, i.e. we
-    would retrieve speed in ghz for CPU or core 1 with this format string:
-    ${1 ghz}.
-
-commit cbd9a53fbc5c6978352fd921a8d652f36fd6adf3
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 02:41:46 2009 +0200
-
-    Next release, tag 1.0.7.
-
-commit 013dd08225ed70010ef983172873766aa9a5d9fb
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 02:26:23 2009 +0200
-
-    HDD Temperature widget included.
-    
-    Widget uses the hddtemp daemon to return the temperatures for all
-    available hard drives. It uses curl and connects to the daemon over
-    telnet.
-
-commit 515cc0dd6bc24d56e85803f626e60fa70bb73b4e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Aug 6 01:50:50 2009 +0200
-
-    Weather widget switched to curl.
-    
-    It is somewhat lighter, faster and simpler than wget. It is as common
-    as wget these days... from GnuPG to Git and Gimp, they all depend on
-    it, and we all have it installed.
-
-commit 477b8d284ad3ab84f4990cbba4570910e3ffa522
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 23:08:47 2009 +0200
-
-    CHANGES file updated before the next push.
-
-commit f14280bf9c60bac3dd024c0967690780ecf13fcf
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 22:53:42 2009 +0200
-
-    Pacman widget updated for pacman 3.3.
-    
-    Pacman 3.3 returns one package on a line, without any other
-    information. So now we count lines, while before the list of packages
-    was provided on one line along with the number of updates - so we
-    didn't have to count them. Old code was commented out, and is waiting
-    for removal.
-
-commit b46278a7467b1ebe2cd2cd16ef400f927987524f
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 22:44:47 2009 +0200
-
-    Lower the wget timeout to 3s in weather.lua
-
-commit eaf847011169a9f7b3ff33f5b995467be9ff71fa
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 22:33:44 2009 +0200
-
-    Cleaned up sample widgets in the README
-
-commit 44aea404c792d1991563e8e924ffbebf14094151
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 22:21:37 2009 +0200
-
-    Remove a spurious comment from helpers.lua
-
-commit 3c76e0ddd2083db5074e3cce644270cb84098c60
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 22:11:11 2009 +0200
-
-    Introduced the truncate helper.
-    
-    Function takes two arguments, the text to be truncated and the max
-    lenght. Last three characters will be replaced by "...". Mbox and MPD
-    widgets that previously did it them selves are now using this helper.
-
-commit 2d0cbf562ed19b4d68dd4d7325d912d104ed71aa
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 21:58:04 2009 +0200
-
-    Fixed the weather widget, wind km/h was broken.
-
-commit 4c74de711f564d26ebefef7f9422289bd76ef8c2
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 21:50:41 2009 +0200
-
-    Padding removed, along with deprecated helper functions.
-    
-    If you have any use for it then continue using an older vicious tag,
-    or keep maintaining it in your local vicious copy.
-
-commit 2d4efa6893a582a7bc6a15b4840a116c0547b534
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 21:19:41 2009 +0200
-
-    Minor cleanup in init.lua
-
-commit 22033bae53409d280782aff375f5ceebeaa83c1e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Aug 5 19:20:32 2009 +0200
-
-    Disallow using a string widget type.
-
-commit 756215f020915ab7e80e65674e063c699d480da4
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 3 04:43:53 2009 +0200
-
-    Next release, tag 1.0.6.
-
-commit 5909d9eacb9114fa44623663510e44d93b21348b
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 3 04:42:08 2009 +0200
-
-    Updated the CHANGES file in preparation for tag v1.0.6.
-
-commit cef569b6f17cb18bf11b453dcf1887ff81fe0974
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 3 04:40:55 2009 +0200
-
-    CPU frequency widget included.
-    
-    The cpufreq widget supplements the cpu widget. It returns the current
-    CPU scaling frequency (in MHz and GHz), voltage (in mV and V) and
-    governor information for a requested CPU. If supported by the
-    processor and correct kernel modules are loaded.
-
-commit 3fe67d4311f1f099da9ff13849c70a97d5078228
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 3 04:33:18 2009 +0200
-
-    Coding style changes in entropy, load, thermal, uptime.
-
-commit 09fda0ab05c066a8f630e1d7a36f401bbc0ca68e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Mon Aug 3 04:29:06 2009 +0200
-
-    Rewrite of the escape helper.
-    
-    It is simillar to the awful.util.escape now, using a table which we
-    could expand (and rename) with other unwated characters if it comes to
-    that. I saw awesome break on many occasions because of encoding
-    problems.
-
-commit 047dba0e5d3aeedd7498c05135a924b980660d3e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 1 23:15:09 2009 +0200
-
-    Next release, version/tag 1.0.5.
-
-commit cad950a838f027af7d1a569d25932f587f9ee040
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 1 23:13:29 2009 +0200
-
-    Updated the CHANGES file in preparation for tag v1.0.5.
-
-commit 418151f57ebe56b84e35169e73912fe244871db5
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 1 23:11:41 2009 +0200
-
-    Make all widgets return their worker functions when called.
-
-commit 1630b786d4028a8075695c026391ee80cc9b9aca
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Sat Aug 1 06:20:31 2009 +0200
-
-    Added wind speed in km/h to the weather widget.
-
-commit f841c540d41507f37e907482fe467c3e0b3c285d
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Jul 31 21:53:58 2009 +0200
-
-    Updated the CHANGES file.
-
-commit 3f851ff5893c31d81eab244f6caeb6132f69ea69
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Jul 31 21:53:14 2009 +0200
-
-    Added a note about weather symbols to the weather widget.
-
-commit 1b9906165de561b9db3157719265c910c41ed9ff
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Jul 31 20:40:36 2009 +0200
-
-    Use utf symbols for some bat states. Mention LuaFileSystem in mdir.lua
-
-commit f00558cb966f8c49149c8c2ffc7f160c40dca229
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Jul 31 08:00:07 2009 +0200
-
-    Next release, version 1.0.4.
-
-commit 475da04ed1199d87121be886e1636a1cbbf7f0d2
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Fri Jul 31 07:49:28 2009 +0200
-
-    Mbox mail count widget included.
-    
-    The, mboxc, widget supplements the mbox widget. The mbox widget
-    returns the subject of the last e-mail in a mbox, while the mboxc
-    widget returns the count of total, old and new messages. Dealing with
-    potentially *HUGE* files is not easy, I tried to find some middle
-    ground for now, comments in the file discuss it in detail. Having the
-    LuaFileSystem lib would be nice, so we could do caching and avoid 90%
-    of the reads, but I didn't rely on external libraries to this point so
-    I'm not going to start now.
-
-commit dad393b94b508e4ce94b66c4c209e29f89830472
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 20:47:32 2009 +0200
-
-    Updated the CHANGES file.
-
-commit bc637062d7518988884c36762d3d257c1c8d0aad
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 20:47:02 2009 +0200
-
-    Coding style fixes in battery widgets.
-
-commit 052748a2cb671b5b9e85c4e4aefb76a58e88a520
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 20:33:54 2009 +0200
-
-    Fix the key reference to custom keys in the README
-
-commit 9c973a5a7481a8b644f0d81d07730879013747cd
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 17:36:21 2009 +0200
-
-    Updated the CHANGES file.
-
-commit 51770fe3e5fa03e0bf49a8d062d98fd11707766e
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 17:15:21 2009 +0200
-
-    Fixed README and moved the ChangeLog to CHANGES.
-
-commit 2ab90dec9764f0aa496fa6dbde8b81d70a0fc717
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 04:50:30 2009 +0200
-
-    Updated the ChangeLog file, for v1.0.3.
-
-commit 0471c6a7dedf067857a2d30a818ff80bc8398da0
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 04:49:22 2009 +0200
-
-    Next release, version 1.0.3.
-
-commit a8dc5c6f6d2f8572f7a7a5458ab969defdb47ded
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 04:44:22 2009 +0200
-
-    Added basic documentation as a README file.
-    
-    The README explains some basics. Also fixed a typo in the dio
-    widget description, that I noticed while writing documentation.
-
-commit b06a5b6e15953d05405d3831c1008a10b6b779f2
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 02:57:51 2009 +0200
-
-    Make git ignore org-mode files and archives.
-
-commit 87d895f81824f289e52004d9696fd152f92a514a
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 02:11:54 2009 +0200
-
-    Next release, version 1.0.2.
-
-commit 5ff480ddf3146ceaf98ea71563a6b66e0106b312
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 02:08:46 2009 +0200
-
-    Updated the ChangeLog file in preparation for a new version.
-
-commit 2921200d0f1dbf36ae885d0898849a31e646f372
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 02:05:22 2009 +0200
-
-    Added handlers to batat and fixed the battery_state table.
-    
-    Batat now returns "/" in situations where the battery is not
-    present. Last commit broke the battery_state table, fixed that.
-
-commit e2d503ee36d0e3f0d20f7f888ab03caac68c32bb
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Thu Jul 30 01:48:07 2009 +0200
-
-    Added a new, standalone, battery widget.
-    
-    The widget reads /proc/acpi/battery/*/{info,state} and doesn't require
-    an external utility like 'acpi' or 'acpitool'. It returns state,
-    charge and remaining time information, just like the old bat (now
-    batat) widget. Using /sys/class/power_supply we would need to open
-    much more file descriptors so we use /proc for now.
-
-commit 19ca7b5a038508179b2e195d223ecaa2299f14a1
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 23:40:50 2009 +0200
-
-    Replaced TODO with Todo in helpers.
-
-commit 9cd250be0b046cf4692df077e9e1db1d050345d0
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 23:13:24 2009 +0200
-
-    Fixed batat module name and expanded bat states and symbols.
-
-commit b331cb15707055190d2485ad492eabda6cece03b
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 22:22:17 2009 +0200
-
-    Updated the ChangeLog file.
-
-commit 76b8978ef2d75ba8930ef263afb4a2d583c629c4
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 22:20:32 2009 +0200
-
-    Battery widget moved to batat.lua in preparation for a new bat widget.
-    
-    It's time for a standalone battery widget that reads
-    /proc/acpi/battery/*/{info,state} alone. However the old battery
-    widget that uses 'acpitool' will not be deleted, let it serve as an
-    alternative widget as a convenience. Some might also prefer it over
-    reading multiple files in /proc
-
-commit 9da374da4dbb53af6f01638410f3e2b8bd3763a7
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 20:51:56 2009 +0200
-
-    Updated the ChangeLog file.
-
-commit 1f31527e8964dbf6407495370ceca37553c2f56f
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 20:13:40 2009 +0200
-
-    Next release, version 1.0.1.
-
-commit 11baa09ab240e604929c0375cc9345e18e54d744
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 20:12:34 2009 +0200
-
-    Added the ChangeLog file.
-
-commit 3eefddf8ab4ef32f2db34c4769609322063c6bb5
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 18:46:43 2009 +0200
-
-    Weather widget written and included, by request.
-    
-    The widget uses 'wget' to grab the information. The Lua socket library
-    would be nicer, of course, but let's not introduce external libraries
-    at this point. Wget will write to stdout with a timeout of 5s. This
-    has the potential to block everything else in case of problems... But
-    let's not introduce temporary files at this point. Besides having to
-    handle files, operations while running on battery power are to be
-    avoided.
-
-commit 95dd8de34d404e10a05169e381f382881097af89
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 18:06:19 2009 +0200
-
-    Make git ignore backup files and lua binaries.
-
-commit 98e26ee0436822b00d4a6e707d86cf33d24bc00f
-Author: Adrian C. (anrxc) <anrxc@sysphere.org>
-Date:   Wed Jul 29 17:59:32 2009 +0200
-
-    Import of vicious source tree.
-    
-    Vicious is a modular widget library for 'awesome' window manager,
-    derived from the 'Wicked' widget library.
-    
-    Summary of changes:
-      * Original wicked code modularized
-      * Widgets ported from Wicked:
-        - CPU, MEM, FS, NET, Date, Uptime, MPD
-          * CPU widget rewritten, uses pattern matching
-          * MEM widget rewritten, uses pattern matching
-            - Swap widget merged with MEM widget type
-          * FS widget rewritten, uses pattern matching
-            - Also fixed padding in the process
-          * NET widget rewritten, uses pattern matching
-          * MPD widget rewritten, a bit more versatile
-          * Removed deprecated helper functions
-      * Widgets written for Vicious:
-        - Thermal, Battery, Mbox, OrgMode, Volume, Entropy,
-          Disk I/O, System Load, Wireless, Pacman, Maildir
+fcda8a0 README rewritten to match HEAD
+1196ced Backported 'widgets derived from wicked include a notice'
+52c5bf6 init: Default to 2s timer
+572aa16 Entropy widget cleaned up
+7dc6115 Backported 'remote file systems in fs widget are optional'
+a543507 General cleanup to match with HEAD
+080d1e8 Curl connect timeout 1s, max time 3s
+ee281a7 Gmail widget backported from master
+b4e9ac2 Match all punctuation chars in fs partitions and mount points.
+9f2761e Match punctuation characters in wifi SSID.
+1b4e28c Created branch 3.3 to backport fixes
+53b2799 Next release, tag 1.0.11.
+c283edc Updated link to wicked home.
+0067dca Removed emtpy lines from mpd.lua
+5e3b953 Link to wicked and add Joerg as contributor.
+4330375 Next release, tag 1.0.10.
+44cd53f Updated the CHANGES file in preparation for a new tag.
+7ad474b Use of LANG=C and improved matching in fs.lua.
+f8eb93a Mention ICAO as the wanted code in the weather widget.
+376591e Added laptop-mode note to the README.
+e5181cc Next release, tag 1.0.9.
+03693e7 Renamed unused loop identifiers to _
+9f75b0d Spurious folds removed from helpers.
+41d4acb Truncate helper, txtlen is local.
+3b3e0dc CHANGES file updated. Will probably switch to shortlog.
+d4595bb All worker functions are local.
+8b38567 Added missing poolsize info to the README + minor change in fs.lua
+798036e Changed fs widget type description.
+8d59a01 Next release, tag 1.0.8.
+d2d244f CPU Information widget included.
+cbd9a53 Next release, tag 1.0.7.
+013dd08 HDD Temperature widget included.
+515cc0d Weather widget switched to curl.
+477b8d2 CHANGES file updated before the next push.
+f14280b Pacman widget updated for pacman 3.3.
+b46278a Lower the wget timeout to 3s in weather.lua
+eaf8470 Cleaned up sample widgets in the README
+44aea40 Remove a spurious comment from helpers.lua
+3c76e0d Introduced the truncate helper.
+2d0cbf5 Fixed the weather widget, wind km/h was broken.
+4c74de7 Padding removed, along with deprecated helper functions.
+2d4efa6 Minor cleanup in init.lua
+22033ba Disallow using a string widget type.
+756215f Next release, tag 1.0.6.
+5909d9e Updated the CHANGES file in preparation for tag v1.0.6.
+cef569b CPU frequency widget included.
+3fe67d4 Coding style changes in entropy, load, thermal, uptime.
+09fda0a Rewrite of the escape helper.
+047dba0 Next release, version/tag 1.0.5.
+cad950a Updated the CHANGES file in preparation for tag v1.0.5.
+418151f Make all widgets return their worker functions when called.
+1630b78 Added wind speed in km/h to the weather widget.
+f841c54 Updated the CHANGES file.
+3f851ff Added a note about weather symbols to the weather widget.
+1b99061 Use utf symbols for some bat states. Mention LuaFileSystem in mdir.lua
+f00558c Next release, version 1.0.4.
+475da04 Mbox mail count widget included.
+dad393b Updated the CHANGES file.
+bc63706 Coding style fixes in battery widgets.
+052748a Fix the key reference to custom keys in the README
+9c973a5 Updated the CHANGES file.
+51770fe Fixed README and moved the ChangeLog to CHANGES.
+2ab90de Updated the ChangeLog file, for v1.0.3.
+0471c6a Next release, version 1.0.3.
+a8dc5c6 Added basic documentation as a README file.
+b06a5b6 Make git ignore org-mode files and archives.
+87d895f Next release, version 1.0.2.
+5ff480d Updated the ChangeLog file in preparation for a new version.
+2921200 Added handlers to batat and fixed the battery_state table.
+e2d503e Added a new, standalone, battery widget.
+19ca7b5 Replaced TODO with Todo in helpers.
+9cd250b Fixed batat module name and expanded bat states and symbols.
+b331cb1 Updated the ChangeLog file.
+76b8978 Battery widget moved to batat.lua in preparation for a new bat widget.
+9da374d Updated the ChangeLog file.
+1f31527 Next release, version 1.0.1.
+11baa09 Added the ChangeLog file.
+3eefddf Weather widget written and included, by request.
+95dd8de Make git ignore backup files and lua binaries.
+98e26ee Import of vicious source tree.
