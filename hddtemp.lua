@@ -22,7 +22,6 @@ local function worker(format, port)
     local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:" .. port)
     local hdd_temp = {}
 
-    -- Get temperature data
     for line in f:lines() do
         local disk, temp = line:match("|([%/%a]+)|.*|([%d]+)|[CF]+|")
 

@@ -61,7 +61,7 @@ require("vicious.date")
 module("vicious")
 
 
--- {{{ Initialise variables
+-- {{{ Initialise tables
 local registered   = {}
 local widget_cache = {}
 
@@ -85,7 +85,7 @@ end
 -- }}}
 
 -- {{{ Main functions
--- {{{ Register widget
+-- {{{ Register a widget
 function register(widget, wtype, format, timer, field, warg)
     local reg = {}
     local widget = widget
@@ -108,10 +108,10 @@ function register(widget, wtype, format, timer, field, warg)
         reg.timer = 1
     end
 
-    -- Register reg object
+    -- Register a reg object
     regregister(reg)
 
-    -- Return reg object for reuse
+    -- Return a reg object for reuse
     return reg
 end
 -- }}}
@@ -119,12 +119,11 @@ end
 -- {{{ Register from reg object
 function regregister(reg)
     if not reg.running then
-        -- Put widget in table
         if registered[reg.widget] == nil then
             registered[reg.widget] = {}
             table.insert(registered[reg.widget], reg)
         else
-            already = false
+            local already = false
 
             for w, i in pairs(registered) do
                 if w == reg.widget then
@@ -146,21 +145,19 @@ function regregister(reg)
             end
         end
 
-        -- Start timer
+        -- Start the timer
         if reg.timer > 0 then
             awful.hooks.timer.register(reg.timer, reg.update)
         end
 
         -- Initial update
         reg.update()
-
-        -- Set running
         reg.running = true
     end
 end
 -- }}}
 
--- {{{ Unregister widget
+-- {{{ Unregister a widget
 function unregister(widget, keep, reg)
     if reg == nil then
         for w, i in pairs(registered) do
@@ -186,7 +183,7 @@ function unregister(widget, keep, reg)
         end
     end
 
-    -- Unregister the timer
+    -- Stop the timer
     awful.hooks.timer.unregister(reg.update)
     reg.running = false
 
@@ -194,7 +191,7 @@ function unregister(widget, keep, reg)
 end
 -- }}}
 
--- {{{ Suspend vicious, halt all widget updates
+-- {{{ Suspend vicious
 function suspend()
     for w, i in pairs(registered) do
         for _, v in pairs(i) do
@@ -204,7 +201,7 @@ function suspend()
 end
 -- }}}
 
--- {{{ Activate vicious, restart all widget updates
+-- {{{ Activate vicious
 function activate(widget)
     for w, i in pairs(registered) do
         if widget == nil or w == widget then
@@ -216,7 +213,7 @@ function activate(widget)
 end
 -- }}}
 
--- {{{ Update widget
+-- {{{ Update a widget
 function update(widget, reg, disablecache)
     -- Check if there are any equal widgets
     if reg == nil then
@@ -234,8 +231,7 @@ function update(widget, reg, disablecache)
     local t = os.time()
     local data = {}
 
-    -- Check if we have output chached for this widget newer than last
-    -- widget update
+    -- Do we have output chached for a widget newer than last update
     if widget_cache[reg.type] ~= nil then
         local c = widget_cache[reg.type]
 

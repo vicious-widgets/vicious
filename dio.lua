@@ -27,7 +27,6 @@ local function worker(format, disk)
     local f = io.open("/proc/diskstats")
     local disk_lines = {}
 
-    -- Format data
     for line in f:lines() do
         if line:match("("..disk..")%s") then
             -- Todo: find a way to do this
@@ -52,7 +51,6 @@ local function worker(format, disk)
         table.insert(disk_total, 0)
     end
 
-    -- Setup tables
     local diff_total  = {}
 
     for i, v in ipairs(disk_lines) do

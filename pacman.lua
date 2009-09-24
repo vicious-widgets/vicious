@@ -16,27 +16,22 @@ module("vicious.pacman")
 
 -- {{{ Pacman widget type
 local function worker(format)
+    -- Initialise counters
+    local updates = 0
+
     -- Check if updates are available
     local f = io.popen("pacman -Qu")
 
-    -- Initialise updates
-    local updates = 0
-
-    -- Get data
     for line in f:lines() do
-        -- Pacman 3.3 returns one package on a line, without any extra
-        -- information
-        updates = updates + 1
-
-        -- Pacman 3.2 returns 'Targets:' followed by a number of
-        -- available updates and a list of packages all on one
-        -- line. Since the number is provided we don't have to count
-        -- them
+        -- Pacman 3.2 provides the number of available updates
         --updates = line:match("^Targets[%s]%(([%d]+)%)") or 0
-        -- If the count changed then break out of the loop
+        ---- If the count changed then break out of the loop
         --if tonumber(updates) > 0 then
         --    break
         --end
+
+        -- Pacman 3.3 returns one line per package
+        updates = updates + 1
     end
     f:close()
 

@@ -20,7 +20,6 @@ local function worker(format)
     -- Get meminfo
     local f = io.open("/proc/meminfo")
 
-    -- Get data
     for line in f:lines() do
         if line:match("^MemTotal.*") then
             mem_total = math.floor(tonumber(line:match("([%d]+)")) / 1024)

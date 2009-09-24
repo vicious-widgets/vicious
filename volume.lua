@@ -21,13 +21,10 @@ local function worker(format, channel)
     local mixer = f:read("*all")
     f:close()
 
-    -- Get volume level
     local volume_level = string.match(mixer, "([%d]?[%d]?[%d])%%")
 
     -- Don't break progressbars
-    if volume_level == nil then
-        return {0}
-    end
+    if volume_level == nil then return {0} end
 
     return {volume_level}
 end

@@ -26,7 +26,7 @@ local function worker(format, files)
     local soon   = today + 24 * 3600 * 3 -- 3 days ahead is close
     local future = today + 24 * 3600 * 7 -- 7 days ahead is maximum
 
-    -- Initialise count table
+    -- Initialise counters
     local count  = {
         past   = 0,
         today  = 0,
@@ -38,7 +38,6 @@ local function worker(format, files)
     for i=1, #files do
        local f = io.open(files[i])
 
-       -- Parse the agenda
        for line in f:lines() do
           local scheduled = string.find(line, "SCHEDULED:")
           local closed    = string.find(line, "CLOSED:")
@@ -47,7 +46,6 @@ local function worker(format, files)
           if (scheduled and not closed) or (deadline and not closed) then
              local b, e, y, m, d = string.find(line, "(%d%d%d%d)-(%d%d)-(%d%d)")
 
-             -- Enumerate agenda items
              if b then
                 local t = os.time{ year = y, month = m, day = d }
 

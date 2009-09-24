@@ -21,17 +21,11 @@ local function worker(format, mbox)
     local total = 0
 
     -- Open the mbox
-    --
-    -- If we had LuaFileSystem we could check the mtime and size of
-    -- the file and if they didn't change since the last read we could
-    -- return the old, cached, count. However, we didn't rely on extra
-    -- libraries to this point so we won't start now.
     local f = io.open(mbox)
 
     while true do
       -- Read the mbox line by line, if we are going to read some
-      -- *HUGE* folders then switch to reading chunks. It's why we are
-      -- not reading the whole file at once in the first place.
+      -- *HUGE* folders then switch to reading chunks
       local lines = f:read("*line")
       if not lines then break end
 

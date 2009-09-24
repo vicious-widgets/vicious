@@ -16,10 +16,6 @@ module("vicious.mpd")
 
 -- {{{ MPD widget type
 local function worker(format)
-    -- This one is as simple as they come. Using sockets or expanding
-    -- it is a lost cause since there are already a few MPD Lua libs
-    -- written for awesome. Use them.
-    --
     -- Get data from mpc
     local f = io.popen("mpc")
     local np = f:read("*line")

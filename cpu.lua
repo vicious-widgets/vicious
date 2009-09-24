@@ -27,7 +27,6 @@ local function worker(format)
     local f = io.open("/proc/stat")
     local cpu_lines = {}
 
-    -- Format data
     for line in f:lines() do
         if line:find("^cpu") then
             if #cpu_lines < 1 then cpuid = 1
@@ -52,7 +51,6 @@ local function worker(format)
         table.insert(cpu_usage, 0)
     end
 
-    -- Setup tables
     local total_new   = {}
     local active_new  = {}
     local diff_total  = {}

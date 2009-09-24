@@ -16,12 +16,6 @@ module("vicious.mdir")
 
 -- {{{ Maildir widget type
 local function worker(format, mdir)
-    -- Like with the mbox count widget, we would benefit from the
-    -- LuaFileSystem library. However, we didn't rely on extra
-    -- libraries to this point so we won't start now. Widgets like
-    -- this one are not agressive like CPU or NET, so we can keep it
-    -- simple, find is OK with me if we execute every >60s
-    --
     -- Initialise counters
     local newcount = 0
     local curcount = 0
