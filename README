@@ -90,8 +90,10 @@ is one way to prevent widgets from draining your battery.
 
 Vicious can also cache values returned by widget types. Caching
 enables you to have multiple widgets using the same widget type and
-its worker function will be executed only once. It is useful mostly
-for widgets which do not require a special argument to be passed.
+its worker function will be executed only once. However be careful
+with those widgets that require a widget argument to be passed. If you
+are requesting information for different devices then caching is
+useless and can lead to confusion.
 
 Update intervals also play a big role, and you can save a lot of power
 with a smart approach to intervals. You should avoid intervals like:
