@@ -74,6 +74,12 @@ Restart suspended widgets:
     widget
       - if provided, only that widget will be activated
 
+Enable caching for a widget:
+
+  vicious.enable_caching(widget_type)
+
+    - enable caching of values returned by a widget type
+
 
 Power
 -----
@@ -82,9 +88,10 @@ of wake-ups and also be very expensive for system resources. This is
 especially important when running on battery power. Suspending widgets
 is one way to prevent widgets from draining your battery.
 
-Vicious also caches all widget types. Caching enables you to have
-multiple widgets using the same widget type and its worker function
-will be executed only once.
+Vicious can also cache values returned by widget types. Caching
+enables you to have multiple widgets using the same widget type and
+its worker function will be executed only once. It is useful mostly
+for widgets which do not require a special argument to be passed.
 
 Update intervals also play a big role, and you can save a lot of power
 with a smart approach to intervals. You should avoid intervals like:
@@ -251,10 +258,11 @@ MPD widget
 
 Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
+  vicious.enable_caching(vicious.widgets.mem)
   vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
   - executed every 13 seconds, appends "MB" to 2nd and 3rd returned
-    values
+    values and enables caching of this widget type
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
