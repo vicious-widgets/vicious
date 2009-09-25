@@ -1,3 +1,10 @@
+b8f288b README: clarified caching usage
+46a7241 README: added more caching information
+eadf0c9 Caching is controlled by users
+0945724 README: minor fix in mem widget example
+51d5255 README: include pbar/graph properties in examples
+c9fba4e Widgets derived from wicked include a notice
+ba6dfae Next release, tag 1.0.15
 1707bc6 README: rewritten and now includes the "Power" section
 e205d66 CHANGES: changelog update
 9ca9e2f Next release, tag 1.0.14
