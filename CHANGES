@@ -1,3 +1,7 @@
+d2c60b3 README: clarified caching usage
+56335fa README: added more caching information
+549d27f Caching is controlled by users
+16778bf CHANGES: file updated
 fcda8a0 README rewritten to match HEAD
 1196ced Backported 'widgets derived from wicked include a notice'
 52c5bf6 init: Default to 2s timer
