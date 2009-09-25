@@ -74,8 +74,6 @@ for w, i in pairs(_M) do
         if w ~= "widgets" and w ~= "helpers" then
             -- Place widgets in the namespace table
             widgets[w] = i
-            -- Enable caching for all widget types
-            widget_cache[i] = {}
         end
     end
 end
@@ -211,6 +209,14 @@ function activate(widget)
                 regregister(v)
             end
         end
+    end
+end
+-- }}}
+
+-- {{{ Enable caching for a widget
+function enable_caching(widget)
+    if widget_cache[widget] == nil then
+        widget_cache[widget] = {}
     end
 end
 -- }}}
