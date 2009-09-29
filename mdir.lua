@@ -1,8 +1,8 @@
-----------------------------------------------------------
--- Licensed under the GNU General Public License version 2
---  * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
---  * Derived from Maildir Biff Widget, by Fredrik Ax
-----------------------------------------------------------
+---------------------------------------------------
+-- Licensed under the GNU General Public License v2
+--  * (c) 2009, Adrian C. <anrxc.sysphere.org>
+--  * (c) Maildir Biff Widget, Fredrik Ax
+---------------------------------------------------
 
 -- {{{ Grab environment
 local io = { popen = io.popen }
