@@ -1,8 +1,8 @@
-----------------------------------------------------------
--- Licensed under the GNU General Public License version 2
---  * Copyright (C) 2009 Adrian C. <anrxc_sysphere_org>
---  * Derived from org-awesome, copyright of Damien Leone
-----------------------------------------------------------
+---------------------------------------------------
+-- Licensed under the GNU General Public License v2
+--  * (c) 2009, Adrian C. <anrxc.sysphere.org>
+--  * (c) org-awesome, Damien Leone
+---------------------------------------------------
 
 -- {{{ Grab environment
 local io = { open = io.open }
