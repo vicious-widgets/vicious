@@ -16,6 +16,7 @@ local table = {
     insert  = table.insert,
     remove  = table.remove
 }
+
 require("vicious.helpers")
 require("vicious.widgets")
 

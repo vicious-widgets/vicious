@@ -1,7 +1,7 @@
-----------------------------------------------------------
--- Licensed under the GNU General Public License version 2
---  * Copyright (C) 2009 olcc
-----------------------------------------------------------
+---------------------------------------------------
+-- Licensed under the GNU General Public License v2
+--  * (c) 2009, olcc
+---------------------------------------------------
 
 -- {{{ Grab environment
 local pairs = pairs
@@ -11,7 +11,7 @@ local setmetatable = setmetatable
 
 
 -- RSS: provides latest world news
-module("vicious.rss")
+module("vicious.widgets.rss")
 
 
 -- {{{ RSS widget type
