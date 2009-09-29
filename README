@@ -1,5 +1,5 @@
-vicious
-=======
+Vicious
+-------
 vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
 Wicked widget types, a few of them rewritten, and a good number of
@@ -234,7 +234,7 @@ second argument, and should return the text to be used for the widget.
 
 Example widget
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
-  vicious.register(mpdwidget,vicious.widgets.mpd, 
+  vicious.register(mpdwidget,vicious.widgets.mpd,
     function (widget, args)
       if   args[1] == "Stopped" then return ''
       else return '<span color="white">MPD:</span> '..args[1]
@@ -334,7 +334,7 @@ Other
 -----
 Also read "awesome" manual pages:
 
-  awesome(1)  awesomerc(5) 
+  awesome(1)  awesomerc(5)
 
 
 Authors
