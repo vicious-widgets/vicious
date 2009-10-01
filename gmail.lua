@@ -10,22 +10,25 @@ local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Gmail: provides count of new and subject of last e-mail in a Gmail inbox
+-- Gmail: provides count of new and subject of last e-mail on Gmail
 module("vicious.gmail")
 
 
+-- User data
+local user = "" -- Todo
+local pass = "" --  * find a safer storage
+
 -- {{{ Gmail widget type
-local function worker(format, login)
+local function worker(format, feed)
+    local auth = user .. ":" .. pass
+    local feed = feed or "https://mail.google.com/mail/feed/atom/unread"
     local mail = {
         ["{count}"]   = "0",
         ["{subject}"] = "N/A"
     }
 
-    -- Todo: find a safer way to do this
-    local auth = login[1] .. ":" .. login[2]
-
     -- Get info from the Gmail atom feed
-    local f = io.popen("curl --connect-timeout 1 -m 3 -fsu "..auth.." https://mail.google.com/mail/feed/atom")
+    local f = io.popen("curl --connect-timeout 1 -m 3 -fsu "..auth.." "..feed)
 
     -- Could be huge don't read it all at once, info we are after is at the top
     for line in f:lines() do
@@ -34,8 +37,8 @@ local function worker(format, login)
         -- Find subject tags
         local title = line:match("<title>(.*)</title>")
         -- If the subject changed then break out of the loop
-        if title ~= nil and  --    Ignore the feed title
-           title ~= "Gmail - Inbox for "..login[1].."@gmail.com" then
+        if title ~= nil and  -- Todo: find a better way to deal with 1st title
+           title ~= "Gmail - Label &#39;unread&#39; for "..user.."@gmail.com" then
                -- Spam sanitize the subject
                title = helpers.escape(title)
                -- Don't abuse the wibox, truncate, then store
