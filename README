@@ -170,8 +170,8 @@ vicious.widgets.mbox
   - takes the full path to the mbox as an argument
 
 vicious.widgets.mboxc
-  - provides the count of total, old and new messages in a mbox
-  - takes the full path to the mbox as an argument
+  - provides the count of total, old and new messages in mbox files
+  - takes a table with full paths to mbox files as an argument
 
 vicious.widgets.mdir
   - provides a number of new and unread messages in a Maildir
