@@ -177,8 +177,7 @@ vicious.widgets.mdir
   - takes the full path to the Maildir structure as an argument
 
 vicious.widgets.gmail
-  - provides count of new and subject of last e-mail in a Gmail inbox
-  - takes a table with Gmail login information as an argument
+  - provides count of new and subject of last e-mail on Gmail
 
 vicious.widgets.entropy
   - provides available system entropy
@@ -281,10 +280,9 @@ Mbox widget
 
 Gmail widget
   gmailwidget = widget({ type = 'textbox', name = 'gmailwidget' })
-  vicious.register(gmailwidget, vicious.widgets.gmail, 'Mail: ${count}', 601, {'user', 'pass'})
+  vicious.register(gmailwidget, vicious.widgets.gmail, 'Mail: ${count}', 601)
 
-  - executed every 10 minutes, provides a table with login information
-    as an argument, prepends "Mail: " to the returned value
+  - executed every 10 minutes and prepends "Mail: " to the returned value
 
 Battery widget
   batwidget = awful.widget.progressbar({ layout = awful.widget.layout.horizontal.rightleft })
