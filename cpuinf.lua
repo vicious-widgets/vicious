@@ -16,10 +16,9 @@ module("vicious.cpuinf")
 
 -- {{{ CPU Information widget type
 local function worker(format)
-    cpu_id = nil
-
     -- Get cpuinfo
     local f = io.open("/proc/cpuinfo")
+    local cpu_id   = nil
     local cpu_info = {}
 
     for line in f:lines() do
@@ -27,12 +26,12 @@ local function worker(format)
             cpu_id = line:match("([%d]+)")
         elseif line:match("^cpu MHz.*") then
             local cpu_speed = line:match("([%d]+)%.")
-            cpu_info["{"..cpu_id.." mhz}"] = cpu_speed
-            cpu_info["{"..cpu_id.." ghz}"] = tonumber(cpu_speed) / 1000
+            cpu_info["{cpu"..cpu_id.." mhz}"] = cpu_speed
+            cpu_info["{cpu"..cpu_id.." ghz}"] = tonumber(cpu_speed) / 1000
         elseif line:match("^cache size.*") then
             local cpu_cache = line:match("([%d]+)[%s]KB")
-            cpu_info["{"..cpu_id.." kb}"] = cpu_cache
-            cpu_info["{"..cpu_id.." mb}"] = tonumber(cpu_cache) / 1024
+            cpu_info["{cpu"..cpu_id.." kb}"] = cpu_cache
+            cpu_info["{cpu"..cpu_id.." mb}"] = tonumber(cpu_cache) / 1024
         end
     end
     f:close()
