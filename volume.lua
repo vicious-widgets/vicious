@@ -6,7 +6,10 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = { match = string.match }
+local string = {
+    find = string.find,
+    match = string.match
+}
 -- }}}
 
 
@@ -22,9 +25,10 @@ local function worker(format, channel)
     f:close()
 
     local volume_level = string.match(mixer, "([%d]?[%d]?[%d])%%")
-
-    -- Don't break progressbars
-    if volume_level == nil then return {0} end
+    -- If muted return 0 (not "Mute") so we dont break progressbars
+    if string.find(mixer, "%[off%]") or volume_level == nil then
+        volume_level = 0
+    end
 
     return {volume_level}
 end
