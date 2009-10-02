@@ -31,9 +31,9 @@ local function worker(format, batid)
     }
 
     -- Get /proc/acpi/battery info
-    local finfo = io.open("/proc/acpi/battery/"..batid.."/info")
-    local infofile = finfo:read("*all")
-    finfo:close()
+    local f = io.open("/proc/acpi/battery/"..batid.."/info")
+    local infofile = f:read("*all")
+    f:close()
 
     -- Check if the file wasn't found or the battery isn't present
     if infofile == nil or string.find(infofile, "present:[%s]+no") then
@@ -44,9 +44,9 @@ local function worker(format, batid)
 
 
         -- Get /proc/acpi/battery state
-        local fstate = io.open("/proc/acpi/battery/"..batid.."/state")
-        local statefile = fstate:read("*all")
-        fstate:close()
+        local f = io.open("/proc/acpi/battery/"..batid.."/state")
+        local statefile = f:read("*all")
+        f:close()
 
         -- Get state information
         local state = string.match(statefile, "charging state:[%s]+([%a]+).*")
