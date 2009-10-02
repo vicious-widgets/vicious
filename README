@@ -181,8 +181,8 @@ vicious.widgets.gmail
 
 vicious.widgets.entropy
   - provides available system entropy
-  - takes the poolsize as an argument, or defaults to Linux 2.6
-    default entropy pool of 4096-bits
+  - takes the poolsize as an argument, or uses Linux 2.6 default
+    entropy pool of 4096-bits
 
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode
@@ -299,7 +299,7 @@ Battery widget
   vicious.register(batwidget, vicious.widgets.bat, '$2', 61, 'BAT0')
 
   - executed every 61 seconds, requests the current battery charge
-    level and display a progressbar, provides "BAT0" battery ID as an
+    level and displays a progressbar, provides "BAT0" battery ID as an
     argument
 
 CPU usage widget
