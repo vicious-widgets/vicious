@@ -49,7 +49,7 @@ vicious.register() to register it with vicious:
         the battery ID
 
 
-Other Functions
+Other functions
 ---------------
 Unregister a widget:
 
@@ -326,6 +326,14 @@ authors rc.lua as a reference to see how it all fits into the big
 picture:
 
   http://git.sysphere.org/awesome-configs/
+
+
+Other uses
+----------
+You can reuse Vicious modules for objects other than widgets. Maybe
+you want to populate an awful tooltip or a naughty notification? Call
+a module directly and manipulate the result however you want, until
+you have some nicely formatted data suitable for display.
 
 
 Other
