@@ -1,6 +1,9 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
 --  * (c) 2009, olcc
+--
+-- This is now a standalone RSS reader for awesome:
+--  * http://gitorious.org/aware
 ---------------------------------------------------
 
 -- {{{ Grab environment
