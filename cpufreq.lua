@@ -27,10 +27,14 @@ local function worker(format, cpuid)
     --    ["conservative"] = "↯"
     --}
 
+    -- Default voltage values
+    local voltage = { v  = "N/A", mv = "N/A" }
+
+
     -- Get the current frequency
-    local ffreq = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_cur_freq")
-    local freq = ffreq:read("*line")
-    ffreq:close()
+    local f = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_cur_freq")
+    local freq = f:read("*line")
+    f:close()
 
     -- Calculate MHz and GHz
     local freqmhz = freq / 1000
@@ -38,28 +42,29 @@ local function worker(format, cpuid)
 
 
     -- Get the current voltage
-    local fvolt = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_voltages")
-    for line in fvolt:lines() do
+    local f = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_voltages")
+    if f then for line in f:lines() do
         if line:find("^"..freq) then
-            voltagemv = line:match("[%d]+[%s]([%d]+)")
+            voltage.mv = line:match("[%d]+[%s]([%d]+)")
             break
         end
-    end
-    fvolt:close()
+      end
+      f:close()
 
-    -- Calculate voltage from mV
-    local voltagev = voltagemv / 1000
+      -- Calculate voltage from mV
+      voltage.v = voltage.mv / 1000
+    end
 
 
     -- Get the current governor
-    local fgov = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_governor")
-    local governor = fgov:read("*line")
-    fgov:close()
+    local f = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_governor")
+    local governor = f:read("*line")
+    f:close()
 
     -- Represent the governor as a symbol
     --local governor = governor_state[governor] or governor
 
-    return {freqmhz, freqghz, voltagemv, voltagev, governor}
+    return {freqmhz, freqghz, voltage.mv, voltage.v, governor}
 end
 -- }}}
 
