@@ -15,8 +15,11 @@ module("vicious.thermal")
 
 -- {{{ Thermal widget type
 local function worker(format, thermal_zone)
-    -- Get thermal zone
+    -- Get an ACPI thermal zone
     local f = io.open("/proc/acpi/thermal_zone/" .. thermal_zone .. "/temperature")
+    -- Fix your ACPI setup, or find another source of temperature
+    -- exposed trough /sys, if a thermal_zone can't be found.
+    if not f then return {"N/A"} end
     local line = f:read("*line")
     f:close()
 
