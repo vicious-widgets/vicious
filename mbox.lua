@@ -17,17 +17,15 @@ module("vicious.mbox")
 
 -- {{{ Mailbox widget type
 local function worker(format, mbox)
-    local f = io.open(mbox)
     -- mbox could be huge, get a 15kb chunk from EOF
     --  * attachments could be much bigger than this
+    local f = io.open(mbox)
     f:seek("end", -15360)
-    local text = f:read("*all")
+    local txt = f:read("*all")
     f:close()
 
-    for match in string.gfind(text, "Subject: ([^\n]*)") do
-        subject = match
-    end
-
+    -- Find all Subject lines
+    for s in string.gfind(txt, "Subject: ([^\n]*)") do subject = s end
     if subject then
         -- Spam sanitize only the last subject
         subject = helpers.escape(subject)
@@ -36,6 +34,8 @@ local function worker(format, mbox)
         subject = helpers.truncate(subject, 22)
 
         return {subject}
+    else
+        return {"N/A"}
     end
 end
 -- }}}
