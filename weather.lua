@@ -41,32 +41,30 @@ local function worker(format, station)
     }
 
     -- Check if there was a timeout or a problem with the station
-    if ws == nil then
-        return weather
-    else
-        weather["{city}"]    = -- City and/or area
-          string.match(ws, "^(.+)%,.*%([%u]+%)") or weather["{city}"]
-        weather["{wind}"]    = -- Wind direction and degrees if available
-          string.match(ws, "Wind:[%s][%a]+[%s][%a]+[%s](.+)[%s]at.+$") or weather["{wind}"]
-        weather["{windmph}"] = -- Wind speed in MPH if available
-          string.match(ws, "Wind:[%s].+[%s]at[%s]([%d]+)[%s]MPH") or weather["{windmph}"]
-        weather["{sky}"]     = -- Sky conditions if available
-          string.match(ws, "Sky[%s]conditions:[%s](.-)[%c]") or weather["{sky}"]
-        weather["{weather}"] = -- Weather conditions if available
-          string.match(ws, "Weather:[%s](.-)[%c]") or weather["{weather}"]
-        weather["{tempf}"]   = -- Temperature in fahrenheit
-          string.match(ws, "Temperature:[%s]([%d%.]+).*[%c]") or weather["{tempf}"]
-        weather["{tempc}"]   = -- Temperature in celsius
-          string.match(ws, "Temperature:[%s][%d%.]+[%s]F[%s]%(([%d%.]+)[%s]C%)[%c]") or weather["{tempc}"]
-        weather["{humid}"]   = -- Relative humidity in percent
-          string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
-        weather["{press}"]   = -- Pressure in hPa
-          string.match(ws, "Pressure[%s].+%((.+)[%s]hPa%)") or weather["{press}"]
+    if ws == nil then return weather end
 
-        -- Wind speed in KMH if MPH was available
-        if weather["{windmph}"] ~= "N/A" then
-           weather["{windkmh}"] = math.floor(weather["{windmph}"] * 1.6)
-        end
+    weather["{city}"]    = -- City and/or area
+      string.match(ws, "^(.+)%,.*%([%u]+%)") or weather["{city}"]
+    weather["{wind}"]    = -- Wind direction and degrees if available
+      string.match(ws, "Wind:[%s][%a]+[%s][%a]+[%s](.+)[%s]at.+$") or weather["{wind}"]
+    weather["{windmph}"] = -- Wind speed in MPH if available
+      string.match(ws, "Wind:[%s].+[%s]at[%s]([%d]+)[%s]MPH") or weather["{windmph}"]
+    weather["{sky}"]     = -- Sky conditions if available
+      string.match(ws, "Sky[%s]conditions:[%s](.-)[%c]") or weather["{sky}"]
+    weather["{weather}"] = -- Weather conditions if available
+      string.match(ws, "Weather:[%s](.-)[%c]") or weather["{weather}"]
+    weather["{tempf}"]   = -- Temperature in fahrenheit
+      string.match(ws, "Temperature:[%s]([%d%.]+).*[%c]") or weather["{tempf}"]
+    weather["{tempc}"]   = -- Temperature in celsius
+      string.match(ws, "Temperature:[%s][%d%.]+[%s]F[%s]%(([%d%.]+)[%s]C%)[%c]") or weather["{tempc}"]
+    weather["{humid}"]   = -- Relative humidity in percent
+      string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
+    weather["{press}"]   = -- Pressure in hPa
+      string.match(ws, "Pressure[%s].+%((.+)[%s]hPa%)") or weather["{press}"]
+
+    -- Wind speed in KMH if MPH was available
+    if weather["{windmph}"] ~= "N/A" then
+       weather["{windkmh}"] = math.floor(weather["{windmph}"] * 1.6)
     end
 
     return weather
