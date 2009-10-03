@@ -27,12 +27,7 @@ local function worker(format, files)
     local future = today + 24 * 3600 * 7 -- 7 days ahead is maximum
 
     -- Initialise counters
-    local count  = {
-        past   = 0,
-        today  = 0,
-        soon   = 0,
-        future = 0
-    }
+    local count = { past = 0, today = 0, soon = 0, future = 0 }
 
     -- Get data from agenda files
     for i=1, #files do
