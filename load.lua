@@ -20,10 +20,9 @@ local function worker(format)
     local line = f:read("*line")
     f:close()
 
-    local avg1, avg5, avg15 = 
-        line:match("([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
+    local l1, l5, l15 = line:match("([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
 
-    return {avg1, avg5, avg15}
+    return {l1, l5, l15}
 end
 -- }}}
 

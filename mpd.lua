@@ -28,10 +28,10 @@ local function worker(format)
     end
 
     -- Sanitize the song name
-    nowplaying = helpers.escape(np)
+    local nowplaying = helpers.escape(np)
 
     -- Don't abuse the wibox, truncate
-    nowplaying = helpers.truncate(nowplaying, 30)
+    local nowplaying = helpers.truncate(nowplaying, 30)
 
     return {nowplaying}
 end
