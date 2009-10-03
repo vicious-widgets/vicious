@@ -25,7 +25,7 @@ local function worker(format, poolsize)
     f:close()
 
     -- Calculate percentage
-    ent_avail_percent = math.ceil(ent_avail * 100 / poolsize)
+    local ent_avail_percent = math.ceil(ent_avail * 100 / poolsize)
 
     return {ent_avail, ent_avail_percent}
 end

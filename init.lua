@@ -7,21 +7,16 @@
 -----------------------------------------------------
 
 -- {{{ Grab environment
-require("awful")
-require("vicious.helpers")
-
-local type = type
+local type  = type
 local pairs = pairs
-local awful = awful
 local tonumber = tonumber
-local os = { time = os.time }
+local helpers  = require("vicious.helpers")
+local capi  = { timer = timer }
+local os    = { time = os.time }
 local table = {
-    insert = table.insert,
-    remove = table.remove
+    insert  = table.insert,
+    remove  = table.remove
 }
-
--- Grab C API
-local capi = { timer = timer }
 -- }}}
 
 
