@@ -17,34 +17,30 @@ module("vicious.mboxc")
 -- {{{ Mbox count widget type
 local function worker(format, mbox)
     -- Initialise counters
-    local count = {
-        old   = 0,
-        total = 0,
-        new   = 0
-    }
+    local count = { old = 0, total = 0, new = 0 }
 
     -- Get data from mbox files
     for i=1, #mbox do
         local f = io.open(mbox[i])
 
         while true do
-          -- Read the mbox line by line, if we are going to read some
-          -- *HUGE* folders then switch to reading chunks
-          local lines = f:read("*line")
-          if not lines then break end
+            -- Read the mbox line by line, if we are going to read some
+            -- *HUGE* folders then switch to reading chunks
+            local lines = f:read("*line")
+            if not lines then break end
 
-          -- Find all messages
-          --  * http://www.jwz.org/doc/content-length.html
-          local _, from = string.find(lines, "^From[%s]")
-          if from ~= nil then count.total = count.total + 1 end
+            -- Find all messages
+            --  * http://www.jwz.org/doc/content-length.html
+            local _, from = string.find(lines, "^From[%s]")
+            if from ~= nil then count.total = count.total + 1 end
 
-          -- Read messages have the Status header
-          local _, status = string.find(lines, "^Status:[%s]RO$")
-          if status ~= nil then count.old = count.old + 1 end
+            -- Read messages have the Status header
+            local _, status = string.find(lines, "^Status:[%s]RO$")
+            if status ~= nil then count.old = count.old + 1 end
 
-          -- Skip the folder internal data
-          local _, intdata = string.find(lines, "^Subject:[%s].*FOLDER[%s]INTERNAL[%s]DATA")
-          if intdata ~= nil then count.total = count.total - 1 end
+            -- Skip the folder internal data
+            local _, int = string.find(lines, "^Subject:[%s].*FOLDER[%s]INTERNAL[%s]DATA")
+            if int ~= nil then count.total = count.total - 1 end
         end
         f:close()
     end
