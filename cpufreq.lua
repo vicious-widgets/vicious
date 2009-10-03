@@ -44,8 +44,8 @@ local function worker(format, cpuid)
     -- Get the current voltage
     local f = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_voltages")
     if f then for line in f:lines() do
-        if line:find("^"..freq) then
-            voltage.mv = line:match("[%d]+[%s]([%d]+)")
+        if string.find(line, "^"..freq) then
+            voltage.mv = string.match(line, "[%d]+[%s]([%d]+)")
             break
         end
       end
