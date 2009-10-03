@@ -16,11 +16,7 @@ module("vicious.date")
 
 -- {{{ Date widget type
 local function worker(format)
-    if format == nil then
-        return os.date()
-    else
-        return os.date(format)
-    end
+    return os.date(format or nil)
 end
 -- }}}
 
