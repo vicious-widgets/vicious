@@ -1,3 +1,26 @@
+a2b9de4 mem: widget type rewritten
+c84f515 mbox: read a 30kb chunk by default
+4602ca2 Lots of coding style changes
+af4e85f bat: added a handler for incompetent users
+fcf1027 cpufreq: use string library for find/match
+b4e028b Removed some useless else statements
+b65d509 Reworked counters in mboxc, mdir, org
+b185e96 mbox: don't hide when there is no mail
+724366c Reworked some variables in entropy, load, mpd, net, init
+643ecb0 date: function simplified
+3d97d44 cpuinf: prepend 'cpu' to CPU ID in table keys
+0d5f07b README: included 'Other uses' section
+9d518b8 volume: added mute support
+ddf9646 thermal: added some comments
+0e863a5 bat: coding style changes
+44f95c3 cpufreq: widget type rewritten
+aed9245 README: fixed some typos
+f933566 README: updated gmail information
+f99a74b gmail: count all unread messages
+5dac6a4 mboxc: support for multiple mbox files
+32fe770 README: fixes from git-diff --check
+b0f737e Rewrote all headers
+8e544fd Next release, tag 1.0.16
 b8f288b README: clarified caching usage
 46a7241 README: added more caching information
 eadf0c9 Caching is controlled by users
