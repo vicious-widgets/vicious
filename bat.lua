@@ -32,10 +32,12 @@ local function worker(format, batid)
 
     -- Get /proc/acpi/battery info
     local f = io.open("/proc/acpi/battery/"..batid.."/info")
+    -- Handler for incompetent users
+    if not f then return {"/", "/", "/"} end
     local infofile = f:read("*all")
     f:close()
 
-    -- Check if the file wasn't found or the battery isn't present
+    -- Check if the battery is present
     if infofile == nil or string.find(infofile, "present:[%s]+no") then
         return {"/", "/", "/"}
     end
