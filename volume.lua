@@ -24,13 +24,13 @@ local function worker(format, channel)
     local mixer = f:read("*all")
     f:close()
 
-    local volume_level = string.match(mixer, "([%d]?[%d]?[%d])%%")
+    local vol = string.match(mixer, "([%d]?[%d]?[%d])%%")
     -- If muted return 0 (not "Mute") so we dont break progressbars
-    if string.find(mixer, "%[off%]") or volume_level == nil then
-        volume_level = 0
+    if string.find(mixer, "%[off%]") or vol == nil then
+        vol = 0
     end
 
-    return {volume_level}
+    return {vol}
 end
 -- }}}
 

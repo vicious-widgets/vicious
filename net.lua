@@ -10,6 +10,7 @@ local os = { time = os.time }
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
+local string = { match = string.match }
 -- }}}
 
 
@@ -28,12 +29,12 @@ local function worker(format)
 
     for line in f:lines() do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
-        if line:match("^[%s]?[%s]?[%s]?[%s]?[%w]+:") then
-            local name = line:match("^[%s]?[%s]?[%s]?[%s]?([%w]+):")
+        if string.match(line, "^[%s]?[%s]?[%s]?[%s]?[%w]+:") then
+            local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
             -- Received bytes, first value after the name
-            local recv = tonumber(line:match(":[%s]*([%d]+)"))
-            -- Transmited bytes, 7 fields from end of the line
-            local send = tonumber(line:match("([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
+            local recv = tonumber(string.match(line, ":[%s]*([%d]+)"))
+            local send = -- Transmited bytes, 7 fields from end of the line
+             tonumber(string.match(line, "([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
 
             args["{"..name.." rx_b}"]  = math.floor(recv*10)/10
             args["{"..name.." tx_b}"]  = math.floor(send*10)/10

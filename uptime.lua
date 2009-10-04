@@ -9,6 +9,7 @@ local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
+local string = { match = string.match }
 -- }}}
 
 
@@ -23,13 +24,13 @@ local function worker(format)
     local line = f:read("*line")
     f:close()
 
-    local total_uptime   = math.floor(tonumber(line:match("[%d%.]+")))
-    local uptime_days    = math.floor(total_uptime   / (3600 * 24))
-    local uptime_hours   = math.floor((total_uptime  % (3600 * 24)) / 3600)
-    local uptime_minutes = math.floor(((total_uptime % (3600 * 24)) % 3600) / 60)
-    local uptime_seconds = math.floor(((total_uptime % (3600 * 24)) % 3600) % 60)
+    local up_t = math.floor(tonumber(string.match(line, "[%d%.]+")))
+    local up_d = math.floor(up_t   / (3600 * 24))
+    local up_h = math.floor((up_t  % (3600 * 24)) / 3600)
+    local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
+    local up_s = math.floor(((up_t % (3600 * 24)) % 3600) % 60)
 
-    return {total_uptime, uptime_days, uptime_hours, uptime_minutes, uptime_seconds}
+    return {up_t, up_d, up_h, up_m, up_s}
 end
 -- }}}
 

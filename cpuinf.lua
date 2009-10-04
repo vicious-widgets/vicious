@@ -7,6 +7,7 @@
 local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
+local string = { match = string.match }
 -- }}}
 
 
@@ -22,14 +23,14 @@ local function worker(format)
     local cpu_info = {}
 
     for line in f:lines() do
-        if line:match("^processor.*") then
-            cpu_id = line:match("([%d]+)")
-        elseif line:match("^cpu MHz.*") then
-            local cpu_speed = line:match("([%d]+)%.")
+        if string.match(line, "^processor.*") then
+            cpu_id = string.match(line, "([%d]+)")
+        elseif string.match(line, "^cpu MHz.*") then
+            local cpu_speed = string.match(line, "([%d]+)%.")
             cpu_info["{cpu"..cpu_id.." mhz}"] = cpu_speed
             cpu_info["{cpu"..cpu_id.." ghz}"] = tonumber(cpu_speed) / 1000
-        elseif line:match("^cache size.*") then
-            local cpu_cache = line:match("([%d]+)[%s]KB")
+        elseif string.match(line, "^cache size.*") then
+            local cpu_cache = string.match(line, "([%d]+)[%s]KB")
             cpu_info["{cpu"..cpu_id.." kb}"] = cpu_cache
             cpu_info["{cpu"..cpu_id.." mb}"] = tonumber(cpu_cache) / 1024
         end

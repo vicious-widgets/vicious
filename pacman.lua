@@ -7,6 +7,7 @@
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+--local string = { match = string.match }
 -- }}}
 
 
@@ -24,7 +25,7 @@ local function worker(format)
 
     for line in f:lines() do
         -- Pacman 3.2 provides the number of available updates
-        --updates = line:match("^Targets[%s]%(([%d]+)%)") or 0
+        --updates = string.match(line, "^Targets[%s]%(([%d]+)%)") or 0
         ---- If the count changed then break out of the loop
         --if tonumber(updates) > 0 then
         --    break

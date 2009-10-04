@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+local string = { match = string.match }
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -15,7 +16,7 @@ module("vicious.gmail")
 
 
 -- User data
-local user = "" -- Todo
+local user = "" -- Todo:
 local pass = "" --  * find a safer storage
 
 -- {{{ Gmail widget type
@@ -32,10 +33,11 @@ local function worker(format, feed)
 
     -- Could be huge don't read it all at once, info we are after is at the top
     for line in f:lines() do
-        mail["{count}"] = line:match("<fullcount>([%d]+)</fullcount>") or mail["{count}"]
+        mail["{count}"] = -- Count comes before messages and matches at least 0
+          string.match(line, "<fullcount>([%d]+)</fullcount>") or mail["{count}"]
 
         -- Find subject tags
-        local title = line:match("<title>(.*)</title>")
+        local title = string.match(line, "<title>(.*)</title>")
         -- If the subject changed then break out of the loop
         if title ~= nil and  -- Todo: find a better way to deal with 1st title
            title ~= "Gmail - Label &#39;unread&#39; for "..user.."@gmail.com" then
@@ -43,8 +45,6 @@ local function worker(format, feed)
                title = helpers.escape(title)
                -- Don't abuse the wibox, truncate, then store
                mail["{subject}"] = helpers.truncate(title, 22)
-               -- By this point we have the count, it comes before
-               -- messages and always matches, at least 0
                break
         end
     end

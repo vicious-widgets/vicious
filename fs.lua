@@ -7,6 +7,7 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+local string = { match = string.match }
 -- }}}
 
 
@@ -24,10 +25,10 @@ local function worker(format, nfs)
     local fs_info = {}
 
     for line in f:lines() do
-        if not line:match("^Filesystem.*") then
+        if not string.match(line, "^Filesystem.*") then
             local size, used, avail, usep, mount =
              -- Match all at once, including network file systems
-             line:match("^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
+             string.match(line, "^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
             fs_info["{"..mount.." size}"]  = size
             fs_info["{"..mount.." used}"]  = used
