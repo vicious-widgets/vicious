@@ -9,6 +9,7 @@ local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
+local string = { match = string.match }
 -- }}}
 
 
@@ -20,35 +21,36 @@ module("vicious.mem")
 local function worker(format)
     -- Get meminfo
     local f = io.open("/proc/meminfo")
+    local mem  = { buf = {}, swp = {}, }
 
     for line in f:lines() do
-        if line:match("^MemTotal.*") then
-            mem_total = math.floor(tonumber(line:match("([%d]+)")) / 1024)
-        elseif line:match("^MemFree.*") then
-            free = math.floor(tonumber(line:match("([%d]+)")) / 1024)
-        elseif line:match("^Buffers.*") then
-            buffers = math.floor(tonumber(line:match("([%d]+)")) / 1024)
-        elseif line:match("^Cached.*") then
-            cached = math.floor(tonumber(line:match("([%d]+)")) / 1024)
-        -- Get swap stats while we're at it
-        elseif line:match("^SwapTotal.*") then
-            swap_total = math.floor(tonumber(line:match("([%d]+)")) / 1024)
-        elseif line:match("^SwapFree.*") then
-            swap_free = math.floor(tonumber(line:match("([%d]+)")) / 1024)
+        if string.match(line, "^MemTotal.*") then
+            mem.total = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+        elseif string.match(line, "^MemFree.*") then
+            mem.buf.f = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+        elseif string.match(line, "^Buffers.*") then
+            mem.buf.b = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+        elseif string.match(line, "^Cached.*") then
+            mem.buf.c = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+        -- Get swap stats while we are at it
+        elseif string.match(line, "^SwapTotal.*") then
+            mem.swp.total = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+        elseif string.match(line, "^SwapFree.*") then
+            mem.swp.free = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
         end
     end
     f:close()
 
     -- Calculate percentage
-    mem_free = free + buffers + cached
-    mem_inuse = mem_total - mem_free
-    mem_usepercent = math.floor(mem_inuse/mem_total*100)
+    mem.free  = mem.buf.f + mem.buf.b + mem.buf.c
+    mem.inuse = mem.total - mem.free
+    mem.usep  = math.floor(mem.inuse / mem.total * 100)
     -- Calculate swap percentage
-    swap_inuse = swap_total - swap_free
-    swap_usepercent = math.floor(swap_inuse/swap_total*100)
+    mem.swp.inuse = mem.swp.total - mem.swp.free
+    mem.swp.usep  = math.floor(mem.swp.inuse / mem.swp.total * 100)
 
-    return {mem_usepercent,  mem_inuse,  mem_total,  mem_free,
-            swap_usepercent, swap_inuse, swap_total, swap_free}
+    return {mem.usep,     mem.inuse,     mem.total,     mem.free,
+            mem.swp.usep, mem.swp.inuse, mem.swp.total, mem.swp.free}
 end
 -- }}}
 
