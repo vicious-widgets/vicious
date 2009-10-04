@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local io = { open = io.open }
 local setmetatable = setmetatable
+local string = { match = string.match }
 -- }}}
 
 
@@ -15,12 +16,12 @@ module("vicious.load")
 
 -- {{{ Load widget type
 local function worker(format)
-    -- Get load averages
     local f = io.open('/proc/loadavg')
     local line = f:read("*line")
     f:close()
 
-    local l1, l5, l15 = line:match("([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
+    local l1, l5, l15 =  -- Get load averages for past 1, 5 and 15 minutes
+      string.match(line, "([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
 
     return {l1, l5, l15}
 end

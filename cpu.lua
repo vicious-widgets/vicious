@@ -10,6 +10,10 @@ local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
+local string = {
+    find = string.find,
+    gmatch = string.gmatch
+}
 -- }}}
 
 
@@ -29,13 +33,13 @@ local function worker(format)
     local cpu_lines = {}
 
     for line in f:lines() do
-        if line:find("^cpu") then
+        if string.find(line, "^cpu") then
             if #cpu_lines < 1 then cpuid = 1
             else cpuid = #cpu_lines + 1 end
 
             cpu_lines[cpuid] = {}
-            for match in line:gmatch("[%s]+([%d]+)") do
-                  table.insert(cpu_lines[cpuid], match)
+            for i in string.gmatch(line, "[%s]+([%d]+)") do
+                  table.insert(cpu_lines[cpuid], i)
             end
         end
     end

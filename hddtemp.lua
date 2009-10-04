@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+local string = { match = string.match }
 -- }}}
 
 
@@ -23,7 +24,7 @@ local function worker(format, port)
     local hdd_temp = {}
 
     for line in f:lines() do
-        local disk, temp = line:match("|([%/%a]+)|.*|([%d]+)|[CF]+|")
+        local disk, temp = string.match(line, "|([%/%a]+)|.*|([%d]+)|[CF]+|")
 
         if disk ~= nil and temp ~= nil then
             hdd_temp["{"..disk.."}"] = temp

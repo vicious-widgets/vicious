@@ -7,6 +7,7 @@
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local table = { insert = table.insert }
+local string = { match = string.match }
 -- }}}
 
 
@@ -30,12 +31,12 @@ local function worker(format)
 
     for line in f:lines() do
         -- Check if the battery is present
-        if line:match("^[%s]+Battery.*") then
+        if string.match(line, "^[%s]+Battery.*") then
             -- Store state and charge information
-            table.insert(battery_info, (battery_state[line:match("([%a]*),")] or "/"))
-            table.insert(battery_info, (line:match("([%d]?[%d]?[%d])%.") or "/"))
+            table.insert(battery_info, (battery_state[string.match(line, "([%a]*),")] or "/"))
+            table.insert(battery_info, (string.match(line, "([%d]?[%d]?[%d])%.") or "/"))
             -- Store remaining time information
-            table.insert(battery_info, (line:match("%%,%s(.*)") or "/"))
+            table.insert(battery_info, (string.match(line, "%%,%s(.*)") or "/"))
         else
             return {"/", "/", "/"}
         end

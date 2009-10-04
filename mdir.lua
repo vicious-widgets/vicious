@@ -20,12 +20,12 @@ local function worker(format, mdir)
     local count = { new = 0, cur = 0 }
 
     -- Recursively find new messages
-    local f = io.popen("find " .. mdir .. " -type f -wholename '*/new/*'")
+    local f = io.popen("find "..mdir.." -type f -wholename '*/new/*'")
     for line in f:lines() do count.new = count.new + 1 end
     f:close()
 
     -- Recursively find "old" messages lacking the Seen flag
-    local f = io.popen("find " .. mdir .. " -type f -regex '.*/cur/.*2,[^S]*$'")
+    local f = io.popen("find "..mdir.." -type f -regex '.*/cur/.*2,[^S]*$'")
     for line in f:lines() do count.cur = count.cur + 1 end
     f:close()
 

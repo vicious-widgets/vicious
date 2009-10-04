@@ -10,6 +10,10 @@ local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
+local string = {
+    match = string.match,
+    gmatch = string.gmatch
+}
 -- }}}
 
 
@@ -28,14 +32,14 @@ local function worker(format, disk)
     local disk_lines = {}
 
     for line in f:lines() do
-        if line:match("("..disk..")%s") then
+        if string.match(line, "("..disk..")%s") then
             -- Todo: find a way to do this
-            --for stat in line:gmatch("%s([%d]+)") do
+            --for stat in string.gmatch(line, "%s([%d]+)") do
             --    table.insert(disk_lines, stat)
             --end
             --
             -- Skip first two matches
-            local stat = line:gmatch("%s([%d]+)")
+            local stat = string.gmatch(line, "%s([%d]+)")
             stat()
             stat()
             -- Store the rest

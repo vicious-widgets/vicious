@@ -8,6 +8,7 @@
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
+local string = { find = string.find }
 -- }}}
 
 
@@ -23,7 +24,8 @@ local function worker(format)
     f:close()
 
     -- Check if it's stopped, off or not installed
-    if np == nil or (np:find("MPD_HOST") or np:find("volume:")) then
+    if np == nil
+    or (string.find(np, "MPD_HOST") or string.find(np, "volume:")) then
         return {"Stopped"}
     end
 
@@ -31,7 +33,7 @@ local function worker(format)
     local nowplaying = helpers.escape(np)
 
     -- Don't abuse the wibox, truncate
-    local nowplaying = helpers.truncate(nowplaying, 30)
+    nowplaying = helpers.truncate(nowplaying, 30)
 
     return {nowplaying}
 end
