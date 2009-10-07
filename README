@@ -149,7 +149,7 @@ vicious.widgets.fs
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
-  - takes the disk as an argument, i.e. "/dev/hda"
+  - takes the disk as an argument, i.e. "hda"
 
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
