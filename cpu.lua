@@ -34,12 +34,10 @@ local function worker(format)
 
     for line in f:lines() do
         if string.find(line, "^cpu") then
-            if #cpu_lines < 1 then cpuid = 1
-            else cpuid = #cpu_lines + 1 end
+            cpu_lines[#cpu_lines+1] = {}
 
-            cpu_lines[cpuid] = {}
             for i in string.gmatch(line, "[%s]+([%d]+)") do
-                  table.insert(cpu_lines[cpuid], i)
+                  table.insert(cpu_lines[#cpu_lines], i)
             end
         end
     end
