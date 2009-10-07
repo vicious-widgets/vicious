@@ -3,9 +3,9 @@ Vicious
 vicious is a modular widget library for "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
 Wicked widget types, a few of them rewritten, and a good number of
-new widgets:
+new ones:
 
-  http://git.sysphere.org/vicious/
+  http://git.sysphere.org/vicious/about/
 
 
 Usage
@@ -79,29 +79,39 @@ Enable caching for a widget:
     - enable caching of values returned by a widget type
 
 
-Power
------
+Power and Caching
+-----------------
 When a lot of widgets are in use they, and awesome, can generate a lot
 of wake-ups and also be very expensive for system resources. This is
 especially important when running on battery power. Suspending widgets
 is one way to prevent widgets from draining your battery.
 
-Vicious can also cache values returned by widget types. Caching
-enables you to have multiple widgets using the same widget type and
-its worker function will be executed only once. However be careful
-with those widgets that require a widget argument to be passed. If you
-are requesting information for different devices then caching is
-useless and can lead to confusion.
-
 Update intervals also play a big role, and you can save a lot of power
-with a smart approach to intervals. You should avoid intervals like:
-5, 10, 30, 60... to avoid harmonics. If you take the 60-second mark as
-an example, all of your widgets would be executed at that
-point. Instead think about using only prime numbers, in that case you
-will have only a few widgets executed at any given time interval. When
-choosing intervals also consider what a widget actually does. Some
-widgets read files that reside in memory, others call external
-utilities and some, like the mbox widget, read very big files.
+with a smart approach. Avoid intervals like: 5, 10, 30, 60... to avoid
+harmonics. If you take the 60-second mark as an example, all of your
+widgets would be executed at that point. Instead think about using
+only prime numbers, in that case you will have only a few widgets
+executed at any given time interval. When choosing intervals also
+consider what a widget actually does. Some widget types read files
+that reside in memory, others call external utilities and some, like
+the mbox widget, read big files.
+
+Vicious can also cache values returned by widget types. Caching
+enables you to have multiple widgets using the same widget type. With
+caching its worker function gets executed only once - which is also
+great for saving power.
+
+  - Some widget types keep internal data and if you call one multiple
+    times without caching, the widget that executes it first would
+    modify stored values. This can lead to problems and give you
+    inconsistent data. Remember it for widget types like CPU and
+    Network usage, which compare the old set of data with the new one
+    to calculate usage.
+
+  - Widget types that require a widget argument to be passed should be
+    handled carefully. If you are requesting information for different
+    devices then caching should not be used, because you could get
+    inconsistent data.
 
 
 Widget types
@@ -221,11 +231,11 @@ Format functions
 You can use a function instead of a string as the format parameter, so
 you are able to check the value returned by the widget type and change
 it. You can change the color of the battery widget when it goes below
-a certain point, or hide widgets when they return a certain value,
-or...
+a certain point, or maybe hide widgets when they return a certain
+value or... you get the point.
 
-  - do not confuse this with just coloring the widget, in those cases
-    standard markup can be inserted into the format string
+  - Do not confuse this with just coloring the widget, in those cases
+    standard markup can be inserted into the format string.
 
 The format function will get the widget as its first argument, and a
 table with the values otherwise inserted into the format string as its
@@ -305,7 +315,6 @@ Battery widget
 CPU usage widget
   cpuwidget = awful.widget.graph({ layout = awful.widget.layout.horizontal.rightleft })
   cpuwidget:set_width(50)
-  cpuwidget:set_scale(false)
   cpuwidget:set_max_value(100)
   cpuwidget:set_background_color('#494B4F')
   cpuwidget:set_border_color('#3F3F3F')
@@ -326,14 +335,6 @@ authors rc.lua as a reference to see how it all fits into the big
 picture:
 
   http://git.sysphere.org/awesome-configs/
-
-
-Other uses
-----------
-You can reuse Vicious modules for objects other than widgets. Maybe
-you want to populate an awful tooltip or a naughty notification? Call
-a module directly and manipulate the result however you want, until
-you have some nicely formatted data suitable for display.
 
 
 Other
