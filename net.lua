@@ -51,8 +51,8 @@ local function worker(format)
             if nets[name] == nil then 
                 -- Default values on the first run
                 nets[name] = {}
-                args["{"..name.." down}"] = "n/a"
-                args["{"..name.." up}"] = "n/a"
+                args["{"..name.." down}"] = "N/A"
+                args["{"..name.." up}"] = "N/A"
                 
                 args["{"..name.." down_b}"] = 0
                 args["{"..name.." up_b}"] = 0

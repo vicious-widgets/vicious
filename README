@@ -1,25 +1,34 @@
 Vicious
 -------
-vicious is a modular widget library for "awesome" window manager,
+Vicious is a modular widget library for the "awesome" window manager,
 derived from the "Wicked" widget library. It has some of the old
-Wicked widget types, a few of them rewritten, and a good number of
-new ones:
+Wicked widget types, a few of them rewritten, and a good number of new
+ones:
 
   http://git.sysphere.org/vicious/about/
+
+Vicious widget types are a framework for creating your own widgets.
+Before using a widget type *you* need to ensure that a valid source of
+information exists.
 
 
 Usage
 -----
-To use vicious copy it to the ~/.config/awesome directory, edit
-init.lua and comment out all the widgets you don't need from the
-"Configure widgets" list. Then add:
+To use vicious move it to your awesome configuration directory in
+$XDG_CONFIG_HOME (usually ~/.config):
+
+  $ mv vicious $XDG_CONFIG_HOME/awesome/
+
+Your first step should be editing init.lua to comment out all the
+widget types you don't need from the "Configure widgets" list. It is
+not required but I suggest you do so to avoid having useless modules
+sitting in your memory.
+
+Then add the following to the top of your rc.lua:
 
   require("vicious")
 
-...to the top of your rc.lua.
-
-
-Once you create a widget (as a: textbox, graph or a progressbar) call
+Once you create a widget (a textbox, graph or a progressbar) call
 vicious.register() to register it with vicious:
 
   vicious.register(widget, type, format, interval, field, warg)
@@ -54,28 +63,23 @@ vicious.register() to register it with vicious:
 Other functions
 ---------------
 Unregister a widget:
-
   vicious.unregister(widget, keep)
 
-    keep
-      - if true widget will be suspended, waiting to be activated
+    - if keep is true widget will be suspended, waiting to be
+      activated
 
 Suspend all widgets:
-
   vicious.suspend()
 
     - example automation script for the "laptop-mode-tools" start-stop
       module: http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh
 
 Restart suspended widgets:
-
   vicious.activate(widget)
 
-    widget
-      - if provided, only that widget will be activated
+    - if widget is provided only that widget will be activated
 
 Enable caching for a widget:
-
   vicious.enable_caching(widget_type)
 
     - enable caching of values returned by a widget type
@@ -86,7 +90,7 @@ Power and Caching
 When a lot of widgets are in use they, and awesome, can generate a lot
 of wake-ups and also be very expensive for system resources. This is
 especially important when running on battery power. Suspending widgets
-is one way to prevent widgets from draining your battery.
+is one way to prevent them from draining your battery.
 
 Update intervals also play a big role, and you can save a lot of power
 with a smart approach. Avoid intervals like: 5, 10, 30, 60... to avoid
@@ -108,7 +112,7 @@ great for saving power.
     modify stored values. This can lead to problems and give you
     inconsistent data. Remember it for widget types like CPU and
     Network usage, which compare the old set of data with the new one
-    to calculate usage.
+    to calculate current usage.
 
   - Widget types that require a widget argument to be passed should be
     handled carefully. If you are requesting information for different
@@ -125,147 +129,175 @@ string.
 
 vicious.widgets.cpu
   - provides CPU usage for all available CPUs/cores
+  - returns 1st value as usage of all CPUs/cores, 2nd as usage of
+    first CPU/core, 3rd as usage of second CPU/core etc.
 
 vicious.widgets.cpuinf
   - provides speed and cache information for all available CPUs/cores
+  - returns a table with custom keys, using CPU ID as a base:
+    {cpu0 mhz}, {cpu0 ghz}, {cpu0 kb}, {cpu0 mb}, {cpu1 mhz} etc.
 
 vicious.widgets.cpufreq
   - provides freq, voltage and governor info for a requested CPU
   - takes the CPU ID as an argument, i.e. "cpu0"
+  - returns 1st value as frequency of requested CPU in MHz, 2nd in
+    GHz, 3rd as voltage in mV, 4th as voltage in V and 5th as the
+    governor state
 
 vicious.widgets.thermal
   - provides temperature levels of ACPI thermal zones
   - takes the thermal zone as an argument, i.e. "TZS0"
+  - returns 1st value as temperature of requested thermal zone
 
 vicious.widgets.load
   - provides system load averages for the past 1, 5, and 15 minutes
+  - returns 1st value as load average for past 1 minute, 2nd for 5
+    minutes and 3rd for 15 minutes
 
 vicious.widgets.uptime
   - provides system uptime information
+  - returns 1st value as total uptime, 2nd as uptime in days, 3rd as
+    uptime in hours, 4th as uptime in minutes and 5th as uptime in
+    seconds
 
 vicious.widgets.bat
   - provides state, charge, and remaining time for a requested battery
   - takes battery ID as an argument, i.e. "BAT0"
+  - returns 1st value as state of requested battery, 2nd as charge
+    level in percent and 3rd as remaining (charging or discharging)
+    time
 
 vicious.widgets.batat
   - provides state, charge, and remaining time for all batteries using
     acpitool
+  - returns 1st value as state of the first battery, 2nd as charge
+    level in percent, 3rd as remaining (charging or discharging) time,
+    4th as state of the second battery etc.
 
 vicious.widgets.mem
   - provides RAM and Swap usage statistics
+  - returns 1st value as memory usage in percent, 2nd as memory usage,
+    3rd as total system memory, 4th as free memory, 5th as swap usage
+    in percent, 6th as swap usage, 7th as total system swap and 8th as
+    free swap
 
 vicious.widgets.fs
   - provides file system disk space usage
   - takes an (optional) argument which, if true, includes remote file
     systems, only local file systems are included by default
+  - returns a table with custom keys, using mount points as a base:
+    {/ size}, {/ used}, {/ avail}, {/ usep}, {/home size} etc.
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
   - takes the disk as an argument, i.e. "hda"
+  - returns a table with custom keys: {raw}, {kb} and {mb}
 
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
   - takes the hddtemp listening port as an argument, or defaults to
     port 7634
+  - returns a table with custom keys, using hard drives as a base:
+    {/dev/hda} and {/dev/sda} for example
 
 vicious.widgets.net
   - provides usage statistics for all network interfaces
+  - returns a table with custom keys, using net interfaces as a base:
+    {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb}, {eth0 rx_mb},
+    {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down}, {eth0 up},
+    {eth0 down_b}, {eth0 up_b}, {eth0 down_kb}, {eth0 up_kb},
+    {eth0 down_mb}, {eth0 up_mb}, {eth0 down_gb}, {eth0 up_gb},
+    {eth1 rx_b} etc.
 
 vicious.widgets.wifi
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
+  - returns a table with custom keys: {ssid}, {mode}, {chan}, {rate},
+    {link} and {sign}
 
 vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
   - takes the full path to the mbox as an argument
+  - returns 1st value as the subject of the last e-mail
 
 vicious.widgets.mboxc
   - provides the count of total, old and new messages in mbox files
   - takes a table with full paths to mbox files as an argument
+  - returns 1st value as the total count of messages, 2nd as the count
+    of old messages and 3rd as the count of new messages
 
 vicious.widgets.mdir
   - provides a number of new and unread messages in a Maildir
     structure
   - takes the full path to the Maildir structure as an argument
+  - returns 1st value as the count of new messages and 2nd as the
+    count of "old" messages lacking the Seen flag
 
 vicious.widgets.gmail
   - provides count of new and subject of last e-mail on Gmail
+  - returns a table with custom keys: {count} and {subject}
 
 vicious.widgets.entropy
   - provides available system entropy
   - takes the poolsize as an argument, or uses to Linux 2.6 default
     entropy pool of 4096-bits
+  - returns 1st value as available system entropy and 2nd value as
+    available entropy in percent
 
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode
   - takes a table with full paths to agenda files, that will be
     parsed, as an argument
+  - returns 1st value as count of tasks you forgot to do, 2nd as count
+    of tasks for today, 3rd as count of tasks for the next 3 days and
+    4th as count of tasks to do in the week
 
 vicious.widgets.pacman
   - provides number of pending updates on Arch Linux
+  - returns 1st value as the count of available updates
 
 vicious.widgets.mpd
   - provides the currently playing song in MPD
+  - returns 1st value as the currently playing song
 
 vicious.widgets.volume
   - provides volume levels of requested ALSA mixers
   - takes the ALSA channel as an argument, i.e. "Master"
+  - returns 1st value as the volume level of the requested channel
 
 vicious.widgets.weather
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
+  - returns a table with custom keys: {city}, {wind}, {windmph},
+    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
 
 vicious.widgets.date
   - provides access to os.date, with optional custom formatting;
     provided as the format string
+  - returns the output of os.date(), formatted by provided sequences
 
 
 Custom widget types
 -------------------
-Use any of the existing widgets as a starting point for your
+Use any of the existing widget types as a starting point for your
 own. Write a quick worker function that does the work and plug it
 in. How data will be formatted, will it be red or blue, should be
-defined in rc.lua (or somewhere else, outside the actual widget).
-
-
-Format functions
-----------------
-You can use a function instead of a string as the format parameter, so
-you are able to check the value returned by the widget type and change
-it. You can change the color of the battery widget when it goes below
-a certain point, or maybe hide widgets when they return a certain
-value or... you get the point.
-
-  - Do not confuse this with just coloring the widget, in those cases
-    standard markup can be inserted into the format string.
-
-The format function will get the widget as its first argument, and a
-table with the values otherwise inserted into the format string as its
-second argument, and should return the text to be used for the widget.
-
-Example widget
-  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
-  vicious.register(mpdwidget,vicious.widgets.mpd,
-    function (widget, args)
-      if   args[1] == "Stopped" then return ''
-      else return '<span color="white">MPD:</span> '..args[1]
-      end
-    end)
-
-  - hides the mpd widget when there is no song playing, executed every
-    2 seconds (the default interval)
+defined in rc.lua (or somewhere else, outside the actual module).
 
 
 Usage examples
 --------------
-Remember, beside creating and registering widgets you have to add them
-to a wibox in order to display them.
+Start with a simple widget, like date. Then build your setup from
+there, one widget at a time. Also remember that besides creating and
+registering widgets you have to add them to a wibox (statusbar) in
+order to actually display them.
 
-MPD widget
-  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
-  vicious.register(mpdwidget, vicious.widgets.mpd, '$1', 11)
+Date widget
+  datewidget = widget({ type = 'textbox', name = 'datewidget' })
+  vicious.register(datewidget, vicious.widgets.date, '%b %d, %R')
 
-  - executed every 11 seconds, takes no arguments
+  - executed every 2 seconds (the default interval), uses standard
+    date sequences as the format string
 
 Memory widget
   memwidget = widget({ type = 'textbox', name = 'memwidget' })
@@ -280,7 +312,7 @@ HDD temperature widget
   vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 19)
 
   - executed every 19 seconds, requests the temperature level of the
-    ${/dev/sda} key/disk and appends "°C" to the returned value, does
+    {/dev/sda} key/disk and appends "°C" to the returned value, does
     not provide the port argument so default port is used
 
 Mbox widget
@@ -289,12 +321,6 @@ Mbox widget
 
   - executed every 5 seconds, provides full path to the mbox as an
     argument
-
-Gmail widget
-  gmailwidget = widget({ type = 'textbox', name = 'gmailwidget' })
-  vicious.register(gmailwidget, vicious.widgets.gmail, 'Mail: ${count}', 601)
-
-  - executed every 10 minutes and prepends "Mail: " to the returned value
 
 Battery widget
   batwidget = widget({ type = 'progressbar', name = 'batwidget' })
@@ -340,19 +366,43 @@ CPU usage widget
     total usage percentage of all CPUs/cores
 
 
-All other widgets are used in the same manner, read each widget you
-are interested in to see what data it returns. You can also use
-authors rc.lua as a reference to see how it all fits into the big
-picture:
+Format functions
+----------------
+You can use a function instead of a string as the format parameter.
+Then you are able to check the value returned by the widget type and
+change it or perform some action. You can change the color of the
+battery widget when it goes below a certain point, or maybe hide
+widgets when they return a certain value or... you get the point.
 
-  http://git.sysphere.org/awesome-configs/tree/rc.lua?id=9abcf6c
+  - Do not confuse this with just coloring the widget, in those cases
+    standard markup can be inserted into the format string.
+
+The format function will get the widget as its first argument, and a
+table with the values otherwise inserted into the format string as its
+second argument, and should return the text to be used for the widget.
+
+Example widget
+  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
+  vicious.register(mpdwidget,vicious.widgets.mpd,
+    function (widget, args)
+      if   args[1] == "Stopped" then return ''
+      else return '<span color="white">MPD:</span> '..args[1]
+      end
+    end)
+
+  - hides the mpd widget when there is no song playing, executed every
+    2 seconds (the default interval)
 
 
 Other
 -----
-Also read "awesome" manual pages:
+Read "awesome" manual pages:
 
   awesome(1)  awesomerc(5)
+
+Authors "awesome" configuration:
+
+  http://git.sysphere.org/awesome-configs/tree/rc.lua?id=9abcf6c
 
 
 Authors
