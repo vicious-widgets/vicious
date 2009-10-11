@@ -3,7 +3,7 @@
 --  * (c) 2009, olcc
 --
 -- This is now a standalone RSS reader for awesome:
---  * http://gitorious.org/aware
+--  * http://github.com/olcc/aware
 ---------------------------------------------------
 
 -- {{{ Grab environment
