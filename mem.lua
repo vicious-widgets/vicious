@@ -5,7 +5,6 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
@@ -25,18 +24,18 @@ local function worker(format)
 
     for line in f:lines() do
         if string.match(line, "^MemTotal.*") then
-            mem.total = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.total = math.floor(string.match(line, "([%d]+)")/1024)
         elseif string.match(line, "^MemFree.*") then
-            mem.buf.f = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.buf.f = math.floor(string.match(line, "([%d]+)")/1024)
         elseif string.match(line, "^Buffers.*") then
-            mem.buf.b = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.buf.b = math.floor(string.match(line, "([%d]+)")/1024)
         elseif string.match(line, "^Cached.*") then
-            mem.buf.c = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.buf.c = math.floor(string.match(line, "([%d]+)")/1024)
         -- Get swap stats while we are at it
         elseif string.match(line, "^SwapTotal.*") then
-            mem.swp.total = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.swp.total = math.floor(string.match(line, "([%d]+)")/1024)
         elseif string.match(line, "^SwapFree.*") then
-            mem.swp.free = math.floor(tonumber(string.match(line, "([%d]+)"))/1024)
+            mem.swp.free = math.floor(string.match(line, "([%d]+)")/1024)
         end
     end
     f:close()
