@@ -5,7 +5,6 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
@@ -24,7 +23,7 @@ local function worker(format)
     local line = f:read("*line")
     f:close()
 
-    local up_t = math.floor(tonumber(string.match(line, "[%d%.]+")))
+    local up_t = math.floor(string.match(line, "[%d]+"))
     local up_d = math.floor(up_t   / (3600 * 24))
     local up_h = math.floor((up_t  % (3600 * 24)) / 3600)
     local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
