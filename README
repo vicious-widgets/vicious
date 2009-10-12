@@ -296,7 +296,7 @@ Date widget
   datewidget = widget({ type = 'textbox', name = 'datewidget' })
   vicious.register(datewidget, vicious.widgets.date, '%b %d, %R')
 
-  - executed every 2 seconds (the default interval), uses standard
+  - updated every 2 seconds (the default interval), uses standard
     date sequences as the format string
 
 Memory widget
@@ -304,14 +304,14 @@ Memory widget
   vicious.enable_caching(vicious.widgets.mem)
   vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
-  - executed every 13 seconds, appends "MB" to 2nd and 3rd returned
+  - updated every 13 seconds, appends "MB" to 2nd and 3rd returned
     values and enables caching of this widget type
 
 HDD temperature widget
   hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
   vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 19)
 
-  - executed every 19 seconds, requests the temperature level of the
+  - updated every 19 seconds, requests the temperature level of the
     {/dev/sda} key/disk and appends "°C" to the returned value, does
     not provide the port argument so default port is used
 
@@ -319,7 +319,7 @@ Mbox widget
   mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
   vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 5, nil, '/home/user/mail/Inbox')
 
-  - executed every 5 seconds, provides full path to the mbox as an
+  - updated every 5 seconds, provides full path to the mbox as an
     argument
 
 Battery widget
@@ -371,8 +371,8 @@ Format functions
 You can use a function instead of a string as the format parameter.
 Then you are able to check the value returned by the widget type and
 change it or perform some action. You can change the color of the
-battery widget when it goes below a certain point, or maybe hide
-widgets when they return a certain value or... you get the point.
+battery widget when it goes below a certain point, hide widgets when
+they return a certain value or maybe use string.format for padding.
 
   - Do not confuse this with just coloring the widget, in those cases
     standard markup can be inserted into the format string.
@@ -381,7 +381,7 @@ The format function will get the widget as its first argument, and a
 table with the values otherwise inserted into the format string as its
 second argument, and should return the text to be used for the widget.
 
-Example widget
+Example
   mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
   vicious.register(mpdwidget,vicious.widgets.mpd,
     function (widget, args)
@@ -390,8 +390,18 @@ Example widget
       end
     end)
 
-  - hides the mpd widget when there is no song playing, executed every
+  - hides the mpd widget when there is no song playing, updated every
     2 seconds (the default interval)
+
+Example
+  uptimewidget = widget({ type = 'textbox', name = 'uptimewidget' })
+  vicious.register(uptimewidget, vicious.widgets.uptime,
+    function (widget, args)
+      return string.format('Uptime: %2dd %02d:%02d ', args[2], args[3], args[4])
+    end, 61)
+
+  - uses string.format for padding uptime values to a minimum amount
+    of digits, updated every 61 seconds
 
 
 Other
