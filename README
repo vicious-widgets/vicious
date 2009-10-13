@@ -291,14 +291,14 @@ registering widgets you have to add them to a wibox (statusbar) in
 order to actually display them.
 
 Date widget
-  datewidget = widget({ type = 'textbox', name = 'datewidget' })
+  datewidget = widget({ type = 'textbox' })
   vicious.register(datewidget, vicious.widgets.date, '%b %d, %R')
 
   - updated every 2 seconds (the default interval), uses standard
     date sequences as the format string
 
 Memory widget
-  memwidget = widget({ type = 'textbox', name = 'memwidget' })
+  memwidget = widget({ type = 'textbox' })
   vicious.enable_caching(vicious.widgets.mem)
   vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
@@ -306,7 +306,7 @@ Memory widget
     values and enables caching of this widget type
 
 HDD temperature widget
-  hddtempwidget = widget({ type = 'textbox', name = 'hddtempwidget' })
+  hddtempwidget = widget({ type = 'textbox' })
   vicious.register(hddtempwidget, vicious.widgets.hddtemp, '${/dev/sda}°C', 19)
 
   - updated every 19 seconds, requests the temperature level of the
@@ -314,7 +314,7 @@ HDD temperature widget
     not provide the port argument so default port is used
 
 Mbox widget
-  mboxwidget = widget({ type = 'textbox', name = 'mboxwidget' })
+  mboxwidget = widget({ type = 'textbox' })
   vicious.register(mboxwidget, vicious.widgets.mbox, '$1', 5, '/home/user/mail/Inbox')
 
   - updated every 5 seconds, provides full path to the mbox as an
@@ -364,7 +364,7 @@ table with the values otherwise inserted into the format string as its
 second argument, and should return the text to be used for the widget.
 
 Example
-  mpdwidget = widget({ type = 'textbox', name = 'mpdwidget' })
+  mpdwidget = widget({ type = 'textbox' })
   vicious.register(mpdwidget,vicious.widgets.mpd,
     function (widget, args)
       if   args[1] == "Stopped" then return ''
@@ -376,7 +376,7 @@ Example
     2 seconds (the default interval)
 
 Example
-  uptimewidget = widget({ type = 'textbox', name = 'uptimewidget' })
+  uptimewidget = widget({ type = 'textbox' })
   vicious.register(uptimewidget, vicious.widgets.uptime,
     function (widget, args)
       return string.format('Uptime: %2dd %02d:%02d ', args[2], args[3], args[4])
