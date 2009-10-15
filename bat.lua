@@ -63,6 +63,9 @@ local function worker(format, batid)
     -- Calculate percentage
     local percent = math.floor(remaining / capacity * 100)
     local percent = string.format("%02d", percent)
+    -- Work around broken batteries and/or ACPI implementations
+    if state == "↯" and tonumber(percent) > 100 then percent = 100 end
+
 
     -- Calculate remaining (charging or discharging) time
     if state == "+" then
