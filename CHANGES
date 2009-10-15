@@ -1,3 +1,15 @@
+97d2ecb bat: better returns when handling insufficient data
+4d1af1e bat: better fix for ACPI, from bioe007
+2cfdd5a bat: quick fix for broken BAT/ACPI implementations
+64464ef README: removed obsolete widget names
+11985f6 README: added padding example
+feca5da mem: tonumber is redudant
+7f3d31e uptime: fixed problem discovered by jabbas
+65e57fa README: document tables returned by widget types
+893a85c README: caching documentation improved
+00e7b2d README: fixed disk i/o warg documentation
+0eea1a1 cpu: simplified CPU identification
+e252fd9 Next release, tag 1.0.17
 a2b9de4 mem: widget type rewritten
 c84f515 mbox: read a 30kb chunk by default
 4602ca2 Lots of coding style changes
