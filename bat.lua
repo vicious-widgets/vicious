@@ -7,7 +7,10 @@
 local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
-local math = { floor = math.floor }
+local math = {
+    min = math.min,
+    floor = math.floor
+}
 local string = {
     find = string.find,
     match = string.match,
@@ -60,12 +63,8 @@ local function worker(format, batid)
     local remaining = string.match(statefile, "remaining capacity:[%s]+([%d]+).*")
 
 
-    -- Calculate percentage
-    local percent = math.floor(remaining / capacity * 100)
-    local percent = string.format("%02d", percent)
-    -- Work around broken batteries and/or ACPI implementations
-    if state == "↯" and tonumber(percent) > 100 then percent = 100 end
-
+    -- Calculate percentage (but work around broken BAT/ACPI implementations)
+    local percent = math.min(math.floor(remaining / capacity * 100), 100)
 
     -- Calculate remaining (charging or discharging) time
     if state == "+" then
