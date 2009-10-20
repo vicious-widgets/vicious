@@ -62,13 +62,13 @@ widgets = {}
 -- }}}
 
 -- {{{ Widget types
-for w, i in pairs(_M) do
+for i, w in pairs(_M) do
     -- Ensure we don't call ourselves
-    if i and i ~= _M and type(i) == "table" then
+    if w and w ~= _M and type(w) == "table" then
         -- Ignore the function table and helpers
-        if w ~= "widgets" and w ~= "helpers" then
+        if i ~= "widgets" and i ~= "helpers" then
             -- Place widgets in the namespace table
-            widgets[w] = i
+            widgets[i] = w
         end
     end
 end
@@ -257,7 +257,7 @@ function update(widget, reg, disablecache)
     end
 
     if widget.add_value ~= nil then
-        widget:add_value(tonumber(data))
+        widget:add_value(tonumber(data) / 100)
     elseif widget.set_value ~= nil then
         widget:set_value(tonumber(data) / 100)
     else

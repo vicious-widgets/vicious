@@ -338,7 +338,6 @@ Battery widget
 CPU usage widget
   cpuwidget = awful.widget.graph()
   cpuwidget:set_width(50)
-  cpuwidget:set_max_value(100)
   cpuwidget:set_background_color('#494B4F')
   cpuwidget:set_color('#FF5656')
   cpuwidget:set_gradient_colors({ '#FF5656', '#88A175', '#AECF96' })
