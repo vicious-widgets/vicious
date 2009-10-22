@@ -207,10 +207,9 @@ vicious.widgets.net
   - provides usage statistics for all network interfaces
   - returns a table with custom keys, using net interfaces as a base:
     {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb}, {eth0 rx_mb},
-    {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down}, {eth0 up},
-    {eth0 down_b}, {eth0 up_b}, {eth0 down_kb}, {eth0 up_kb},
-    {eth0 down_mb}, {eth0 up_mb}, {eth0 down_gb}, {eth0 up_gb},
-    {eth1 rx_b} etc.
+    {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b}, {eth0 up_b},
+    {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb}, {eth0 up_mb},
+    {eth0 down_gb}, {eth0 up_gb}, {eth1 rx_b} etc.
 
 vicious.widgets.wifi
   - provides wireless information for a requested interface

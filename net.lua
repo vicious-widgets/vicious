@@ -10,7 +10,6 @@ local tonumber = tonumber
 local os = { time = os.time }
 local io = { open = io.open }
 local setmetatable = setmetatable
-local math = { floor = math.floor }
 local string = {
     match = string.match,
     format = string.format
