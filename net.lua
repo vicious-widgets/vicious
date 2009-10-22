@@ -1,6 +1,7 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc.sysphere.org>
+--  * (c) 2009, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2009, Henning Glawe <glaweh@debian.org>
 --  * (c) Wicked, Lucas de Vries
 ---------------------------------------------------
 
@@ -10,7 +11,10 @@ local os = { time = os.time }
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
-local string = { match = string.match }
+local string = {
+    match = string.match,
+    format = string.format
+}
 -- }}}
 
 
@@ -27,6 +31,15 @@ local function worker(format)
     local f = io.open("/proc/net/dev")
     local args = {}
 
+    local function uformat(array, key, value)
+        array["{"..key.."_b}"]  = string.format("%.1f", value)
+        array["{"..key.."_kb}"] = string.format("%.1f", value/1024)
+        array["{"..key.."_mb}"] = string.format("%.1f", value/1024/1024)
+        array["{"..key.."_gb}"] = string.format("%.1f", value/1024/1024/1024)
+
+        return array
+    end
+
     for line in f:lines() do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
         if string.match(line, "^[%s]?[%s]?[%s]?[%s]?[%w]+:") then
@@ -36,35 +49,14 @@ local function worker(format)
             local send = -- Transmited bytes, 7 fields from end of the line
              tonumber(string.match(line, "([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
 
-            args["{"..name.." rx_b}"]  = math.floor(recv*10)/10
-            args["{"..name.." tx_b}"]  = math.floor(send*10)/10
-            
-            args["{"..name.." rx_kb}"] = math.floor(recv/1024*10)/10
-            args["{"..name.." tx_kb}"] = math.floor(send/1024*10)/10
-
-            args["{"..name.." rx_mb}"] = math.floor(recv/1024/1024*10)/10
-            args["{"..name.." tx_mb}"] = math.floor(send/1024/1024*10)/10
-
-            args["{"..name.." rx_gb}"] = math.floor(recv/1024/1024/1024*10)/10
-            args["{"..name.." tx_gb}"] = math.floor(send/1024/1024/1024*10)/10
+            uformat(args, name .. " rx", recv)
+            uformat(args, name .. " tx", send)
 
             if nets[name] == nil then 
                 -- Default values on the first run
                 nets[name] = {}
-                args["{"..name.." down}"] = "N/A"
-                args["{"..name.." up}"] = "N/A"
-                
-                args["{"..name.." down_b}"] = 0
-                args["{"..name.." up_b}"] = 0
-
-                args["{"..name.." down_kb}"] = 0
-                args["{"..name.." up_kb}"] = 0
-
-                args["{"..name.." down_mb}"] = 0
-                args["{"..name.." up_mb}"] = 0
-
-                args["{"..name.." down_gb}"] = 0
-                args["{"..name.." up_gb}"] = 0
+                uformat(args, name .. " down", 0)
+                uformat(args, name .. " up", 0)
 
                 nets[name].time = os.time()
             else
@@ -75,17 +67,8 @@ local function worker(format)
                 local down = (recv - nets[name][1])/interval
                 local up   = (send - nets[name][2])/interval
 
-                args["{"..name.." down_b}"] = math.floor(down*10)/10
-                args["{"..name.." up_b}"] = math.floor(up*10)/10
-
-                args["{"..name.." down_kb}"] = math.floor(down/1024*10)/10
-                args["{"..name.." up_kb}"] = math.floor(up/1024*10)/10
-
-                args["{"..name.." down_mb}"] = math.floor(down/1024/1024*10)/10
-                args["{"..name.." up_mb}"] = math.floor(up/1024/1024*10)/10
-
-                args["{"..name.." down_gb}"] = math.floor(down/1024/1024/1024*10)/10
-                args["{"..name.." up_gb}"] = math.floor(up/1024/1024/1024*10)/10
+                uformat(args, name .. " down", down)
+                uformat(args, name .. " up", up)
             end
 
             -- Store totals
