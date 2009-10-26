@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -23,7 +24,7 @@ local function worker(format)
     local l1, l5, l15 =  -- Get load averages for past 1, 5 and 15 minutes
       string.match(line, "([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
 
-    return {l1, l5, l15}
+    return {tonumber(l1), tonumber(l5), tonumber(l15)}
 end
 -- }}}
 

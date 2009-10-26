@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -24,7 +25,7 @@ local function worker(format, feed)
     local auth = user .. ":" .. pass
     local feed = feed or "https://mail.google.com/mail/feed/atom/unread"
     local mail = {
-        ["{count}"]   = "0",
+        ["{count}"]   = 0,
         ["{subject}"] = "N/A"
     }
 
@@ -34,7 +35,7 @@ local function worker(format, feed)
     -- Could be huge don't read it all at once, info we are after is at the top
     for line in f:lines() do
         mail["{count}"] = -- Count comes before messages and matches at least 0
-          string.match(line, "<fullcount>([%d]+)</fullcount>") or mail["{count}"]
+          tonumber(string.match(line, "<fullcount>([%d]+)</fullcount>")) or mail["{count}"]
 
         -- Find subject tags
         local title = string.match(line, "<title>(.*)</title>")

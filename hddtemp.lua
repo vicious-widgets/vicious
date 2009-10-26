@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -27,7 +28,7 @@ local function worker(format, port)
         local disk, temp = string.match(line, "|([%/%a]+)|.*|([%d]+)|[CF]+|")
 
         if disk ~= nil and temp ~= nil then
-            hdd_temp["{"..disk.."}"] = temp
+            hdd_temp["{"..disk.."}"] = tonumber(temp)
         end
     end
     f:close()

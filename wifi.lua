@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = {
@@ -30,7 +31,7 @@ local function worker(format, iface)
         ["{mode}"] = "N/A",
         ["{chan}"] = "N/A",
         ["{rate}"] = "N/A",
-        ["{link}"] = "N/A",
+        ["{link}"] = 0,
         ["{sign}"] = "N/A"
     }
 
@@ -47,13 +48,13 @@ local function worker(format, iface)
     winfo["{mode}"] =  -- Modes are simple, but also match the "-" in Ad-Hoc
       string.match(iw, "Mode[=:]([%w%-]*)") or winfo["{mode}"]
     winfo["{chan}"] =  -- Channels are plain digits
-      string.match(iw, "Channel[=:]([%d]+)") or winfo["{chan}"]
+      tonumber(string.match(iw, "Channel[=:]([%d]+)") or winfo["{chan}"])
     winfo["{rate}"] =  -- Bitrate can start with a space and we want to display Mb/s
       string.match(iw, "Bit Rate[=:]([%s]?[%d%.]*[%s][%/%a]+)") or winfo["{rate}"]
 --  winfo["{link}"] =  -- Link quality can contain a slash: 32/100
 --    string.match(iw, "Link Quality[=:]([%d]+[%/%d]*)") or winfo["{link}"]
-    winfo["{link}"] =  --  * match only the first number, great data for a progressbar
-      string.match(iw, "Link Quality[=:]([%d]+)") or winfo["{link}"]
+    winfo["{link}"] =  --  * match only the first number, also suitable for a progressbar
+      tonumber(string.match(iw, "Link Quality[=:]([%d]+)") or winfo["{link}"])
     winfo["{sign}"] =  -- Signal level can be a negative value, also display decibel notation
       string.match(iw, "Signal level[=:]([%-%d]+[%s][%a]*)") or winfo["{sign}"]
 

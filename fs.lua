@@ -5,6 +5,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -30,10 +31,10 @@ local function worker(format, nfs)
              -- Match all at once, including network file systems
              string.match(line, "^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
-            fs_info["{"..mount.." size}"]  = size
-            fs_info["{"..mount.." used}"]  = used
-            fs_info["{"..mount.." avail}"] = avail
-            fs_info["{"..mount.." usep}"]  = usep
+            fs_info["{"..mount.." size}"]  = tonumber(size)
+            fs_info["{"..mount.." used}"]  = tonumber(used)
+            fs_info["{"..mount.." avail}"] = tonumber(avail)
+            fs_info["{"..mount.." usep}"]  = tonumber(usep)
         end
     end
     f:close()

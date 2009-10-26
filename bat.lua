@@ -36,13 +36,13 @@ local function worker(format, batid)
     -- Get /proc/acpi/battery info
     local f = io.open("/proc/acpi/battery/"..batid.."/info")
     -- Handler for incompetent users
-    if not f then return {battery_state["unknown"], "0", "N/A"} end
+    if not f then return {battery_state["unknown"], 0, "N/A"} end
     local infofile = f:read("*all")
     f:close()
 
     -- Check if the battery is present
     if infofile == nil or string.find(infofile, "present:[%s]+no") then
-        return {battery_state["unknown"], "0", "N/A"}
+        return {battery_state["unknown"], 0, "N/A"}
     end
 
     -- Get capacity information

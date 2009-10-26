@@ -26,13 +26,13 @@ local function worker(format)
         if string.match(line, "^processor.*") then
             cpu_id = string.match(line, "([%d]+)")
         elseif string.match(line, "^cpu MHz.*") then
-            local cpu_speed = string.match(line, "([%d]+)%.")
+            local cpu_speed = tonumber(string.match(line, "([%d]+)%."))
             cpu_info["{cpu"..cpu_id.." mhz}"] = cpu_speed
-            cpu_info["{cpu"..cpu_id.." ghz}"] = tonumber(cpu_speed) / 1000
+            cpu_info["{cpu"..cpu_id.." ghz}"] = cpu_speed / 1000
         elseif string.match(line, "^cache size.*") then
-            local cpu_cache = string.match(line, "([%d]+)[%s]KB")
+            local cpu_cache = tonumber(string.match(line, "([%d]+)[%s]KB"))
             cpu_info["{cpu"..cpu_id.." kb}"] = cpu_cache
-            cpu_info["{cpu"..cpu_id.." mb}"] = tonumber(cpu_cache) / 1024
+            cpu_info["{cpu"..cpu_id.." mb}"] = cpu_cache / 1024
         end
     end
     f:close()

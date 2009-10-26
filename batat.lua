@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local table = { insert = table.insert }
@@ -34,11 +35,11 @@ local function worker(format)
         if string.match(line, "^[%s]+Battery.*") then
             -- Store state and charge information
             table.insert(battery_info, (battery_state[string.match(line, "([%a]*),") or "unknown"]))
-            table.insert(battery_info, (string.match(line, "([%d]?[%d]?[%d])%.") or "0"))
+            table.insert(battery_info, (tonumber(string.match(line, "([%d]?[%d]?[%d])%.")) or 0))
             -- Store remaining time information
             table.insert(battery_info, (string.match(line, "%%,%s(.*)") or "N/A"))
         else
-            return {battery_state["unknown"], "0", "N/A"}
+            return {battery_state["unknown"], 0, "N/A"}
         end
     end
     f:close()

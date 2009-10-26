@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local string = {
@@ -45,7 +46,7 @@ local function worker(format, cpuid)
     local f = io.open("/sys/devices/system/cpu/"..cpuid.."/cpufreq/scaling_voltages")
     if f then for line in f:lines() do
         if string.find(line, "^"..freq) then
-            voltage.mv = string.match(line, "[%d]+[%s]([%d]+)")
+            voltage.mv = tonumber(string.match(line, "[%d]+[%s]([%d]+)"))
             break
         end
       end

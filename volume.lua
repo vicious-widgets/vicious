@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = {
@@ -24,8 +25,8 @@ local function worker(format, channel)
     local mixer = f:read("*all")
     f:close()
 
-    local vol = string.match(mixer, "([%d]?[%d]?[%d])%%")
-    -- If muted return 0 (not "Mute") so we dont break progressbars
+    local vol = tonumber(string.match(mixer, "([%d]?[%d]?[%d])%%"))
+    -- If mute return 0 (not "Mute") so we don't break progressbars
     if string.find(mixer, "%[off%]") or vol == nil then
         vol = 0
     end

@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -19,11 +20,11 @@ local function worker(format, thermal_zone)
     -- Get an ACPI thermal zone
     local f = io.open("/proc/acpi/thermal_zone/"..thermal_zone.."/temperature")
     -- Handler for incompetent users
-    if not f then return {"N/A"} end
+    if not f then return {0} end
     local line = f:read("*line")
     f:close()
 
-    local temperature = string.match(line, "[%d]?[%d]?[%d]")
+    local temperature = tonumber(string.match(line, "[%d]?[%d]?[%d]"))
 
     return {temperature}
 end

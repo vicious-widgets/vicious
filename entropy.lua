@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { ceil = math.ceil }
@@ -21,7 +22,7 @@ local function worker(format, poolsize)
 
     -- Get available entropy
     local f = io.open("/proc/sys/kernel/random/entropy_avail")
-    local ent = f:read("*line")
+    local ent = tonumber(f:read("*line"))
     f:close()
 
     -- Calculate percentage
