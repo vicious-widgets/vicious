@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
@@ -21,9 +22,9 @@ local user = "" -- Todo:
 local pass = "" --  * find a safer storage
 
 -- {{{ Gmail widget type
-local function worker(format, feed)
+local function worker(format, warg)
     local auth = user .. ":" .. pass
-    local feed = feed or "https://mail.google.com/mail/feed/atom/unread"
+    local feed = "https://mail.google.com/mail/feed/atom/unread"
     local mail = {
         ["{count}"]   = 0,
         ["{subject}"] = "N/A"
@@ -40,12 +41,19 @@ local function worker(format, feed)
         -- Find subject tags
         local title = string.match(line, "<title>(.*)</title>")
         -- If the subject changed then break out of the loop
-        if title ~= nil and  -- Todo: find a better way to deal with 1st title
+        if title ~= nil and -- Todo: find a better way to deal with 1st title
            title ~= "Gmail - Label &#39;unread&#39; for "..user.."@gmail.com" then
-               -- Spam sanitize the subject
-               title = helpers.escape(title)
-               -- Don't abuse the wibox, truncate, then store
-               mail["{subject}"] = helpers.truncate(title, 22)
+               -- Check if we should scroll, or maybe truncate
+               if warg then
+                   if type(warg) == "table" then
+                       title = helpers.scroll(title, warg[1], warg[2])
+                   else
+                       title = helpers.truncate(title, warg)
+                   end
+               end
+
+               -- Spam sanitize the subject and store
+               mail["{subject}"] = helpers.escape(title)
                break
         end
     end
