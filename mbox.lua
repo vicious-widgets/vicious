@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
 local io = { open = io.open }
 local setmetatable = setmetatable
 local string = { gfind = string.gfind }
@@ -16,10 +17,11 @@ module("vicious.mbox")
 
 
 -- {{{ Mailbox widget type
-local function worker(format, mbox)
+local function worker(format, warg)
+    if type(warg) ~= "table" then mbox = warg end
     -- mbox could be huge, get a 30kb chunk from EOF
     --  * attachments could be much bigger than this
-    local f = io.open(mbox)
+    local f = io.open(mbox or warg[1])
     f:seek("end", -30720)
     local txt = f:read("*all")
     f:close()
@@ -32,13 +34,16 @@ local function worker(format, mbox)
        subject = i
     end
 
-    -- Spam sanitize only the last subject
-    subject = helpers.escape(subject)
+    -- Check if we should scroll, or maybe truncate
+    if type(warg) == "table" then
+        if warg[3] ~= nil then
+            subject = helpers.scroll(subject, warg[2], warg[3])
+        else
+            subject = helpers.truncate(subject, warg[2])
+        end
+    end
 
-    -- Don't abuse the wibox, truncate
-    subject = helpers.truncate(subject, 22)
-
-    return {subject}
+    return {helpers.escape(subject)}
 end
 -- }}}
 
