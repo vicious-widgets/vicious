@@ -5,10 +5,11 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local helpers = require("vicious.helpers")
 local string = { find = string.find }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -17,25 +18,29 @@ module("vicious.mpd")
 
 
 -- {{{ MPD widget type
-local function worker(format)
+local function worker(format, warg)
     -- Get data from mpc
     local f = io.popen("mpc")
     local np = f:read("*line")
     f:close()
 
     -- Check if it's stopped, off or not installed
-    if np == nil
-    or (string.find(np, "MPD_HOST") or string.find(np, "volume:")) then
+    if np == nil or
+       (string.find(np, "MPD_HOST") or string.find(np, "volume:"))
+    then
         return {"Stopped"}
     end
 
-    -- Sanitize the song name
-    local nowplaying = helpers.escape(np)
+    -- Check if we should scroll, or maybe truncate
+    if warg then
+        if type(warg) == "table" then
+            np = helpers.scroll(np, warg[1], warg[2])
+        else
+            np = helpers.truncate(np, warg)
+        end
+    end
 
-    -- Don't abuse the wibox, truncate
-    nowplaying = helpers.truncate(nowplaying, 30)
-
-    return {nowplaying}
+    return {helpers.escape(np)}
 end
 -- }}}
 
