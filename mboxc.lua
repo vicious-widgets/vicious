@@ -15,13 +15,13 @@ module("vicious.mboxc")
 
 
 -- {{{ Mbox count widget type
-local function worker(format, mbox)
+local function worker(format, warg)
     -- Initialise counters
     local count = { old = 0, total = 0, new = 0 }
 
     -- Get data from mbox files
-    for i=1, #mbox do
-        local f = io.open(mbox[i])
+    for i=1, #warg do
+        local f = io.open(warg[i])
 
         while true do
             -- Read the mbox line by line, if we are going to read some
