@@ -1,10 +1,10 @@
------------------------------------------------------
+---------------------------------------------------
 -- Vicious widgets for the awesome window manager
------------------------------------------------------
+---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc.sysphere.org>
---  * (c) Wicked, Lucas de Vries <lucas.glacicle.com>
------------------------------------------------------
+--  * (c) 2009, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2008, Lucas de Vries <lucas@glacicle.com>
+---------------------------------------------------
 
 -- {{{ Grab environment
 local type  = type

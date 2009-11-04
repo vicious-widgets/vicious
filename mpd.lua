@@ -1,7 +1,7 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc.sysphere.org>
---  * (c) Wicked, Lucas de Vries
+--  * (c) 2009, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2008, Lucas de Vries <lucas@glacicle.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
@@ -24,8 +24,8 @@ local function worker(format, warg)
     local np = f:read("*line")
     f:close()
 
-    -- Check if it's stopped, off or not installed
-    if np == nil or
+    -- Not installed,
+    if np == nil or --  off         or                 stoppped.
        (string.find(np, "MPD_HOST") or string.find(np, "volume:"))
     then
         return {"Stopped"}

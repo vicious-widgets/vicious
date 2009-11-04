@@ -1,6 +1,6 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc.sysphere.org>
+--  * (c) 2009, Adrian C. <anrxc@sysphere.org>
 --  * (c) Maildir Biff Widget, Fredrik Ax
 ---------------------------------------------------
 

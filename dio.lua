@@ -1,10 +1,9 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc.sysphere.org>
+--  * (c) 2009, Adrian C. <anrxc@sysphere.org>
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local type = type
 local ipairs = ipairs
 local io = { open = io.open }
 local setmetatable = setmetatable
