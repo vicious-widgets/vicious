@@ -5,7 +5,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local lfs = require("lfs")
+local lfs_available, lfs = pcall(require, "lfs")
 
 local unpack = unpack
 local setmetatable = setmetatable
