@@ -5,44 +5,19 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local lfs_available, lfs = pcall(require, "lfs")
-
 local unpack = unpack
 local setmetatable = setmetatable
-local getmetatable = getmetatable
 local io = { open = io.open }
 local string = { format = string.format }
 local math = {
     min = math.min,
+    ceil = math.ceil,
     floor = math.floor
 }
 local os = {
     time = os.time,
     difftime = os.difftime
 }
--- }}}
-
--- {{{ Sysfs helper
-local sys_metatable = {
-    __index = -- sysfs items available as lua tables
-        function (table, index)
-            path = table._path .. '/' .. index
-            attr = lfs.attributes(path)
-            if attr then
-                if attr.mode == "file" then
-                    return io.open(path):read("*all")
-                elseif attr.mode == "directory" then
-                    local obj = { _path = path }
-                    setmetatable(obj, getmetatable(table))
-                    return obj
-                end
-            end
-            return nil
-        end,
-}
-
-local sys = { _path = "/sys" }
-setmetatable(sys, sys_metatable)
 -- }}}
 
 
@@ -55,7 +30,15 @@ local time_energy = {}
 
 -- {{{ Battery widget type
 local function worker(format, batid)
-    local battery = sys.class.power_supply[batid]
+    local battery = setmetatable({}, {__index = function(table, name)
+        local file = io.open("/sys/class/power_supply/"..batid.."/"..name)
+        if file then
+            local f = file:read("*all")
+            file:close()
+            return f
+        end
+    end})
+
     local battery_state = {
         ["Full\n"] = "↯",
         ["Unknown\n"] = "⌁",
@@ -65,7 +48,7 @@ local function worker(format, batid)
     }
 
     -- Check if the battery is present
-    if not battery or battery.present == "0\n" then
+    if not battery.present == "1\n" then
         return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
@@ -82,23 +65,23 @@ local function worker(format, batid)
         return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
+
     -- Calculate percentage (but work around broken BAT/ACPI implementations)
     local charge  = energy_now / energy_full
-    local percent = math.min(math.floor(charge * 100), 100)
+    local percent = math.min(math.ceil(charge * 100), 100)
 
 
     -- Calculate remaining (charging or discharging) time
-    --
-    -- Default values on our first run
     if not time_energy[batid] then
+        -- Default values on our first run
         time_energy[batid] = { os.time(), energy_now }
         return {state, percent, "N/A"}
     end
 
     local time, energy = unpack(time_energy[batid])
-    local difft = os.difftime(os.time(), time)
-    local diffe = energy_now - energy
-    local rate  = diffe / difft
+    local timediff = os.difftime(os.time(), time)
+    local enerdiff = energy_now - energy
+    local rate  = enerdiff / timediff
 
     if rate > 0 then
         timeleft = (energy_full - energy_now) / rate
