@@ -5,18 +5,13 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local unpack = unpack
-local setmetatable = setmetatable
+local tonumber = tonumber
 local io = { open = io.open }
+local setmetatable = setmetatable
 local string = { format = string.format }
 local math = {
     min = math.min,
-    ceil = math.ceil,
     floor = math.floor
-}
-local os = {
-    time = os.time,
-    difftime = os.difftime
 }
 -- }}}
 
@@ -25,17 +20,14 @@ local os = {
 module("vicious.batsys")
 
 
--- Initialise tables
-local time_energy = {}
-
 -- {{{ Battery widget type
 local function worker(format, batid)
     local battery = setmetatable({}, {__index = function(table, name)
-        local file = io.open("/sys/class/power_supply/"..batid.."/"..name)
-        if file then
-            local f = file:read("*all")
-            file:close()
-            return f
+        local f = io.open("/sys/class/power_supply/"..batid.."/"..name)
+        if f then
+            local s = f:read("*all")
+            f:close()
+            return s
         end
     end})
 
@@ -56,42 +48,36 @@ local function worker(format, batid)
     -- Get state information
     local state = battery_state[battery.status] or battery_state["Unknown\n"]
 
-    -- Get charge information
-    if battery.energy_now then
-        energy_now, energy_full = battery.energy_now, battery.energy_full
-    elseif battery.charge_now then
-        energy_now, energy_full = battery.charge_now, battery.charge_full
+    -- Get capacity information
+    if battery.charge_now then
+        remaining, capacity = battery.charge_now, battery.charge_full
+    elseif battery.energy_now then
+        remaining, capacity = battery.energy_now, battery.energy_full
     else
         return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
+    -- Get charge information
+    if battery.current_now then rate = battery.current_now
+    else return {battery_state["Unknown\n"], 0, "N/A"} end
+
 
     -- Calculate percentage (but work around broken BAT/ACPI implementations)
-    local charge  = energy_now / energy_full
-    local percent = math.min(math.ceil(charge * 100), 100)
-
+    local percent = math.min(math.floor(remaining / capacity * 100), 100)
 
     -- Calculate remaining (charging or discharging) time
-    if not time_energy[batid] then
-        -- Default values on our first run
-        time_energy[batid] = { os.time(), energy_now }
+    if state == "+"then
+        timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
+    elseif state == "-" then
+        timeleft = tonumber(remaining) / tonumber(rate)
+    else
         return {state, percent, "N/A"}
     end
+    local hoursleft = math.floor(timeleft)
+    local minutesleft = math.floor((timeleft - hoursleft) * 60 )
+    local time = string.format("%02d:%02d", hoursleft, minutesleft)
 
-    local time, energy = unpack(time_energy[batid])
-    local timediff = os.difftime(os.time(), time)
-    local enerdiff = energy_now - energy
-    local rate  = enerdiff / timediff
-
-    if rate > 0 then
-        timeleft = (energy_full - energy_now) / rate
-    else
-        timeleft = -energy_now / rate
-    end
-    local hoursleft = math.floor(timeleft / 3600)
-    local minutesleft = math.floor((timeleft - hoursleft * 3600) / 60)
-
-    return {state, percent, string.format("%02d:%02d", hoursleft, minutesleft)}
+    return {state, percent, time}
 end
 -- }}}
 
