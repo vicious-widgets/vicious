@@ -62,11 +62,14 @@ local function worker(format, batid)
 
 
     -- Get charge information
-    if battery.current_now then rate = battery.current_now
-    else return {state, percent, "N/A"} end
+    if battery.current_now then
+        rate = battery.current_now
+    else -- Todo: other rate sources, as with capacity?
+        return {state, percent, "N/A"}
+    end
 
     -- Calculate remaining (charging or discharging) time
-    if state == "+"then
+    if state == "+" then
         timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
     elseif state == "-" then
         timeleft = tonumber(remaining) / tonumber(rate)
