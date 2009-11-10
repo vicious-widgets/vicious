@@ -57,13 +57,13 @@ local function worker(format, batid)
         return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
-    -- Get charge information
-    if battery.current_now then rate = battery.current_now
-    else return {battery_state["Unknown\n"], 0, "N/A"} end
-
-
     -- Calculate percentage (but work around broken BAT/ACPI implementations)
     local percent = math.min(math.floor(remaining / capacity * 100), 100)
+
+
+    -- Get charge information
+    if battery.current_now then rate = battery.current_now
+    else return {state, percent, "N/A"} end
 
     -- Calculate remaining (charging or discharging) time
     if state == "+"then
