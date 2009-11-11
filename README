@@ -165,15 +165,6 @@ vicious.widgets.uptime
 
 vicious.widgets.bat
   - provides state, charge, and remaining time for a requested battery
-    using procfs
-  - takes battery ID as an argument, i.e. "BAT0"
-  - returns 1st value as state of requested battery, 2nd as charge
-    level in percent and 3rd as remaining (charging or discharging)
-    time
-
-vicious.widgets.batsys
-  - provides state, charge, and remaining time for a requested battery
-    using sysfs
   - takes battery ID as an argument, i.e. "BAT0"
   - returns 1st value as state of requested battery, 2nd as charge
     level in percent and 3rd as remaining (charging or discharging)

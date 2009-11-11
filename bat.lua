@@ -5,66 +5,63 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = { open = io.open }
 local setmetatable = setmetatable
+local string = { format = string.format }
+local helpers = require("vicious.helpers")
 local math = {
     min = math.min,
     floor = math.floor
 }
-local string = {
-    find = string.find,
-    match = string.match,
-    format = string.format
-}
 -- }}}
 
 
--- Bat: provides state, charge, and remaining time for a requested battery using procfs
+-- Batsys: provides state, charge, and remaining time for a requested battery
 module("vicious.bat")
 
 
 -- {{{ Battery widget type
 local function worker(format, batid)
+    local battery = setmetatable(
+        { _path = "/sys/class/power_supply/" .. batid },
+        helpers.pathtotable
+    )
+
     local battery_state = {
-        ["full"] = "↯",
-        ["unknown"] = "⌁",
-        ["charged"] = "↯",
-        ["charging"] = "+",
-        ["discharging"] = "-"
+        ["Full\n"] = "↯",
+        ["Unknown\n"] = "⌁",
+        ["Charged\n"] = "↯",
+        ["Charging\n"] = "+",
+        ["Discharging\n"] = "-"
     }
 
-    -- Get /proc/acpi/battery info
-    local f = io.open("/proc/acpi/battery/"..batid.."/info")
-    -- Handler for incompetent users
-    if not f then return {battery_state["unknown"], 0, "N/A"} end
-    local infofile = f:read("*all")
-    f:close()
-
     -- Check if the battery is present
-    if infofile == nil or string.find(infofile, "present:[%s]+no") then
-        return {battery_state["unknown"], 0, "N/A"}
+    if not battery.present == "1\n" then
+        return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
-    -- Get capacity information
-    local capacity = string.match(infofile, "last full capacity:[%s]+([%d]+).*")
-
-
-    -- Get /proc/acpi/battery state
-    local f = io.open("/proc/acpi/battery/"..batid.."/state")
-    local statefile = f:read("*all")
-    f:close()
 
     -- Get state information
-    local state = string.match(statefile, "charging state:[%s]+([%a]+).*")
-    local state = battery_state[state] or battery_state["unknown"]
+    local state = battery_state[battery.status] or battery_state["Unknown\n"]
 
-    -- Get charge information
-    local rate = string.match(statefile, "present rate:[%s]+([%d]+).*")
-    local remaining = string.match(statefile, "remaining capacity:[%s]+([%d]+).*")
-
+    -- Get capacity information
+    if battery.charge_now then
+        remaining, capacity = battery.charge_now, battery.charge_full
+    elseif battery.energy_now then
+        remaining, capacity = battery.energy_now, battery.energy_full
+    else
+        return {battery_state["Unknown\n"], 0, "N/A"}
+    end
 
     -- Calculate percentage (but work around broken BAT/ACPI implementations)
     local percent = math.min(math.floor(remaining / capacity * 100), 100)
+
+
+    -- Get charge information
+    if battery.current_now then
+        rate = battery.current_now
+    else -- Todo: other rate sources, as with capacity?
+        return {state, percent, "N/A"}
+    end
 
     -- Calculate remaining (charging or discharging) time
     if state == "+" then
