@@ -207,7 +207,9 @@ vicious.widgets.wifi
 
 vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
-  - takes the full path to the mbox as an argument
+  - takes the full path to the mbox as an argument, or a table with
+    1st field as path, 2nd as maximum lenght and 3rd (optional) as
+    widget name - if 3rd field is present scrolling will be used
   - returns 1st value as the subject of the last e-mail
 
 vicious.widgets.mboxc
@@ -225,6 +227,9 @@ vicious.widgets.mdir
 
 vicious.widgets.gmail
   - provides count of new and subject of last e-mail on Gmail
+  - takes an (optional) argument, if it's a number subject will be
+    truncated, if a table, with 1st field as maximum lenght and 2nd
+    the widget name (i.e. "gmailwidget"), scrolling will be used
   - returns a table with custom keys: {count} and {subject}
 
 vicious.widgets.entropy
@@ -246,6 +251,9 @@ vicious.widgets.pacman
 
 vicious.widgets.mpd
   - provides the currently playing song in MPD
+  - takes an (optional) argument, if it's a number song name will be
+    truncated, if a table, with 1st field as maximum lenght and 2nd
+    the widget name (i.e. "mpdwidget"), scrolling will be used
   - returns 1st value as the currently playing song
 
 vicious.widgets.volume
