@@ -5,31 +5,35 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Uptime: provides system uptime information
+-- Uptime: provides system uptime and load information
 module("vicious.uptime")
 
 
 -- {{{ Uptime widget type
 local function worker(format)
-    -- Get /proc/uptime
-    local f = io.open("/proc/uptime")
-    local line = f:read("*line")
-    f:close()
+    local proc = setmetatable(
+        { _path = "/proc" },
+        helpers.pathtotable
+    )
 
-    local up_t = math.floor(string.match(line, "[%d]+"))
+    -- Get system uptime
+    local up_t = math.floor(string.match(proc.uptime, "[%d]+"))
     local up_d = math.floor(up_t   / (3600 * 24))
     local up_h = math.floor((up_t  % (3600 * 24)) / 3600)
     local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
-    local up_s = math.floor(((up_t % (3600 * 24)) % 3600) % 60)
 
-    return {up_t, up_d, up_h, up_m, up_s}
+    -- Get load averages
+    local l1, l5, l15 =  -- Get load averages for past 1, 5 and 15 minutes
+      string.match(proc.loadavg, "([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
+
+    return {up_d, up_h, up_m, l1, l5, l15}
 end
 -- }}}
 

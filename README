@@ -152,16 +152,11 @@ vicious.widgets.thermal
   - takes the thermal zone as an argument, i.e. "thermal_zone0"
   - returns 1st value as temperature of requested thermal zone
 
-vicious.widgets.load
-  - provides system load averages for the past 1, 5, and 15 minutes
-  - returns 1st value as load average for past 1 minute, 2nd for 5
-    minutes and 3rd for 15 minutes
-
 vicious.widgets.uptime
-  - provides system uptime information
-  - returns 1st value as total uptime, 2nd as uptime in days, 3rd as
-    uptime in hours, 4th as uptime in minutes and 5th as uptime in
-    seconds
+  - provides system uptime and load information
+  - returns 1st value as uptime in days, 2nd as uptime in hours, 3rd
+    as uptime in minutes, 4th as load average for past 1 minute, 5th
+    for 5 minutes and 6th for 15 minutes
 
 vicious.widgets.bat
   - provides state, charge, and remaining time for a requested battery
@@ -375,7 +370,7 @@ Example
   uptimewidget = widget({ type = 'textbox' })
   vicious.register(uptimewidget, vicious.widgets.uptime,
     function (widget, args)
-      return string.format('Uptime: %2dd %02d:%02d ', args[2], args[3], args[4])
+      return string.format('Uptime: %2dd %02d:%02d ', args[1], args[2], args[3])
     end, 61)
 
   - uses string.format for padding uptime values to a minimum amount
