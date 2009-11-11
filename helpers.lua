@@ -2,11 +2,13 @@
 -- Licensed under the GNU General Public License v2
 --  * (c) 2009, Adrian C. <anrxc@sysphere.org>
 --  * (c) 2009, Rémy C. <shikamaru@mandriva.org>
+--  * (c) 2009, Benedikt Sauer <filmor@gmail.com>
 --  * (c) 2008, Lucas de Vries <lucas@glacicle.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
 local pairs = pairs
+local io = { open = io.open }
 local string = {
     sub = string.sub,
     gsub = string.gsub
@@ -23,6 +25,17 @@ local scroller = {}
 -- }}}
 
 -- {{{ Helper functions
+-- {{{ Expose path as a Lua table
+pathtotable = { __index = function (table, name)
+    local f = io.open(table._path .. '/' .. name)
+    if f then
+        local s = f:read("*all")
+        f:close()
+        return s
+    end
+end }
+-- }}}
+
 -- {{{ Format a string with args
 function format(format, args)
     for var, val in pairs(args) do
