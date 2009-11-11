@@ -15,19 +15,21 @@ module("vicious.mdir")
 
 
 -- {{{ Maildir widget type
-local function worker(format, mdir)
+local function worker(format, warg)
     -- Initialise counters
     local count = { new = 0, cur = 0 }
 
-    -- Recursively find new messages
-    local f = io.popen("find "..mdir.." -type f -wholename '*/new/*'")
-    for line in f:lines() do count.new = count.new + 1 end
-    f:close()
+    for i=1, #warg do
+        -- Recursively find new messages
+        local f = io.popen("find "..warg[i].." -type f -wholename '*/new/*'")
+        for line in f:lines() do count.new = count.new + 1 end
+        f:close()
 
-    -- Recursively find "old" messages lacking the Seen flag
-    local f = io.popen("find "..mdir.." -type f -regex '.*/cur/.*2,[^S]*$'")
-    for line in f:lines() do count.cur = count.cur + 1 end
-    f:close()
+        -- Recursively find "old" messages lacking the Seen flag
+        local f = io.popen("find "..warg[i].." -type f -regex '.*/cur/.*2,[^S]*$'")
+        for line in f:lines() do count.cur = count.cur + 1 end
+        f:close()
+    end
 
     return {count.new, count.cur}
 end

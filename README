@@ -220,8 +220,8 @@ vicious.widgets.mboxc
 
 vicious.widgets.mdir
   - provides a number of new and unread messages in a Maildir
-    structure
-  - takes the full path to the Maildir structure as an argument
+    structures/directories
+  - takes a table with full paths to Maildir structures as an argument
   - returns 1st value as the count of new messages and 2nd as the
     count of "old" messages lacking the Seen flag
 
