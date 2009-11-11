@@ -21,11 +21,7 @@ module("vicious.bat")
 
 -- {{{ Battery widget type
 local function worker(format, batid)
-    local battery = setmetatable(
-        { _path = "/sys/class/power_supply/" .. batid },
-        helpers.pathtotable
-    )
-
+    local battery = helpers.pathtotable("/sys/class/power_supply/" .. batid)
     local battery_state = {
         ["Full\n"] = "↯",
         ["Unknown\n"] = "⌁",

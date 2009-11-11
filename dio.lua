@@ -27,10 +27,7 @@ local disk_total = {}
 -- {{{ Disk I/O widget type
 local function worker(format, disk)
     local disk_lines = {}
-    local disk_stats = setmetatable(
-        { _path = "/sys/block/" .. disk },
-        helpers.pathtotable
-    )
+    local disk_stats = helpers.pathtotable("/sys/block/" .. disk)
 
     if disk_stats.stat then
         local match = string.gmatch(disk_stats.stat, "[%s]+([%d]+)")

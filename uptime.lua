@@ -18,10 +18,7 @@ module("vicious.uptime")
 
 -- {{{ Uptime widget type
 local function worker(format)
-    local proc = setmetatable(
-        { _path = "/proc" },
-        helpers.pathtotable
-    )
+    local proc = helpers.pathtotable("/proc")
 
     -- Get system uptime
     local up_t = math.floor(string.match(proc.uptime, "[%d]+"))

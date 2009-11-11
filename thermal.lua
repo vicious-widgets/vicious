@@ -15,10 +15,7 @@ module("vicious.thermal")
 
 -- {{{ Thermal widget type
 local function worker(format, thermal_zone)
-    local thermal = setmetatable(
-        { _path = "/sys/class/thermal/" .. thermal_zone },
-        helpers.pathtotable
-    )
+    local thermal = helpers.pathtotable("/sys/class/thermal/"..thermal_zone)
 
     -- Get ACPI thermal zone
     if thermal.temp then

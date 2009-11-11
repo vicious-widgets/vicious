@@ -17,11 +17,7 @@ module("vicious.cpufreq")
 
 -- {{{ CPU frequency widget type
 local function worker(format, cpuid)
-    local cpufreq = setmetatable(
-        { _path = "/sys/devices/system/cpu/"..cpuid.."/cpufreq"},
-        helpers.pathtotable
-    )
-
+    local cpufreq = helpers.pathtotable("/sys/devices/system/cpu/"..cpuid.."/cpufreq")
     local governor_state = {
        ["ondemand\n"] = "↯",
        ["powersave\n"] = "⌁",

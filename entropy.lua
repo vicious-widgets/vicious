@@ -17,10 +17,7 @@ module("vicious.entropy")
 
 -- {{{ Entropy widget type
 local function worker(format)
-    local random = setmetatable(
-        { _path = "/proc/sys/kernel/random"},
-        helpers.pathtotable
-    )
+    local random = helpers.pathtotable("/proc/sys/kernel/random")
 
     -- Linux 2.6 has a default entropy pool of 4096-bits
     local poolsize = tonumber(random.poolsize)
