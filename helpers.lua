@@ -9,6 +9,7 @@
 -- {{{ Grab environment
 local pairs = pairs
 local io = { open = io.open }
+local setmetatable = setmetatable
 local string = {
     sub = string.sub,
     gsub = string.gsub
@@ -26,14 +27,18 @@ local scroller = {}
 
 -- {{{ Helper functions
 -- {{{ Expose path as a Lua table
-pathtotable = { __index = function (table, name)
-    local f = io.open(table._path .. '/' .. name)
-    if f then
-        local s = f:read("*all")
-        f:close()
-        return s
-    end
-end }
+function pathtotable(path)
+    return setmetatable({},
+        { __index = function(_, name)
+            local f = io.open(path .. '/' .. name)
+            if f then
+                local s = f:read("*all")
+                f:close()
+                return s
+            end
+        end
+    })
+end
 -- }}}
 
 -- {{{ Format a string with args
