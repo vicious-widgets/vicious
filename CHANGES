@@ -1,3 +1,28 @@
+2e9b811 README: document new truncate and scroll usage
+d0aa48a entropy: widget rewritten, poolsize no longer an argument
+493150c uptime: merged with load widget type
+7be560b bat: widget rewritten for sysfs
+a99c1cf cpufreq: widget rewritten, governor symbols enabled
+5f9818f dio: widget type rewritten
+92be5fb thermal: widget rewritten for sysfs
+46d52fa helpers: import pathtotable
+eb661f6 batsys: add note about other charge/rate sources
+6fadee6 batsys: don't return 0 if only rate is missing
+8e21d26 batat: widget type removed, now available in the contrib branch
+e66e507 batsys: import battery widget that uses sysfs
+896df4d De-obfuscate e-mail address
+94cf0b7 Minor changes in mboxc and org
+44d943d gmail: add scrolling support and truncate control
+9e91408 mbox: add scrolling support and truncate control
+5ff8927 mpd: add scrolling support and truncate control
+589feb1 helpers: import scroll from Remy Clouard
+0d73f6d Ensure returned numbers are of type number
+b105ae2 README: updated net description
+3dc7c5e net: unit formatting delegated to a function
+5c6f544 README: more information in Power section
+40d7881 Adapt to awful.widget.graph max_value of 1
+25ce79e batat: better returns when handling insufficient data
+baa3612 Next release, tag 1.0.18
 97d2ecb bat: better returns when handling insufficient data
 4d1af1e bat: better fix for ACPI, from bioe007
 2cfdd5a bat: quick fix for broken BAT/ACPI implementations
