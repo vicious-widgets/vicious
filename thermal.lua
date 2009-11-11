@@ -4,10 +4,8 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local tonumber = tonumber
-local io = { open = io.open }
 local setmetatable = setmetatable
-local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -17,16 +15,17 @@ module("vicious.thermal")
 
 -- {{{ Thermal widget type
 local function worker(format, thermal_zone)
-    -- Get an ACPI thermal zone
-    local f = io.open("/proc/acpi/thermal_zone/"..thermal_zone.."/temperature")
-    -- Handler for incompetent users
-    if not f then return {0} end
-    local line = f:read("*line")
-    f:close()
+    local thermal = setmetatable(
+        { _path = "/sys/class/thermal/" .. thermal_zone },
+        helpers.pathtotable
+    )
 
-    local temperature = tonumber(string.match(line, "[%d]?[%d]?[%d]"))
+    -- Get ACPI thermal zone
+    if thermal.temp then
+        return {thermal.temp / 1000}
+    end
 
-    return {temperature}
+    return {0}
 end
 -- }}}
 

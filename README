@@ -149,7 +149,7 @@ vicious.widgets.cpufreq
 
 vicious.widgets.thermal
   - provides temperature levels of ACPI thermal zones
-  - takes the thermal zone as an argument, i.e. "TZS0"
+  - takes the thermal zone as an argument, i.e. "thermal_zone0"
   - returns 1st value as temperature of requested thermal zone
 
 vicious.widgets.load
