@@ -229,8 +229,6 @@ vicious.widgets.gmail
 
 vicious.widgets.entropy
   - provides available system entropy
-  - takes the poolsize as an argument, or uses Linux 2.6 default
-    entropy pool of 4096-bits
   - returns 1st value as available system entropy and 2nd value as
     available entropy in percent
 
