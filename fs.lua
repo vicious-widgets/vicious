@@ -27,9 +27,8 @@ local function worker(format, nfs)
 
     for line in f:lines() do
         if not string.match(line, "^Filesystem.*") then
-            local size, used, avail, usep, mount =
-             -- Match all at once, including network file systems
-             string.match(line, "^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
+            local size, used, avail, usep, mount = string.match(line, --  Match all (network file systems too)
+             "^[%w%p]+[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d%.]+)[%a]?[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
             fs_info["{"..mount.." size}"]  = tonumber(size)
             fs_info["{"..mount.." used}"]  = tonumber(used)
