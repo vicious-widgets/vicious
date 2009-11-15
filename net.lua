@@ -45,8 +45,9 @@ local function worker(format)
             local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
             -- Received bytes, first value after the name
             local recv = tonumber(string.match(line, ":[%s]*([%d]+)"))
-            local send = -- Transmited bytes, 7 fields from end of the line
-             tonumber(string.match(line, "([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
+            -- Transmited bytes, 7 fields from end of the line
+            local send = tonumber(string.match(line,
+             "([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
 
             uformat(args, name .. " rx", recv)
             uformat(args, name .. " tx", send)
