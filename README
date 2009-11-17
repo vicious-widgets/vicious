@@ -177,7 +177,8 @@ vicious.widgets.fs
   - takes an (optional) argument which, if true, includes remote file
     systems, only local file systems are included by default
   - returns a table with custom keys, using mount points as a base:
-    {/ size}, {/ used}, {/ avail}, {/ usep}, {/home size} etc.
+    {/ size_mb}, {/ size_gb}, {/ used_mb}, {/ used_gb}, {/ used_p},
+    {/ avail_mb}, {/ avail_gb}, {/home size_mb} etc.
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
