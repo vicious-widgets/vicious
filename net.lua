@@ -24,20 +24,21 @@ module("vicious.net")
 -- Initialise function tables
 local nets = {}
 
+-- {{{ Helper functions
+local function uformat(array, key, value)
+    array["{"..key.."_b}"]  = string.format("%.1f", value)
+    array["{"..key.."_kb}"] = string.format("%.1f", value/1024)
+    array["{"..key.."_mb}"] = string.format("%.1f", value/1024/1024)
+    array["{"..key.."_gb}"] = string.format("%.1f", value/1024/1024/1024)
+    return array
+end
+-- }}}
+
 -- {{{ Net widget type
 local function worker(format)
     -- Get /proc/net/dev
     local f = io.open("/proc/net/dev")
     local args = {}
-
-    local function uformat(array, key, value)
-        array["{"..key.."_b}"]  = string.format("%.1f", value)
-        array["{"..key.."_kb}"] = string.format("%.1f", value/1024)
-        array["{"..key.."_mb}"] = string.format("%.1f", value/1024/1024)
-        array["{"..key.."_gb}"] = string.format("%.1f", value/1024/1024/1024)
-
-        return array
-    end
 
     for line in f:lines() do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
