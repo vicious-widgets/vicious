@@ -357,21 +357,22 @@ they return a certain value or maybe use string.format for padding.
   - Do not confuse this with just coloring the widget, in those cases
     standard markup can be inserted into the format string.
 
-The format function will get the widget as its first argument, and a
-table with the values otherwise inserted into the format string as its
-second argument, and should return the text to be used for the widget.
+The format function will get the widget as its first argument, table
+with the values otherwise inserted into the format string as its
+second argument, and will return the text/data to be used for the
+widget.
 
 Example
   mpdwidget = widget({ type = 'textbox' })
   vicious.register(mpdwidget,vicious.widgets.mpd,
     function (widget, args)
-      if   args[1] == "Stopped" then return ''
+      if   args[1] == 'Stopped' then return ''
       else return '<span color="white">MPD:</span> '..args[1]
       end
     end)
 
-  - hides the mpd widget when there is no song playing, updated every
-    2 seconds (the default interval)
+  - hides the mpd widget when no song is playing, updated every 2
+    seconds (the default interval)
 
 Example
   uptimewidget = widget({ type = 'textbox' })
@@ -390,7 +391,7 @@ Read "awesome" manual pages:
 
   awesome(1)  awesomerc(5)
 
-Authors "awesome" configuration:
+Example "awesome" configuration:
 
   http://git.sysphere.org/awesome-configs/
 
