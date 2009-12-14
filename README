@@ -44,7 +44,7 @@ vicious.register() to register it with vicious:
       - string argument or a function
         - $1, $2, $3... will be replaced by their respective value
           returned by the widget type, some widget types return tables
-          with custom keys, in that case use: ${key}
+          with string keys, in that case use: ${key}
       - function
         - function(widget, args) can be used to manipulate data
           returned by the widget type, more about this below
@@ -137,7 +137,7 @@ vicious.widgets.cpu
 
 vicious.widgets.cpuinf
   - provides speed and cache information for all available CPUs/cores
-  - returns a table with custom keys, using CPU ID as a base:
+  - returns a table with string keys, using CPU ID as a base:
     {cpu0 mhz}, {cpu0 ghz}, {cpu0 kb}, {cpu0 mb}, {cpu1 mhz} etc.
 
 vicious.widgets.cpufreq
@@ -176,25 +176,26 @@ vicious.widgets.fs
   - provides file system disk space usage
   - takes an (optional) argument which, if true, includes remote file
     systems, only local file systems are included by default
-  - returns a table with custom keys, using mount points as a base:
+  - returns a table with string keys, using mount points as a base:
     {/ size_mb}, {/ size_gb}, {/ used_mb}, {/ used_gb}, {/ used_p},
     {/ avail_mb}, {/ avail_gb}, {/home size_mb} etc.
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
-  - takes the disk as an argument, i.e. "hda"
-  - returns a table with custom keys: {raw}, {kb} and {mb}
+  - takes the disk as an argument, i.e. "sda"
+  - returns a table with string keys: {total_s}, {total_kb}, {total_mb},
+    {read_s}, {read_kb}, {read_mb}, {write_s},{write_kb} and {write_mb}
 
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
   - takes the hddtemp listening port as an argument, or defaults to
     port 7634
-  - returns a table with custom keys, using hard drives as a base:
-    {/dev/hda} and {/dev/sda} for example
+  - returns a table with string keys, using hard drives as a base:
+    {/dev/sda} and {/dev/sdc} for example
 
 vicious.widgets.net
   - provides usage statistics for all network interfaces
-  - returns a table with custom keys, using net interfaces as a base:
+  - returns a table with string keys, using net interfaces as a base:
     {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb}, {eth0 rx_mb},
     {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b}, {eth0 up_b},
     {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb}, {eth0 up_mb},
@@ -203,7 +204,7 @@ vicious.widgets.net
 vicious.widgets.wifi
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
-  - returns a table with custom keys: {ssid}, {mode}, {chan}, {rate},
+  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
     {link} and {sign}
 
 vicious.widgets.mbox
@@ -231,7 +232,7 @@ vicious.widgets.gmail
   - takes an (optional) argument, if it's a number subject will be
     truncated, if a table, with 1st field as maximum lenght and 2nd
     the widget name (i.e. "gmailwidget"), scrolling will be used
-  - returns a table with custom keys: {count} and {subject}
+  - returns a table with string keys: {count} and {subject}
 
 vicious.widgets.entropy
   - provides available system entropy
@@ -265,7 +266,7 @@ vicious.widgets.volume
 vicious.widgets.weather
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
-  - returns a table with custom keys: {city}, {wind}, {windmph},
+  - returns a table with string keys: {city}, {wind}, {windmph},
     {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
 
 vicious.widgets.date

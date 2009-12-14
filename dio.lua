@@ -24,6 +24,15 @@ module("vicious.dio")
 local disk_usage = {}
 local disk_total = {}
 
+-- {{{ Helper functions
+local function uformat(array, key, value)
+    array["{"..key.."_s}"]  = string.format("%.1f", value)
+    array["{"..key.."_kb}"] = string.format("%.1f", value/2)
+    array["{"..key.."_mb}"] = string.format("%.1f", value/2/1024)
+    return array
+end
+-- }}}
+
 -- {{{ Disk I/O widget type
 local function worker(format, disk)
     local disk_lines = {}
@@ -37,11 +46,10 @@ local function worker(format, disk)
     end
 
     -- Ensure tables are initialized correctly
+    local diff_total  = {}
     while #disk_total < #disk_lines do
         table.insert(disk_total, 0)
     end
-
-    local diff_total  = {}
 
     for i, v in ipairs(disk_lines) do
         -- Diskstats are absolute, substract our last reading
@@ -51,11 +59,10 @@ local function worker(format, disk)
         disk_total[i] = v
     end
 
-    -- Calculate I/O
-    disk_usage["{raw}"] = diff_total[7] + diff_total[3]
-    -- Divide "sectors read" by 2 and 1024 to get KB and MB
-    disk_usage["{kb}"] = string.format("%.1f", math.floor(diff_total[7] + diff_total[3])/2)
-    disk_usage["{mb}"] = string.format("%.1f", math.floor(diff_total[7] + diff_total[3])/1024)
+    -- Calculate and store I/O
+    uformat(disk_usage, "read",  diff_total[3])
+    uformat(disk_usage, "write", diff_total[7])
+    uformat(disk_usage, "total", diff_total[7] + diff_total[3])
 
     return disk_usage
 end
