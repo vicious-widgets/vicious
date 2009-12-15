@@ -45,13 +45,9 @@ local function worker(format)
 
     -- Ensure tables are initialized correctly
     while #cpu_total < #cpu_lines do
-        table.insert(cpu_total, 0)
-    end
-    while #cpu_active < #cpu_lines do
+        table.insert(cpu_total,  0)
         table.insert(cpu_active, 0)
-    end
-    while #cpu_usage < #cpu_lines do
-        table.insert(cpu_usage, 0)
+        table.insert(cpu_usage,  0)
     end
 
     local total_new   = {}
