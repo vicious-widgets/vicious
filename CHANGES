@@ -2,6 +2,14 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+9b5efc7 cpu: simplified table initialization
+9150063 dio: preliminary support for multiple devices
+b4031d2 dio: return separated read and write statistics
+2c900fa README: minor changes in Format functions
+c870691 fs: switched to 1K blocks and new keys
+5cbd759 net: move formatting out of the worker
+14d69f6 net: minor coding style change
+db82c2a Next release, tag 1.0.20
 3834caa hddtemp: fixed support for multiple devices
 1790abb hddtemp: adapt regex to match disks like /dev/sg0
 2492945 fs: minor coding style change
