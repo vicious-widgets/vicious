@@ -54,9 +54,9 @@ local function worker(format, station)
     weather["{weather}"] = -- Weather conditions if available
       string.match(ws, "Weather:[%s](.-)[%c]") or weather["{weather}"]
     weather["{tempf}"]   = -- Temperature in fahrenheit
-      string.match(ws, "Temperature:[%s]([%d%.]+).*[%c]") or weather["{tempf}"]
+      string.match(ws, "Temperature:[%s]([%-]?[%d%.]+).*[%c]") or weather["{tempf}"]
     weather["{tempc}"]   = -- Temperature in celsius
-      string.match(ws, "Temperature:[%s][%d%.]+[%s]F[%s]%(([%d%.]+)[%s]C%)[%c]") or weather["{tempc}"]
+      string.match(ws, "Temperature:[%s][%d%.]+[%s]F[%s]%(([%-]?[%d%.]+)[%s]C%)[%c]") or weather["{tempc}"]
     weather["{humid}"]   = -- Relative humidity in percent
       string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
     weather["{press}"]   = -- Pressure in hPa
