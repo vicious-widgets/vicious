@@ -22,16 +22,10 @@ local function worker(format)
 
     -- Check if updates are available
     local f = io.popen("pacman -Qu")
+    -- Exclude IgnorePkg and count deps
+    --local f = io.popen("pacman -Sup")
 
     for line in f:lines() do
-        -- Pacman 3.2 provides the number of available updates
-        --updates = string.match(line, "^Targets[%s]%(([%d]+)%)") or 0
-        ---- If the count changed then break out of the loop
-        --if tonumber(updates) > 0 then
-        --    break
-        --end
-
-        -- Pacman 3.3 returns one line per package
         updates = updates + 1
     end
     f:close()
