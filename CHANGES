@@ -2,6 +2,11 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+15dd6ea vicious: update copyright
+9e37225 pacman: remove 3.2 example, add ignores+deps example
+cedf171 wifi: return numbers without notations
+fba4db6 weather: fix parsing of negative temperatures
+2100ea1 Next release, tag 1.0.21
 9b5efc7 cpu: simplified table initialization
 9150063 dio: preliminary support for multiple devices
 b4031d2 dio: return separated read and write statistics

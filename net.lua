@@ -53,7 +53,7 @@ local function worker(format)
             uformat(args, name .. " rx", recv)
             uformat(args, name .. " tx", send)
 
-            if nets[name] == nil then 
+            if nets[name] == nil then
                 -- Default values on the first run
                 nets[name] = {}
                 uformat(args, name .. " down", 0)
