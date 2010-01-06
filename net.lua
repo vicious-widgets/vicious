@@ -57,19 +57,19 @@ local function worker(format)
                 -- Default values on the first run
                 nets[name] = {}
                 uformat(args, name .. " down", 0)
-                uformat(args, name .. " up", 0)
+                uformat(args, name .. " up",   0)
 
                 nets[name].time = os.time()
-            else
-                -- Net stats are absolute, substract our last reading
-                local interval = os.time() - nets[name].time
+            else -- Net stats are absolute, substract our last reading
+                local interval  = os.time() - nets[name].time >  0 and
+                                  os.time() - nets[name].time or 1
                 nets[name].time = os.time()
 
-                local down = (recv - nets[name][1])/interval
-                local up   = (send - nets[name][2])/interval
+                local down = (recv - nets[name][1]) / interval
+                local up   = (send - nets[name][2]) / interval
 
                 uformat(args, name .. " down", down)
-                uformat(args, name .. " up", up)
+                uformat(args, name .. " up",   up)
             end
 
             -- Store totals
