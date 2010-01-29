@@ -24,8 +24,8 @@ local function worker(format, warg)
         local f = io.open(warg[i])
 
         while true do
-            -- Read the mbox line by line, if we are going to read some
-            -- *HUGE* folders then switch to reading chunks
+            -- Read the mbox line by line, if we are going to read
+            -- some *HUGE* folders then switch to reading chunks
             local lines = f:read("*line")
             if not lines then break end
 

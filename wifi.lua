@@ -41,8 +41,8 @@ local function worker(format, iface)
         return winfo
     end
 
-    -- The output differs from system to system, some stats can
-    -- be separated by =, and not all drivers report all stats
+    -- Output differs from system to system, some stats can be
+    -- separated by =, and not all drivers report all stats
     winfo["{ssid}"] =  -- SSID can have almost anything in it
       string.match(iw, 'ESSID[=:]"([%w%p]+[%s]*[%w%p]*]*)"') or winfo["{ssid}"]
     winfo["{mode}"] =  -- Modes are simple, but also match the "-" in Ad-Hoc
