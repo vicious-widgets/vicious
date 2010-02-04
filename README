@@ -357,7 +357,7 @@ battery widget when it goes below a certain point, hide widgets when
 they return a certain value or maybe use string.format for padding.
 
   - Do not confuse this with just coloring the widget, in those cases
-    standard markup can be inserted into the format string.
+    standard pango markup can be inserted into the format string.
 
 The format function will get the widget as its first argument, table
 with the values otherwise inserted into the format string as its
@@ -385,6 +385,19 @@ Example
 
   - uses string.format for padding uptime values to a minimum amount
     of digits, updated every 61 seconds
+
+When it comes to padding it is also useful to mention how a widget can
+be configured to have a fixed width. You can set a fixed width on your
+textbox widgets by changing their .width field (by default width is
+automatically adapted to text width).
+
+Example
+  uptimewidget = widget({ type = 'textbox' })
+  uptimewidget.width, uptimewidget.align = 50, 'right'
+  vicious.register(uptimewidget, vicious.widgets.uptime, '$1 $2:$3', 61)
+
+  - forces a fix width of 50px to the uptime widget, and aligns its
+    text to the right
 
 
 Other
