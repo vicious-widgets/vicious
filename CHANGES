@@ -2,6 +2,12 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+0f3123e README: added textbox fixed width example
+3095ffb pkg: added apt and yum to pkg managers table
+91925e6 pkg: pacman moved to generic packages module
+71566e0 dio: further improved support for multiple devices
+8fe4cf4 net: sanitize time computation to avoid division by zero
+d2a00d7 Next release, tag 1.0.22
 15dd6ea vicious: update copyright
 9e37225 pacman: remove 3.2 example, add ignores+deps example
 cedf171 wifi: return numbers without notations
