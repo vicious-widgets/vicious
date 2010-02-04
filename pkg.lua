@@ -4,8 +4,8 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local tonumber = tonumber
 local io = { popen = io.popen }
+local math = { max = math.max }
 local setmetatable = setmetatable
 -- }}}
 
@@ -15,21 +15,26 @@ module("vicious.pkg")
 
 
 -- {{{ Packages widget type
-local function worker(format)
+local function worker(format, dist)
     -- Initialise counters
     local updates = 0
+    local manager = {
+        ["Arch"]   = { cmd = "pacman -Qu" },
+        ["Arch S"] = { cmd = "pacman -Sup", sub = 2 },
+        ["Debian"] = { cmd = "apt-show-versions -u -b" },
+        ["Fedora"] = { cmd = "yum list updates", sub = 3 }
+    }
 
-    -- Check if updates are available on Arch
-    local f = io.popen("pacman -Qu")
-    --- Exclude IgnorePkg and count deps
-    ---local f = io.popen("pacman -Sup")
+    -- Check if updates are available
+    local pkg = manager[dist]
+    local f = io.popen(pkg.cmd)
 
     for line in f:lines() do
         updates = updates + 1
     end
     f:close()
 
-    return {updates}
+    return {pkg.sub and math.max(updates-pkg.sub, 0) or updates}
 end
 -- }}}
 

@@ -247,8 +247,9 @@ vicious.widgets.org
     of tasks for today, 3rd as count of tasks for the next 3 days and
     4th as count of tasks to do in the week
 
-vicious.widgets.pacman
-  - provides number of pending updates on Arch Linux
+vicious.widgets.pkg
+  - provides number of pending updates on GNU/Linux
+  - takes the distribution name as an argument, i.e. "Arch"
   - returns 1st value as the count of available updates
 
 vicious.widgets.mpd
