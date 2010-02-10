@@ -4,22 +4,36 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
+local tonumber = tonumber
 local setmetatable = setmetatable
+local string = { match = string.match }
 local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Thermal: provides temperature levels of ACPI thermal zones
+-- Thermal: provides temperature levels of ACPI and coretemp thermal zones
 module("vicious.thermal")
 
 
 -- {{{ Thermal widget type
-local function worker(format, thermal_zone)
-    local thermal = helpers.pathtotable("/sys/class/thermal/"..thermal_zone)
+local function worker(format, warg)
+    -- Known temperature data sources
+    local zone = {
+        ["sys"]  = {"/sys/class/thermal/",     file = "temp",       div = 1000},
+        ["core"] = {"/sys/devices/platform/",  file = "temp1_input",div = 1000},
+        ["proc"] = {"/proc/acpi/thermal_zone/",file = "temperature"}
+    } --  Default to /sys/class/thermal
+    local warg    = type(warg) == "table" and warg or {warg, "sys"}
+    local thermal = helpers.pathtotable(zone[warg[2]][1] .. warg[1])
 
-    -- Get ACPI thermal zone
-    if thermal.temp then
-        return {thermal.temp / 1000}
+    -- Get temperature from thermal zone
+    if thermal[zone[warg[2]].file] then
+        if zone[warg[2]].div then
+            return {thermal[zone[warg[2]].file] / zone[warg[2]].div}
+        else -- /proc/acpi "temperature: N C"
+            return {tonumber(string.match(thermal[zone[warg[2]].file], "[%d]+"))}
+        end
     end
 
     return {0}
