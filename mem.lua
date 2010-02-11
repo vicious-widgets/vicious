@@ -20,7 +20,7 @@ module("vicious.mem")
 local function worker(format)
     -- Get meminfo
     local f = io.open("/proc/meminfo")
-    local mem  = { buf = {}, swp = {}, }
+    local mem = { buf = {}, swp = {} }
 
     for line in f:lines() do
         if string.match(line, "^MemTotal.*") then

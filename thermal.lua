@@ -18,8 +18,7 @@ module("vicious.thermal")
 
 -- {{{ Thermal widget type
 local function worker(format, warg)
-    -- Known temperature data sources
-    local zone = {
+    local zone = { -- Known temperature data sources
         ["sys"]  = {"/sys/class/thermal/",     file = "temp",       div = 1000},
         ["core"] = {"/sys/devices/platform/",  file = "temp1_input",div = 1000},
         ["proc"] = {"/proc/acpi/thermal_zone/",file = "temperature"}
