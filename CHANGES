@@ -2,6 +2,14 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+b96cb98 bat: added a note about Apple PMU and ACPI/procfs
+23d09f0 README: added the Security section
+e29ea62 helpers: uformat helper replaces formatting done by widgets
+f4cd746 pkg: solve interactive pacman prompt patch from tdy
+5e1d1e0 volume: suggest appending card ID or other options
+24f23fa gmail: reworked feed handling and changed username format
+6c34e85 thermal: added support for procfs and coretemp
+355c838 Next release, tag 1.0.23
 0f3123e README: added textbox fixed width example
 3095ffb pkg: added apt and yum to pkg managers table
 91925e6 pkg: pacman moved to generic packages module
