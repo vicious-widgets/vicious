@@ -12,7 +12,8 @@ local io = { open = io.open }
 local setmetatable = setmetatable
 local string = {
     sub = string.sub,
-    gsub = string.gsub
+    gsub = string.gsub,
+    format = string.format
 }
 -- }}}
 
@@ -48,6 +49,16 @@ function format(format, args)
     end
 
     return format
+end
+-- }}}
+
+-- {{{ Format units to one decimal point
+function uformat(array, key, value, unit)
+    for u, v in pairs(unit) do
+        array["{"..key.."_"..u.."}"] = string.format("%.1f", value/v)
+    end
+
+    return array
 end
 -- }}}
 

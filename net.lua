@@ -10,10 +10,8 @@ local tonumber = tonumber
 local os = { time = os.time }
 local io = { open = io.open }
 local setmetatable = setmetatable
-local string = {
-    match = string.match,
-    format = string.format
-}
+local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -23,16 +21,10 @@ module("vicious.net")
 
 -- Initialise function tables
 local nets = {}
-
--- {{{ Helper functions
-local function uformat(array, key, value)
-    array["{"..key.."_b}"]  = string.format("%.1f", value)
-    array["{"..key.."_kb}"] = string.format("%.1f", value/1024)
-    array["{"..key.."_mb}"] = string.format("%.1f", value/1024/1024)
-    array["{"..key.."_gb}"] = string.format("%.1f", value/1024/1024/1024)
-    return array
-end
--- }}}
+-- Variable definitions
+local unit = { ["b"] = 1, ["kb"] = 1024,
+    ["mb"] = 1024^2, ["gb"] = 1024^3
+}
 
 -- {{{ Net widget type
 local function worker(format)
@@ -50,14 +42,14 @@ local function worker(format)
             local send = tonumber(string.match(line,
              "([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$"))
 
-            uformat(args, name .. " rx", recv)
-            uformat(args, name .. " tx", send)
+            helpers.uformat(args, name .. " rx", recv, unit)
+            helpers.uformat(args, name .. " tx", send, unit)
 
             if nets[name] == nil then
                 -- Default values on the first run
                 nets[name] = {}
-                uformat(args, name .. " down", 0)
-                uformat(args, name .. " up",   0)
+                helpers.uformat(args, name .. " down", 0, unit)
+                helpers.uformat(args, name .. " up",   0, unit)
 
                 nets[name].time = os.time()
             else -- Net stats are absolute, substract our last reading
@@ -68,8 +60,8 @@ local function worker(format)
                 local down = (recv - nets[name][1]) / interval
                 local up   = (send - nets[name][2]) / interval
 
-                uformat(args, name .. " down", down)
-                uformat(args, name .. " up",   up)
+                helpers.uformat(args, name .. " down", down, unit)
+                helpers.uformat(args, name .. " up",   up,   unit)
             end
 
             -- Store totals

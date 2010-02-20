@@ -8,10 +8,8 @@
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = {
-    match = string.match,
-    format = string.format
-}
+local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -19,13 +17,8 @@ local string = {
 module("vicious.fs")
 
 
--- {{{ Helper functions
-local function uformat(array, key, value)
-    array["{"..key.."_mb}"] = string.format("%.1f", value/1024)
-    array["{"..key.."_gb}"] = string.format("%.1f", value/1024/1024)
-    return array
-end
--- }}}
+-- Variable definitions
+local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
 local function worker(format, nfs)
@@ -41,9 +34,9 @@ local function worker(format, nfs)
             local s, u, a, p, m = string.match(line, -- Match all at once (including NFS)
              "^[%w%p]+[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
-            uformat(fs_info, m .. " size",  s)
-            uformat(fs_info, m .. " used",  u)
-            uformat(fs_info, m .. " avail", a)
+            helpers.uformat(fs_info, m .. " size",  s, unit)
+            helpers.uformat(fs_info, m .. " used",  u, unit)
+            helpers.uformat(fs_info, m .. " avail", a, unit)
             fs_info["{" .. m .. " used_p}"] = tonumber(p)
         end
     end

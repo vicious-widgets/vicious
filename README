@@ -187,7 +187,7 @@ vicious.widgets.dio
   - provides I/O statistics for requested storage devices
   - takes the disk as an argument, i.e. "sda"
   - returns a table with string keys: {total_s}, {total_kb}, {total_mb},
-    {read_s}, {read_kb}, {read_mb}, {write_s},{write_kb} and {write_mb}
+    {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb} and {write_mb}
 
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
