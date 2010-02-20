@@ -21,7 +21,7 @@ local function worker(format, cpuid)
     local governor_state = {
        ["ondemand\n"] = "↯",
        ["powersave\n"] = "⌁",
-       ["userspace\n"] = "@",
+       ["userspace\n"] = "¤",
        ["performance\n"] = "⚡",
        ["conservative\n"] = "↯"
     }

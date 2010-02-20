@@ -1,8 +1,9 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
 --  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2010, Rémy C. <shikamaru@mandriva.org>
---  * (c) 2010, Benedikt Sauer <filmor@gmail.com>
+--  * (c) 2009, Rémy C. <shikamaru@mandriva.org>
+--  * (c) 2009, Benedikt Sauer <filmor@gmail.com>
+--  * (c) 2009, Henning Glawe <glaweh@debian.org>
 --  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
 ---------------------------------------------------
 
