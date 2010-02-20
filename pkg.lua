@@ -20,7 +20,7 @@ local function worker(format, dist)
     local updates = 0
     local manager = {
         ["Arch"]   = { cmd = "pacman -Qu" },
-        ["Arch S"] = { cmd = "pacman -Sup", sub = 2 },
+        ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 2 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Fedora"] = { cmd = "yum list updates", sub = 3 }
     }
