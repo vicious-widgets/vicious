@@ -5,8 +5,11 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = { popen = io.popen }
 local setmetatable = setmetatable
+local io = {
+    open = io.open,
+    popen = io.popen
+}
 local string = {
     find = string.find,
     match = string.match
@@ -31,7 +34,14 @@ local function worker(format, iface)
     }
 
     -- Get data from iwconfig where available
-    local f = io.popen("iwconfig " .. iface .. " 2>&1")
+    local iwconfig = "/sbin/iwconfig"
+    local f = io.open(iwconfig, "rb")
+    if not f then
+        iwconfig = "/usr/sbin/iwconfig"
+    else
+        f:close()
+    end
+    local f = io.popen(iwconfig .." ".. iface .. " 2>&1")
     local iw = f:read("*all")
     f:close()
 
