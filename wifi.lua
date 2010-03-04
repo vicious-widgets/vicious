@@ -20,11 +20,6 @@ module("vicious.wifi")
 
 -- {{{ Wireless widget type
 local function worker(format, iface)
-    -- Get data from iwconfig (where available)
-    local f = io.popen("iwconfig " .. iface)
-    local iw = f:read("*all")
-    f:close()
-
     -- Default values
     local winfo = {
         ["{ssid}"] = "N/A",
@@ -35,8 +30,12 @@ local function worker(format, iface)
         ["{sign}"] = 0
     }
 
-    -- Check if iwconfig wasn't found, can't be executed or the
-    -- interface is not a wireless one
+    -- Get data from iwconfig where available
+    local f = io.popen("iwconfig " .. iface .. " 2>&1")
+    local iw = f:read("*all")
+    f:close()
+
+    -- iwconfig wasn't found, isn't executable, or non-wireless interface
     if iw == nil or string.find(iw, "No such device") then
         return winfo
     end
