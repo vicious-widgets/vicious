@@ -9,6 +9,7 @@ local io = { popen = io.popen }
 local setmetatable = setmetatable
 local math = { ceil = math.ceil }
 local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -63,10 +64,16 @@ local function worker(format, station)
     if weather["{windmph}"] ~= "N/A" then
        weather["{windmph}"] = tonumber(weather["{windmph}"])
        weather["{windkmh}"] = math.ceil(weather["{windmph}"] * 1.6)
-    end -- Temperature in degree °C if °F was available
+    end -- Temperature in °C if °F was available
     if weather["{tempf}"] ~= "N/A" then
        weather["{tempf}"] = tonumber(weather["{tempf}"])
        weather["{tempc}"] = math.ceil((weather["{tempf}"] - 32) * 5/9)
+    end -- Capitalize some stats so they don't look so out of place
+    if weather["{sky}"] ~= "N/A" then
+       weather["{sky}"] = helpers.capitalize(weather["{sky}"])
+    end
+    if weather["{weather}"] ~= "N/A" then
+       weather["{weather}"] = helpers.capitalize(weather["{weather}"])
     end
 
     return weather
