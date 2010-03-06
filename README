@@ -293,10 +293,11 @@ vicious.widgets.mpd
   - returns 1st value as the currently playing song
 
 vicious.widgets.volume
-  - provides volume levels of requested ALSA mixers
+  - provides volume levels and state of requested ALSA mixers
   - takes the ALSA mixer control as an argument, i.e. "Master",
     optionally append the card ID or other options, i.e. "PCM -c 0"
-  - returns 1st value as the volume level of the requested channel
+  - returns 1st value as the volume level and 2nd as the mute state of
+    the requested channel
 
 vicious.widgets.weather
   - provides weather information for a requested station

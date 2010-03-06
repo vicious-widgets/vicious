@@ -24,10 +24,10 @@ local function worker(format, batid)
     -- Apple PMU and ACPI/procfs battery widgets are in the [contrib] branch
     local battery = helpers.pathtotable("/sys/class/power_supply/" .. batid)
     local battery_state = {
-        ["Full\n"] = "↯",
-        ["Unknown\n"] = "⌁",
-        ["Charged\n"] = "↯",
-        ["Charging\n"] = "+",
+        ["Full\n"]        = "↯",
+        ["Unknown\n"]     = "⌁",
+        ["Charged\n"]     = "↯",
+        ["Charging\n"]    = "+",
         ["Discharging\n"] = "-"
     }
 

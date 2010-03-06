@@ -19,10 +19,10 @@ module("vicious.cpufreq")
 local function worker(format, cpuid)
     local cpufreq = helpers.pathtotable("/sys/devices/system/cpu/"..cpuid.."/cpufreq")
     local governor_state = {
-       ["ondemand\n"] = "↯",
-       ["powersave\n"] = "⌁",
-       ["userspace\n"] = "¤",
-       ["performance\n"] = "⚡",
+       ["ondemand\n"]     = "↯",
+       ["powersave\n"]    = "⌁",
+       ["userspace\n"]    = "¤",
+       ["performance\n"]  = "⚡",
        ["conservative\n"] = "↯"
     }
     -- Default voltage values

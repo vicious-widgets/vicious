@@ -7,31 +7,43 @@
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = {
-    find = string.find,
-    match = string.match
-}
+local string = { match = string.match }
 -- }}}
 
 
--- Volume: provides volume levels of requested ALSA mixers
+-- Volume: provides volume levels and state of requested ALSA mixers
 module("vicious.volume")
 
 
 -- {{{ Volume widget type
 local function worker(format, warg)
+    local mixer_state = {
+        ["on"]  = "♫", -- "",
+        ["off"] = "♩"  -- "M"
+    }
+
     -- Get mixer control contents
     local f = io.popen("amixer get " .. warg)
     local mixer = f:read("*all")
     f:close()
 
-    local vol = tonumber(string.match(mixer, "([%d]?[%d]?[%d])%%"))
-    -- If mute return 0 (not "Mute") so we don't break progressbars
-    if string.find(mixer, "%[off%]") or vol == nil then
-        vol = 0
+    -- Capture mixer control state:          [5%] ... ... [on]
+    local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
+    -- Handle mixers without data
+    if volu == nil then
+       return {0, mixer_state["off"]}
     end
 
-    return {vol}
+    -- Handle mixers without mute
+    if mute == "" and volu == "0"
+    -- Handle mixers that are muted
+    or mute == "off" then
+       mute = mixer_state["off"]
+    else
+       mute = mixer_state["on"]
+    end
+
+    return {tonumber(volu), mute}
 end
 -- }}}
 
