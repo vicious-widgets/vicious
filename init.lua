@@ -207,7 +207,7 @@ end
 -- }}}
 
 -- {{{ Enable caching for a widget
-function enable_caching(widget)
+function cache(widget)
     if widget_cache[widget] == nil then
         widget_cache[widget] = {}
     end

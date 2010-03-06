@@ -78,7 +78,7 @@ Restart suspended widgets:
     - if widget is provided only that widget will be activated
 
 Enable caching for a widget:
-  vicious.enable_caching(widget_type)
+  vicious.cache(widget_type)
 
     - enable caching of values returned by a widget type
 
@@ -335,7 +335,7 @@ Date widget
 
 Memory widget
   memwidget = widget({ type = 'textbox' })
-  vicious.enable_caching(vicious.widgets.mem)
+  vicious.cache(vicious.widgets.mem)
   vicious.register(memwidget, vicious.widgets.mem, '$1 ($2MB/$3MB)', 13)
 
   - updated every 13 seconds, appends "MB" to 2nd and 3rd returned
