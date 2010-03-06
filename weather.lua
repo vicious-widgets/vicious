@@ -4,9 +4,10 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local math = { floor = math.floor }
+local math = { ceil = math.ceil }
 local string = { match = string.match }
 -- }}}
 
@@ -17,15 +18,6 @@ module("vicious.weather")
 
 -- {{{ Weather widget type
 local function worker(format, station)
-    -- US National Oceanic and Atmospheric Administration
-    --   * ICAO codes: http://www.rap.ucar.edu/weather/surface/stations.txt
-    local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
-
-    -- Get info from a weather station
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..station..".TXT")
-    local ws = f:read("*all")
-    f:close()
-
     -- Default values
     local weather = {
         ["{city}"]    = "N/A",
@@ -40,31 +32,41 @@ local function worker(format, station)
         ["{press}"]   = "N/A"
     }
 
+    -- Get weather forceast by the station ICAO code, from:
+    -- * US National Oceanic and Atmospheric Administration
+    local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..station..".TXT")
+    local ws = f:read("*all")
+    f:close()
+
     -- Check if there was a timeout or a problem with the station
     if ws == nil then return weather end
 
     weather["{city}"]    = -- City and/or area
-      string.match(ws, "^(.+)%,.*%([%u]+%)") or weather["{city}"]
+       string.match(ws, "^(.+)%,.*%([%u]+%)") or weather["{city}"]
     weather["{wind}"]    = -- Wind direction and degrees if available
-      string.match(ws, "Wind:[%s][%a]+[%s][%a]+[%s](.+)[%s]at.+$") or weather["{wind}"]
+       string.match(ws, "Wind:[%s][%a]+[%s][%a]+[%s](.+)[%s]at.+$") or weather["{wind}"]
     weather["{windmph}"] = -- Wind speed in MPH if available
-      string.match(ws, "Wind:[%s].+[%s]at[%s]([%d]+)[%s]MPH") or weather["{windmph}"]
+       string.match(ws, "Wind:[%s].+[%s]at[%s]([%d]+)[%s]MPH") or weather["{windmph}"]
     weather["{sky}"]     = -- Sky conditions if available
-      string.match(ws, "Sky[%s]conditions:[%s](.-)[%c]") or weather["{sky}"]
+       string.match(ws, "Sky[%s]conditions:[%s](.-)[%c]") or weather["{sky}"]
     weather["{weather}"] = -- Weather conditions if available
-      string.match(ws, "Weather:[%s](.-)[%c]") or weather["{weather}"]
+       string.match(ws, "Weather:[%s](.-)[%c]") or weather["{weather}"]
     weather["{tempf}"]   = -- Temperature in fahrenheit
-      string.match(ws, "Temperature:[%s]([%-]?[%d%.]+).*[%c]") or weather["{tempf}"]
-    weather["{tempc}"]   = -- Temperature in celsius
-      string.match(ws, "Temperature:[%s][%d%.]+[%s]F[%s]%(([%-]?[%d%.]+)[%s]C%)[%c]") or weather["{tempc}"]
+       string.match(ws, "Temperature:[%s]([%-]?[%d%.]+).*[%c]") or weather["{tempf}"]
     weather["{humid}"]   = -- Relative humidity in percent
-      string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
+       string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or weather["{humid}"]
     weather["{press}"]   = -- Pressure in hPa
-      string.match(ws, "Pressure[%s].+%((.+)[%s]hPa%)") or weather["{press}"]
+       string.match(ws, "Pressure[%s].+%((.+)[%s]hPa%)") or weather["{press}"]
 
-    -- Wind speed in KMH if MPH was available
+    -- Wind speed in km/h if MPH was available
     if weather["{windmph}"] ~= "N/A" then
-       weather["{windkmh}"] = math.floor(weather["{windmph}"] * 1.6)
+       weather["{windmph}"] = tonumber(weather["{windmph}"])
+       weather["{windkmh}"] = math.ceil(weather["{windmph}"] * 1.6)
+    end -- Temperature in degree °C if °F was available
+    if weather["{tempf}"] ~= "N/A" then
+       weather["{tempf}"] = tonumber(weather["{tempf}"])
+       weather["{tempc}"] = math.ceil((weather["{tempf}"] - 32) * 5/9)
     end
 
     return weather
