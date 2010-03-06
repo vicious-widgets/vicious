@@ -12,8 +12,7 @@ local pairs = pairs
 local io = { open = io.open }
 local setmetatable = setmetatable
 local string = {
-    sub = string.sub,
-    gsub = string.gsub,
+    upper = string.upper,
     format = string.format
 }
 -- }}}
@@ -46,7 +45,7 @@ end
 -- {{{ Format a string with args
 function format(format, args)
     for var, val in pairs(args) do
-        format = string.gsub(format, "$" .. var, val)
+        format = format:gsub("$" .. var, val)
     end
 
     return format
@@ -77,12 +76,20 @@ function escape(text)
 end
 -- }}}
 
+-- {{{ Capitalize a string
+function capitalize(text)
+    return text and text:gsub("([%w])([%w]*)", function(c, s)
+        return string.upper(c) .. s
+    end)
+end
+-- }}}
+
 -- {{{ Truncate a string
 function truncate(text, maxlen)
     local txtlen = text:len()
 
     if txtlen > maxlen then
-        text = string.sub(text, 1, maxlen - 3) .. "..."
+        text = text:sub(1, maxlen - 3) .. "..."
     end
 
     return text
@@ -100,14 +107,14 @@ function scroll(text, maxlen, widget)
 
     if txtlen > maxlen then
         if state.d then
-            text = string.sub(text, state.i, state.i + maxlen) .. "..."
+            text = text:sub(state.i, state.i + maxlen) .. "..."
             state.i = state.i + 3
 
             if maxlen + state.i >= txtlen then
                 state.d = false
             end
         else
-            text = "..." .. string.sub(text, state.i, state.i + maxlen)
+            text = "..." .. text:sub(state.i, state.i + maxlen)
             state.i = state.i - 3
 
             if state.i <= 1 then
