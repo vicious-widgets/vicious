@@ -2,6 +2,21 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+f34bfaf fs: fix the bug reported by Alex Tergeland
+5f41c7a init: do not use keyword type for user data
+ee64644 API: added force() function to force update widgets
+95e9a77 API: regregister() and update() are not exposed
+ff050a0 README: link to the "Widgets in awesome" document
+5226d10 API: function enable_caching() is now cache()
+9371839 volume: added real mute support
+dbd6c7b weather: capitalize weather and sky stats
+2c6b969 weather: calculate degree Celsius from Fahrenheit
+ad14818 helpers: import capitalize
+0ab8311 wifi: properly handle iwconfig PATH differences
+4fa87fa wifi: properly handle non-existant interface
+9eef646 git: ignore file removed
+4664bee mdir: fix module description
+57004c0 Next release, tag 1.0.24
 b96cb98 bat: added a note about Apple PMU and ACPI/procfs
 23d09f0 README: added the Security section
 e29ea62 helpers: uformat helper replaces formatting done by widgets
