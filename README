@@ -82,6 +82,12 @@ Enable caching of a widget type:
 
     - enable caching of values returned by a widget type
 
+Force update of widgets:
+  vicious.force({ widget, })
+
+    - widget argument is a table with one or more widgets that will be
+      updated
+
 
 Power and Caching
 -----------------

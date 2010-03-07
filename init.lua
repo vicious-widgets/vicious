@@ -72,6 +72,7 @@ for i, w in pairs(_M) do
 end
 -- }}}
 
+
 -- {{{ Local functions
 -- {{{ Update a widget
 local function update(widget, reg, disablecache)
@@ -170,6 +171,7 @@ end
 -- }}}
 -- }}}
 
+
 -- {{{ Exposed functions
 -- {{{ Register a widget
 function register(widget, wtype, format, timer, warg)
@@ -241,6 +243,16 @@ end
 function cache(type)
     if widget_cache[type] == nil then
         widget_cache[type] = {}
+    end
+end
+-- }}}
+
+-- {{{ Force update of widgets
+function force(widgets)
+    if type(widgets) == "table" then
+        for _, w in pairs(widgets) do
+            update(w, nil, true)
+        end
     end
 end
 -- }}}
