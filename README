@@ -77,8 +77,8 @@ Restart suspended widgets:
 
     - if widget is provided only that widget will be activated
 
-Enable caching for a widget:
-  vicious.cache(widget_type)
+Enable caching of a widget type:
+  vicious.cache(type)
 
     - enable caching of values returned by a widget type
 

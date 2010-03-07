@@ -50,12 +50,12 @@ require("vicious.date")
 module("vicious")
 
 
--- {{{ Initialise tables
+-- {{{ Initialize tables
 local timers       = {}
 local registered   = {}
 local widget_cache = {}
 
--- Initialise the function table
+-- Initialize the function table
 widgets = {}
 -- }}}
 
@@ -72,39 +72,60 @@ for i, w in pairs(_M) do
 end
 -- }}}
 
--- {{{ Main functions
--- {{{ Register a widget
-function register(widget, wtype, format, timer, warg)
-    local reg = {}
-    local widget = widget
+-- {{{ Local functions
+-- {{{ Update a widget
+local function update(widget, reg, disablecache)
+    -- Check if there are any equal widgets
+    if reg == nil then
+        for w, i in pairs(registered) do
+            if w == widget then
+                for _, r in pairs(i) do
+                    update(w, r, disablecache)
+                end
+            end
+        end
 
-    -- Set properties
-    reg.type   = wtype
-    reg.format = format
-    reg.timer  = timer
-    reg.warg   = warg
-    reg.widget = widget
-
-    -- Update function
-    reg.update = function ()
-        update(widget, reg)
+        return
     end
 
-    -- Default to 2s timer
-    if reg.timer == nil then
-        reg.timer = 2
+    local t = os.time()
+    local data = {}
+
+    -- Check for chached output newer than the last update
+    if widget_cache[reg.type] ~= nil then
+        local c = widget_cache[reg.type]
+
+        if (c.time == nil or c.time <= t-reg.timer) or disablecache then
+            c.time, c.data = t, reg.type(reg.format, reg.warg)
+        end
+
+        data = c.data
+    else
+        data = reg.type(reg.format, reg.warg)
     end
 
-    -- Register a reg object
-    regregister(reg)
+    if type(data) == "table" then
+        if type(reg.format) == "string" then
+            data = helpers.format(reg.format, data)
+        elseif type(reg.format) == "function" then
+            data = reg.format(widget, data)
+        end
+    end
 
-    -- Return a reg object for reuse
-    return reg
+    if widget.add_value ~= nil then
+        widget:add_value(tonumber(data) / 100)
+    elseif widget.set_value ~= nil then
+        widget:set_value(tonumber(data) / 100)
+    else
+        widget.text = data
+    end
+
+    return data
 end
 -- }}}
 
 -- {{{ Register from reg object
-function regregister(reg)
+local function regregister(reg)
     if not reg.running then
         if registered[reg.widget] == nil then
             registered[reg.widget] = {}
@@ -147,6 +168,38 @@ function regregister(reg)
     end
 end
 -- }}}
+-- }}}
+
+-- {{{ Exposed functions
+-- {{{ Register a widget
+function register(widget, wtype, format, timer, warg)
+    local reg = {}
+    local widget = widget
+
+    -- Set properties
+    reg.type   = wtype
+    reg.format = format
+    reg.timer  = timer
+    reg.warg   = warg
+    reg.widget = widget
+
+    -- Update function
+    reg.update = function ()
+        update(widget, reg)
+    end
+
+    -- Default to 2s timer
+    if reg.timer == nil then
+        reg.timer = 2
+    end
+
+    -- Register a reg object
+    regregister(reg)
+
+    -- Return a reg object for reuse
+    return reg
+end
+-- }}}
 
 -- {{{ Unregister a widget
 function unregister(widget, keep, reg)
@@ -184,7 +237,15 @@ function unregister(widget, keep, reg)
 end
 -- }}}
 
--- {{{ Suspend vicious
+-- {{{ Enable caching of a widget type
+function cache(type)
+    if widget_cache[type] == nil then
+        widget_cache[type] = {}
+    end
+end
+-- }}}
+
+-- {{{ Suspend all widgets
 function suspend()
     for w, i in pairs(registered) do
         for _, v in pairs(i) do
@@ -194,7 +255,7 @@ function suspend()
 end
 -- }}}
 
--- {{{ Activate vicious
+-- {{{ Activate a widget
 function activate(widget)
     for w, i in pairs(registered) do
         if widget == nil or w == widget then
@@ -203,66 +264,6 @@ function activate(widget)
             end
         end
     end
-end
--- }}}
-
--- {{{ Enable caching for a widget
-function cache(widget)
-    if widget_cache[widget] == nil then
-        widget_cache[widget] = {}
-    end
-end
--- }}}
-
--- {{{ Update a widget
-function update(widget, reg, disablecache)
-    -- Check if there are any equal widgets
-    if reg == nil then
-        for w, i in pairs(registered) do
-            if w == widget then
-                for _, v in pairs(i) do
-                    update(w, v, disablecache)
-                end
-            end
-        end
-
-        return
-    end
-
-    local t = os.time()
-    local data = {}
-
-    -- Do we have output chached for a widget newer than last update
-    if widget_cache[reg.type] ~= nil then
-        local c = widget_cache[reg.type]
-
-        if c.time == nil or c.time <= t - reg.timer or disablecache then
-            c.time = t
-            c.data = reg.type(reg.format, reg.warg)
-        end
-
-        data = c.data
-    else
-        data = reg.type(reg.format, reg.warg)
-    end
-
-    if type(data) == "table" then
-        if type(reg.format) == "string" then
-            data = helpers.format(reg.format, data)
-        elseif type(reg.format) == "function" then
-            data = reg.format(widget, data)
-        end
-    end
-
-    if widget.add_value ~= nil then
-        widget:add_value(tonumber(data) / 100)
-    elseif widget.set_value ~= nil then
-        widget:set_value(tonumber(data) / 100)
-    else
-        widget.text = data
-    end
-
-    return data
 end
 -- }}}
 -- }}}
