@@ -93,16 +93,16 @@ local function update(widget, reg, disablecache)
     local data = {}
 
     -- Check for chached output newer than the last update
-    if widget_cache[reg.type] ~= nil then
-        local c = widget_cache[reg.type]
+    if widget_cache[reg.wtype] ~= nil then
+        local c = widget_cache[reg.wtype]
 
         if (c.time == nil or c.time <= t-reg.timer) or disablecache then
-            c.time, c.data = t, reg.type(reg.format, reg.warg)
+            c.time, c.data = t, reg.wtype(reg.format, reg.warg)
         end
 
         data = c.data
     else
-        data = reg.type(reg.format, reg.warg)
+        data = reg.wtype(reg.format, reg.warg)
     end
 
     if type(data) == "table" then
@@ -179,7 +179,7 @@ function register(widget, wtype, format, timer, warg)
     local widget = widget
 
     -- Set properties
-    reg.type   = wtype
+    reg.wtype  = wtype
     reg.format = format
     reg.timer  = timer
     reg.warg   = warg
@@ -240,9 +240,9 @@ end
 -- }}}
 
 -- {{{ Enable caching of a widget type
-function cache(type)
-    if widget_cache[type] == nil then
-        widget_cache[type] = {}
+function cache(wtype)
+    if widget_cache[wtype] == nil then
+        widget_cache[wtype] = {}
     end
 end
 -- }}}
