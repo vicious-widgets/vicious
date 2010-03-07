@@ -441,6 +441,10 @@ Read "awesome" manual pages:
 
   awesome(1)  awesomerc(5)
 
+Awesome widgets explained:
+
+  http://awesome.naquadah.org/wiki/Widgets_in_awesome
+
 Example "awesome" configuration:
 
   http://git.sysphere.org/awesome-configs/
