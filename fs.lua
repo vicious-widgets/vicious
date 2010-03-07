@@ -30,10 +30,10 @@ local function worker(format, nfs)
     local fs_info = {}
 
     for line in f:lines() do
-        if not string.match(line, "^Filesystem.*") then
-            local s, u, a, p, m = string.match(line, -- Match all at once (including NFS)
-             "^[%w%p]+[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%[%s]+([%w%p]+)$")
+        local s, u, a, p, m = string.match(line, -- Match all at once (including NFS)
+         "[%w%p]+[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%[%s]+([%w%p]+)$")
 
+        if m ~= nil then
             helpers.uformat(fs_info, m .. " size",  s, unit)
             helpers.uformat(fs_info, m .. " used",  u, unit)
             helpers.uformat(fs_info, m .. " avail", a, unit)
