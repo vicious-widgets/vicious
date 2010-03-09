@@ -22,18 +22,19 @@ local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
 local function worker(format, nfs)
-    -- Fallback to listing only local file systems
+    -- Fallback to listing only local file-systems
     if nfs then nfs = "" else nfs = "--local" end
 
-    -- Get data from df
-    local f = io.popen("LANG=C df -kP " .. nfs)
+    -- Get (non-localized)data from df
+    local f = io.popen("LC_ALL=C df -kP " .. nfs)
     local fs_info = {}
 
-    for line in f:lines() do
-        local s, u, a, p, m = string.match(line, -- Match all at once (including NFS)
-         "[%w%p]+[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%[%s]+([%w%p]+)$")
+    for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
+        local s     = string.match(line, "^.-[%s]+([%d]+)")
+        local u,a,p = string.match(line, "([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%")
+        local m     = string.match(line, "%%[%s]([%p%w]+)")
 
-        if m ~= nil then
+        if u and m then -- Handle 1st line and broken regexp
             helpers.uformat(fs_info, m .. " size",  s, unit)
             helpers.uformat(fs_info, m .. " used",  u, unit)
             helpers.uformat(fs_info, m .. " avail", a, unit)
