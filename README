@@ -217,7 +217,7 @@ vicious.widgets.fs
     systems, only local file systems are included by default
   - returns a table with string keys, using mount points as a base:
     {/ size_mb}, {/ size_gb}, {/ used_mb}, {/ used_gb}, {/ used_p},
-    {/ avail_mb}, {/ avail_gb}, {/home size_mb} etc.
+    {/ avail_mb}, {/ avail_gb}, {/ avail_p}, {/home size_mb} etc.
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices

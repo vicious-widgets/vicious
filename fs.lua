@@ -38,7 +38,9 @@ local function worker(format, nfs)
             helpers.uformat(fs_info, m .. " size",  s, unit)
             helpers.uformat(fs_info, m .. " used",  u, unit)
             helpers.uformat(fs_info, m .. " avail", a, unit)
-            fs_info["{" .. m .. " used_p}"] = tonumber(p)
+
+            fs_info["{" .. m .. " used_p}"]  = tonumber(p)
+            fs_info["{" .. m .. " avail_p}"] = 100 - tonumber(p)
         end
     end
     f:close()
