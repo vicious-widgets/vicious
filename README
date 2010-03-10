@@ -131,11 +131,12 @@ great for saving power.
 
 Security
 --------
+
 At the moment only one widget type (Gmail) requires auth. information
 in order to get to the data. In the future there could be more, and
 you should give some thought to the issue of protecting your data. The
-Gmail widget type by default stores login information in the module it
-self, and you are advised to make sure that file is only readable by
+Gmail widget type by default stores login information in the ~/.netrc
+file, and you are advised to make sure that file is only readable by
 the owner. Other than that we can not force all users to conform to
 one standard, one way of keeping it secure, like in some keyring.
 
@@ -152,11 +153,9 @@ be done with tools like "dbus-send" and "qdbus". The Gnome keyring
 should support the same, so those with parts of Gnome installed could
 use that keyring.
 
-Some users move their login into an external file and read it from
-there. Not much different than keeping it in the module, but what if
-you encrypt the file with your GPG key? Users of the GPG Passphrase
-Agent could decrypt the file transparently while their session is
-active.
+Users of GnuPG (and its agent) could consider encrypting the netrc
+file with their GPG key. Trough the GPG Passphrase Agent they could
+then decrypt the file transparently while their session is active.
 
 
 Widget types
@@ -271,6 +270,8 @@ vicious.widgets.gmail
   - takes an (optional) argument, if it's a number subject will be
     truncated, if a table, with 1st field as maximum lenght and 2nd
     the widget name (i.e. "gmailwidget"), scrolling will be used
+  - keeps login information in the ~/.netrc file, example:
+    machine mail.google.com login user password pass
   - returns a table with string keys: {count} and {subject}
 
 vicious.widgets.entropy

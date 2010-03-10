@@ -8,8 +8,11 @@ local type = type
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = { match = string.match }
 local helpers = require("vicious.helpers")
+local string = {
+    find = string.find,
+    match = string.match
+}
 -- }}}
 
 
@@ -21,37 +24,32 @@ module("vicious.gmail")
 local rss = {
   inbox   = {
     "https://mail.google.com/mail/feed/atom",
-    "Gmail - Inbox for "
+    "Gmail %- Inbox"
   },
   unread  = {
     "https://mail.google.com/mail/feed/atom/unread",
-    "Gmail - Label &#39;unread&#39; for "
+    "Gmail %- Label"
   },
   --labelname = {
   --  "https://mail.google.com/mail/feed/atom/labelname",
-  --  "Gmail - Label &#39;labelname&#39; for "
+  --  "Gmail %- Label"
   --},
 }
 
--- Todo: safer storage, maybe hook into Kwallet
-local cfg = {
-  user = "",        -- user@gmail.com
-  pass = "",        -- users password
-  feed = rss.unread -- default is all unread
-}
+-- Default is all unread
+local feed = rss.unread
 -- }}}
 
 
 -- {{{ Gmail widget type
 local function worker(format, warg)
-    local auth = cfg.user ..":".. cfg.pass
     local mail = {
         ["{count}"]   = 0,
         ["{subject}"] = "N/A"
     }
 
     -- Get info from the Gmail atom feed
-    local f = io.popen("curl --connect-timeout 1 -m 3 -fsu '"..auth.."' "..cfg.feed[1])
+    local f = io.popen("curl --connect-timeout 1 -m 3 -fsn " .. feed[1])
 
     -- Could be huge don't read it all at once, info we are after is at the top
     for line in f:lines() do
@@ -61,7 +59,7 @@ local function worker(format, warg)
         -- Find subject tags
         local title = string.match(line, "<title>(.*)</title>")
         -- If the subject changed then break out of the loop
-        if title ~= nil and title ~= cfg.feed[2] .. cfg.user then
+        if title ~= nil and not string.find(title, feed[2]) then
             -- Check if we should scroll, or maybe truncate
             if warg then
                 if type(warg) == "table" then
