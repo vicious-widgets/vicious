@@ -30,8 +30,8 @@ local function worker(format, nfs)
     local fs_info = {}
 
     for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
-        local s     = string.match(line, "^.-[%s]+([%d]+)")
-        local u,a,p = string.match(line, "([%d]+)[%s]+([%d]+)[%s]+([%d]+)%%")
+        local s     = string.match(line, "^.-[%s]([%d]+)")
+        local u,a,p = string.match(line, "([%d]+)[%D]+([%d]+)[%D]+([%d]+)%%")
         local m     = string.match(line, "%%[%s]([%p%w]+)")
 
         if u and m then -- Handle 1st line and broken regexp
