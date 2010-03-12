@@ -5,11 +5,20 @@ derived from the "Wicked" widget library. It has some of the old
 Wicked widget types, a few of them rewritten, and a good number of new
 ones:
 
-  http://git.sysphere.org/vicious/about/
+  - http://git.sysphere.org/vicious/about/
 
 Vicious widget types are a framework for creating your own awesome
 widgets.  Before using a widget type *you* need to ensure that a valid
 source of information exists.
+
+For now Vicious doesn't depend on any third party Lua libraries, to
+make it easier to install and use. That means some system utilities
+are used instead, where available:
+
+  - hddtemp:        for the HDD Temperature widget type
+  - alsa-utils:     for the Volume widget type
+  - wireless_tools: for the Wireless widget type
+  - curl:           for widget types accessing network resources
 
 
 Usage
@@ -271,12 +280,12 @@ other were contributed by Vicious users. The [contrib] branch also
 holds widget types that were deprecated, rewritten or removed from the
 [master] branch.
 
-  http://git.sysphere.org/vicious/log/?h=contrib
+  - http://git.sysphere.org/vicious/log/?h=contrib
 
 Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find his work here:
 
-  http://git.sigil.org/vicious-fbsd/
+  - http://git.sigil.org/vicious-fbsd/
 
 
 Power and Caching
@@ -472,27 +481,26 @@ Read "awesome" manual pages:
 
 Awesome widgets explained:
 
-  http://awesome.naquadah.org/wiki/Widgets_in_awesome
+  - http://awesome.naquadah.org/wiki/Widgets_in_awesome
 
 Example "awesome" configuration:
 
-  http://git.sysphere.org/awesome-configs/
+  - http://git.sysphere.org/awesome-configs/
 
 
 Authors
 -------
 Wicked written by:
-  Lucas de Vries           <lucas glacicle.com>
+  - Lucas de Vries           <lucas glacicle.com>
 
 Vicious written by:
-  Adrian C. (anrxc)        <anrxc sysphere.org>
+  - Adrian C. (anrxc)        <anrxc sysphere.org>
 
 Vicious contributors:
-  Michael Unterkalmsteiner <miciu gmx.de>
-  Martin Striz             <striz raynet.cz>
-  Benedikt Sauer           <filmor gmail.com>
-  Greg D.                  <jabbas jabbas.pl>
-  Henning Glawe            <glaweh debian.org>
-  Zsolt Udvari             <udvzsolt gmail.com>
-  Rémy C.                  <shikamaru mandriva.org>
-  Hiltjo Posthuma          <hiltjo codemadness.org>
+  - Michael Unterkalmsteiner <miciu gmx.de>
+  - Martin Striz             <striz raynet.cz>
+  - Benedikt Sauer           <filmor gmail.com>
+  - Greg D.                  <jabbas jabbas.pl>
+  - Henning Glawe            <glaweh debian.org>
+  - Rémy C.                  <shikamaru mandriva.org>
+  - Hiltjo Posthuma          <hiltjo codemadness.org>
