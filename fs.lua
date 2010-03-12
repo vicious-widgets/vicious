@@ -22,8 +22,8 @@ local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
 local function worker(format, nfs)
-    -- Fallback to listing only local file-systems
-    if nfs then nfs = "" else nfs = "--local" end
+    -- Fallback to listing local filesystems
+    if nfs then nfs = "" else nfs = "-l" end
 
     -- Get (non-localized)data from df
     local f = io.popen("LC_ALL=C df -kP " .. nfs)
