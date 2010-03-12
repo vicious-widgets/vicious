@@ -33,8 +33,8 @@ local function worker(format)
 
     for line in f:lines() do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
-        if string.match(line, "^[%s]?[%s]?[%s]?[%s]?[%w]+:") then
-            local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
+        local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
+        if name ~= nil then
             -- Received bytes, first value after the name
             local recv = tonumber(string.match(line, ":[%s]*([%d]+)"))
             -- Transmited bytes, 7 fields from end of the line
