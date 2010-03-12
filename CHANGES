@@ -2,6 +2,17 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+6898d4a dio: add I/O scheduler support
+71f21f3 fs: use -l not --local for portability
+edb4619 os: import operating system information widget
+de15934 fs: further improve the regexp
+3178068 mem: rewrite and simplify
+77d1a0b gmail: switch to ~/.netrc for login storage
+1c0ceff gmail: don't break on non-escaped chars, quote login
+abacd77 fs: include available space in percent, requested by Jon
+94e7ed1 fs: rewritten, less prone to error
+fa40e40 init: never pass nil into awful.widget widgets
+6f79227 Next release, tag 1.0.25
 f34bfaf fs: fix the bug reported by Alex Tergeland
 5f41c7a init: do not use keyword type for user data
 ee64644 API: added force() function to force update widgets
