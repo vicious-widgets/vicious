@@ -1,46 +1,58 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
 --  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local type = type
+local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = { find = string.find }
+local string = { gmatch = string.gmatch }
 local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Mpd: provides the currently playing song in MPD
+-- Mpd: provides Music Player Daemon information
 module("vicious.mpd")
 
 
 -- {{{ MPD widget type
 local function worker(format, warg)
-    -- Get data from mpc
-    local f = io.popen("mpc")
-    local np = f:read("*line")
-    f:close()
+    local mpd_state  = {
+        ["{volume}"] = 0,
+        ["{state}"]  = "N/A",
+        ["{Artist}"] = "N/A",
+        ["{Title}"]  = "N/A",
+        ["{Album}"]  = "N/A",
+        ["{Genre}"]  = "N/A"
+    }
 
-    -- Not installed,
-    if np == nil or --  off         or                 stoppped.
-       (string.find(np, "MPD_HOST") or string.find(np, "volume:"))
-    then
-        return {"Stopped"}
-    end
+    -- Fallback to MPD defaults
+    local pass = warg and warg[1] or "\"\""
+    local host = warg and warg[2] or "127.0.0.1"
+    local port = warg and warg[3] or "6600"
 
-    -- Check if we should scroll, or maybe truncate
-    if warg then
-        if type(warg) == "table" then
-            np = helpers.scroll(np, warg[1], warg[2])
-        else
-            np = helpers.truncate(np, warg)
+    -- Construct MPD client options
+    local mpdh = "telnet://"..host..":"..port
+    local echo = "echo 'password "..pass.."\nstatus\ncurrentsong\nclose'"
+
+    -- Get data from MPD server
+    local f = io.popen(echo.." | curl --connect-timeout 1 -fsm 3 "..mpdh)
+
+    for line in f:lines() do
+        for k, v in string.gmatch(line, "([%w]+):[%s](.*)$") do
+            if     k == "volume" then mpd_state["{"..k.."}"] = v and tonumber(v)
+            elseif k == "state"  then mpd_state["{"..k.."}"] = helpers.capitalize(v)
+            elseif k == "Artist" then mpd_state["{"..k.."}"] = helpers.escape(v)
+            elseif k == "Title"  then mpd_state["{"..k.."}"] = helpers.escape(v)
+            elseif k == "Album"  then mpd_state["{"..k.."}"] = helpers.escape(v)
+            elseif k == "Genre"  then mpd_state["{"..k.."}"] = helpers.escape(v)
+            end
         end
     end
+    f:close()
 
-    return {helpers.escape(np)}
+    return mpd_state
 end
 -- }}}
 

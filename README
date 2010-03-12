@@ -131,7 +131,6 @@ great for saving power.
 
 Security
 --------
-
 At the moment only one widget type (Gmail) requires auth. information
 in order to get to the data. In the future there could be more, and
 you should give some thought to the issue of protecting your data. The
@@ -299,11 +298,13 @@ vicious.widgets.pkg
   - returns 1st value as the count of available updates
 
 vicious.widgets.mpd
-  - provides the currently playing song in MPD
-  - takes an (optional) argument, if it's a number song name will be
-    truncated, if a table, with 1st field as maximum lenght and 2nd
-    the widget name (i.e. "mpdwidget"), scrolling will be used
-  - returns 1st value as the currently playing song
+  - provides Music Player Daemon information
+  - takes a table as an argument, 1st field should be the password (or
+    nil), 2nd the hostname (or nil) and 3rd port (or nil) - if no
+    argument is provided connection attempt will be made to localhost
+    port 6600 with no password
+  - returns a table with string keys: {volume}, {state}, {Artist},
+    {Title}, {Album}, {Genre}
 
 vicious.widgets.volume
   - provides volume levels and state of requested ALSA mixers
@@ -413,11 +414,12 @@ second argument, and will return the text/data to be used for the
 widget.
 
 Example
-  mpdwidget = widget({ type = 'textbox' })
-  vicious.register(mpdwidget,vicious.widgets.mpd,
+  mpdwidget = widget({ type = "textbox" })
+  vicious.register(mpdwidget, vicious.widgets.mpd,
     function (widget, args)
-      if   args[1] == 'Stopped' then return ''
-      else return '<span color="white">MPD:</span> '..args[1]
+      if   args["{state}"] == "Stop" then return ""
+      else return '<span color="white">MPD:</span> '..
+             args["{Artist}"]..' - '.. args["{Title}"]
       end
     end)
 
