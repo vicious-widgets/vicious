@@ -26,6 +26,7 @@ local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 local function worker(format, disk)
     local disk_lines = { [disk] = {} }
     local disk_stats = helpers.pathtotable("/sys/block/" .. disk)
+    local disk_queue = helpers.pathtotable("/sys/block/" .. disk .. "/queue")
 
     if disk_stats.stat then
         local match = string.gmatch(disk_stats.stat, "[%s]+([%d]+)")
@@ -57,6 +58,11 @@ local function worker(format, disk)
     helpers.uformat(disk_usage[disk], "read",  diff_total[disk][3], unit)
     helpers.uformat(disk_usage[disk], "write", diff_total[disk][7], unit)
     helpers.uformat(disk_usage[disk], "total", diff_total[disk][7] + diff_total[disk][3], unit)
+
+    -- Store I/O scheduler
+    if disk_queue.scheduler then
+        disk_usage[disk]["{sched}"] = string.gmatch(disk_queue.scheduler, "%[([%a]+)%]")
+    end
 
     return disk_usage[disk]
 end
