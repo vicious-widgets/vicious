@@ -210,6 +210,11 @@ vicious.widgets.mem
     in percent, 6th as swap usage, 7th as total system swap and 8th as
     free swap
 
+vicious.widgets.os
+  - provides operating system information
+  - returns 1st value as the operating system in use, 2nd as the
+    release version, 3rd as your username and 4th the hostname
+
 vicious.widgets.fs
   - provides file system disk space usage
   - takes an (optional) argument which, if true, includes remote file
