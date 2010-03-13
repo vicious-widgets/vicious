@@ -5,7 +5,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local io = { open = io.open }
+local io = { lines = io.lines }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { gmatch = string.gmatch }
@@ -18,11 +18,10 @@ module("vicious.mem")
 
 -- {{{ Memory widget type
 local function worker(format)
-    -- Get meminfo
-    local f = io.open("/proc/meminfo")
     local mem = { buf = {}, swp = {} }
 
-    for line in f:lines() do
+    -- Get MEM info
+    for line in io.lines("/proc/meminfo") do
         for k, v in string.gmatch(line, "([%a]+):[%s]+([%d]+).+") do
             if     k == "MemTotal"  then mem.total = math.floor(v/1024)
             elseif k == "MemFree"   then mem.buf.f = math.floor(v/1024)
@@ -33,7 +32,6 @@ local function worker(format)
             end
         end
     end
-    f:close()
 
     -- Calculate memory percentage
     mem.free  = mem.buf.f + mem.buf.b + mem.buf.c

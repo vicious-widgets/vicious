@@ -6,7 +6,7 @@
 
 -- {{{ Grab environment
 local ipairs = ipairs
-local io = { open = io.open }
+local io = { lines = io.lines }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
@@ -28,11 +28,10 @@ local cpu_active = {}
 
 -- {{{ CPU widget type
 local function worker(format)
-    -- Get /proc/stat
-    local f = io.open("/proc/stat")
     local cpu_lines = {}
 
-    for line in f:lines() do
+    -- Get CPU stats
+    for line in io.lines("/proc/stat") do
         if string.find(line, "^cpu") then
             cpu_lines[#cpu_lines+1] = {}
 
@@ -41,7 +40,6 @@ local function worker(format)
             end
         end
     end
-    f:close()
 
     -- Ensure tables are initialized correctly
     while #cpu_total < #cpu_lines do

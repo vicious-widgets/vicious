@@ -7,7 +7,7 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local os = { time = os.time }
-local io = { open = io.open }
+local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
@@ -27,11 +27,10 @@ local unit = { ["b"] = 1, ["kb"] = 1024,
 
 -- {{{ Net widget type
 local function worker(format)
-    -- Get /proc/net/dev
-    local f = io.open("/proc/net/dev")
     local args = {}
 
-    for line in f:lines() do
+    -- Get NET stats
+    for line in io.lines("/proc/net/dev") do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
         local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
         if name ~= nil then
@@ -68,7 +67,6 @@ local function worker(format)
             nets[name][2] = send
         end
     end
-    f:close()
 
     return args
 end

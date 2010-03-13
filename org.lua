@@ -5,7 +5,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local io = { open = io.open }
+local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { find = string.find }
 local os = {
@@ -31,9 +31,7 @@ local function worker(format, warg)
 
     -- Get data from agenda files
     for i=1, #warg do
-       local f = io.open(warg[i])
-
-       for line in f:lines() do
+       for line in io.lines(warg[i]) do
           local scheduled = string.find(line, "SCHEDULED:")
           local closed    = string.find(line, "CLOSED:")
           local deadline  = string.find(line, "DEADLINE:")
@@ -56,7 +54,6 @@ local function worker(format, warg)
              end
           end
        end
-       f:close()
     end
 
     return {count.past, count.today, count.soon, count.future}

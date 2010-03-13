@@ -5,7 +5,7 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = { open = io.open }
+local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { match = string.match }
 -- }}}
@@ -17,12 +17,11 @@ module("vicious.cpuinf")
 
 -- {{{ CPU Information widget type
 local function worker(format)
-    -- Get cpuinfo
-    local f = io.open("/proc/cpuinfo")
     local cpu_id   = nil
     local cpu_info = {}
 
-    for line in f:lines() do
+    -- Get CPU info
+    for line in io.lines("/proc/cpuinfo") do
         if string.match(line, "^processor.*") then
             cpu_id = string.match(line, "([%d]+)")
         elseif string.match(line, "^cpu MHz.*") then
@@ -35,7 +34,6 @@ local function worker(format)
             cpu_info["{cpu"..cpu_id.." mb}"] = cpu_cache / 1024
         end
     end
-    f:close()
 
     return cpu_info
 end
