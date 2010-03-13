@@ -40,16 +40,12 @@ local function worker(format, warg)
              local b, e, y, m, d = string.find(line, "(%d%d%d%d)-(%d%d)-(%d%d)")
 
              if b then
-                local t = os.time{ year = y, month = m, day = d }
+                local  t = os.time{ year = y, month = m, day = d }
 
-                if t < today then
-                    count.past = count.past + 1
-                elseif t == today then
-                    count.today = count.today + 1
-                elseif t <= soon then
-                    count.soon = count.soon + 1
-                elseif t <= future then
-                    count.future = count.future + 1
+                if     t <  today  then count.past   = count.past   + 1
+                elseif t == today  then count.today  = count.today  + 1
+                elseif t <= soon   then count.soon   = count.soon   + 1
+                elseif t <= future then count.future = count.future + 1
                 end
              end
           end

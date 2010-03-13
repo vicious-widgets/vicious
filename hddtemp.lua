@@ -21,13 +21,12 @@ local function worker(format, port)
     if port == nil then port = 7634 end
 
     -- Get info from the hddtemp daemon
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:" .. port)
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:"..port)
     local hdd_temp = {}
 
     for line in f:lines() do
-        for disk, temp in string.gmatch(line, "|([%/%a%d]+)|.-|([%d]+)|[CF]+|")
-        do
-            hdd_temp["{"..disk.."}"] = tonumber(temp)
+        for d, t in string.gmatch(line, "|([%/%a%d]+)|.-|([%d]+)|[CF]+|") do
+            hdd_temp["{"..d.."}"] = tonumber(t)
         end
     end
     f:close()
