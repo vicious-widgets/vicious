@@ -115,9 +115,9 @@ local function update(widget, reg, disablecache)
     end
 
     if widget.add_value ~= nil then
-        widget:add_value(data and tonumber(data) / 100)
+        widget:add_value(tonumber(data) and tonumber(data)/100)
     elseif widget.set_value ~= nil then
-        widget:set_value(data and tonumber(data) / 100)
+        widget:set_value(tonumber(data) and tonumber(data)/100)
     else
         widget.text = data
     end
@@ -251,9 +251,9 @@ end
 -- }}}
 
 -- {{{ Force update of widgets
-function force(widgets)
-    if type(widgets) == "table" then
-        for _, w in pairs(widgets) do
+function force(wtable)
+    if type(wtable) == "table" then
+        for _, w in pairs(wtable) do
             update(w, nil, true)
         end
     end
