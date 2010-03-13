@@ -103,7 +103,7 @@ local function update(widget, reg, disablecache)
 
         data = c.data
     else
-        data = reg.wtype(reg.format, reg.warg)
+        data = reg.wtype and reg.wtype(reg.format, reg.warg)
     end
 
     if type(data) == "table" then
@@ -242,8 +242,10 @@ end
 
 -- {{{ Enable caching of a widget type
 function cache(wtype)
-    if widget_cache[wtype] == nil then
-        widget_cache[wtype] = {}
+    if wtype ~= nil then
+        if widget_cache[wtype] == nil then
+            widget_cache[wtype] = {}
+        end
     end
 end
 -- }}}
