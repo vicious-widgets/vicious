@@ -7,7 +7,7 @@
 local tonumber = tonumber
 local io = { lines = io.lines }
 local setmetatable = setmetatable
-local string = { match = string.match }
+local string = { gmatch = string.gmatch }
 -- }}}
 
 
@@ -17,21 +17,23 @@ module("vicious.cpuinf")
 
 -- {{{ CPU Information widget type
 local function worker(format)
-    local cpu_id   = nil
+    local id = nil
     local cpu_info = {}
 
     -- Get CPU info
     for line in io.lines("/proc/cpuinfo") do
-        if string.match(line, "^processor.*") then
-            cpu_id = string.match(line, "([%d]+)")
-        elseif string.match(line, "^cpu MHz.*") then
-            local cpu_speed = tonumber(string.match(line, "([%d]+)%."))
-            cpu_info["{cpu"..cpu_id.." mhz}"] = cpu_speed
-            cpu_info["{cpu"..cpu_id.." ghz}"] = cpu_speed / 1000
-        elseif string.match(line, "^cache size.*") then
-            local cpu_cache = tonumber(string.match(line, "([%d]+)[%s]KB"))
-            cpu_info["{cpu"..cpu_id.." kb}"] = cpu_cache
-            cpu_info["{cpu"..cpu_id.." mb}"] = cpu_cache / 1024
+        for k, v in string.gmatch(line, "([%a%s]+)[%s]+:[%s]([%d]+).-$") do
+            if k == "processor" then
+                id = v
+            elseif k == "cpu MHz\t" or k == "cpu MHz" then
+                local speed = tonumber(v)
+                cpu_info["{cpu"..id.." mhz}"] = speed
+                cpu_info["{cpu"..id.." ghz}"] = speed / 1000
+            elseif k == "cache size" then
+                local cache = tonumber(v)
+                cpu_info["{cpu"..id.." kb}"] = cache
+                cpu_info["{cpu"..id.." mb}"] = cache / 1024
+            end
         end
     end
 
