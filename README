@@ -8,8 +8,9 @@ ones:
   - http://git.sysphere.org/vicious/about/
 
 Vicious widget types are a framework for creating your own awesome
-widgets. Before using a widget type *you* need to ensure that a valid
-source of information exists.
+widgets. Vicious contains modules that gather data about your system,
+and a few helper functions that make it easier to register timers,
+suspend widgets and so on.
 
 For now Vicious doesn't depend on any third party Lua libraries, to
 make it easier to install and use. That means some system utilities
@@ -279,7 +280,7 @@ other were contributed by Vicious users. The [contrib] branch also
 holds widget types that were deprecated, rewritten or removed from the
 [master] branch.
 
-  - http://git.sysphere.org/vicious/log/?h=contrib
+  - http://git.sysphere.org/vicious/tree/extra?h=contrib
 
 Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find his work here:
@@ -468,7 +469,7 @@ Example
   uptimewidget.width, uptimewidget.align = 50, "right"
   vicious.register(uptimewidget, vicious.widgets.uptime, "$1 $2:$3", 61)
 
-  - forces a fix width of 50px to the uptime widget, and aligns its
+  - forces a fixed width of 50px to the uptime widget, and aligns its
     text to the right
 
 
