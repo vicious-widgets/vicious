@@ -24,6 +24,8 @@ local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 
 -- {{{ Disk I/O widget type
 local function worker(format, disk)
+    if not disk then return end
+
     local disk_lines = { [disk] = {} }
     local disk_stats = helpers.pathtotable("/sys/block/" .. disk)
     local disk_queue = helpers.pathtotable("/sys/block/" .. disk .. "/queue")

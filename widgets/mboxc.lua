@@ -16,6 +16,8 @@ module("vicious.widgets.mboxc")
 
 -- {{{ Mbox count widget type
 local function worker(format, warg)
+    if not warg then return end
+
     -- Initialise counters
     local count = { old = 0, total = 0, new = 0 }
 

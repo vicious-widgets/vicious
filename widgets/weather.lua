@@ -18,7 +18,9 @@ module("vicious.widgets.weather")
 
 
 -- {{{ Weather widget type
-local function worker(format, station)
+local function worker(format, warg)
+    if not warg then return end
+
     -- Default values
     local weather = {
         ["{city}"]    = "N/A",
@@ -36,7 +38,7 @@ local function worker(format, station)
     -- Get weather forceast by the station ICAO code, from:
     -- * US National Oceanic and Atmospheric Administration
     local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..station..".TXT")
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..warg..".TXT")
     local ws = f:read("*all")
     f:close()
 

@@ -21,12 +21,12 @@ module("vicious.widgets.fs")
 local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
-local function worker(format, nfs)
+local function worker(format, warg)
     -- Fallback to listing local filesystems
-    if nfs then nfs = "" else nfs = "-l" end
+    if warg then warg = "" else warg = "-l" end
 
     -- Get (non-localized)data from df
-    local f = io.popen("LC_ALL=C df -kP " .. nfs)
+    local f = io.popen("LC_ALL=C df -kP " .. warg)
     local fs_info = {}
 
     for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)

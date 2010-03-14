@@ -16,12 +16,12 @@ module("vicious.widgets.hddtemp")
 
 
 -- {{{ HDD Temperature widget type
-local function worker(format, port)
-    -- Fallback to default hddtemp port
-    if port == nil then port = 7634 end
+local function worker(format, warg)
+    -- Fallback to default hddtemp warg
+    if warg == nil then warg = 7634 end
 
     -- Get info from the hddtemp daemon
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:"..port)
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:"..warg)
     local hdd_temp = {}
 
     for line in f:lines() do

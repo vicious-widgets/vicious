@@ -17,6 +17,8 @@ module("vicious.widgets.volume")
 
 -- {{{ Volume widget type
 local function worker(format, warg)
+    if not warg then return end
+
     local mixer_state = {
         ["on"]  = "♫", -- "",
         ["off"] = "♩"  -- "M"

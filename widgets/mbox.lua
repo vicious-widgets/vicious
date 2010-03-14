@@ -18,9 +18,11 @@ module("vicious.widgets.mbox")
 
 -- {{{ Mailbox widget type
 local function worker(format, warg)
-    if type(warg) ~= "table" then mbox = warg end
+    if not warg then return end
+
     -- mbox could be huge, get a 30kb chunk from EOF
-    --  * attachments could be much bigger than this
+    if type(warg) ~= "table" then mbox = warg end
+    -- * attachment could be much bigger than 30kb
     local f = io.open(mbox or warg[1])
     f:seek("end", -30720)
     local txt = f:read("*all")

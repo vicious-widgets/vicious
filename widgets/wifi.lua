@@ -22,7 +22,9 @@ module("vicious.widgets.wifi")
 
 
 -- {{{ Wireless widget type
-local function worker(format, iface)
+local function worker(format, warg)
+    if not warg then return end
+
     -- Default values
     local winfo = {
         ["{ssid}"] = "N/A",
@@ -41,7 +43,7 @@ local function worker(format, iface)
     else
         f:close()
     end
-    local f = io.popen(iwconfig .." ".. iface .. " 2>&1")
+    local f = io.popen(iwconfig .." ".. warg .. " 2>&1")
     local iw = f:read("*all")
     f:close()
 

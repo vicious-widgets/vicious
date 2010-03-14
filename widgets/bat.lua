@@ -20,9 +20,10 @@ module("vicious.widgets.bat")
 
 
 -- {{{ Battery widget type
-local function worker(format, batid)
-    -- Apple PMU and ACPI/procfs battery widgets are in the [contrib] branch
-    local battery = helpers.pathtotable("/sys/class/power_supply/" .. batid)
+local function worker(format, warg)
+    if not warg then return end
+
+    local battery = helpers.pathtotable("/sys/class/power_supply/"..warg)
     local battery_state = {
         ["Full\n"]        = "↯",
         ["Unknown\n"]     = "⌁",

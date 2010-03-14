@@ -15,7 +15,9 @@ module("vicious.widgets.pkg")
 
 
 -- {{{ Packages widget type
-local function worker(format, dist)
+local function worker(format, warg)
+    if not warg then return end
+
     -- Initialise counters
     local updates = 0
     local manager = {
@@ -26,7 +28,7 @@ local function worker(format, dist)
     }
 
     -- Check if updates are available
-    local pkg = manager[dist]
+    local pkg = manager[warg]
     local f = io.popen(pkg.cmd)
 
     for line in f:lines() do
