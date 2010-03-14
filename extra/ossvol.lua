@@ -19,19 +19,34 @@ module("vicious.widgets.ossvol")
 
 
 -- {{{ Volume widget type
-local function worker(format, channel)
-    -- Get mixer data
-    local f = io.popen("ossmix " .. channel)
+local function worker(format, warg)
+    if not warg then return end
+
+    local mixer_state = {
+        ["on"]  = "♫", -- "",
+        ["off"] = "♩"  -- "M"
+    }
+
+    -- Get mixer control contents
+    local f = io.popen("ossmix " .. warg)
     local mixer = f:read("*all")
     f:close()
 
-    local vol = tonumber(string.match(mixer, "([%d]+)"))
-    -- If mute return 0 (not "Mute") so we don't break progressbars
-    if (vol == nil or vol == 0) or string.find(mixer, "OFF") then
-        vol = 0
+    -- Capture mixer control state
+    local volu = tonumber(string.match(mixer, "([%d]+)"))
+    -- Handle mixers without data
+    if volu == nil then
+        return {0, mixer_state["off"]}
     end
 
-    return {vol}
+    -- Handle mixers that are muted
+    if string.find(mixer, "OFF") then
+        mute = mixer_state["off"]
+    else
+        mute = mixer_state["on"]
+    end
+
+    return {volu, mute}
 end
 -- }}}
 
