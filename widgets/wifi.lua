@@ -18,7 +18,7 @@ local string = {
 
 
 -- Wifi: provides wireless information for a requested interface
-module("vicious.wifi")
+module("vicious.widgets.wifi")
 
 
 -- {{{ Wireless widget type

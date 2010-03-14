@@ -18,7 +18,7 @@ local string = {
 
 
 -- Cpu: provides CPU usage for all available CPUs/cores
-module("vicious.cpu")
+module("vicious.widgets.cpu")
 
 
 -- Initialise function tables

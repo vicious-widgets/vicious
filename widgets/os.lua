@@ -17,7 +17,7 @@ local string = {
 
 
 -- OS: provides operating system information
-module("vicious.os")
+module("vicious.widgets.os")
 
 
 -- {{{ Operating system widget type

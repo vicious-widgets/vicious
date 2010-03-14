@@ -12,7 +12,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Entropy: provides available system entropy
-module("vicious.entropy")
+module("vicious.widgets.entropy")
 
 
 -- {{{ Entropy widget type

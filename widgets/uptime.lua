@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Uptime: provides system uptime and load information
-module("vicious.uptime")
+module("vicious.widgets.uptime")
 
 
 -- {{{ Uptime widget type

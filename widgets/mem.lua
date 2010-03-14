@@ -13,7 +13,7 @@ local string = { gmatch = string.gmatch }
 
 
 -- Mem: provides RAM and Swap usage statistics
-module("vicious.mem")
+module("vicious.widgets.mem")
 
 
 -- {{{ Memory widget type

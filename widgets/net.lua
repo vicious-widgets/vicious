@@ -15,7 +15,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Net: provides usage statistics for all network interfaces
-module("vicious.net")
+module("vicious.widgets.net")
 
 
 -- Initialise function tables

@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Thermal: provides temperature levels of ACPI and coretemp thermal zones
-module("vicious.thermal")
+module("vicious.widgets.thermal")
 
 
 -- {{{ Thermal widget type

@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Mbox: provides the subject of last e-mail in a mbox file
-module("vicious.mbox")
+module("vicious.widgets.mbox")
 
 
 -- {{{ Mailbox widget type

@@ -11,7 +11,7 @@ local setmetatable = setmetatable
 
 
 -- Pkg: provides number of pending updates on GNU/Linux
-module("vicious.pkg")
+module("vicious.widgets.pkg")
 
 
 -- {{{ Packages widget type

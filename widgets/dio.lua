@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Disk I/O: provides I/O statistics for requested storage devices
-module("vicious.dio")
+module("vicious.widgets.dio")
 
 
 -- Initialise function tables

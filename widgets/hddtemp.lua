@@ -12,7 +12,7 @@ local string = { gmatch = string.gmatch }
 
 
 -- Hddtemp: provides hard drive temperatures using the hddtemp daemon
-module("vicious.hddtemp")
+module("vicious.widgets.hddtemp")
 
 
 -- {{{ HDD Temperature widget type

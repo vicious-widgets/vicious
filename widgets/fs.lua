@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 
 -- FS: provides file system disk space usage
-module("vicious.fs")
+module("vicious.widgets.fs")
 
 
 -- Variable definitions

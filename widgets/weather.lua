@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Weather: provides weather information for a requested station
-module("vicious.weather")
+module("vicious.widgets.weather")
 
 
 -- {{{ Weather widget type

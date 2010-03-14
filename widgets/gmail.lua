@@ -17,7 +17,7 @@ local string = {
 
 
 -- Gmail: provides count of new and subject of last e-mail on Gmail
-module("vicious.gmail")
+module("vicious.widgets.gmail")
 
 
 -- {{{ Variable definitions

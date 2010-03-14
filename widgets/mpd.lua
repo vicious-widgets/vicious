@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Mpd: provides Music Player Daemon information
-module("vicious.mpd")
+module("vicious.widgets.mpd")
 
 
 -- {{{ MPD widget type

@@ -6,71 +6,27 @@
 --  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
 ---------------------------------------------------
 
--- {{{ Grab environment
+-- {{{ Setup environment
 local type  = type
 local pairs = pairs
 local tonumber = tonumber
-local helpers  = require("vicious.helpers")
 local capi  = { timer = timer }
 local os    = { time = os.time }
 local table = {
     insert  = table.insert,
     remove  = table.remove
 }
--- }}}
-
-
--- {{{ Configure widgets
-require("vicious.cpu")
-require("vicious.cpuinf")
-require("vicious.cpufreq")
-require("vicious.thermal")
-require("vicious.uptime")
-require("vicious.bat")
-require("vicious.mem")
-require("vicious.os")
-require("vicious.fs")
-require("vicious.dio")
-require("vicious.hddtemp")
-require("vicious.net")
-require("vicious.wifi")
-require("vicious.mbox")
-require("vicious.mboxc")
-require("vicious.mdir")
-require("vicious.gmail")
-require("vicious.entropy")
-require("vicious.org")
-require("vicious.pkg")
-require("vicious.mpd")
-require("vicious.volume")
-require("vicious.weather")
-require("vicious.date")
--- }}}
+require("vicious.helpers")
+require("vicious.widgets")
 
 -- Vicious: widgets for the awesome window manager
 module("vicious")
 
 
--- {{{ Initialize tables
+-- Initialize tables
 local timers       = {}
 local registered   = {}
 local widget_cache = {}
-
--- Initialize the function table
-widgets = {}
--- }}}
-
--- {{{ Widget types
-for i, w in pairs(_M) do
-    -- Ensure we don't call ourselves
-    if w and w ~= _M and type(w) == "table" then
-        -- Ignore the function table and helpers
-        if i ~= "widgets" and i ~= "helpers" then
-            -- Place widgets in the namespace table
-            widgets[i] = w
-        end
-    end
-end
 -- }}}
 
 
@@ -173,7 +129,7 @@ end
 -- }}}
 
 
--- {{{ Exposed functions
+-- {{{ Global functions
 -- {{{ Register a widget
 function register(widget, wtype, format, timer, warg)
     local reg = {}

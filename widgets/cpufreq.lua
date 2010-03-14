@@ -12,7 +12,7 @@ local helpers = require("vicious.helpers")
 
 
 -- Cpufreq: provides freq, voltage and governor info for a requested CPU
-module("vicious.cpufreq")
+module("vicious.widgets.cpufreq")
 
 
 -- {{{ CPU frequency widget type

@@ -12,7 +12,7 @@ local string = { gmatch = string.gmatch }
 
 
 -- Cpuinf: provides speed and cache information for all available CPUs/cores
-module("vicious.cpuinf")
+module("vicious.widgets.cpuinf")
 
 
 -- {{{ CPU Information widget type

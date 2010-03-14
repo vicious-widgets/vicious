@@ -11,7 +11,7 @@ local setmetatable = setmetatable
 
 
 -- Date: provides access to os.date with optional custom formatting
-module("vicious.date")
+module("vicious.widgets.date")
 
 
 -- {{{ Date widget type
