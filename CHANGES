@@ -2,6 +2,27 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+0299c15 widgets: minor cleanup before a tag in cpuinf, fs, mbox...
+4fc6dff wifi: return 0 not N/A when channel is unavailable
+f50ad21 thermal: function argument is already local
+4f86e28 os: merge with entropy widget type
+49b1b09 helpers: index subdirectories in pathtotable()
+7cbf987 bat: fix battery detection
+a4bd307 README: updated link to contrib
+4dad2e3 API: missing warg should not break awesome
+237470c API: transform widgets namespace table to a directory
+9a82d41 init: never pass string to awful.widget widgets
+3ac4fcf init: missing widget type should not break awesome
+febc91d hddtemp: minor style changes
+9338cb9 cpuinf: rewritten and optimized
+96a8e55 Make use of io.lines() where appropriate
+6441db0 README: added a list of needed utilities
+06a455a README: add contributors to Authors section
+178a7eb README: added contrib and vicious-fbsd information
+0dd5b72 README: standardize quotes
+8482b54 mpd: rewritten and now uses curl not mpc
+dda51b1 net: remove redudant string.match call
+1abb451 Next release, tag 1.0.26
 6898d4a dio: add I/O scheduler support
 71f21f3 fs: use -l not --local for portability
 edb4619 os: import operating system information widget
