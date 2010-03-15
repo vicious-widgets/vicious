@@ -29,7 +29,7 @@ local function worker(format, warg)
     local winfo = {
         ["{ssid}"] = "N/A",
         ["{mode}"] = "N/A",
-        ["{chan}"] = "N/A",
+        ["{chan}"] = 0,
         ["{rate}"] = 0,
         ["{link}"] = 0,
         ["{sign}"] = 0
