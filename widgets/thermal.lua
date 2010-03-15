@@ -25,10 +25,11 @@ local function worker(format, warg)
         ["core"] = {"/sys/devices/platform/",  file = "temp1_input",div = 1000},
         ["proc"] = {"/proc/acpi/thermal_zone/",file = "temperature"}
     } --  Default to /sys/class/thermal
-    local warg    = type(warg) == "table" and warg or {warg, "sys"}
-    local thermal = helpers.pathtotable(zone[warg[2]][1] .. warg[1])
+    warg = type(warg) == "table" and warg or { warg, "sys" }
 
     -- Get temperature from thermal zone
+    local thermal = helpers.pathtotable(zone[warg[2]][1] .. warg[1])
+
     if thermal[zone[warg[2]].file] then
         if zone[warg[2]].div then
             return {thermal[zone[warg[2]].file] / zone[warg[2]].div}
