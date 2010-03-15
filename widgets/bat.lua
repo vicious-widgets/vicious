@@ -33,7 +33,7 @@ local function worker(format, warg)
     }
 
     -- Check if the battery is present
-    if not battery.present == "1\n" then
+    if battery.present ~= "1\n" then
         return {battery_state["Unknown\n"], 0, "N/A"}
     end
 
