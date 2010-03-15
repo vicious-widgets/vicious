@@ -11,6 +11,7 @@
 local pairs = pairs
 local io = { open = io.open }
 local setmetatable = setmetatable
+local getmetatable = getmetatable
 local string = {
     upper = string.upper,
     format = string.format
@@ -28,14 +29,21 @@ local scroller = {}
 
 -- {{{ Helper functions
 -- {{{ Expose path as a Lua table
-function pathtotable(path)
-    return setmetatable({},
-        { __index = function(_, name)
-            local f = io.open(path .. '/' .. name)
+function pathtotable(dir)
+    return setmetatable({ _path = dir },
+        { __index = function(table, index)
+            local path = table._path .. '/' .. index
+            local f = io.open(path)
             if f then
                 local s = f:read("*all")
                 f:close()
-                return s
+                if s then
+                    return s
+                else
+                    local o = { _path = path }
+                    setmetatable(o, getmetatable(table))
+                    return o
+                end
             end
         end
     })
