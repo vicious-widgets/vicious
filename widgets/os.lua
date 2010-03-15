@@ -5,8 +5,10 @@
 
 -- {{{ Grab environment
 local pairs = pairs
+local tonumber = tonumber
 local io = { popen = io.popen }
 local os = { getenv = os.getenv }
+local math = { ceil = math.ceil }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 local string = {
@@ -26,7 +28,9 @@ local function worker(format)
         ["ostype"]    = "N/A",
         ["hostname"]  = "N/A",
         ["osrelease"] = "N/A",
-        ["username"]  = "N/A"
+        ["username"]  = "N/A",
+        ["entropy"]   = "N/A",
+        ["entropy_p"] = "N/A"
     }
 
     -- Linux manual page: uname(2)
@@ -47,11 +51,21 @@ local function worker(format)
             string.match(uname, "([%w]+)[%s]([%w%p]+)[%s]([%w%p]+)")
     end
 
+    -- Linux manual page: random(4)
+    if kernel.random then
+        -- Linux 2.6 default entropy pool is 4096-bits
+        local poolsize = tonumber(kernel.random.poolsize)
+
+        -- Get available entropy and calculate percentage
+        system["entropy"]   = tonumber(kernel.random.entropy_avail)
+        system["entropy_p"] = math.ceil(system["entropy"] * 100 / poolsize)
+    end
+
     -- Get user from the environment
     system["username"] = os.getenv("USER")
 
-    return {system["ostype"],   system["osrelease"],
-            system["username"], system["hostname"]}
+    return {system["ostype"], system["osrelease"], system["username"],
+            system["hostname"], system["entropy"], system["entropy_p"]}
 end
 -- }}}
 

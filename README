@@ -153,7 +153,9 @@ vicious.widgets.mem
 vicious.widgets.os
   - provides operating system information
   - returns 1st value as the operating system in use, 2nd as the
-    release version, 3rd as your username and 4th the hostname
+    release version, 3rd as your username, 4th the hostname, 5th as
+    available system entropy and 6th value as available entropy in
+    percent
 
 vicious.widgets.fs
   - provides file system disk space usage
@@ -219,11 +221,6 @@ vicious.widgets.gmail
   - keeps login information in the ~/.netrc file, example:
     machine mail.google.com login user password pass
   - returns a table with string keys: {count} and {subject}
-
-vicious.widgets.entropy
-  - provides available system entropy
-  - returns 1st value as available system entropy and 2nd value as
-    available entropy in percent
 
 vicious.widgets.org
   - provides agenda statistics for Emacs org-mode
