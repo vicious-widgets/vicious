@@ -20,6 +20,9 @@ module("vicious.widgets.mbox")
 local function worker(format, warg)
     if not warg then return end
 
+    -- Default value
+    local subject = "N/A"
+
     -- mbox could be huge, get a 30kb chunk from EOF
     if type(warg) ~= "table" then mbox = warg end
     -- * attachment could be much bigger than 30kb
@@ -27,9 +30,6 @@ local function worker(format, warg)
     f:seek("end", -30720)
     local txt = f:read("*all")
     f:close()
-
-    -- Default value
-    local subject = "N/A"
 
     -- Find all Subject lines
     for i in string.gfind(txt, "Subject: ([^\n]*)") do

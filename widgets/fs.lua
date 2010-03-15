@@ -25,9 +25,8 @@ local function worker(format, warg)
     -- Fallback to listing local filesystems
     if warg then warg = "" else warg = "-l" end
 
-    -- Get (non-localized)data from df
+    local fs_info = {} -- Get data from df
     local f = io.popen("LC_ALL=C df -kP " .. warg)
-    local fs_info = {}
 
     for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
         local s     = string.match(line, "^.-[%s]([%d]+)")

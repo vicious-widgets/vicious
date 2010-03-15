@@ -18,9 +18,8 @@ module("vicious.widgets.cpuinf")
 -- {{{ CPU Information widget type
 local function worker(format)
     local id = nil
-    local cpu_info = {}
 
-    -- Get CPU info
+    local cpu_info = {} -- Get CPU info
     for line in io.lines("/proc/cpuinfo") do
         for k, v in string.gmatch(line, "([%a%s]+)[%s]+:[%s]([%d]+).-$") do
             if k == "processor" then
