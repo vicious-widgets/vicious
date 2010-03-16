@@ -15,7 +15,7 @@ local math = {
 -- }}}
 
 
--- Batsys: provides state, charge, and remaining time for a requested battery
+-- Bat: provides state, charge, and remaining time for a requested battery
 module("vicious.widgets.bat")
 
 
