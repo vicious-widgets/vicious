@@ -24,6 +24,7 @@ local function worker(format, warg)
         ["Arch"]   = { cmd = "pacman -Qu" },
         ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 2 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
+        ["Ubuntu"] = { cmd = "aptitude search '~U'" },
         ["Fedora"] = { cmd = "yum list updates", sub = 3 }
     }
 
