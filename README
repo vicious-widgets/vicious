@@ -172,6 +172,12 @@ vicious.widgets.dio
     {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
     and {sched}
 
+vicious.widgets.raid
+  - provides state information for a requested RAID array
+  - takes the RAID array ID as an argument
+  - returns 1st value as the number of assigned, and 2nd as active,
+    devices in the array
+
 vicious.widgets.hddtemp
   - provides hard drive temperatures using the hddtemp daemon
   - takes the hddtemp listening port as an argument, or defaults to
@@ -501,3 +507,4 @@ Vicious contributors:
   - Henning Glawe            <glaweh debian.org>
   - Rémy C.                  <shikamaru mandriva.org>
   - Hiltjo Posthuma          <hiltjo codemadness.org>
+  - Hagen Schink             <troja84 googlemail.com>
