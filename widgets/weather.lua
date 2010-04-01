@@ -17,23 +17,23 @@ local helpers = require("vicious.helpers")
 module("vicious.widgets.weather")
 
 
+-- Initialize function tables
+local weather = {
+    ["{city}"]    = "N/A",
+    ["{wind}"]    = "N/A",
+    ["{windmph}"] = "N/A",
+    ["{windkmh}"] = "N/A",
+    ["{sky}"]     = "N/A",
+    ["{weather}"] = "N/A",
+    ["{tempf}"]   = "N/A",
+    ["{tempc}"]   = "N/A",
+    ["{humid}"]   = "N/A",
+    ["{press}"]   = "N/A"
+}
+
 -- {{{ Weather widget type
 local function worker(format, warg)
     if not warg then return end
-
-    -- Default values
-    local weather = {
-        ["{city}"]    = "N/A",
-        ["{wind}"]    = "N/A",
-        ["{windmph}"] = "N/A",
-        ["{windkmh}"] = "N/A",
-        ["{sky}"]     = "N/A",
-        ["{weather}"] = "N/A",
-        ["{tempf}"]   = "N/A",
-        ["{tempc}"]   = "N/A",
-        ["{humid}"]   = "N/A",
-        ["{press}"]   = "N/A"
-    }
 
     -- Get weather forceast by the station ICAO code, from:
     -- * US National Oceanic and Atmospheric Administration

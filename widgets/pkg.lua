@@ -18,7 +18,7 @@ module("vicious.widgets.pkg")
 local function worker(format, warg)
     if not warg then return end
 
-    -- Initialise counters
+    -- Initialize counters
     local updates = 0
     local manager = {
         ["Arch"]   = { cmd = "pacman -Qu" },

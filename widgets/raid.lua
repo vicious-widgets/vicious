@@ -19,20 +19,23 @@ local string = {
 module("vicious.widgets.raid")
 
 
+-- Initialize function tables
+local mddev = {}
+
 -- {{{ RAID widget type
 local function worker(format, warg)
     if not warg then return end
-
-    local found = false
-    local mddev = {}
-    mddev[warg] = {
-        ["active"]   = 0,
-        ["assigned"] = 0
-    }
+    if not mddev[warg] then
+        mddev[warg] = {
+            ["found"]    = false,
+            ["active"]   = 0,
+            ["assigned"] = 0
+        }
+    end
 
     -- Linux manual page: md(4)
     for line in io.lines("/proc/mdstat") do
-        if found then
+        if mddev[warg]["found"] then
             local updev = string.match(line, "%[[_U]+%]")
 
             for i in string.gmatch(updev, "U") do
@@ -41,7 +44,7 @@ local function worker(format, warg)
 
             break
         elseif string.sub(line, 1, string.len(warg)) == warg then
-            found = true
+            mddev[warg]["found"] = true
 
             for i in string.gmatch(line, "%[%d%]") do
                 mddev[warg]["assigned"] = mddev[warg]["assigned"] + 1

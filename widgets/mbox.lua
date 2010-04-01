@@ -16,12 +16,12 @@ local helpers = require("vicious.helpers")
 module("vicious.widgets.mbox")
 
 
+-- Initialize variables
+local subject = "N/A"
+
 -- {{{ Mailbox widget type
 local function worker(format, warg)
     if not warg then return end
-
-    -- Default value
-    local subject = "N/A"
 
     -- mbox could be huge, get a 30kb chunk from EOF
     if type(warg) ~= "table" then mbox = warg end

@@ -28,7 +28,7 @@ local function worker(format, warg)
     local soon   = today + 24 * 3600 * 3 -- 3 days ahead is close
     local future = today + 24 * 3600 * 7 -- 7 days ahead is maximum
 
-    -- Initialise counters
+    -- Initialize counters
     local count = { past = 0, today = 0, soon = 0, future = 0 }
 
     -- Get data from agenda files

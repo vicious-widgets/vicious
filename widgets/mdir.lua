@@ -18,7 +18,7 @@ module("vicious.widgets.mdir")
 local function worker(format, warg)
     if not warg then return end
 
-    -- Initialise counters
+    -- Initialize counters
     local count = { new = 0, cur = 0 }
 
     for i=1, #warg do

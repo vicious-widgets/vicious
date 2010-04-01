@@ -38,16 +38,15 @@ local rss = {
 
 -- Default is all unread
 local feed = rss.unread
+local mail = {
+    ["{count}"]   = 0,
+    ["{subject}"] = "N/A"
+}
 -- }}}
 
 
 -- {{{ Gmail widget type
 local function worker(format, warg)
-    local mail = {
-        ["{count}"]   = 0,
-        ["{subject}"] = "N/A"
-    }
-
     -- Get info from the Gmail atom feed
     local f = io.popen("curl --connect-timeout 1 -m 3 -fsn " .. feed[1])
 

@@ -18,7 +18,7 @@ module("vicious.widgets.mboxc")
 local function worker(format, warg)
     if not warg then return end
 
-    -- Initialise counters
+    -- Initialize counters
     local count = { old = 0, total = 0, new = 0 }
 
     -- Get data from mbox files

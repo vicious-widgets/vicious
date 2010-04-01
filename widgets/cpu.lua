@@ -21,7 +21,7 @@ local string = {
 module("vicious.widgets.cpu")
 
 
--- Initialise function tables
+-- Initialize function tables
 local cpu_usage  = {}
 local cpu_total  = {}
 local cpu_active = {}
