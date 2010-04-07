@@ -27,8 +27,7 @@ local function worker(format)
     local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
 
     local l1, l5, l15 = -- Get load averages for past 1, 5 and 15 minutes
-      string.match(proc.loadavg, "([%d]*%.[%d]*)%s([%d]*%.[%d]*)%s([%d]*%.[%d]*)")
-
+      string.match(proc.loadavg, "([%d%.]+)[%s]([%d%.]+)[%s]([%d%.]+)")
     return {up_d, up_h, up_m, l1, l5, l15}
 end
 -- }}}
