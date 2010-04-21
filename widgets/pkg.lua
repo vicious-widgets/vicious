@@ -25,7 +25,8 @@ local function worker(format, warg)
         ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 2 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Ubuntu"] = { cmd = "aptitude search '~U'" },
-        ["Fedora"] = { cmd = "yum list updates", sub = 3 }
+        ["Fedora"] = { cmd = "yum list updates", sub = 3 },
+        ["Mandriva"]={ cmd = "urpmq --auto-select" }
     }
 
     -- Check if updates are available
