@@ -25,13 +25,11 @@ local mddev = {}
 -- {{{ RAID widget type
 local function worker(format, warg)
     if not warg then return end
-    if not mddev[warg] then
-        mddev[warg] = {
-            ["found"]    = false,
-            ["active"]   = 0,
-            ["assigned"] = 0
-        }
-    end
+    mddev[warg] = {
+        ["found"]    = false,
+        ["active"]   = 0,
+        ["assigned"] = 0
+    }
 
     -- Linux manual page: md(4)
     for line in io.lines("/proc/mdstat") do
