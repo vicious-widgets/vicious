@@ -1,16 +1,13 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2009, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2010, Adrian C. <anrxc@sysphere.org>
 ---------------------------------------------------
 
 -- {{{ Grab environment
 local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
-local string = {
-    find = string.find,
-    match = string.match
-}
+local string = { match = string.match }
 -- }}}
 
 
@@ -28,22 +25,25 @@ local function worker(format, warg)
     }
 
     -- Get mixer control contents
-    local f = io.popen("ossmix " .. warg)
+    local f = io.popen("ossmix -c")
     local mixer = f:read("*all")
     f:close()
 
     -- Capture mixer control state
-    local volu = tonumber(string.match(mixer, "([%d]+)"))
+    local volu = tonumber(string.match(mixer, warg .. "[%s]([%d%.]+)"))/0.25
+    local mute = string.match(mixer, "vol%.mute[%s]([%a]+)")
     -- Handle mixers without data
     if volu == nil then
-        return {0, mixer_state["off"]}
+       return {0, mixer_state["off"]}
     end
 
+    -- Handle mixers without mute
+    if mute == "OFF" and volu == "0"
     -- Handle mixers that are muted
-    if string.find(mixer, "OFF") then
-        mute = mixer_state["off"]
+    or mute == "ON" then
+       mute = mixer_state["off"]
     else
-        mute = mixer_state["on"]
+       mute = mixer_state["on"]
     end
 
     return {volu, mute}
