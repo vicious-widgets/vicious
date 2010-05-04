@@ -16,6 +16,7 @@ require("vicious.widgets.mem")
 require("vicious.widgets.os")
 require("vicious.widgets.fs")
 require("vicious.widgets.dio")
+require("vicious.widgets.raid")
 require("vicious.widgets.hddtemp")
 require("vicious.widgets.net")
 require("vicious.widgets.wifi")
@@ -29,6 +30,17 @@ require("vicious.widgets.mpd")
 require("vicious.widgets.volume")
 require("vicious.widgets.weather")
 require("vicious.widgets.date")
+
+-- Additional Widgets from extra - see the Wiki how to use
+--require("vicious.widgets.batacpi")
+--require("vicious.widgets.batpmu")
+--require("vicious.widgets.batproc")
+--require("vicious.widgets.mpc")
+--require("vicious.widgets.net")
+--require("vicious.widgets.ossvol")
+--require("vicious.widgets.rss")
+--require("vicious.widgets.sensors")
+--require("vicious.widgets.sumup")
 -- }}}
 
 -- Vicious: widgets for the awesome window manager
