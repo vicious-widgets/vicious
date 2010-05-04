@@ -14,6 +14,7 @@ local string = { match = string.match }
 -- Volume: provides volume levels and state of requested ALSA mixers
 module("vicious.widgets.volume")
 
+local startup = true
 
 -- {{{ Volume widget type
 local function worker(format, warg)
@@ -24,13 +25,19 @@ local function worker(format, warg)
         ["off"] = "♩"  -- "M"
     }
 
-    -- Get mixer control contents
-    local f = io.popen("amixer get " .. warg)
-    local mixer = f:read("*all")
-    f:close()
+    local volu, mute
+    if not startup then
+       -- Get mixer control contents
+       local f = io.popen("amixer get " .. warg)
+       local mixer = f:read("*all")
+       f:close()
 
-    -- Capture mixer control state:          [5%] ... ... [on]
-    local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
+       -- Capture mixer control state:          [5%] ... ... [on]
+       volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
+    else
+       startup = false
+    end
+
     -- Handle mixers without data
     if volu == nil then
        return {0, mixer_state["off"]}
