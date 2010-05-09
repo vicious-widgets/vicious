@@ -18,13 +18,15 @@ module("vicious.widgets.pkg")
 local function worker(format, warg)
     if not warg then return end
 
-    -- Initialise counters
+    -- Initialize counters
     local updates = 0
     local manager = {
         ["Arch"]   = { cmd = "pacman -Qu" },
         ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 2 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
-        ["Fedora"] = { cmd = "yum list updates", sub = 3 }
+        ["Ubuntu"] = { cmd = "aptitude search '~U'" },
+        ["Fedora"] = { cmd = "yum list updates", sub = 3 },
+        ["Mandriva"]={ cmd = "urpmq --auto-select" }
     }
 
     -- Check if updates are available

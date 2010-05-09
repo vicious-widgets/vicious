@@ -16,7 +16,7 @@ local helpers = require("vicious.helpers")
 module("vicious.widgets.dio")
 
 
--- Initialise function tables
+-- Initialize function tables
 local disk_usage = {}
 local disk_total = {}
 -- Variable definitions

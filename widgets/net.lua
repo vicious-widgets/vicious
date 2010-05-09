@@ -18,7 +18,7 @@ local helpers = require("vicious.helpers")
 module("vicious.widgets.net")
 
 
--- Initialise function tables
+-- Initialize function tables
 local nets = {}
 -- Variable definitions
 local unit = { ["b"] = 1, ["kb"] = 1024,
