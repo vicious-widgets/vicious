@@ -342,9 +342,8 @@ the owner. Other than that we can not force all users to conform to
 one standard, one way of keeping it secure, like in some keyring.
 
 First let's clear why we simply don't encrypt the login information
-and store it in ciphertext. Answer is simple, that is no more secure
-than having it stored in plaintext. By exposing the algorithm anyone
-can reverse the encryption steps. Some claim even that's better than
+and store it in ciphertext. By exposing the algorithm anyone can
+reverse the encryption steps. Some claim even that's better than
 plaintext but it's just security trough obscurity.
 
 Here are some ideas actually worth your time. Users that have KDE (or
