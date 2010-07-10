@@ -167,7 +167,8 @@ vicious.widgets.fs
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
-  - takes the disk as an argument, i.e. "sda"
+  - takes the disk as an argument, i.e. "sda" (or specific partition,
+    i.e. "sda/sda5")
   - returns a table with string keys: {total_s}, {total_kb}, {total_mb},
     {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
     and {sched}

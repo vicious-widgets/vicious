@@ -61,7 +61,7 @@ local function worker(format, disk)
     helpers.uformat(disk_usage[disk], "total", diff_total[disk][7] + diff_total[disk][3], unit)
 
     -- Store I/O scheduler
-    if disk_stats.queue.scheduler then
+    if disk_stats.queue and disk_stats.queue.scheduler then
         disk_usage[disk]["{sched}"] = string.gmatch(disk_stats.queue.scheduler, "%[([%a]+)%]")
     end
 
