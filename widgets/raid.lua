@@ -44,7 +44,7 @@ local function worker(format, warg)
         elseif string.sub(line, 1, string.len(warg)) == warg then
             mddev[warg]["found"] = true
 
-            for i in string.gmatch(line, "%[%d%]") do
+            for i in string.gmatch(line, "%[[%d]%]") do
                 mddev[warg]["assigned"] = mddev[warg]["assigned"] + 1
             end
         end

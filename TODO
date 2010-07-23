@@ -5,6 +5,7 @@
 
 
 * Vicious
+** TODO Consider multigraph, graph stacking, support
 ** TODO Consider including this code in format helper
    - return format and format:gsub("${[^}]+}", "")
    - Note: We should then also replace just $1/$2...
