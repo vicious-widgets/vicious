@@ -167,7 +167,8 @@ vicious.widgets.fs
 
 vicious.widgets.dio
   - provides I/O statistics for requested storage devices
-  - takes the disk as an argument, i.e. "sda"
+  - takes the disk as an argument, i.e. "sda" (or a specific
+    partition, i.e. "sda/sda2")
   - returns a table with string keys: {total_s}, {total_kb}, {total_mb},
     {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
     and {sched}
@@ -186,12 +187,12 @@ vicious.widgets.hddtemp
     {/dev/sda} and {/dev/sdc} for example
 
 vicious.widgets.net
-  - provides usage statistics for all network interfaces
+  - provides state and usage statistics of all network interfaces
   - returns a table with string keys, using net interfaces as a base:
-    {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb}, {eth0 rx_mb},
-    {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b}, {eth0 up_b},
-    {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb}, {eth0 up_mb},
-    {eth0 down_gb}, {eth0 up_gb}, {eth1 rx_b} etc.
+    {eth0 carrier}, {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb},
+    {eth0 rx_mb}, {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b},
+    {eth0 up_b}, {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb},
+    {eth0 up_mb}, {eth0 down_gb}, {eth0 up_gb}, {eth1 rx_b} etc.
 
 vicious.widgets.wifi
   - provides wireless information for a requested interface

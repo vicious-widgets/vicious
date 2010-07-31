@@ -17,7 +17,7 @@ module("vicious.widgets.hddtemp")
 
 -- {{{ HDD Temperature widget type
 local function worker(format, warg)
-    -- Fallback to default hddtemp warg
+    -- Fallback to default hddtemp port
     if warg == nil then warg = 7634 end
 
     local hdd_temp = {} -- Get info from the hddtemp daemon

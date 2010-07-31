@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Net: provides usage statistics for all network interfaces
+-- Net: provides state and usage statistics of all network interfaces
 module("vicious.widgets.net")
 
 
@@ -42,6 +42,10 @@ local function worker(format)
 
             helpers.uformat(args, name .. " rx", recv, unit)
             helpers.uformat(args, name .. " tx", send, unit)
+
+            -- Operational state and carrier detection
+            local sysnet = helpers.pathtotable("/sys/class/net/" .. name)
+            args["{"..name.." carrier}"] = tonumber(sysnet.carrier) or 0
 
             if nets[name] == nil then
                 -- Default values on the first run

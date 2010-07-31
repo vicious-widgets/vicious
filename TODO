@@ -1,0 +1,34 @@
+#-*- mode: org -*-
+#+TYP_TODO: TODO MAYBE CANCEL WAITING NEXT NOTE DONE
+#+STARTUP: showall
+#+STARTUP: hidestars
+
+
+* Vicious
+** TODO Consider multigraph, graph stacking, support
+** TODO Consider including this code in format helper
+   - return format and format:gsub("${[^}]+}", "")
+   - Note: We should then also replace just $1/$2...
+** TODO Include Name and file in MPD widget
+** TODO Complete the hddtemp fix
+   - In certain setups regexp does not match all devices
+     - The regexp catches the first device name, but last stats
+     - Shortening the match introduced new problems IIRC
+** TODO Expand raid to grab data for all available devices
+** TODO Add fan speed to thermal.lua
+** TODO Return values of type number in NET and FS
+   - Note: tonumber() strips decimal points
+** MAYBE Simplify scrolling using negative margins + fixed width
+** TODO Try to simplify truncating with a fixed width
+** NOTE Changelog header
+---------------------------------------------------
+Full changelog is available online:
+    http://git.sysphere.org/vicious/log/?showmsg=1
+---------------------------------------------------
+
+
+* Git
+** DONE Git hook post-update not executed on git push
+** DONE Git post-update hook does not leave info/refs with correct permissions
+** DONE Git persmission are incorrect since 1.6.5, does not honor umask
+** TODO Git smart http transport with cgit
