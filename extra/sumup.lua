@@ -6,6 +6,7 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+local pairs = pairs
 -- }}}
 
 -- Sum up: provides a number of files in several directories
@@ -15,7 +16,7 @@ local setmetatable = setmetatable
 
 -- Be carefull with directories, who contains a mass of files.
 -- "find" is usally fast, but will also produce delays, if the inodes get to big. 
--- So if you want to count your music library, you may want to use locate/updatedb
+-- So if you want to count your music library, you may want to use locate/updatedb instead.
 module("vicious.widgets.sumup")
 
 
@@ -28,16 +29,17 @@ local function worker(format, warg)
    -- Match by default all files
    warg.pattern = warg.pattern or ".*"
 
-	 -- Cycle through the given directories
-   for i=1, #warg.paths do
-      local f =  io.popen("find '"..warg.paths[i].."'"..
+   for key, value in pairs(warg.paths) do
+      local f =  io.popen("find '"..value.."'"..
                           " -type f -regextype posix-egrep"..
                           " -regex '"..warg.pattern.."'")
 
-      store[i] = 0
-      for lines in f:lines() do
-         store[i] = store[i] + 1
+      local lines = 0
+      for line in f:lines() do
+         lines = lines + 1
       end
+
+      store[key] = lines
 
       f:close()
    end
