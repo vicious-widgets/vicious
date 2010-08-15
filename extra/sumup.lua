@@ -10,13 +10,14 @@ local pairs = pairs
 -- }}}
 
 -- Sum up: provides a number of files in several directories
--- @warg.paths a table with the paths which should be checked
+-- @warg.paths a hash table with the paths which should be checked
+-- EXAMPLE: paths = { music = "/home/user/music" }
 -- @warg.pattern a global regex to match files (Default: match all)
 -- use posix-egrep style instead of the default (less familar) emacs regex
 
 -- Be carefull with directories, who contains a mass of files.
--- "find" is usally fast, but will also produce delays, if the inodes get to big. 
--- So if you want to count your music library, you may want to use locate/updatedb instead.
+-- "find" is usally fast, but will also produce delays, if a big number of inodes are checked. 
+-- So if you want to count your big music library, you may want to use locate/updatedb instead.
 module("vicious.widgets.sumup")
 
 
