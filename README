@@ -249,7 +249,7 @@ vicious.widgets.mpd
     argument is provided connection attempt will be made to localhost
     port 6600 with no password
   - returns a table with string keys: {volume}, {state}, {Artist},
-    {Title}, {Album}, {Genre}
+    {Title}, {Album}, {Genre} and optionally {Name} and {file}
 
 vicious.widgets.volume
   - provides volume levels and state of requested ALSA mixers

@@ -9,7 +9,6 @@
 ** TODO Consider including this code in format helper
    - return format and format:gsub("${[^}]+}", "")
    - Note: We should then also replace just $1/$2...
-** TODO Include Name and file in MPD widget
 ** TODO Complete the hddtemp fix
    - In certain setups regexp does not match all devices
      - The regexp catches the first device name, but last stats

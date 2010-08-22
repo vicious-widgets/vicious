@@ -24,7 +24,9 @@ local function worker(format, warg)
         ["{Artist}"] = "N/A",
         ["{Title}"]  = "N/A",
         ["{Album}"]  = "N/A",
-        ["{Genre}"]  = "N/A"
+        ["{Genre}"]  = "N/A",
+        --["{Name}"] = "N/A",
+        --["{file}"] = "N/A",
     }
 
     -- Fallback to MPD defaults
@@ -47,6 +49,8 @@ local function worker(format, warg)
             elseif k == "Title"  then mpd_state["{"..k.."}"] = helpers.escape(v)
             elseif k == "Album"  then mpd_state["{"..k.."}"] = helpers.escape(v)
             elseif k == "Genre"  then mpd_state["{"..k.."}"] = helpers.escape(v)
+            --elseif k == "Name" then mpd_state["{"..k.."}"] = helpers.escape(v)
+            --elseif k == "file" then mpd_state["{"..k.."}"] = helpers.escape(v)
             end
         end
     end
