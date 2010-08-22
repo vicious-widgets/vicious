@@ -26,6 +26,7 @@ local function worker(format, warg)
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Ubuntu"] = { cmd = "aptitude search '~U'" },
         ["Fedora"] = { cmd = "yum list updates", sub = 3 },
+        ["FreeBSD"] ={ cmd = "pkg_version -I -l '<'" },
         ["Mandriva"]={ cmd = "urpmq --auto-select" }
     }
 
