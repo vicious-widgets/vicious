@@ -2,6 +2,23 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+1534951 mpd: added some optional stats, commented
+4113d37 pkg: include FreeBSD support
+fc46e7a TODO: solid multigraph support needed
+d912663 net: add operational state support
+8674c91 dio: add partition support
+d6faae1 TODO: remove org-mode extension
+6171734 TODO: added the carrier detection todo
+6d6e98a TODO: included the todo file to encourage contribution
+ca1d8d7 README: cut on the security crap
+fdae848 raid: removed permanent stats storage
+3e12875 pkg: include Mandriva support
+64e5426 uptime: simplified system load regexp
+448275a widgets: reuse existing datasets where appropriate
+a9347ec raid: import raid state widget type by Hagen
+9af29ce pkg: aptitude alternative to apt-show-versions
+94a60fb bat: fixed module description
+338a2ee Next release, tag 2.0.0
 0299c15 widgets: minor cleanup before a tag in cpuinf, fs, mbox...
 4fc6dff wifi: return 0 not N/A when channel is unavailable
 f50ad21 thermal: function argument is already local
