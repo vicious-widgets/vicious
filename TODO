@@ -5,6 +5,7 @@
 
 
 * Vicious
+** TODO Document contrib widgets in contrib/README
 ** TODO Consider multigraph, graph stacking, support
 ** TODO Consider including this code in format helper
    - return format and format:gsub("${[^}]+}", "")
