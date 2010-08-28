@@ -10,9 +10,11 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local setmetatable = setmetatable
-local socket = require("socket")
 local tonumber = tonumber
+local setmetatable = setmetatable
+local sock_avail, socket = pcall(function()
+    return require("socket")
+end)
 -- }}}
 
 
@@ -22,7 +24,7 @@ module("vicious.contrib.pop")
 
 -- {{{ POP3 count widget type
 local function worker(format, warg)
-    if not warg or #warg ~= 4 then
+    if not sock_avail or (not warg or #warg ~= 4) then
         return {"N/A"}
     end
 
