@@ -238,7 +238,7 @@ vicious.widgets.org
     4th as count of tasks to do in the week
 
 vicious.widgets.pkg
-  - provides number of pending updates on GNU/Linux
+  - provides number of pending updates on UNIX systems
   - takes the distribution name as an argument, i.e. "Arch"
   - returns 1st value as the count of available updates
 
