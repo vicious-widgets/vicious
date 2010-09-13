@@ -278,13 +278,11 @@ in. How data will be formatted, will it be red or blue, should be
 defined in rc.lua (or somewhere else, outside the actual module).
 
 Before writing a widget type you should check if there is already one
-in the [contrib] branch of Vicious. The [contrib] branch contains
+in the contrib directory of Vicious. The contrib directory contains
 extra widgets you can use. Some are for less common hardware, and
-other were contributed by Vicious users. The [contrib] branch also
-holds widget types that were deprecated, rewritten or removed from the
-[master] branch.
-
-  - http://git.sysphere.org/vicious/tree/extra?h=contrib
+other were contributed by Vicious users. The contrib directory also
+holds widget types that were obsoleted or rewritten. Contrib widgets
+will not be imported by init unless you explicitly enable it.
 
 Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find his work here:
