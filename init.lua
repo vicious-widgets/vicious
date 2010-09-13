@@ -118,6 +118,8 @@ local function regregister(reg)
                 timer = capi.timer({ timeout = reg.timer })
             }
             timers[reg.update].timer:add_signal("timeout", reg.update)
+            -- Connect signals in development versions of awesome
+            --timers[reg.update].timer:connect_signal("timeout", reg.update)
             timers[reg.update].timer:start()
         end
 
