@@ -117,10 +117,13 @@ local function regregister(reg)
             timers[reg.update] = {
                 timer = capi.timer({ timeout = reg.timer })
             }
-            timers[reg.update].timer:add_signal("timeout", reg.update)
-            -- Connect signals in development versions of awesome
-            --timers[reg.update].timer:connect_signal("timeout", reg.update)
-            timers[reg.update].timer:start()
+            local tm = timers[reg.update].timer
+            if tm.connect_signal then
+                tm:connect_signal("timeout", reg.update)
+            else
+                tm:add_signal("timeout", reg.update)
+            end
+            tm:start()
         end
 
         -- Initial update
