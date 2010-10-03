@@ -10,13 +10,13 @@ local setmetatable = setmetatable
 -- }}}
 
 
--- Date: provides access to os.date with optional custom formatting
+-- Date: provides access to os.date with optional time formatting
 module("vicious.widgets.date")
 
 
 -- {{{ Date widget type
-local function worker(format)
-    return os.date(format or nil)
+local function worker(format, warg)
+    return os.date(format or nil, warg or nil)
 end
 -- }}}
 

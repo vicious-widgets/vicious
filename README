@@ -265,8 +265,10 @@ vicious.widgets.weather
     {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
 
 vicious.widgets.date
-  - provides access to os.date, with optional custom formatting;
-    provided as the format string
+  - provides access to os.date, with optional time formatting provided
+    as the format string
+  - takes optional time as an argument, for example to calculate
+    time-zone differences, otherwise it formats the current time
   - returns the output of os.date(), formatted by provided sequences
 
 
