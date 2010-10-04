@@ -5,8 +5,11 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local os = { date = os.date }
 local setmetatable = setmetatable
+local os = {
+    date = os.date,
+    time = os.time
+}
 -- }}}
 
 
@@ -16,7 +19,7 @@ module("vicious.widgets.date")
 
 -- {{{ Date widget type
 local function worker(format, warg)
-    return os.date(format or nil, warg or nil)
+    return os.date(format or nil, warg and os.time()+warg or nil)
 end
 -- }}}
 

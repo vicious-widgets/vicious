@@ -266,9 +266,10 @@ vicious.widgets.weather
 
 vicious.widgets.date
   - provides access to os.date, with optional time formatting provided
-    as the format string
-  - takes optional time as an argument, for example to calculate
-    time-zone differences, otherwise it formats the current time
+    as the format string - using regular date sequences
+  - takes optional time offset, in seconds, as an argument for example
+    to calculate time zone differences, otherwise current time is
+    formatted
   - returns the output of os.date(), formatted by provided sequences
 
 
