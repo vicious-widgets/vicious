@@ -75,6 +75,8 @@ local function update(widget, reg, disablecache)
         widget:add_value(tonumber(data) and tonumber(data)/100)
     elseif widget.set_value ~= nil then
         widget:set_value(tonumber(data) and tonumber(data)/100)
+    elseif widget.set_markup ~= nil then
+        widget:set_markup(data)
     else
         widget.text = data
     end
