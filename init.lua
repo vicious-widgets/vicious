@@ -119,6 +119,7 @@ local function regregister(reg)
             timers[reg.update] = {
                 timer = capi.timer({ timeout = reg.timer })
             }
+
             local tm = timers[reg.update].timer
             if tm.connect_signal then
                 tm:connect_signal("timeout", reg.update)
@@ -126,10 +127,10 @@ local function regregister(reg)
                 tm:add_signal("timeout", reg.update)
             end
             tm:start()
-        end
 
-        -- Initial update
-        reg.update()
+            -- Initial update
+            tm:emit_signal("timeout")
+        end
         reg.running = true
     end
 end
