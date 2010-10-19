@@ -5,6 +5,7 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
+local math = { ceil = math.ceil }
 local setmetatable = setmetatable
 local io = {
     open = io.open,
@@ -28,6 +29,7 @@ local winfo = {
     ["{chan}"] = 0,
     ["{rate}"] = 0,
     ["{link}"] = 0,
+    ["{linp}"] = 0,
     ["{sign}"] = 0
 }
 
@@ -66,6 +68,9 @@ local function worker(format, warg)
       tonumber(string.match(iw, "Link Quality[=:]([%d]+)") or winfo["{link}"])
     winfo["{sign}"] =  -- Signal level can be a negative value, don't display decibel notation
       tonumber(string.match(iw, "Signal level[=:]([%-]?[%d]+)") or winfo["{sign}"])
+
+    -- Link quality percentage if quality was available
+    if winfo["{link}"] ~= 0 then winfo["{linp}"] = math.ceil(winfo["{link}"] / 0.7) end
 
     return winfo
 end

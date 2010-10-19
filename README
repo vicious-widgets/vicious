@@ -198,7 +198,7 @@ vicious.widgets.wifi
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link} and {sign}
+    {link}, {linp} and {sign}
 
 vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
