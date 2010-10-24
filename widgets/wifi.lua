@@ -22,20 +22,20 @@ local string = {
 module("vicious.widgets.wifi")
 
 
--- Initialize function tables
-local winfo = {
-    ["{ssid}"] = "N/A",
-    ["{mode}"] = "N/A",
-    ["{chan}"] = 0,
-    ["{rate}"] = 0,
-    ["{link}"] = 0,
-    ["{linp}"] = 0,
-    ["{sign}"] = 0
-}
-
 -- {{{ Wireless widget type
 local function worker(format, warg)
     if not warg then return end
+
+    -- Default values
+    local winfo = {
+        ["{ssid}"] = "N/A",
+        ["{mode}"] = "N/A",
+        ["{chan}"] = 0,
+        ["{rate}"] = 0,
+        ["{link}"] = 0,
+        ["{linp}"] = 0,
+        ["{sign}"] = 0
+    }
 
     -- Get data from iwconfig where available
     local iwconfig = "/sbin/iwconfig"
