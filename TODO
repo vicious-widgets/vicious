@@ -16,6 +16,9 @@
      - Shortening the match introduced new problems IIRC
 ** TODO Expand raid to grab data for all available devices
 ** TODO Add fan speed to thermal.lua
+** TODO Fix contrib/sensors for Ian
+   - > it does work and provides the lm_sensors
+     > information but only for one cpu core.
 ** TODO Return values of type number in NET and FS
    - Note: tonumber() strips decimal points
 ** MAYBE Simplify scrolling using negative margins + fixed width
