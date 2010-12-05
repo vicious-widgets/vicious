@@ -19,7 +19,7 @@ local table = {
 
 require("vicious.helpers")
 require("vicious.widgets")
---require("vicious.contrib")
+require("vicious.contrib")
 
 -- Vicious: widgets for the awesome window manager
 module("vicious")
