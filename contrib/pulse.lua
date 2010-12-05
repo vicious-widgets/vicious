@@ -1,6 +1,6 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2010, MrMagne <MrMagne@cerv.fr>
+--  * (c) 2010, MrMagne <mr.magne@yahoo.fr>
 ---------------------------------------------------
 -- Usage example
 --

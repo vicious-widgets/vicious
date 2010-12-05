@@ -38,7 +38,7 @@ Then add the following to the top of your rc.lua:
   require("vicious")
 
 Once you create a widget (a textbox, graph or a progressbar) call
-vicious.register() to register it with vicious:
+vicious.register() to register it with Vicious:
 
   vicious.register(widget, wtype, format, interval, warg)
 
@@ -198,7 +198,7 @@ vicious.widgets.wifi
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link} and {sign}
+    {link}, {linp} and {sign}
 
 vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
@@ -270,7 +270,7 @@ vicious.widgets.date
   - takes optional time offset, in seconds, as an argument for example
     to calculate time zone differences, otherwise current time is
     formatted
-  - returns the output of os.date(), formatted by provided sequences
+  - returns the output of os.date, formatted by provided sequences
 
 
 Custom widget types
@@ -291,6 +291,12 @@ Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find his work here:
 
   - http://git.sigil.org/vicious-fbsd/
+
+Some users would like to avoid writing new modules. For them Vicious
+kept the old Wicked functionality, possibility to register their own
+functions as widget types. By providing them as the second argument to
+vicious.register. Your function can accept "format" and "warg"
+arguments, just like workers.
 
 
 Power and Caching

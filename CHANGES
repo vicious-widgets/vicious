@@ -2,6 +2,30 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+add54f8 README: added missing register() documentation
+fe2e432 TODO: fix contrib/sensors for Ian
+7625933 wifi: proper fix for SSID regexp
+7f7a94d gmail: inbox is now default
+82eb67b wifi: removed spurious bracket from SSID regexp
+304fa33 wifi: properly handle disconnects
+32a7be1 wifi: provide link quality in percent
+c532c0b contrib: fixed email of pulse widget author
+49b0913 wifi: improved SSID regular expression
+932bd8d init: emit timeout instead of forced update
+fbd2af7 init: add set_markup support
+e51d8ac date: turn time widget argument into an offset
+c6085ee date: accept time as a widget argument
+a9d6ea2 init: add connect_signal support, patch by Uli
+86a1394 README: update contrib information
+fbfcc49 init: comment connect_signal for users of awesome master
+1d7f646 pkg: description updated
+88c3d0c contrib: use pcall for luasocket in pop
+b200a80 contrib: dont import pop - requires luasocket
+0350ec9 TODO: document contrib widgets
+f8a8696 contrib: imported POP3 widget from Boris
+1a443cd init: import contrib widgets, commented
+26b0395 contrib: imported contrib widgets
+0d6333e Next release, tag 2.0.1
 1534951 mpd: added some optional stats, commented
 4113d37 pkg: include FreeBSD support
 fc46e7a TODO: solid multigraph support needed
