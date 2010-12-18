@@ -30,7 +30,6 @@ require("vicious.widgets.mpd")
 require("vicious.widgets.volume")
 require("vicious.widgets.weather")
 require("vicious.widgets.date")
-
 -- }}}
 
 -- Vicious: widgets for the awesome window manager
