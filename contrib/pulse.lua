@@ -1,6 +1,7 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
 --  * (c) 2010, MrMagne <mr.magne@yahoo.fr>
+--  * (c) 2010, Mic92 <jthalheim@gmail.com>
 ---------------------------------------------------
 -- Usage example
 --
@@ -30,56 +31,58 @@ local string = {
 -- }}}
 
 
--- Pulse: provides volume levels of requested pulseaudio sinks
+-- Pulse: provides volume levels of requested pulseaudio sinks and methods to change them
 module("vicious.contrib.pulse")
 
-
 -- {{{ Helper function
+local function pacmd(args)
+	local f = io.popen("pacmd "..args)
+	local line = f:read("*all")
+	f:close()
+	return line
+end
+
+local function escape(text)
+	local special_chars = { ["."] = "%.", ["-"] = "%-" }
+	return text:gsub("[%.%-]", special_chars)
+end
+
+local cached_sinks = {}
 local function get_sink_name(sink)
-    -- If no sink is specified take the first one
-    if sink == nil then
-        local f = io.popen("pacmd list-sinks | grep name:")
-        local line = f:read("*all")
-        f:close()
-
-        sink = string.match(line, "<(.*)>")
-    -- If sink is an index, retrieve its name
-    elseif type(sink) == "number" then
-        local f = io.popen("pacmd list-sinks | grep name:")
-        local line = f:read("*all")
-        f:close()
-
-        local sinks = {}
-        for s in string.gmatch(line, "<(.*)>") do
-            table.insert(sinks, s)
-        end
-
-        sink = sinks[sink]
+    if type(sink) == "string" then return sink end
+    -- avoid nil keys
+    local key = sink or 1
+    -- Cache requests
+    if not cached_sinks[key] then
+	local line = pacmd("list-sinks")
+	for s in string.gmatch(line, "name: <(.-)>") do
+		table.insert(cached_sinks, s)
+	end
     end
 
-    return sink
+    return cached_sinks[key]
 end
+
+
 -- }}}
 
 -- {{{ Pulseaudio widget type
 local function worker(format, sink)
     sink = get_sink_name(sink)
-    if sink == nil then return {0} end
+    if sink == nil then return {0, "unknown"} end
 
     -- Get sink data
-    local f = io.popen("pacmd dump | grep '\\(set-sink-volume " .. sink.."\\)\\|\\(set-sink-mute "..sink.."\\)'")
-    local data = f:read("*all")
-    f:close()
+    local data = pacmd("dump")
 
     -- If mute return 0 (not "Mute") so we don't break progressbars
-    if string.match(data," (yes)\n$") then
-        return {0}
+    if string.find(data,"set%-sink%-mute "..escape(sink).." yes") then
+	return {0, "off"}
     end
 
-    local vol = tonumber(string.match(data, "(0x[%x]+)"))
+    local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
     if vol == nil then vol = 0 end
 
-    return { vol/0x10000*100 }
+    return { vol/0x10000*100, "on"}
 end
 -- }}}
 
@@ -88,17 +91,31 @@ function add(percent, sink)
     sink = get_sink_name(sink)
     if sink == nil then return end
 
-    local f = io.popen("pacmd dump | grep 'set-sink-volume " .. sink.."'")
-    local data = f:read("*all")
-    f:close()
+    local data = pacmd("dump")
 
-    local initial_vol =  tonumber(string.match(data, "(0x[%x]+)"))
+    local pattern = "set%-sink%-volume "..escape(sink).." (0x[%x]+)"
+    local initial_vol =  tonumber(string.match(data, pattern))
+
     local vol = initial_vol + percent/100*0x10000
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
 
-    local cmd = "pacmd set-sink-volume "..sink..string.format(" 0x%x", vol).." >/dev/null"
-    os.execute(cmd)
+    local cmd = string.format("pacmd set-sink-volume %s 0x%x >/dev/null", sink, vol)
+    return os.execute(cmd)
+end
+
+function toggle(sink)
+    sink = get_sink_name(sink)
+    if sink == nil then return end
+
+    local data = pacmd("dump")
+    local pattern = "set%-sink%-mute "..escape(sink).." (%a%a%a?)"
+    local mute = string.match(data, pattern)
+
+    -- 0 to enable a sink or 1 to mute it.
+    local state = { yes = 0, no = 1}
+    local cmd = string.format("pacmd set-sink-mute %s %d", sink, state[mute])
+    return os.execute(cmd)
 end
 -- }}}
 
