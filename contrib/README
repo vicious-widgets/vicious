@@ -1,0 +1,79 @@
+Contrib
+-------
+Contrib widgets are extra widgets you can use. Some are for less
+common hardware, and other were contributed by Vicious users. The
+contrib directory also holds widget types that were obsoleted or
+rewritten. Contrib widgets will not be imported by init unless you
+explicitly enable it.
+
+
+Widget types
+------------
+Most widget types consist of worker functions that take the "format"
+argument given to vicious.register as the first argument, "warg" as
+the second, and return a table of values to insert in the format
+string. But we have not insisted on this coding style in contrib. So
+widgets like PulseAudio have emerged that are different. These widgets
+could also depend on Lua libraries that are not distributed with the
+core Lua distribution. Ease of installation and use does not
+necessarily have to apply to contributed widgets.
+
+vicious.contrib.batacpi
+  -
+
+vicious.contrib.batpmu
+  -
+
+vicious.contrib.batproc
+  -
+
+vicious.contrib.mpc
+  -
+
+vicious.contrib.netcfg
+  -
+
+vicious.contrib.net
+  -
+
+vicious.contrib.ossvol
+  -
+
+vicious.contrib.pop
+  -
+
+vicious.contrib.pulse
+    - provides volume levels of requested pulseaudio sinks and
+      functions to manipulate them
+    - takes the name of a sink as an optional argument.  a number will
+      be interpret as an index, if no argument is given, it will take
+      the first-best
+    - to get a list of available sinks use the command: pacmd
+      list-sinks | grep 'name:'
+    - returns 1st value as the volume level
+  - vicious.contrib.pulse.add(percent, sink)
+    - @percent is a number, which increments or decrements the volume
+      level by its value in percent
+    - @sink optional, same usage as in vicious.contrib.pulse
+    - returns the exit status of pacmd
+  - vicious.contrib.pulse.toggle(sink)
+    - inverts the volume state (mute -> unmute; unmute -> mute)
+    - @sink optional, same usage as in vicious.contrib.pulse
+    - returns the exit status of pacmd
+
+vicious.contrib.rss
+  -
+
+vicious.contrib.sensors
+  -
+
+
+Usage examples
+--------------
+Pulse Audio widget
+  vicious.register(vol, vicious.contrib.pulse, " $1%", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
+  vol:buttons(awful.util.table.join(
+    awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
+    awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
+    awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
+  ))

@@ -3,17 +3,6 @@
 --  * (c) 2010, MrMagne <mr.magne@yahoo.fr>
 --  * (c) 2010, Mic92 <jthalheim@gmail.com>
 ---------------------------------------------------
--- Usage example
---
--- -- Register widget
--- vicious.register(vol, vicious.contrib.pulse, " $1%", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
--- -- Register buttons
--- vol:buttons(awful.util.table.join(
---   awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
---   awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
---   awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
--- ))
----------------------------------------------------
 
 -- {{{ Grab environment
 local type = type
