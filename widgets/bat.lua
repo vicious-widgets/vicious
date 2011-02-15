@@ -57,7 +57,9 @@ local function worker(format, warg)
     -- Get charge information
     if battery.current_now then
         rate = battery.current_now
-    else -- Todo: other rate sources, as with capacity?
+    elseif battery.power_now then
+        rate = battery.power_now
+    else
         return {state, percent, "N/A"}
     end
 
