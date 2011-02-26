@@ -9,6 +9,7 @@
 
 -- {{{ Grab environment
 local pairs = pairs
+local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local getmetatable = getmetatable
@@ -53,7 +54,9 @@ end
 -- {{{ Format a string with args
 function format(format, args)
     for var, val in pairs(args) do
-        format = format:gsub("$" .. var, val)
+        format = format:gsub("$" .. (tonumber(var) and var or
+            var:gsub("[-+?*]", function(i) return "%"..i end)),
+        val)
     end
 
     return format
