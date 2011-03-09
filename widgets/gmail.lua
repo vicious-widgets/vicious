@@ -36,7 +36,7 @@ local rss = {
   --},
 }
 
--- Default is all unread
+-- Default is just Inbox
 local feed = rss.inbox
 local mail = {
     ["{count}"]   = 0,
