@@ -1,7 +1,8 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2011, Adrian C. <anrxc@sysphere.org>
 --  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
+--  * (c) 2011, Jörg Thalheim <jthalheim@gmail.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
@@ -11,7 +12,7 @@ local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
 local string = {
-    find = string.find,
+    sub = string.sub,
     gmatch = string.gmatch
 }
 -- }}}
@@ -32,12 +33,12 @@ local function worker(format)
 
     -- Get CPU stats
     for line in io.lines("/proc/stat") do
-        if string.find(line, "^cpu") then
-            cpu_lines[#cpu_lines+1] = {}
+        if string.sub(line, 1, 3) ~= "cpu" then break end
 
-            for i in string.gmatch(line, "[%s]+([%d]+)") do
-                  table.insert(cpu_lines[#cpu_lines], i)
-            end
+        cpu_lines[#cpu_lines+1] = {}
+
+        for i in string.gmatch(line, "[%s]+([^%s]+)") do
+            table.insert(cpu_lines[#cpu_lines], i)
         end
     end
 
