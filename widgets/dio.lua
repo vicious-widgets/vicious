@@ -1,71 +1,72 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2011, Jörg T. <jthalheim@gmail.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local ipairs = ipairs
+local helpers_uformat = require("vicious.helpers").uformat
+local io = { lines = io.lines }
+local os = { time = os.time, difftime = os.difftime }
+local pairs = pairs
 local setmetatable = setmetatable
-local table = { insert = table.insert }
-local string = { gmatch = string.gmatch }
-local helpers = require("vicious.helpers")
 -- }}}
 
 
--- Disk I/O: provides I/O statistics for requested storage devices
+-- Disk I/O: provides I/O statistics for storage devices/partitions (only linux >= 2.6 )
 module("vicious.widgets.dio")
 
 
 -- Initialize function tables
-local disk_usage = {}
-local disk_total = {}
--- Variable definitions
-local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
+local last_time = 0
+local last_diskstats = {}
+-- Constant definitions
+local UNIT = {["s"] = 1, ["kb"] = 2, ["mb"] = 2048}
 
--- {{{ Disk I/O widget type
-local function worker(format, disk)
-    if not disk then return end
+-- {{{ I/O widget type
+local function read()
+   local lines = {}
+   for l in io.lines("/proc/diskstats") do
+      -- linux kernel doc: Documentation/iostats.txt
+      --   8       0 sda 5328 6084 205232 142076 1295 3162 35178 45946 0 58440 188000
+      --             ^             ^                       ^
+      local device, read, write = l:match("([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
+      lines[device]={read, write}
+   end
+   return lines
+end
 
-    local disk_lines = { [disk] = {} }
-    local disk_stats = helpers.pathtotable("/sys/block/" .. disk)
+local function worker(format)
+   local diskstats = read()
+   local diskusage = {}
 
-    if disk_stats.stat then
-        local match = string.gmatch(disk_stats.stat, "[%s]+([%d]+)")
-        for i = 1, 11 do -- Store disk stats
-            table.insert(disk_lines[disk], match())
-        end
-    end
+   local time = os.time()
+   local time_diff = os.difftime(time, last_time)
 
-    -- Ensure tables are initialized correctly
-    local diff_total = { [disk] = {} }
-    if not disk_total[disk] then
-        disk_usage[disk] = {}
-        disk_total[disk] = {}
+   -- should not happen since the minimum time difference in vicious is 1 sec
+   if time_diff == 0 then time_diff = 1 end
 
-        while #disk_total[disk] < #disk_lines[disk] do
-            table.insert(disk_total[disk], 0)
-        end
-    end
+   for device, stats in pairs(diskstats) do
+	   -- ensure, we have last_diskstat to avoid insane values at the startup
+	   local last_stats = last_diskstats[device] or stats
 
-    for i, v in ipairs(disk_lines[disk]) do
-        -- Diskstats are absolute, substract our last reading
-        diff_total[disk][i] = v - disk_total[disk][i]
+	   -- Check for overflows and counter resets (> 2^32)
+	   if stats[1] < last_stats[1] or stats[2] < last_stats[2] then
+		   last_stats[1], last_stats[2] = stats[1], stats[2]
+	   end
+	   -- Diskstats are absolute, so substract our last reading
+	   -- dividing by timediff is needed cause we don't know how often the widget is called
+	   local read  = (stats[1] - last_stats[1]) / time_diff
+	   local write = (stats[2] - last_stats[2]) / time_diff
 
-        -- Store totals
-        disk_total[disk][i] = v
-    end
+	   -- Calculate and store per disk I/O
+	   helpers_uformat(diskusage, device.." read",  read,  UNIT)
+	   helpers_uformat(diskusage, device.." write", write, UNIT)
+	   helpers_uformat(diskusage, device.." total", read + write, UNIT)
+   end
 
-    -- Calculate and store I/O
-    helpers.uformat(disk_usage[disk], "read",  diff_total[disk][3], unit)
-    helpers.uformat(disk_usage[disk], "write", diff_total[disk][7], unit)
-    helpers.uformat(disk_usage[disk], "total", diff_total[disk][7] + diff_total[disk][3], unit)
-
-    -- Store I/O scheduler
-    if disk_stats.queue and disk_stats.queue.scheduler then
-        disk_usage[disk]["{sched}"] = string.gmatch(disk_stats.queue.scheduler, "%[([%a]+)%]")
-    end
-
-    return disk_usage[disk]
+   last_time = time
+   last_diskstats = diskstats
+   return diskusage
 end
 -- }}}
 
