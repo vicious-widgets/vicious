@@ -9,6 +9,7 @@
 require("vicious.contrib.batacpi")
 require("vicious.contrib.batpmu")
 require("vicious.contrib.batproc")
+require("vicious.contrib.dio")
 require("vicious.contrib.mpc")
 require("vicious.contrib.netcfg")
 require("vicious.contrib.net")

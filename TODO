@@ -6,8 +6,6 @@
 
 * Vicious
 ** TODO Consider commiting power drain support to bat.lua
-** TODO Try replacing dio.lua with io.lua
-*** TODO First io.lua should grab data for all devices
 ** TODO Document contrib widgets in contrib/README
 ** TODO Consider multigraph, graph stacking, support
 ** TODO Complete the hddtemp fix

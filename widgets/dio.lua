@@ -1,14 +1,17 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2011, Jörg T. <jthalheim@gmail.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local ipairs = ipairs
+local pairs = pairs
+local io = { lines = io.lines }
 local setmetatable = setmetatable
-local table = { insert = table.insert }
-local string = { gmatch = string.gmatch }
 local helpers = require("vicious.helpers")
+local os = {
+    time = os.time,
+    difftime = os.difftime
+}
 -- }}}
 
 
@@ -18,54 +21,50 @@ module("vicious.widgets.dio")
 
 -- Initialize function tables
 local disk_usage = {}
-local disk_total = {}
--- Variable definitions
+local disk_stats = {}
+local disk_time  = 0
+-- Constant definitions
 local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 
 -- {{{ Disk I/O widget type
-local function worker(format, disk)
-    if not disk then return end
+local function worker(format)
+    local disk_lines = {}
 
-    local disk_lines = { [disk] = {} }
-    local disk_stats = helpers.pathtotable("/sys/block/" .. disk)
-
-    if disk_stats.stat then
-        local match = string.gmatch(disk_stats.stat, "[%s]+([%d]+)")
-        for i = 1, 11 do -- Store disk stats
-            table.insert(disk_lines[disk], match())
-        end
+    for line in io.lines("/proc/diskstats") do
+        local device, read, write =
+            -- Linux kernel docs: Documentation/iostats.txt
+	    line:match("([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
+        disk_lines[device] = { read, write }
     end
 
-    -- Ensure tables are initialized correctly
-    local diff_total = { [disk] = {} }
-    if not disk_total[disk] then
-        disk_usage[disk] = {}
-        disk_total[disk] = {}
+    local time = os.time()
+    local interval = os.difftime(time, disk_time)
+    if interval == 0 then interval = 1 end
 
-        while #disk_total[disk] < #disk_lines[disk] do
-            table.insert(disk_total[disk], 0)
+    for device, stats in pairs(disk_lines) do
+        -- Avoid insane values on startup
+        local last_stats = disk_stats[device] or stats
+
+        -- Check for overflows and counter resets (> 2^32)
+        if stats[1] < last_stats[1] or stats[2] < last_stats[2] then
+            last_stats[1], last_stats[2] = stats[1], stats[2]
         end
-    end
 
-    for i, v in ipairs(disk_lines[disk]) do
         -- Diskstats are absolute, substract our last reading
-        diff_total[disk][i] = v - disk_total[disk][i]
+        -- * divide by timediff because we don't know the timer value
+        local read  = (stats[1] - last_stats[1]) / interval
+        local write = (stats[2] - last_stats[2]) / interval
 
-        -- Store totals
-        disk_total[disk][i] = v
+        -- Calculate and store I/O
+        helpers.uformat(disk_usage, device.." read",  read,  unit)
+        helpers.uformat(disk_usage, device.." write", write, unit)
+        helpers.uformat(disk_usage, device.." total", read + write, unit)
     end
 
-    -- Calculate and store I/O
-    helpers.uformat(disk_usage[disk], "read",  diff_total[disk][3], unit)
-    helpers.uformat(disk_usage[disk], "write", diff_total[disk][7], unit)
-    helpers.uformat(disk_usage[disk], "total", diff_total[disk][7] + diff_total[disk][3], unit)
+    disk_time  = time
+    disk_stats = disk_lines
 
-    -- Store I/O scheduler
-    if disk_stats.queue and disk_stats.queue.scheduler then
-        disk_usage[disk]["{sched}"] = string.gmatch(disk_stats.queue.scheduler, "%[([%a]+)%]")
-    end
-
-    return disk_usage[disk]
+    return disk_usage
 end
 -- }}}
 
