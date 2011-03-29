@@ -7,6 +7,7 @@
 local pairs = pairs
 local io = { lines = io.lines }
 local setmetatable = setmetatable
+local string = { match = string.match }
 local helpers = require("vicious.helpers")
 local os = {
     time = os.time,
@@ -32,8 +33,8 @@ local function worker(format)
 
     for line in io.lines("/proc/diskstats") do
         local device, read, write =
-            -- Linux kernel docs: Documentation/iostats.txt
-	    line:match("([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
+            -- Linux kernel documentation: Documentation/iostats.txt
+            string.match(line, "([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
         disk_lines[device] = { read, write }
     end
 
