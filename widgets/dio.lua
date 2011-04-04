@@ -4,11 +4,15 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local helpers_uformat = require("vicious.helpers").uformat
-local io = { lines = io.lines }
-local os = { time = os.time, difftime = os.difftime }
 local pairs = pairs
+local io = { lines = io.lines }
 local setmetatable = setmetatable
+local string = { match = string.match }
+local helpers = require("vicious.helpers")
+local os = {
+    time = os.time,
+    difftime = os.difftime
+}
 -- }}}
 
 
@@ -17,56 +21,51 @@ module("vicious.widgets.dio")
 
 
 -- Initialize function tables
-local last_time = 0
-local last_diskstats = {}
+local disk_usage = {}
+local disk_stats = {}
+local disk_time  = 0
 -- Constant definitions
-local UNIT = {["s"] = 1, ["kb"] = 2, ["mb"] = 2048}
+local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 
--- {{{ I/O widget type
-local function read()
-   local lines = {}
-   for l in io.lines("/proc/diskstats") do
-      -- linux kernel doc: Documentation/iostats.txt
-      --   8       0 sda 5328 6084 205232 142076 1295 3162 35178 45946 0 58440 188000
-      --             ^             ^                       ^
-      local device, read, write = l:match("([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
-      lines[device]={read, write}
-   end
-   return lines
-end
-
+-- {{{ Disk I/O widget type
 local function worker(format)
-   local diskstats = read()
-   local diskusage = {}
+    local disk_lines = {}
 
-   local time = os.time()
-   local time_diff = os.difftime(time, last_time)
+    for line in io.lines("/proc/diskstats") do
+        local device, read, write =
+            -- Linux kernel documentation: Documentation/iostats.txt
+            string.match(line, "([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+)")
+        disk_lines[device] = { read, write }
+    end
 
-   -- should not happen since the minimum time difference in vicious is 1 sec
-   if time_diff == 0 then time_diff = 1 end
+    local time = os.time()
+    local interval = os.difftime(time, disk_time)
+    if interval == 0 then interval = 1 end
 
-   for device, stats in pairs(diskstats) do
-	   -- ensure, we have last_diskstat to avoid insane values at the startup
-	   local last_stats = last_diskstats[device] or stats
+    for device, stats in pairs(disk_lines) do
+        -- Avoid insane values on startup
+        local last_stats = disk_stats[device] or stats
 
-	   -- Check for overflows and counter resets (> 2^32)
-	   if stats[1] < last_stats[1] or stats[2] < last_stats[2] then
-		   last_stats[1], last_stats[2] = stats[1], stats[2]
-	   end
-	   -- Diskstats are absolute, so substract our last reading
-	   -- dividing by timediff is needed cause we don't know how often the widget is called
-	   local read  = (stats[1] - last_stats[1]) / time_diff
-	   local write = (stats[2] - last_stats[2]) / time_diff
+        -- Check for overflows and counter resets (> 2^32)
+        if stats[1] < last_stats[1] or stats[2] < last_stats[2] then
+            last_stats[1], last_stats[2] = stats[1], stats[2]
+        end
 
-	   -- Calculate and store per disk I/O
-	   helpers_uformat(diskusage, device.." read",  read,  UNIT)
-	   helpers_uformat(diskusage, device.." write", write, UNIT)
-	   helpers_uformat(diskusage, device.." total", read + write, UNIT)
-   end
+        -- Diskstats are absolute, substract our last reading
+        -- * divide by timediff because we don't know the timer value
+        local read  = (stats[1] - last_stats[1]) / interval
+        local write = (stats[2] - last_stats[2]) / interval
 
-   last_time = time
-   last_diskstats = diskstats
-   return diskusage
+        -- Calculate and store I/O
+        helpers.uformat(disk_usage, device.." read",  read,  unit)
+        helpers.uformat(disk_usage, device.." write", write, unit)
+        helpers.uformat(disk_usage, device.." total", read + write, unit)
+    end
+
+    disk_time  = time
+    disk_stats = disk_lines
+
+    return disk_usage
 end
 -- }}}
 

@@ -166,9 +166,9 @@ vicious.widgets.fs
     {/ avail_mb}, {/ avail_gb}, {/ avail_p}, {/home size_mb} etc.
 
 vicious.widgets.dio
-  - provides I/O statistics for storage devices or partitions
+  - provides I/O statistics for all available storage devices
   - returns a table with string keys: {sda total_s}, {sda total_kb},
-    {sda total_mb}, {sda read_s}, {sda read_kb}, {sda read_mb}, 
+    {sda total_mb}, {sda read_s}, {sda read_kb}, {sda read_mb},
     {sda write_s}, {sda write_kb}, {sda write_mb}, {sdb1 total_s} etc.
 
 vicious.widgets.raid
