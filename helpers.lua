@@ -13,6 +13,8 @@ local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local getmetatable = getmetatable
+local require = require
+local rawget = rawget
 local string = {
     upper = string.upper,
     format = string.format
@@ -29,6 +31,14 @@ local scroller = {}
 -- }}}
 
 -- {{{ Helper functions
+
+-- {{{ Require a submodule once
+function require_once(t,  key)                                                                                        
+	local module = rawget(t,  key)                                                                                
+	return module or require(t._NAME.."."..key)
+end
+-- }}}
+
 -- {{{ Expose path as a Lua table
 function pathtotable(dir)
     return setmetatable({ _path = dir },
