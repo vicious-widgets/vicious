@@ -29,9 +29,9 @@ $XDG_CONFIG_HOME (usually ~/.config):
 
   $ mv vicious $XDG_CONFIG_HOME/awesome/
 
-If you want you can disable widgets you will not use, to avoid having
-useless modules sitting in your memory. You can comment out any widget
-type from the "Configure widgets" list in the widgets/init.lua file.
+Vicious will only load modules for widget types you intend to use in
+your awesome configuration, to avoid having useless modules sitting in
+your memory.
 
 Then add the following to the top of your rc.lua:
 
