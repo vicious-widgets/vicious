@@ -2,6 +2,19 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+dcc2b60 vicious: load widget modules only when needed
+06e8f7c mpd: allow named keys or positional arguments
+729ceb7 dio: import string.match()
+c2f7fbc dio: provide stats for all devices, rewritten by Joerg
+6522f58 cpu: another 10 percent optimization from Joerg
+753ce61 cpu: calculation and optimization fixes by Joerg
+f85d944 gmail: fixed misleading comment
+31d7b2f bat: fixed "no such device" for current and power
+d385843 helpers: properly handle magic characters
+6ddad31 bat: added power_now support
+fd0718e contrib: added a README with pulse.lua documented
+9f4302c contrib: rewrite pulse module
+5160cfe Next release, tag 2.0.2
 add54f8 README: added missing register() documentation
 fe2e432 TODO: fix contrib/sensors for Ian
 7625933 wifi: proper fix for SSID regexp
