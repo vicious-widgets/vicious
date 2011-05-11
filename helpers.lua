@@ -9,6 +9,8 @@
 
 -- {{{ Grab environment
 local pairs = pairs
+local rawget = rawget
+local require = require
 local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
@@ -31,11 +33,10 @@ local scroller = {}
 -- }}}
 
 -- {{{ Helper functions
-
--- {{{ Require a submodule once
-function require_once(t,  key)                                                                                        
-	local module = rawget(t,  key)                                                                                
-	return module or require(t._NAME.."."..key)
+-- {{{ Loader of vicious modules
+function wrequire(table,  key)
+    local module = rawget(table,  key)
+    return module or require(table._NAME .. "." .. key)
 end
 -- }}}
 
