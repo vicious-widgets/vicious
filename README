@@ -147,8 +147,8 @@ vicious.widgets.mem
   - provides RAM and Swap usage statistics
   - returns 1st value as memory usage in percent, 2nd as memory usage,
     3rd as total system memory, 4th as free memory, 5th as swap usage
-    in percent, 6th as swap usage, 7th as total system swap and 8th as
-    free swap
+    in percent, 6th as swap usage, 7th as total system swap, 8th as
+    free swap and 9th as memory usage with buffers and cache
 
 vicious.widgets.os
   - provides operating system information
