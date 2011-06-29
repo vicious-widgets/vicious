@@ -36,13 +36,15 @@ local function worker(format)
     -- Calculate memory percentage
     mem.free  = mem.buf.f + mem.buf.b + mem.buf.c
     mem.inuse = mem.total - mem.free
+    mem.bcuse = mem.total - mem.buf.f
     mem.usep  = math.floor(mem.inuse / mem.total * 100)
     -- Calculate swap percentage
     mem.swp.inuse = mem.swp.t - mem.swp.f
     mem.swp.usep  = math.floor(mem.swp.inuse / mem.swp.t * 100)
 
     return {mem.usep,     mem.inuse,     mem.total, mem.free,
-            mem.swp.usep, mem.swp.inuse, mem.swp.t, mem.swp.f}
+            mem.swp.usep, mem.swp.inuse, mem.swp.t, mem.swp.f, 
+            mem.bcuse }
 end
 -- }}}
 
