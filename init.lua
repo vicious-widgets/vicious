@@ -144,17 +144,17 @@ end
 function register(widget, wtype, format, timer, warg)
     local widget = widget
     local reg = {
-	    -- Set properties
-	    wtype  = wtype,
-	    format = format,
-	    timer  = timer,
-	    warg   = warg,
-	    widget = widget,
+        -- Set properties
+        wtype  = wtype,
+        format = format,
+        timer  = timer,
+        warg   = warg,
+        widget = widget,
 
-	    -- Update function
-	    update = function ()
-		    update(widget, reg)
-	    end,
+        -- Update function
+        update = function ()
+            update(widget, reg)
+        end,
     }
 
     -- Default to 2s timer
