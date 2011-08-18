@@ -141,20 +141,20 @@ end
 -- {{{ Global functions
 -- {{{ Register a widget
 function register(widget, wtype, format, timer, warg)
-    local reg = {}
     local widget = widget
+    local reg = {
+	    -- Set properties
+	    wtype  = wtype,
+	    format = format,
+	    timer  = timer,
+	    warg   = warg,
+	    widget = widget,
 
-    -- Set properties
-    reg.wtype  = wtype
-    reg.format = format
-    reg.timer  = timer
-    reg.warg   = warg
-    reg.widget = widget
-
-    -- Update function
-    reg.update = function ()
-        update(widget, reg)
-    end
+	    -- Update function
+	    update = function ()
+		    update(widget, reg)
+	    end,
+    }
 
     -- Default to 2s timer
     if reg.timer == nil then
