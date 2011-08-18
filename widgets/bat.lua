@@ -65,7 +65,7 @@ local function worker(format, warg)
 
     -- Calculate remaining (charging or discharging) time
     local time = "N/A"
-    if rate ~= nil then
+    if tonumber(rate) then
         if state == "+" then
             timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
         elseif state == "-" then

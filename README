@@ -480,6 +480,29 @@ Example
   - forces a fixed width of 50px to the uptime widget, and aligns its
     text to the right
 
+Another use case are stacked graphs (aka multigraphs) which Vicious
+does not handle on its own at the moment, as it's hard to pass on
+color index arguments elegantly. But they are not unusable, far from
+it.
+
+Example
+  ctext = widget({ type = "textbox"})
+  cgraph = awful.widget.graph()
+  cgraph:set_width(100):set_height(20)
+  cgraph:set_stack(true):set_max_value(100)
+  cgraph:set_background_color("#494B4F")
+  cgraph:set_stack_colors({ "#FF5656", "#88A175", "#AECF96" })
+  vicious.register(ctext, vicious.widgets.cpu,
+    function (widget, args)
+      cgraph:add_value(args[2], 1) -- Core 1, color 1
+      cgraph:add_value(args[3], 2) -- Core 2, color 2
+      cgraph:add_value(args[4], 3) -- Core 3, color 3
+    end, 3)
+
+  - enables graph stacking/multigraph and plots usage of all three CPU
+    cores on a single graph, the textbox "ctext" is just an empty
+    placeholder, graph is updated every 3 seconds
+
 
 Other
 -----
