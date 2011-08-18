@@ -47,15 +47,15 @@ local function worker(format)
             local sysnet = helpers.pathtotable("/sys/class/net/" .. name)
             args["{"..name.." carrier}"] = tonumber(sysnet.carrier) or 0
 
-	    local now = os.time()
+            local now = os.time()
             if nets[name] == nil then
                 -- Default values on the first run
                 nets[name] = {}
                 helpers.uformat(args, name .. " down", 0, unit)
                 helpers.uformat(args, name .. " up",   0, unit)
             else -- Net stats are absolute, substract our last reading
-		local interval = now - nets[name].time 
-		if interval < 0 then interval = 1 end 
+                local interval = now - nets[name].time
+                if interval < 0 then interval = 1 end
 
                 local down = (recv - nets[name][1]) / interval
                 local up   = (send - nets[name][2]) / interval
@@ -64,7 +64,7 @@ local function worker(format)
                 helpers.uformat(args, name .. " up",   up,   unit)
             end
 
-	    nets[name].time = now
+            nets[name].time = now
 
             -- Store totals
             nets[name][1] = recv
