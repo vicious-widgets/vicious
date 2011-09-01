@@ -17,6 +17,9 @@ local string = {
     format = string.format,
     gmatch = string.gmatch
 }
+local math = {
+	floor = math.floor
+}
 -- }}}
 
 
@@ -71,7 +74,7 @@ local function worker(format, sink)
     local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
     if vol == nil then vol = 0 end
 
-    return { vol/0x10000*100, "on"}
+    return { math.floor(vol/0x10000*100), "on"}
 end
 -- }}}
 
