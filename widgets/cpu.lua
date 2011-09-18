@@ -61,6 +61,8 @@ local function worker(format)
         -- Calculate percentage
         local diff_total  = total_new - cpu_total[i]
         local diff_active = active_new - cpu_active[i]
+
+        if diff_total == 0 then diff_total = 1E-6 end
         cpu_usage[i]      = math.floor((diff_active / diff_total) * 100)
 
         -- Store totals
