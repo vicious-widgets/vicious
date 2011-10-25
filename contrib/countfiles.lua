@@ -9,15 +9,15 @@ local setmetatable = setmetatable
 local pairs = pairs
 -- }}}
 
--- Sum up: provides a number of files in several directories
+-- countfiles: provides a number of files in several directories
 -- @warg.paths a table with the paths which should be checked
 -- @warg.pattern a global regex to match files (Default: match all)
--- use posix-egrep style instead of the default (less familar) emacs regex
+-- use posix-egrep style instead of the default (less familiar) emacs regex
 
 -- Be carefull with directories, who contains a mass of files.
 -- "find" is usally fast, but will also produce delays, if the inodes get to big. 
 -- So if you want to count your music library, you may want to use locate/updatedb instead.
-module("vicious.widgets.sumup")
+module("vicious.contrib.countfiles")
 
 
 -- {{{ Sum up widget type
@@ -39,7 +39,7 @@ local function worker(format, warg)
          lines = lines + 1
       end
 
-      store[key] = lines
+      store[key] = (store[key] or 0) + lines
 
       f:close()
    end
