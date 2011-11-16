@@ -30,11 +30,12 @@ local function worker(format, warg)
     -- Get temperature from thermal zone
     local thermal = helpers.pathtotable(zone[warg[2]][1] .. warg[1])
 
-    if thermal[zone[warg[2]].file] then
+    data = thermal[zone[warg[2]].file]
+    if data then
         if zone[warg[2]].div then
-            return {thermal[zone[warg[2]].file] / zone[warg[2]].div}
+            return {data / zone[warg[2]].div}
         else -- /proc/acpi "temperature: N C"
-            return {tonumber(string.match(thermal[zone[warg[2]].file], "[%d]+"))}
+            return {tonumber(string.match(data, "[%d]+"))}
         end
     end
 
