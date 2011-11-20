@@ -74,8 +74,11 @@ local function worker(format, warg)
             return {state, percent, time}
         end
         -- Calculate time (but work around broken BAT/ACPI implementations)
-        local hoursleft = math.min(math.floor(timeleft), 0)
-        local minutesleft = math.min(math.floor((timeleft - hoursleft) * 60 ), 0)
+        local hoursleft, minutesleft = 0, 0
+        if timeleft > 0 then
+            hoursleft = math.floor(timeleft)
+            minutesleft = math.floor((timeleft - hoursleft) * 60 )
+        end
         time = string.format("%02d:%02d", hoursleft, minutesleft)
     end
 
