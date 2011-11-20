@@ -30,7 +30,7 @@ local function worker(format, warg)
     -- Get temperature from thermal zone
     local thermal = helpers.pathtotable(zone[warg[2]][1] .. warg[1])
 
-    data = thermal[zone[warg[2]].file]
+    local data = thermal[zone[warg[2]].file]
     if data then
         if zone[warg[2]].div then
             return {data / zone[warg[2]].div}
