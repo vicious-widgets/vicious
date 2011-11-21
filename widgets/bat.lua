@@ -10,6 +10,7 @@ local string = { format = string.format }
 local helpers = require("vicious.helpers")
 local math = {
     min = math.min,
+    max = math.max,
     floor = math.floor
 }
 -- }}}
@@ -65,6 +66,7 @@ local function worker(format, warg)
 
     -- Calculate remaining (charging or discharging) time
     local time = "N/A"
+
     if tonumber(rate) then
         if state == "+" then
             timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
@@ -73,12 +75,11 @@ local function worker(format, warg)
         else
             return {state, percent, time}
         end
+
         -- Calculate time (but work around broken BAT/ACPI implementations)
-        local hoursleft, minutesleft = 0, 0
-        if timeleft > 0 then
-            hoursleft = math.floor(timeleft)
-            minutesleft = math.floor((timeleft - hoursleft) * 60 )
-        end
+        local hoursleft   = math.max(math.floor(timeleft), 0)
+        local minutesleft = math.max(math.floor((timeleft - hoursleft) * 60 ), 0)
+
         time = string.format("%02d:%02d", hoursleft, minutesleft)
     end
 
