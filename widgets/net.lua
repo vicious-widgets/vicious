@@ -55,7 +55,7 @@ local function worker(format)
                 helpers.uformat(args, name .. " up",   0, unit)
             else -- Net stats are absolute, substract our last reading
                 local interval = now - nets[name].time
-                if interval < 0 then interval = 1 end
+                if interval <= 0 then interval = 1 end
 
                 local down = (recv - nets[name][1]) / interval
                 local up   = (send - nets[name][2]) / interval
