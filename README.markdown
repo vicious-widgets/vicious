@@ -50,23 +50,23 @@ vicious.register() to register it with Vicious:
 **wtype**
 
  - widget type or a function
-        - any of the available (default, or custom) widget types can
-          be used here, see below for a list of those provided by
-          Vicious
+  * any of the available (default, or custom) widget types can
+   be used here, see below for a list of those provided by
+   Vicious
  - function
-        - custom functions from your own "awesome" configuration can
-          be registered as widget types, see the "Custom widget types"
-          section
+  * custom functions from your own "awesome" configuration can
+   be registered as widget types, see the "Custom widget types"
+   section
 
 **format**
 
  - string argument or a function
- - $1, $2, $3... will be replaced by their respective value
-   returned by the widget type, some widget types return tables
-   with string keys, in that case use: ${key}
+  * $1, $2, $3... will be replaced by their respective value
+    returned by the widget type, some widget types return tables
+    with string keys, in that case use: ${key}
  - function
- - function(widget, args) can be used to manipulate data
-   returned by the widget type, more about this below
+  * function(widget, args) can be used to manipulate data
+    returned by the widget type, more about this below
 
 **interval**
 
@@ -74,6 +74,7 @@ vicious.register() to register it with Vicious:
     default, also read the "Power" section below
 
 **warg**
+
   - some widget types require an argument to be passed, for example
     the battery ID
 
