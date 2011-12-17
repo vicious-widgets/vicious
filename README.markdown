@@ -49,7 +49,14 @@ vicious.register() to register it with Vicious:
 
 **wtype**
 
- - one of the available widget types, see below for a list
+ - widget type or a function
+        - any of the available (default, or custom) widget types can
+          be used here, see below for a list of those provided by
+          Vicious
+ - function
+        - custom functions from your own "awesome" configuration can
+          be registered as widget types, see the "Custom widget types"
+          section
 
 **format**
 
