@@ -35,12 +35,16 @@ your memory.
 
 Then add the following to the top of your rc.lua:
 
-    require("vicious")
+```Lua
+require("vicious")
+```
 
 Once you create a widget (a textbox, graph or a progressbar) call
 vicious.register() to register it with Vicious:
 
-    vicious.register(widget, wtype, format, interval, warg)
+```Lua
+vicious.register(widget, wtype, format, interval, warg)
+```
 
 **widget**
 
@@ -83,13 +87,17 @@ Other functions
 ---------------
 **Unregister a widget**:
 
+```Lua
     vicious.unregister(widget, keep)
+```
 
 if keep is true widget will be suspended, waiting to be activated
 
 **Suspend all widgets**:
 
+```Lua
     vicious.suspend()
+```
 
 [example automation script](http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh) for the "laptop-mode-tools" start-stop module:
 
@@ -100,13 +108,17 @@ if widget is provided only that widget will be activated
 
 **Enable caching of a widget type:**
 
+```Lua
     vicious.cache(wtype)
+```
 
 enable caching of values returned by a widget type
 
 **Force update of widgets:**
 
+```Lua
     vicious.force({ widget, })
+```
 
 widget argument is a table with one or more widgets that will be updated
 
@@ -408,25 +420,31 @@ order to actually display them.
 
 **Date widget**
 
+```Lua
     datewidget = widget({ type = "textbox" })
     vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
+```
 
 updated every 2 seconds (the default interval), uses standard
 date sequences as the format string
 
 **Memory widget**
 
+```Lua
     memwidget = widget({ type = "textbox" })
     vicious.cache(vicious.widgets.mem)
     vicious.register(memwidget, vicious.widgets.mem, "$1 ($2MB/$3MB)", 13)
+```
 
 updated every 13 seconds, appends "MB" to 2nd and 3rd returned
 values and enables caching of this widget type
 
 **HDD temperature widget**
 
+```Lua
     hddtempwidget = widget({ type = "textbox" })
     vicious.register(hddtempwidget, vicious.widgets.hddtemp, "${/dev/sda} °C", 19)
+```
 
 updated every 19 seconds, requests the temperature level of the
 {/dev/sda} key/disk and appends "°C" to the returned value, does
@@ -434,14 +452,16 @@ not provide the port argument so default port is used
 
 **Mbox widget**
 
+```Lua
     mboxwidget = widget({ type = "textbox" })
     vicious.register(mboxwidget, vicious.widgets.mbox, "$1", 5, "/home/user/mail/Inbox")
-
+```
 updated every 5 seconds, provides full path to the mbox as an
 argument
 
 **Battery widget**
 
+```Lua
     batwidget = awful.widget.progressbar()
     batwidget:set_width(8)
     batwidget:set_height(10)
@@ -451,20 +471,21 @@ argument
     batwidget:set_color("#AECF96")
     batwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
     vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
-
+```
 updated every 61 seconds, requests the current battery charge
 level and displays a progressbar, provides "BAT0" battery ID as an
 argument
 
 **CPU usage widget**
 
+```Lua
     cpuwidget = awful.widget.graph()
     cpuwidget:set_width(50)
     cpuwidget:set_background_color("#494B4F")
     cpuwidget:set_color("#FF5656")
     cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
     vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
-
+```
 updated every 3 seconds, feeds the graph with total usage
 percentage of all CPUs/cores
 
@@ -487,6 +508,7 @@ widget.
 
 **Example**
 
+```Lua
     mpdwidget = widget({ type = "textbox" })
     vicious.register(mpdwidget, vicious.widgets.mpd,
      function (widget, args)
@@ -495,18 +517,19 @@ widget.
              args["{Artist}"]..' - '.. args["{Title}"]
        end
      end)
-
+```
 hides the mpd widget when no song is playing, updated every 2
 seconds (the default interval)
 
 **Example**
 
+```Lua
     uptimewidget = widget({ type = "textbox" })
     vicious.register(uptimewidget, vicious.widgets.uptime,
       function (widget, args)
         return string.format("Uptime: %2dd %02d:%02d ", args[1], args[2], args[3])
       end, 61)
-
+```
 uses string.format for padding uptime values to a minimum amount
 of digits, updated every 61 seconds
 
@@ -517,10 +540,11 @@ automatically adapted to text width).
 
 **Example**
 
+```Lua
     uptimewidget = widget({ type = "textbox" })
     uptimewidget.width, uptimewidget.align = 50, "right"
     vicious.register(uptimewidget, vicious.widgets.uptime, "$1 $2:$3", 61)
-
+```
 forces a fixed width of 50px to the uptime widget, and aligns its
 text to the right
 
@@ -531,6 +555,7 @@ it.
 
 **Example**
 
+```Lua
     ctext = widget({ type = "textbox"})
     cgraph = awful.widget.graph()
     cgraph:set_width(100):set_height(20)
@@ -543,7 +568,7 @@ it.
         cgraph:add_value(args[3], 2) -- Core 2, color 2
         cgraph:add_value(args[4], 3) -- Core 3, color 3
       end, 3)
-
+```
 enables graph stacking/multigraph and plots usage of all three CPU
 cores on a single graph, the textbox "ctext" is just an empty
 placeholder, graph is updated every 3 seconds
