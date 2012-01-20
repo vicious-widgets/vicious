@@ -25,7 +25,7 @@ local function worker(format, warg)
        ["powersave\n"]    = "⌁",
        ["userspace\n"]    = "¤",
        ["performance\n"]  = "⚡",
-       ["conservative\n"] = "↯"
+       ["conservative\n"] = "⊚"
     }
     -- Default voltage values
     local voltage = { v  = "N/A", mv = "N/A" }
