@@ -18,16 +18,16 @@ are used instead, where available:
 
   - hddtemp        for the HDD Temperature widget type
   - alsa-utils     for the Volume widget type
-  - wireless_tools for the Wireless widget type
+  - wireless\_tools for the Wireless widget type
   - curl           for widget types accessing network resources
 
 
 Usage
 -----
 To use vicious move it to your awesome configuration directory in
-*$XDG_CONFIG_HOME* (usually ~/.config):
+*$XDG\_CONFIG\_HOME* (usually ~/.config):
 
-  $ mv vicious $XDG_CONFIG_HOME/awesome/
+  $ mv vicious $XDG\_CONFIG\_HOME/awesome/
 
 Vicious will only load modules for widget types you intend to use in
 your awesome configuration, to avoid having useless modules sitting in
