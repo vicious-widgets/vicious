@@ -510,6 +510,20 @@ Example
     cores on a single graph, the textbox "ctext" is just an empty
     placeholder, graph is updated every 3 seconds
 
+A lot of users are not happy with default symbols used in volume,
+battery, cpufreq and other widget types. You can use your own symbols
+without any need to modify modules.
+
+  volumewidget = widget({ type = "textbox"})
+  vicious.register(volumewidget, vicious.widgets.volume,
+    function(widget, args)
+      local label = { ["♫"] = "O", ["♩"] = "M" }
+      return "Volume: " .. args[1] .. "% State: " .. label[args[2]]
+    end, 2, "PCM")
+
+  - uses a custom table map to modify symbols representing the mixer
+    state; on or off/mute
+
 
 Other
 -----
