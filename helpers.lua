@@ -15,8 +15,6 @@ local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
 local getmetatable = getmetatable
-local require = require
-local rawget = rawget
 local string = {
     upper = string.upper,
     format = string.format
