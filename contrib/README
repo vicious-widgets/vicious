@@ -18,6 +18,9 @@ could also depend on Lua libraries that are not distributed with the
 core Lua distribution. Ease of installation and use does not
 necessarily have to apply to contributed widgets.
 
+vicious.contrib.ac
+  - if AC is connected, $1 returns "On", otherwise returns "Off"
+
 vicious.contrib.batacpi
   -
 
