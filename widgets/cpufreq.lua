@@ -29,13 +29,20 @@ local function worker(format, warg)
     }
     -- Default voltage values
     local voltage = { v  = "N/A", mv = "N/A" }
+    local freqmhz = "N/A"
+    local freqghz = "N/A"
 
 
     -- Get the current frequency
     local freq = tonumber(cpufreq.scaling_cur_freq)
     -- Calculate MHz and GHz
-    local freqmhz = freq / 1000
-    local freqghz = freqmhz / 1000
+
+    if freq then
+        freqmhz = freq / 1000
+        freqghz = freqmhz / 1000
+    end
+
+
 
     -- Get the current voltage
     if cpufreq.scaling_voltages then
@@ -47,7 +54,7 @@ local function worker(format, warg)
     -- Get the current governor
     local governor = cpufreq.scaling_governor
     -- Represent the governor as a symbol
-    governor = governor_state[governor] or governor
+    governor = governor_state[governor] or governor or "N/A"
 
     return {freqmhz, freqghz, voltage.mv, voltage.v, governor}
 end
