@@ -153,10 +153,11 @@ string.
 **vicious.widgets.thermal**
 
   - provides temperature levels of ACPI and coretemp thermal zones
-  - takes the thermal zone as an argument, i.e. "thermal_zone0", or a
-    table with 1st field as thermal zone and 2nd as data source -
-    available data sources are "proc", "core" and "sys" - which is the
-    default when only the zone is provided
+  - takes the thermal zone as an argument, i.e. "thermal\_zone0", or a
+    table with 1st field as thermal zone, 2nd as data source -
+    available data sources are "proc", "core" and "sys" (which is the
+    default when only the zone is provided) and 3rd optional argument
+    as a temperature input file to read
   - returns 1st value as temperature of requested thermal zone
 
 **vicious.widgets.uptime**
