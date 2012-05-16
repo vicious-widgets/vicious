@@ -22,7 +22,7 @@ local function worker(format, warg)
     local updates = 0
     local manager = {
         ["Arch"]   = { cmd = "pacman -Qu" },
-        ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 2 },
+        ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Ubuntu"] = { cmd = "aptitude search '~U'" },
         ["Fedora"] = { cmd = "yum list updates", sub = 3 },

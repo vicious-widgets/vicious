@@ -2,6 +2,27 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+f972955 README: update thermal documentation
+5605030 thermal: change coretemp default, allow file as widget argument
+7a3699c division by zero, if battery is full charged
+b11bb78 hddtemp: fix curl hang in version 7.24.0
+73db82b README: add format function example for overriding symbols
+7e81bb8 cpufreq: differentiate between ondemand and conservative
+6f42ee5 README: update wtype argument explanation
+45c6eba bat: fix time calculation, bug introduced in 350e924
+cd4b04d thermal: remove unnecessary read
+350e924 bat: another workaround for broken ACPI implementations
+eeb27a2 [cpu] fix division by zero
+059442d net: sanitize time computation to avoid division by zero
+25b375b [pulse] round volume to integer
+18e1823 vicious: cleanup tabs and bad intendation
+cf996f2 [net] calculate time in a more clean way
+f1844de Allocate reg table with all values in one shot
+b11d251 README: provide multigraph usage example
+44aea37 bat: better fix for missing rate in 31d7b2f
+e01a8eb vicious: document mem.bcuse
+1384b69 mem: provide mem.bcuse for Gabriel
+324563e Next release, tag 2.0.3
 dcc2b60 vicious: load widget modules only when needed
 06e8f7c mpd: allow named keys or positional arguments
 729ceb7 dio: import string.match()
