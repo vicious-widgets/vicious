@@ -39,13 +39,13 @@ local function worker(format, warg)
     if freq then
         freqv.mhz = freq / 1000
         freqv.ghz = freqv.mhz / 1000
-    end
 
-    -- Get the current voltage
-    if cpufreq.scaling_voltages and freq then
-        freqv.mv = tonumber(string.match(cpufreq.scaling_voltages, freq.."[%s]([%d]+)"))
-        -- Calculate voltage from mV
-        freqv.v  = freqv.mv / 1000
+        -- Get the current voltage
+        if cpufreq.scaling_voltages then
+            freqv.mv = tonumber(string.match(cpufreq.scaling_voltages, freq.."[%s]([%d]+)"))
+            -- Calculate voltage from mV
+            freqv.v  = freqv.mv / 1000
+        end
     end
 
     -- Get the current governor
