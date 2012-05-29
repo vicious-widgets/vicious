@@ -90,6 +90,7 @@ vicious.contrib.wpa
   - $1 returns the ssid your wireless lan is connecting 
   - $2 returns the quality of your wireless lan
   - $3 returns the ip of your wireless lan
+  - $4 returns the bssid of your wireless lan
 
 Usage examples
 --------------
