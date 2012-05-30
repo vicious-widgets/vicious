@@ -83,6 +83,12 @@ vicious.contrib.rss
 vicious.contrib.sensors
   -
 
+vicious.contrib.wpa
+- provides information about the wifi status
+- requires 'wpa_cli' from wpa_supplicant
+- takes the interface as an argument, i.e "wlan0" or "wlan1"
+- returns a table with string keys: {ssid}, {qual}, {ip}, {bssid}
+
 
 Usage examples
 --------------
