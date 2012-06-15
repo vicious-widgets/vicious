@@ -24,7 +24,8 @@ local math = {
 
 
 -- Pulse: provides volume levels of requested pulseaudio sinks and methods to change them
-module("vicious.contrib.pulse")
+-- vicious.contrib.pulse
+local pulse = {}
 
 -- {{{ Helper function
 local function pacmd(args)
@@ -79,7 +80,7 @@ end
 -- }}}
 
 -- {{{ Volume control helper
-function add(percent, sink)
+function pulse.add(percent, sink)
     sink = get_sink_name(sink)
     if sink == nil then return end
 
@@ -96,7 +97,7 @@ function add(percent, sink)
     return os.execute(cmd)
 end
 
-function toggle(sink)
+function pulse.toggle(sink)
     sink = get_sink_name(sink)
     if sink == nil then return end
 
@@ -111,4 +112,4 @@ function toggle(sink)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(pulse, { __call = function(_, ...) return worker(...) end })

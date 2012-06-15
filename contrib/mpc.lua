@@ -14,7 +14,8 @@ local helpers = require("vicious.helpers")
 
 
 -- Mpc: provides the currently playing song in MPD
-module("vicious.contrib.mpc")
+-- vicious.contrib.mpc
+local mpc = {}
 
 
 -- {{{ MPC widget type
@@ -44,4 +45,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mpc, { __call = function(_, ...) return worker(...) end })

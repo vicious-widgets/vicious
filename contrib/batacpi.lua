@@ -13,7 +13,8 @@ local string = { match = string.match }
 
 
 -- Batacpi: provides state, charge, and remaining time for all batteries using acpitool
-module("vicious.contrib.batacpi")
+-- vicious.contrib.batacpi
+local batacpi = {}
 
 
 -- {{{ Battery widget type
@@ -48,4 +49,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(batacpi, { __call = function(_, ...) return worker(...) end })
