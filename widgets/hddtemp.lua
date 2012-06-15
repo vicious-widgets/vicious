@@ -12,7 +12,8 @@ local string = { gmatch = string.gmatch }
 
 
 -- Hddtemp: provides hard drive temperatures using the hddtemp daemon
-module("vicious.widgets.hddtemp")
+-- vicious.widgets.hddtemp
+local hddtemp = {}
 
 
 -- {{{ HDD Temperature widget type
@@ -34,4 +35,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(hddtemp, { __call = function(_, ...) return worker(...) end })

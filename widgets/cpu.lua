@@ -19,7 +19,8 @@ local string = {
 
 
 -- Cpu: provides CPU usage for all available CPUs/cores
-module("vicious.widgets.cpu")
+-- vicious.widgets.cpu
+local cpu = {}
 
 
 -- Initialize function tables
@@ -74,4 +75,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(cpu, { __call = function(_, ...) return worker(...) end })

@@ -15,7 +15,8 @@ local helpers = require("vicious.helpers")
 
 
 -- Net: provides state and usage statistics of all network interfaces
-module("vicious.widgets.net")
+-- vicious.widgets.net
+local net = {}
 
 
 -- Initialize function tables
@@ -76,4 +77,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(net, { __call = function(_, ...) return worker(...) end })

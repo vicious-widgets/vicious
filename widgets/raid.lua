@@ -16,7 +16,8 @@ local string = {
 
 
 -- Raid: provides state information for a requested RAID array
-module("vicious.widgets.raid")
+-- vicious.widgets.raid
+local raid = {}
 
 
 -- Initialize function tables
@@ -54,4 +55,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(raid, { __call = function(_, ...) return worker(...) end })
