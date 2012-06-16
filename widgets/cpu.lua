@@ -7,7 +7,7 @@
 
 -- {{{ Grab environment
 local ipairs = ipairs
-local io = { lines = io.lines }
+local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
@@ -15,6 +15,7 @@ local string = {
     sub = string.sub,
     gmatch = string.gmatch
 }
+local naught = require("naughty")
 -- }}}
 
 
@@ -33,7 +34,8 @@ local function worker(format)
     local cpu_lines = {}
 
     -- Get CPU stats
-    for line in io.lines("/proc/stat") do
+    local fd = io.open("/proc/stat")
+    for line in fd:lines() do
         if string.sub(line, 1, 3) ~= "cpu" then break end
 
         cpu_lines[#cpu_lines+1] = {}
@@ -42,6 +44,7 @@ local function worker(format)
             table.insert(cpu_lines[#cpu_lines], i)
         end
     end
+    fd:close()
 
     -- Ensure tables are initialized correctly
     for i = #cpu_total + 1, #cpu_lines do

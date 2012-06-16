@@ -4,7 +4,7 @@
 -----------------------------------------------------
 
 -- {{{ Grab environment
-local io = { lines = io.lines }
+local io = { open = io.open }
 local setmetatable = setmetatable
 local string = {
     len = string.len,
@@ -33,7 +33,8 @@ local function worker(format, warg)
     }
 
     -- Linux manual page: md(4)
-    for line in io.lines("/proc/mdstat") do
+    local fd = io.open("/proc/mdstat")
+    for line in fd:lines() do
         if mddev[warg]["found"] then
             local updev = string.match(line, "%[[_U]+%]")
 
@@ -50,6 +51,7 @@ local function worker(format, warg)
             end
         end
     end
+    fd:close()
 
     return {mddev[warg]["assigned"], mddev[warg]["active"]}
 end
