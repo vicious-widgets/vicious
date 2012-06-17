@@ -33,8 +33,8 @@ local function worker(format, warg)
     }
 
     -- Linux manual page: md(4)
-    local fd = io.open("/proc/mdstat")
-    for line in fd:lines() do
+    local f = io.open("/proc/mdstat")
+    for line in f:lines() do
         if mddev[warg]["found"] then
             local updev = string.match(line, "%[[_U]+%]")
 
@@ -51,7 +51,7 @@ local function worker(format, warg)
             end
         end
     end
-    fd:close()
+    f:close()
 
     return {mddev[warg]["assigned"], mddev[warg]["active"]}
 end

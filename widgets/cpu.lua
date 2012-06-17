@@ -15,7 +15,6 @@ local string = {
     sub = string.sub,
     gmatch = string.gmatch
 }
-local naught = require("naughty")
 -- }}}
 
 
@@ -34,8 +33,8 @@ local function worker(format)
     local cpu_lines = {}
 
     -- Get CPU stats
-    local fd = io.open("/proc/stat")
-    for line in fd:lines() do
+    local f = io.open("/proc/stat")
+    for line in f:lines() do
         if string.sub(line, 1, 3) ~= "cpu" then break end
 
         cpu_lines[#cpu_lines+1] = {}
@@ -44,7 +43,7 @@ local function worker(format)
             table.insert(cpu_lines[#cpu_lines], i)
         end
     end
-    fd:close()
+    f:close()
 
     -- Ensure tables are initialized correctly
     for i = #cpu_total + 1, #cpu_lines do
