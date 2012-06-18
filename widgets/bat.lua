@@ -87,4 +87,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(mt, { __call = function(_, ...) return worker(...) end })
+return setmetatable(bat, { __call = function(_, ...) return worker(...) end })
