@@ -14,7 +14,8 @@ local os = {
 
 
 -- Date: provides access to os.date with optional time formatting
-module("vicious.widgets.date")
+-- vicious.widgets.date
+local date = {}
 
 
 -- {{{ Date widget type
@@ -23,4 +24,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(date, { __call = function(_, ...) return worker(...) end })

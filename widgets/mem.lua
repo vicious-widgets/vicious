@@ -13,39 +13,40 @@ local string = { gmatch = string.gmatch }
 
 
 -- Mem: provides RAM and Swap usage statistics
-module("vicious.widgets.mem")
+-- vicious.widgets.mem
+local mem = {}
 
 
 -- {{{ Memory widget type
 local function worker(format)
-    local mem = { buf = {}, swp = {} }
+    local _mem = { buf = {}, swp = {} }
 
     -- Get MEM info
     for line in io.lines("/proc/meminfo") do
         for k, v in string.gmatch(line, "([%a]+):[%s]+([%d]+).+") do
-            if     k == "MemTotal"  then mem.total = math.floor(v/1024)
-            elseif k == "MemFree"   then mem.buf.f = math.floor(v/1024)
-            elseif k == "Buffers"   then mem.buf.b = math.floor(v/1024)
-            elseif k == "Cached"    then mem.buf.c = math.floor(v/1024)
-            elseif k == "SwapTotal" then mem.swp.t = math.floor(v/1024)
-            elseif k == "SwapFree"  then mem.swp.f = math.floor(v/1024)
+            if     k == "MemTotal"  then _mem.total = math.floor(v/1024)
+            elseif k == "MemFree"   then _mem.buf.f = math.floor(v/1024)
+            elseif k == "Buffers"   then _mem.buf.b = math.floor(v/1024)
+            elseif k == "Cached"    then _mem.buf.c = math.floor(v/1024)
+            elseif k == "SwapTotal" then _mem.swp.t = math.floor(v/1024)
+            elseif k == "SwapFree"  then _mem.swp.f = math.floor(v/1024)
             end
         end
     end
 
     -- Calculate memory percentage
-    mem.free  = mem.buf.f + mem.buf.b + mem.buf.c
-    mem.inuse = mem.total - mem.free
-    mem.bcuse = mem.total - mem.buf.f
-    mem.usep  = math.floor(mem.inuse / mem.total * 100)
+    _mem.free  = _mem.buf.f + _mem.buf.b + _mem.buf.c
+    _mem.inuse = _mem.total - _mem.free
+    _mem.bcuse = _mem.total - _mem.buf.f
+    _mem.usep  = math.floor(_mem.inuse / _mem.total * 100)
     -- Calculate swap percentage
-    mem.swp.inuse = mem.swp.t - mem.swp.f
-    mem.swp.usep  = math.floor(mem.swp.inuse / mem.swp.t * 100)
+    _mem.swp.inuse = _mem.swp.t - _mem.swp.f
+    _mem.swp.usep  = math.floor(_mem.swp.inuse / _mem.swp.t * 100)
 
-    return {mem.usep,     mem.inuse,     mem.total, mem.free,
-            mem.swp.usep, mem.swp.inuse, mem.swp.t, mem.swp.f, 
-            mem.bcuse }
+    return {_mem.usep,     _mem.inuse,     _mem.total, _mem.free,
+            _mem.swp.usep, _mem.swp.inuse, _mem.swp.t, _mem.swp.f,
+            _mem.bcuse }
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mem, { __call = function(_, ...) return worker(...) end })

@@ -7,7 +7,7 @@
 
 -- {{{ Grab environment
 local ipairs = ipairs
-local io = { lines = io.lines }
+local io = { open = io.open }
 local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
@@ -19,7 +19,8 @@ local string = {
 
 
 -- Cpu: provides CPU usage for all available CPUs/cores
-module("vicious.widgets.cpu")
+-- vicious.widgets.cpu
+local cpu = {}
 
 
 -- Initialize function tables
@@ -32,7 +33,8 @@ local function worker(format)
     local cpu_lines = {}
 
     -- Get CPU stats
-    for line in io.lines("/proc/stat") do
+    local f = io.open("/proc/stat")
+    for line in f:lines() do
         if string.sub(line, 1, 3) ~= "cpu" then break end
 
         cpu_lines[#cpu_lines+1] = {}
@@ -41,6 +43,7 @@ local function worker(format)
             table.insert(cpu_lines[#cpu_lines], i)
         end
     end
+    f:close()
 
     -- Ensure tables are initialized correctly
     for i = #cpu_total + 1, #cpu_lines do
@@ -74,4 +77,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(cpu, { __call = function(_, ...) return worker(...) end })

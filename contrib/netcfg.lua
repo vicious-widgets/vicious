@@ -11,7 +11,8 @@ local table = { insert = table.insert }
 
 
 -- Netcfg: provides active netcfg network profiles
-module("vicious.contrib.netcfg")
+-- vicious.contrib.netcfg
+local netcfg = {}
 
 
 -- {{{ Netcfg widget type
@@ -31,4 +32,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(netcfg, { __call = function(_, ...) return worker(...) end })

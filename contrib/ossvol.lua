@@ -12,7 +12,8 @@ local string = { match = string.match }
 
 
 -- Ossvol: provides volume levels of requested OSS mixers
-module("vicious.contrib.ossvol")
+-- vicious.contrib.ossvol
+local ossvol = {}
 
 
 -- {{{ Volume widget type
@@ -50,4 +51,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(ossvol, { __call = function(_, ...) return worker(...) end })

@@ -36,7 +36,7 @@ your memory.
 Then add the following to the top of your rc.lua:
 
 ```Lua
-require("vicious")
+local vicious = require("vicious")
 ```
 
 Once you create a widget (a textbox, graph or a progressbar) call
@@ -607,4 +607,5 @@ Vicious contributors:
   - Hiltjo Posthuma          <hiltjo codemadness.org>
   - Hagen Schink             <troja84 googlemail.com>
   - Jörg Thalheim            <jthalheim gmail.com>
+  - Arvydas Sidorenko        <asido4 gmail.com>
 

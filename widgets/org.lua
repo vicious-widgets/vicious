@@ -16,7 +16,8 @@ local os = {
 
 
 -- Org: provides agenda statistics for Emacs org-mode
-module("vicious.widgets.org")
+-- vicious.widgets.org
+local org = {}
 
 
 -- {{{ OrgMode widget type
@@ -58,4 +59,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(org, { __call = function(_, ...) return worker(...) end })

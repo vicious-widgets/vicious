@@ -13,7 +13,8 @@ local helpers = require("vicious.helpers")
 
 
 -- Mpd: provides Music Player Daemon information
-module("vicious.widgets.mpd")
+-- vicious.widgets.mpd
+local mpd = {}
 
 
 -- {{{ MPD widget type
@@ -60,4 +61,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mpd, { __call = function(_, ...) return worker(...) end })

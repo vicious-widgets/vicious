@@ -4,7 +4,7 @@
 -----------------------------------------------------
 
 -- {{{ Grab environment
-local io = { lines = io.lines }
+local io = { open = io.open }
 local setmetatable = setmetatable
 local string = {
     len = string.len,
@@ -16,7 +16,8 @@ local string = {
 
 
 -- Raid: provides state information for a requested RAID array
-module("vicious.widgets.raid")
+-- vicious.widgets.raid
+local raid = {}
 
 
 -- Initialize function tables
@@ -32,7 +33,8 @@ local function worker(format, warg)
     }
 
     -- Linux manual page: md(4)
-    for line in io.lines("/proc/mdstat") do
+    local f = io.open("/proc/mdstat")
+    for line in f:lines() do
         if mddev[warg]["found"] then
             local updev = string.match(line, "%[[_U]+%]")
 
@@ -49,9 +51,10 @@ local function worker(format, warg)
             end
         end
     end
+    f:close()
 
     return {mddev[warg]["assigned"], mddev[warg]["active"]}
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(raid, { __call = function(_, ...) return worker(...) end })

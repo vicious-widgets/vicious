@@ -20,7 +20,8 @@ local string = {
 
 
 -- Wifi: provides wireless information for a requested interface
-module("vicious.widgets.wifi")
+-- vicious.widgets.wifi
+local wifi = {}
 
 
 -- {{{ Wireless widget type
@@ -77,4 +78,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(wifi, { __call = function(_, ...) return worker(...) end })

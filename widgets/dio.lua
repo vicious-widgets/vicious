@@ -16,8 +16,9 @@ local os = {
 -- }}}
 
 
--- Disk I/O: provides I/O statistics for storage devices/partitions (only linux >= 2.6 )
-module("vicious.widgets.dio")
+-- Disk I/O: provides I/O statistics for requested storage devices
+-- vicious.widgets.dio
+local dio = {}
 
 
 -- Initialize function tables
@@ -69,4 +70,4 @@ local function worker(format)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(dio, { __call = function(_, ...) return worker(...) end })

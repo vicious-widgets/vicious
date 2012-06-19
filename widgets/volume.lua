@@ -12,7 +12,8 @@ local string = { match = string.match }
 
 
 -- Volume: provides volume levels and state of requested ALSA mixers
-module("vicious.widgets.volume")
+-- vicious.widgets.volume
+local volume = {}
 
 
 -- {{{ Volume widget type
@@ -49,4 +50,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(volume, { __call = function(_, ...) return worker(...) end })

@@ -13,7 +13,8 @@ local helpers = require("vicious.helpers")
 
 
 -- Mbox: provides the subject of last e-mail in a mbox file
-module("vicious.widgets.mbox")
+-- vicious.widgets.mbox
+local mbox = {}
 
 
 -- Initialize variables
@@ -24,9 +25,9 @@ local function worker(format, warg)
     if not warg then return end
 
     -- mbox could be huge, get a 30kb chunk from EOF
-    if type(warg) ~= "table" then mbox = warg end
+    if type(warg) ~= "table" then _mbox = warg end
     -- * attachment could be much bigger than 30kb
-    local f = io.open(mbox or warg[1])
+    local f = io.open(_mbox or warg[1])
     f:seek("end", -30720)
     local txt = f:read("*all")
     f:close()
@@ -49,4 +50,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mbox, { __call = function(_, ...) return worker(...) end })

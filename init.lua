@@ -17,13 +17,11 @@ local table = {
     remove  = table.remove
 }
 
-require("vicious.helpers")
-require("vicious.widgets")
-require("vicious.contrib")
+local helpers = require("vicious.helpers")
 
 -- Vicious: widgets for the awesome window manager
-module("vicious")
-
+local vicious = {}
+vicious.widgets = require("vicious.widgets")
 
 -- Initialize tables
 local timers       = {}
@@ -141,7 +139,7 @@ end
 
 -- {{{ Global functions
 -- {{{ Register a widget
-function register(widget, wtype, format, timer, warg)
+function vicious.register(widget, wtype, format, timer, warg)
     local widget = widget
     local reg = {
         -- Set properties
@@ -171,12 +169,12 @@ end
 -- }}}
 
 -- {{{ Unregister a widget
-function unregister(widget, keep, reg)
+function vicious.unregister(widget, keep, reg)
     if reg == nil then
         for w, i in pairs(registered) do
             if w == widget then
                 for _, v in pairs(i) do
-                    reg = unregister(w, keep, v)
+                    reg = vicious.unregister(w, keep, v)
                 end
             end
         end
@@ -207,7 +205,7 @@ end
 -- }}}
 
 -- {{{ Enable caching of a widget type
-function cache(wtype)
+function vicious.cache(wtype)
     if wtype ~= nil then
         if widget_cache[wtype] == nil then
             widget_cache[wtype] = {}
@@ -217,7 +215,7 @@ end
 -- }}}
 
 -- {{{ Force update of widgets
-function force(wtable)
+function vicious.force(wtable)
     if type(wtable) == "table" then
         for _, w in pairs(wtable) do
             update(w, nil, true)
@@ -227,17 +225,17 @@ end
 -- }}}
 
 -- {{{ Suspend all widgets
-function suspend()
+function vicious.suspend()
     for w, i in pairs(registered) do
         for _, v in pairs(i) do
-            unregister(w, true, v)
+            vicious.unregister(w, true, v)
         end
     end
 end
 -- }}}
 
 -- {{{ Activate a widget
-function activate(widget)
+function vicious.activate(widget)
     for w, i in pairs(registered) do
         if widget == nil or w == widget then
             for _, v in pairs(i) do
@@ -247,4 +245,7 @@ function activate(widget)
     end
 end
 -- }}}
+
+return vicious
+
 -- }}}

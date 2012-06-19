@@ -11,7 +11,8 @@ local setmetatable = setmetatable
 
 
 -- Mdir: provides the number of new and unread messages in Maildir structures/dirs
-module("vicious.widgets.mdir")
+-- vicious.widgets.mdir
+local mdir = {}
 
 
 -- {{{ Maildir widget type
@@ -37,4 +38,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mdir, { __call = function(_, ...) return worker(...) end })
