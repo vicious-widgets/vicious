@@ -20,7 +20,7 @@ local string = {
 
 
 -- Wifi: provides wireless information for a requested interface
-module("vicious.contrib.wpa")
+local wpa = {}
 
 local info = {
   ["{ssid}"] = "N/A",

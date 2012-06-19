@@ -14,7 +14,7 @@ local math = {
 }
 -- }}}
 
-module("vicious.contrib.ac")
+local ac = {}
 
 -- {{{ AC widget type
 local function worker(format, warg)
