@@ -590,22 +590,22 @@ Authors
 -------
 Wicked written by:
 
-  - Lucas de Vries           <lucas glacicle.com>
+  - Lucas de Vries           \<lucas glacicle.com\>
 
 Vicious written by:
 
-  - Adrian C. (anrxc)        <anrxc sysphere.org>
+  - Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
 Vicious contributors:
 
-  - Michael Unterkalmsteiner <miciu gmx.de>
-  - Martin Striz             <striz raynet.cz>
-  - Benedikt Sauer           <filmor gmail.com>
-  - Greg D.                  <jabbas jabbas.pl>
-  - Henning Glawe            <glaweh debian.org>
-  - Rémy C.                  <shikamaru mandriva.org>
-  - Hiltjo Posthuma          <hiltjo codemadness.org>
-  - Hagen Schink             <troja84 googlemail.com>
-  - Jörg Thalheim            <jthalheim gmail.com>
-  - Arvydas Sidorenko        <asido4 gmail.com>
+  - Michael Unterkalmsteiner \<miciu gmx.de\>
+  - Martin Striz             \<striz raynet.cz\>
+  - Benedikt Sauer           \<filmor gmail.com\>
+  - Greg D.                  \<jabbas jabbas.pl\>
+  - Henning Glawe            \<glaweh debian.org\>
+  - Rémy C.                  \<shikamaru mandriva.org\>
+  - Hiltjo Posthuma          \<hiltjo codemadness.org\>
+  - Hagen Schink             \<troja84 googlemail.com\>
+  - Jörg Thalheim            \<jthalheim gmail.com\>
+  - Arvydas Sidorenko        \<asido4 gmail.com\>
 
