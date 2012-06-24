@@ -4,7 +4,17 @@ Contrib widgets are extra widgets you can use. Some are for less
 common hardware, and other were contributed by Vicious users. The
 contrib directory also holds widget types that were obsoleted or
 rewritten. Contrib widgets will not be imported by init unless you
-explicitly enable it.
+explicitly enable it, or load them in your rc.lua.
+
+
+Usage
+-----
+To use contrib widgets uncomment the line that loads them in
+init.lua. Or you can load them in your rc.lua after you require
+Vicious:
+
+  local vicious = require("vicious")
+  vicious.contrib = require("vicious.contrib")
 
 
 Widget types

@@ -291,7 +291,8 @@ in the contrib directory of Vicious. The contrib directory contains
 extra widgets you can use. Some are for less common hardware, and
 other were contributed by Vicious users. The contrib directory also
 holds widget types that were obsoleted or rewritten. Contrib widgets
-will not be imported by init unless you explicitly enable it.
+will not be imported by init unless you explicitly enable it, or load
+them in your rc.lua.
 
 Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find his work here:
