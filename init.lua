@@ -16,12 +16,12 @@ local table = {
     insert  = table.insert,
     remove  = table.remove
 }
-
 local helpers = require("vicious.helpers")
 
 -- Vicious: widgets for the awesome window manager
 local vicious = {}
 vicious.widgets = require("vicious.widgets")
+--vicious.contrib = require("vicious.contrib")
 
 -- Initialize tables
 local timers       = {}

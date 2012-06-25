@@ -32,4 +32,4 @@ end
 -- }}}
 
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(_M, { __call = function(_, ...) return worker(...) end })

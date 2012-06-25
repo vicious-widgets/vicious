@@ -11,7 +11,7 @@ local wrequire = require("vicious.helpers").wrequire
 
 -- Vicious: widgets for the awesome window manager
 -- vicious.contrib
-local contrib = {}
+local contrib = { _NAME = "vicious.contrib" }
 -- }}}
 
 -- Load modules at runtime as needed

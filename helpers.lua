@@ -33,11 +33,10 @@ local scroller = {}
 
 -- {{{ Helper functions
 -- {{{ Loader of vicious modules
-function helpers.wrequire(table,  key)
-    local module = rawget(table,  key)
+function helpers.wrequire(table, key)
+    local module = rawget(table, key)
     return module or require(table._NAME .. "." .. key)
 end
--- }}}
 
 -- {{{ Expose path as a Lua table
 function helpers.pathtotable(dir)

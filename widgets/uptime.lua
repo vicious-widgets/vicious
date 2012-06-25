@@ -33,4 +33,5 @@ local function worker(format)
 end
 -- }}}
 
-local setmetatable(uptime, { __call = function(_, ...) return worker(...) end })
+setmetatable(uptime, { __call = function(_, ...) return worker(...) end })
+return uptime

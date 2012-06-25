@@ -7,8 +7,8 @@
 local pairs = pairs
 local tonumber = tonumber
 local io = { popen = io.popen }
-local os = { getenv = os.getenv }
 local math = { ceil = math.ceil }
+local los = { getenv = os.getenv }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 local string = {
@@ -63,7 +63,7 @@ local function worker(format)
     end
 
     -- Get user from the environment
-    system["username"] = os.getenv("USER")
+    system["username"] = los.getenv("USER")
 
     return {system["ostype"], system["osrelease"], system["username"],
             system["hostname"], system["entropy"], system["entropy_p"]}
