@@ -13,7 +13,7 @@ To use contrib widgets uncomment the line that loads them in
 init.lua. Or you can load them in your rc.lua after you require
 Vicious:
 
-  local vicious = require("vicious")
+  vicious = require("vicious")
   vicious.contrib = require("vicious.contrib")
 
 
