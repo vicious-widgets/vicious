@@ -35,7 +35,7 @@ your memory.
 
 Then add the following to the top of your rc.lua:
 
-  local vicious = require("vicious")
+  vicious = require("vicious")
 
 Once you create a widget (a textbox, graph or a progressbar) call
 vicious.register() to register it with Vicious:

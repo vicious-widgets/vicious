@@ -2,6 +2,24 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+da37c09 mdir: add support for maildir whitespaces
+eba6eb0 README: prefer vicious in global space
+c28bac5 uptime: metatable bugfix after lua52 port fixed by Jorg Thalheim
+3b161ff contrib: document how to enable contributed widgets
+e1c7c47 os: change os.getenv init to allow standalone usage of os widget
+1a7b430 contrib: initialization bugfix after lua52 port
+4caf95b README: update initialization instructions
+80d523a bat: metatable bugfix after lua52 port
+e929bea widgets: cleanup behind the last commit 363c03e
+363c03e Fixed io.lines() bug
+8e35a98 Ported vicious.contrib to lua 5.2
+41cc2c0 Ported vicious.widgets module to lua 5.2
+b6b5290 Ported vicious module to lua 5.2
+0741531 cpufreq: skip redudant freq variable check
+97e54d6 cpufreq: rework new exception handlers
+30db4be cpufreq: handle not existing frequency/governer
+13cec6d pkg: update 'Arch S' substitution lines
+2d8d7d7 Next release, tag 2.0.4
 f972955 README: update thermal documentation
 5605030 thermal: change coretemp default, allow file as widget argument
 7a3699c division by zero, if battery is full charged

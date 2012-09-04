@@ -13,7 +13,7 @@ To use contrib widgets uncomment the line that loads them in
 init.lua. Or you can load them in your rc.lua after you require
 Vicious:
 
-  local vicious = require("vicious")
+  vicious = require("vicious")
   vicious.contrib = require("vicious.contrib")
 
 
@@ -94,11 +94,17 @@ vicious.contrib.sensors
   -
 
 vicious.contrib.wpa
-- provides information about the wifi status
-- requires 'wpa_cli' from wpa_supplicant
-- takes the interface as an argument, i.e "wlan0" or "wlan1"
-- returns a table with string keys: {ssid}, {qual}, {ip}, {bssid}
+  - provides information about the wifi status
+  - requires 'wpa_cli' from wpa_supplicant
+  - takes the interface as an argument, i.e "wlan0" or "wlan1"
+  - returns a table with string keys: {ssid}, {qual}, {ip}, {bssid}
 
+vicious.contrib.buildbot
+  - provides last build status for configured buildbot builders (http://trac.buildbot.net/)
+  - returns build status in the format: [<builderName>.<currentBuildNumber>.<lastSuccessfulBuildNumber>]
+  - if <currentBuildNumber> is the same as <lastSuccessfulBuildNumber> only one number is displayed
+  - <buildNumber> colors: red - failed, green - successful, yellow - in progress
+  - it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
 
 Usage examples
 --------------
@@ -109,3 +115,11 @@ Pulse Audio widget
     awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
     awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
   ))
+
+Buildbot widget
+  local buildbotwidget = widget({ type = "textbox" })
+  local buildbotwidget_warg = {
+    {builder="coverage", url="http://buildbot.buildbot.net"},
+    {builder="tarball-slave", url="http://buildbot.buildbot.net"}
+  }
+  vicious.register(buildbotwidget, vicious.contrib.buildbot, "$1,", 3600, buildbotwidget_warg)
