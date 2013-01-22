@@ -373,8 +373,8 @@ file with their GPG key. Trough the GPG Passphrase Agent they could
 then decrypt the file transparently while their session is active.
 
 
-Usage examples
---------------
+Usage examples (for awesome v3.4)
+---------------------------------
 Start with a simple widget, like date. Then build your setup from
 there, one widget at a time. Also remember that besides creating and
 registering widgets you have to add them to a wibox (statusbar) in
