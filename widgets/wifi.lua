@@ -9,11 +9,11 @@ local math = { ceil = math.ceil }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 local io = {
-    open = io.open,
+    open  = io.open,
     popen = io.popen
 }
 local string = {
-    find = string.find,
+    find  = string.find,
     match = string.match
 }
 -- }}}
@@ -22,6 +22,12 @@ local string = {
 -- Wifi: provides wireless information for a requested interface
 -- vicious.widgets.wifi
 local wifi = {}
+
+
+-- {{{ Variable definitions
+local iwconfig = "iwconfig"
+local iwcpaths = { "/sbin", "/usr/sbin", "/usr/local/sbin", "/usr/bin" }
+-- }}}
 
 
 -- {{{ Wireless widget type
@@ -39,14 +45,19 @@ local function worker(format, warg)
         ["{sign}"] = 0
     }
 
-    -- Get data from iwconfig where available
-    local iwconfig = "/sbin/iwconfig"
-    local f = io.open(iwconfig, "rb")
-    if not f then
-        iwconfig = "/usr/sbin/iwconfig"
-    else
-        f:close()
+    -- Sbin paths aren't in user PATH, search for the binary
+    if iwconfig == "iwconfig" then
+        for _, p in ipairs(iwcpaths) do
+            local f = io.open(p .. "/iwconfig", "rb")
+            if f then
+                iwconfig = p .. "/iwconfig"
+                f:close()
+                break
+            end
+        end
     end
+
+    -- Get data from iwconfig where available
     local f = io.popen(iwconfig .." ".. warg .. " 2>&1")
     local iw = f:read("*all")
     f:close()
