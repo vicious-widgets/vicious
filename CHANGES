@@ -2,6 +2,10 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+fac688e wifi: add support for /usr/bin binary path
+f7fdd90 README: usage examples are for awesome version 3.4
+d63343e contrib: add buildbot monitoring widget
+8f2f155 Next release, tag 2.1.0
 da37c09 mdir: add support for maildir whitespaces
 eba6eb0 README: prefer vicious in global space
 c28bac5 uptime: metatable bugfix after lua52 port fixed by Jorg Thalheim
