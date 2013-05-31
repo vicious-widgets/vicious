@@ -1,14 +1,14 @@
 Contrib
 -------
-Contrib widgets are extra widgets you can use. Some are for less
-common hardware, and other were contributed by Vicious users. The
-contrib directory also holds widget types that were obsoleted or
-rewritten. Contrib widgets will not be imported by init unless you
-explicitly enable it, or load them in your rc.lua.
+Contrib libraries, or widget types, are extra snippets of code you can
+use. Some are for less common hardware, and other were contributed by
+Vicious users. The contrib directory also holds widget types that were
+obsoleted or rewritten. Contrib widgets will not be imported by init
+unless you explicitly enable it, or load them in your rc.lua.
 
 
-Usage
------
+Usage within Awesome
+--------------------
 To use contrib widgets uncomment the line that loads them in
 init.lua. Or you can load them in your rc.lua after you require
 Vicious:
@@ -92,8 +92,9 @@ vicious.contrib.buildbot
   - <buildNumber> colors: red - failed, green - successful, yellow - in progress
   - it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
 
-Usage examples
---------------
+
+Usage examples (for awesome v3.4)
+---------------------------------
 Pulse Audio widget
   vicious.register(vol, vicious.contrib.pulse, " $1%", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
   vol:buttons(awful.util.table.join(

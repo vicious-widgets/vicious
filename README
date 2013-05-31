@@ -1,16 +1,16 @@
 Vicious
 -------
-Vicious is a modular widget library for the "awesome" window manager,
-derived from the "Wicked" widget library. It has some of the old
-Wicked widget types, a few of them rewritten, and a good number of new
-ones:
+Vicious is a modular widget library for window managers, but mostly
+catering to users of the "awesome" window manager. It was derived from
+the old "Wicked" widget library, and has some of the old Wicked widget
+types, a few of them rewritten, and a good number of new ones:
 
   - http://git.sysphere.org/vicious/about/
 
-Vicious widget types are a framework for creating your own awesome
+Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
-and a few helper functions that make it easier to register timers,
-suspend widgets and so on.
+and a few "awesome" helper functions that make it easier to register
+timers, suspend widgets and so on.
 
 For now Vicious doesn't depend on any third party Lua libraries, to
 make it easier to install and use. That means some system utilities
@@ -24,8 +24,22 @@ are used instead, where available:
 
 Usage
 -----
-To use vicious move it to your awesome configuration directory in
-$XDG_CONFIG_HOME (usually ~/.config):
+When provided by an operating system package, or installed from source
+into the Lua library path Vicious can be used as a regular Lua
+library, to be used stand-alone or to feed widgets of any window
+manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
+
+  $ lua
+   > widgets = require("vicious.widgets")
+   > print(widgets.volume(nil, "Master")[1])
+     100
+
+
+Usage within Awesome
+--------------------
+To use Vicious with Awesome, install the package from your operating
+system provider, or download the source code and move it to your
+awesome configuration directory in $XDG_CONFIG_HOME (usually ~/.config):
 
   $ mv vicious $XDG_CONFIG_HOME/awesome/
 
