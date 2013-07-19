@@ -55,4 +55,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(mbox, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mboxc, { __call = function(_, ...) return worker(...) end })
