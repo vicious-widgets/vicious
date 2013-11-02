@@ -22,7 +22,8 @@ local function worker(format, warg)
     -- Initialize counters
     local updates = 0
     local manager = {
-        ["Arch"]   = { cmd = "checkupdates" },
+        ["Arch"]   = { cmd = "pacman -Qu" },
+        ["Arch C"] = { cmd = "checkupdates" },
         ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Ubuntu"] = { cmd = "aptitude search '~U'" },
