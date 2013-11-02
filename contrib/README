@@ -107,9 +107,10 @@ vicious.contrib.buildbot
   - it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
 
 
-Usage examples (for awesome v3.4)
+Usage examples
 ---------------------------------
 Pulse Audio widget
+  vol = wibox.widget.textbox()
   vicious.register(vol, vicious.contrib.pulse, " $1%", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
   vol:buttons(awful.util.table.join(
     awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
@@ -118,7 +119,7 @@ Pulse Audio widget
   ))
 
 Buildbot widget
-  local buildbotwidget = widget({ type = "textbox" })
+  buildbotwidget = wibox.widget.textbox()
   local buildbotwidget_warg = {
     {builder="coverage", url="http://buildbot.buildbot.net"},
     {builder="tarball-slave", url="http://buildbot.buildbot.net"}
