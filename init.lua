@@ -116,18 +116,21 @@ local function regregister(reg)
 
         -- Start the timer
         if reg.timer > 0 then
-            timers[reg.update] = {
-                timer = capi.timer({ timeout = reg.timer })
-            }
-
-            local tm = timers[reg.update].timer
+            local tm = timers[reg.timer] and timers[reg.timer].timer
+            tm = tm or capi.timer({ timeout = reg.timer })
             if tm.connect_signal then
                 tm:connect_signal("timeout", reg.update)
             else
                 tm:add_signal("timeout", reg.update)
             end
-            tm:start()
-
+            if not timers[reg.timer] then
+                timers[reg.timer] = { timer = tm, refs = 1 }
+            else
+                timers[reg.timer].refs = timers[reg.timer].refs + 1
+            end
+            if not tm.started then
+                tm:start()
+            end
             -- Initial update
             tm:emit_signal("timeout")
         end
@@ -195,11 +198,23 @@ function vicious.unregister(widget, keep, reg)
         end
     end
 
-    -- Stop the timer
-    if timers[reg.update].timer.started then
-        timers[reg.update].timer:stop()
+    if not reg.running then
+        return reg
+    end
+
+    -- Disconnect from timer
+    local tm  = timers[reg.timer]
+    if tm.timer.disconnect_signal then
+        tm.timer:disconnect_signal("timeout", reg.update)
+    else
+        tm.timer:remove_signal("timeout", reg.update)
     end
     reg.running = false
+    -- Stop the timer
+    tm.refs = tm.refs - 1
+    if tm.refs == 0 and tm.timer.started then
+        tm.timer:stop()
+    end
 
     return reg
 end
