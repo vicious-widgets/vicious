@@ -37,11 +37,10 @@ local function worker(format, warg)
 
     -- Construct MPD client options
     local mpdh = "telnet://"..host..":"..port
-    local echo = '{ echo "password '..pass..'"; echo "status";' ..
-                  'echo "currentsong"; sleep .1; echo "close";}'
+    local echo = "echo 'password "..pass.."\nstatus\ncurrentsong\nclose'"
 
     -- Get data from MPD server
-    local f = io.popen(echo.." | curl --connect-timeout 1 -fs "..mpdh)
+    local f = io.popen(echo.." | curl --connect-timeout 1 -fsm 3 "..mpdh)
 
     for line in f:lines() do
         for k, v in string.gmatch(line, "([%w]+):[%s](.*)$") do
