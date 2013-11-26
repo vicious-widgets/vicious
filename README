@@ -445,10 +445,12 @@ CPU usage widget
   cpuwidget:set_background_color("#494B4F")
   cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 50, 0 },
       stops = { { 0, "#FF5656" }, { 0.5, "#88A175" }, { 1, "#AECF96" }})
+  vicious.cache(vicious.widgets.cpu)
   vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
 
   - updated every 3 seconds, feeds the graph with total usage
-    percentage of all CPUs/cores
+    percentage of all CPUs/cores and enable caching of this widget
+    type
 
 
 Format functions
