@@ -26,7 +26,7 @@ local function worker(format, warg)
     }
 
     -- Get mixer control contents
-    local f = io.popen("amixer get " .. warg)
+    local f = io.popen("amixer -M get " .. warg)
     local mixer = f:read("*all")
     f:close()
 
