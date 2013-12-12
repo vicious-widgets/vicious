@@ -30,7 +30,7 @@ local function worker(format, warg)
         ["Unknown\n"]     = "⌁",
         ["Charged\n"]     = "↯",
         ["Charging\n"]    = "+",
-        ["Discharging\n"] = "-"
+        ["Discharging\n"] = "−"
     }
 
     -- Check if the battery is present
