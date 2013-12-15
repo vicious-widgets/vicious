@@ -132,7 +132,7 @@ local function regregister(reg)
                 tm:start()
             end
             -- Initial update
-            tm:emit_signal("timeout")
+            reg.update()
         end
         reg.running = true
     end
