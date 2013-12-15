@@ -282,7 +282,8 @@ vicious.widgets.weather
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
   - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
+    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
+    {dewc}, {press}
 
 vicious.widgets.date
   - provides access to os.date, with optional time formatting provided
