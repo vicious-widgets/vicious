@@ -159,11 +159,12 @@ vicious.widgets.uptime
     for 5 minutes and 6th for 15 minutes
 
 vicious.widgets.bat
-  - provides state, charge, and remaining time for a requested battery
+  - provides state, charge, remaining time and wear for a requested
+    battery
   - takes battery ID as an argument, i.e. "BAT0"
   - returns 1st value as state of requested battery, 2nd as charge
-    level in percent and 3rd as remaining (charging or discharging)
-    time
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
 
 vicious.widgets.mem
   - provides RAM and Swap usage statistics

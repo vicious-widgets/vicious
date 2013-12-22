@@ -1,6 +1,7 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
 --  * (c) 2010, Adrian C. <anrxc@sysphere.org>
+--  * (c) 2013, NormalRa  <normalrawr@gmail.com>
 ---------------------------------------------------
 
 -- {{{ Grab environment
@@ -15,7 +16,7 @@ local math = {
 -- }}}
 
 
--- Bat: provides state, charge, and remaining time for a requested battery
+-- Bat: provides state, charge, remaining time, and wear for a requested battery
 -- vicious.widgets.bat
 local bat = {}
 
@@ -35,7 +36,7 @@ local function worker(format, warg)
 
     -- Check if the battery is present
     if battery.present ~= "1\n" then
-        return {battery_state["Unknown\n"], 0, "N/A"}
+        return {battery_state["Unknown\n"], 0, "N/A", 0}
     end
 
 
@@ -45,14 +46,17 @@ local function worker(format, warg)
     -- Get capacity information
     if battery.charge_now then
         remaining, capacity = battery.charge_now, battery.charge_full
+        capacity_design = battery.charge_full_design or capacity
     elseif battery.energy_now then
         remaining, capacity = battery.energy_now, battery.energy_full
+        capacity_design = battery.energy_full_design or capacity
     else
-        return {battery_state["Unknown\n"], 0, "N/A"}
+        return {battery_state["Unknown\n"], 0, "N/A", 0}
     end
 
-    -- Calculate percentage (but work around broken BAT/ACPI implementations)
+    -- Calculate capacity and wear percentage (but work around broken BAT/ACPI implementations)
     local percent = math.min(math.floor(remaining / capacity * 100), 100)
+    local wear = math.floor(100 - capacity / capacity_design * 100)
 
 
     -- Get charge information
@@ -61,7 +65,7 @@ local function worker(format, warg)
     elseif battery.power_now then
         rate = tonumber(battery.power_now)
     else
-        return {state, percent, "N/A"}
+        return {state, percent, "N/A", wear}
     end
 
     -- Calculate remaining (charging or discharging) time
@@ -73,7 +77,7 @@ local function worker(format, warg)
         elseif state == "-" then
             timeleft = tonumber(remaining) / tonumber(rate)
         else
-            return {state, percent, time}
+            return {state, percent, time, wear}
         end
 
         -- Calculate time
@@ -83,7 +87,7 @@ local function worker(format, warg)
         time = string.format("%02d:%02d", hoursleft, minutesleft)
     end
 
-    return {state, percent, time}
+    return {state, percent, time, wear}
 end
 -- }}}
 
