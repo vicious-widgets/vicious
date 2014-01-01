@@ -159,11 +159,12 @@ vicious.widgets.uptime
     for 5 minutes and 6th for 15 minutes
 
 vicious.widgets.bat
-  - provides state, charge, and remaining time for a requested battery
+  - provides state, charge, remaining time and wear for a requested
+    battery
   - takes battery ID as an argument, i.e. "BAT0"
   - returns 1st value as state of requested battery, 2nd as charge
-    level in percent and 3rd as remaining (charging or discharging)
-    time
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
 
 vicious.widgets.mem
   - provides RAM and Swap usage statistics
@@ -218,7 +219,7 @@ vicious.widgets.wifi
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link}, {linp} and {sign}
+    {link}, {linp} (link quality in percent) and {sign} (signal level)
 
 vicious.widgets.mbox
   - provides the subject of last e-mail in a mbox file
@@ -282,7 +283,8 @@ vicious.widgets.weather
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
   - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
+    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
+    {dewc}, {press}
 
 vicious.widgets.date
   - provides access to os.date, with optional time formatting provided
@@ -445,10 +447,12 @@ CPU usage widget
   cpuwidget:set_background_color("#494B4F")
   cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 50, 0 },
       stops = { { 0, "#FF5656" }, { 0.5, "#88A175" }, { 1, "#AECF96" }})
+  vicious.cache(vicious.widgets.cpu)
   vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
 
   - updated every 3 seconds, feeds the graph with total usage
-    percentage of all CPUs/cores
+    percentage of all CPUs/cores and enable caching of this widget
+    type
 
 
 Format functions
@@ -565,9 +569,7 @@ Wicked written by:
 Vicious written by:
   - Adrian C. (anrxc)        <anrxc sysphere.org>
 
-Vicious contributors:
-  - Michael Unterkalmsteiner <miciu gmx.de>
-  - Martin Striz             <striz raynet.cz>
+Vicious major contributors:
   - Benedikt Sauer           <filmor gmail.com>
   - Greg D.                  <jabbas jabbas.pl>
   - Henning Glawe            <glaweh debian.org>
@@ -576,3 +578,6 @@ Vicious contributors:
   - Hagen Schink             <troja84 googlemail.com>
   - Jörg Thalheim            <jthalheim gmail.com>
   - Arvydas Sidorenko        <asido4 gmail.com>
+  - Dodo The Last            <dodo.the.last gmail.com>
+  - ...
+  - Consult git log for a complete list of contributors

@@ -131,7 +131,7 @@ local function regregister(reg)
                 tm:start()
             end
             -- Initial update
-            tm:emit_signal("timeout")
+            reg.update()
         end
         reg.running = true
     end
@@ -151,12 +151,11 @@ function vicious.register(widget, wtype, format, timer, warg)
         timer  = timer,
         warg   = warg,
         widget = widget,
-
-        -- Update function
-        update = function ()
-            update(widget, reg)
-        end,
     }
+    -- Set functions
+    reg.update = function ()
+        update(widget, reg)
+    end
 
     -- Default to 2s timer
     if reg.timer == nil then
