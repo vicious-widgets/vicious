@@ -1,16 +1,16 @@
 Vicious
 =======
-Vicious is a modular widget library for the "awesome" window manager,
-derived from the "Wicked" widget library. It has some of the old
-Wicked widget types, a few of them rewritten, and a good number of new
-ones:
+Vicious is a modular widget library for window managers, but mostly
+catering to users of the "awesome" window manager. It was derived from
+the old "Wicked" widget library, and has some of the old Wicked widget
+types, a few of them rewritten, and a good number of new ones:
 
   - http://git.sysphere.org/vicious/about/
 
-Vicious widget types are a framework for creating your own awesome
+Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
-and a few helper functions that make it easier to register timers,
-suspend widgets and so on.
+and a few "awesome" helper functions that make it easier to register
+timers, suspend widgets and so on.
 
 For now Vicious doesn't depend on any third party Lua libraries, to
 make it easier to install and use. That means some system utilities
@@ -24,10 +24,25 @@ are used instead, where available:
 
 Usage
 -----
-To use vicious move it to your awesome configuration directory in
-*$XDG\_CONFIG\_HOME* (usually ~/.config):
+When provided by an operating system package, or installed from source
+into the Lua library path Vicious can be used as a regular Lua
+library, to be used stand-alone or to feed widgets of any window
+manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
 
-  $ mv vicious $XDG\_CONFIG\_HOME/awesome/
+```bash
+  $ lua
+  > widgets = require("vicious.widgets")
+  > print(widgets.volume(nil, "Master")[1])
+    100
+```
+
+Usage within Awesome
+--------------------
+To use Vicious with Awesome, install the package from your operating
+system provider, or download the source code and move it to your
+awesome configuration directory in $XDG\_CONFIG\_HOME (usually ~/.config):
+
+    $ mv vicious $XDG\_CONFIG\_HOME/awesome/
 
 Vicious will only load modules for widget types you intend to use in
 your awesome configuration, to avoid having useless modules sitting in
@@ -49,7 +64,7 @@ vicious.register(widget, wtype, format, interval, warg)
 **widget**
 
  - widget created with widget() or awful.widget() (in case of a
-        graph or a progressbar)
+   graph or a progressbar)
 
 **wtype**
 
@@ -102,7 +117,8 @@ if keep is true widget will be suspended, waiting to be activated
 [example automation script](http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh) for the "laptop-mode-tools" start-stop module:
 
 **Restart suspended widgets:**
-  vicious.activate(widget)
+
+    vicious.activate(widget)
 
 if widget is provided only that widget will be activated
 
@@ -172,8 +188,8 @@ string.
   - provides state, charge, and remaining time for a requested battery
   - takes battery ID as an argument, i.e. "BAT0"
   - returns 1st value as state of requested battery, 2nd as charge
-    level in percent and 3rd as remaining (charging or discharging)
-    time
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
 
 **vicious.widgets.mem**
 
@@ -236,14 +252,16 @@ string.
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link}, {linp} and {sign}
+    {link}, {linp} (link quality in percent) and {sign} (signal level)
 
 **vicious.widgets.mbox**
 
   - provides the subject of last e-mail in a mbox file
   - takes the full path to the mbox as an argument, or a table with
-    1st field as path, 2nd as maximum lenght and 3rd (optional) as
-    widget name - if 3rd field is present scrolling will be used
+    1st field as path, 2nd as maximum length and 3rd (optional) as
+    widget name - if 3rd field is present scrolling will be used (note: the
+    path will be escaped so special variables like ~ will not work, use
+    os.getenv("HOME").."mail" instead to access environment variables)
   - returns 1st value as the subject of the last e-mail
 
 **vicious.widgets.mboxc**
@@ -265,11 +283,16 @@ string.
 
   - provides count of new and subject of last e-mail on Gmail
   - takes an (optional) argument, if it's a number subject will be
-    truncated, if a table, with 1st field as maximum lenght and 2nd
+    truncated, if a table, with 1st field as maximum length and 2nd
     the widget name (i.e. "gmailwidget"), scrolling will be used
   - keeps login information in the ~/.netrc file, example:
     machine mail.google.com login user password pass
   - returns a table with string keys: {count} and {subject}
+  - to be able to use this widget, make sure in your Gmail account 
+    you disabled 
+    [two step verification](https://support.google.com/accounts/answer/1064203)
+    and _then_ 
+    [allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
 
 **vicious.widgets.org**
 
@@ -309,7 +332,8 @@ string.
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
   - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
+    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
+    {dewc}, {press}
 
 **vicious.widgets.date**
 
@@ -333,10 +357,13 @@ in the contrib directory of Vicious. The contrib directory contains
 extra widgets you can use. Some are for less common hardware, and
 other were contributed by Vicious users. The contrib directory also
 holds widget types that were obsoleted or rewritten. Contrib widgets
-will not be imported by init unless you explicitly enable it.
+will not be imported by init unless you explicitly enable it, or load
+them in your rc.lua.
 
-Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
-branch. If you are also a BSD user you can find [his work.](http://git.sigil.org/vicious-fbsd/)
+Rudi Siegel, a FreeBSD user, published his FreeBSD branch. If you are
+also a BSD user you can find his work here:
+
+  - https://bitbucket.org/mutluyum/vicious_bsd/
 
 Some users would like to avoid writing new modules. For them Vicious
 kept the old Wicked functionality, possibility to register their own
@@ -413,7 +440,7 @@ then decrypt the file transparently while their session is active.
 
 
 Usage examples
---------------
+---------------------------------
 Start with a simple widget, like date. Then build your setup from
 there, one widget at a time. Also remember that besides creating and
 registering widgets you have to add them to a wibox (statusbar) in
@@ -470,7 +497,8 @@ argument
     batwidget:set_background_color("#494B4F")
     batwidget:set_border_color(nil)
     batwidget:set_color("#AECF96")
-    batwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
+    batwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 },
+      stops = {{ 0, "#AECF96" }, { 0.5, "#88A175" }, { 1, "#FF5656" }}})
     vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 ```
 updated every 61 seconds, requests the current battery charge
@@ -483,8 +511,8 @@ argument
     cpuwidget = awful.widget.graph()
     cpuwidget:set_width(50)
     cpuwidget:set_background_color("#494B4F")
-    cpuwidget:set_color("#FF5656")
-    cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+    cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 50, 0 },
+      stops = { { 0, "#FF5656" }, { 0.5, "#88A175" }, { 1, "#AECF96" }})
     vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
 ```
 updated every 3 seconds, feeds the graph with total usage
@@ -570,9 +598,26 @@ it.
         cgraph:add_value(args[4], 3) -- Core 3, color 3
       end, 3)
 ```
+
 enables graph stacking/multigraph and plots usage of all three CPU
 cores on a single graph, the textbox "ctext" is just an empty
 placeholder, graph is updated every 3 seconds
+
+A lot of users are not happy with default symbols used in volume,
+battery, cpufreq and other widget types. You can use your own symbols
+without any need to modify modules.
+
+```Lua
+  volumewidget = wibox.widget.textbox()
+  vicious.register(volumewidget, vicious.widgets.volume,
+    function(widget, args)
+      local label = { ["♫"] = "O", ["♩"] = "M" }
+      return "Volume: " .. args[1] .. "% State: " .. label[args[2]]
+    end, 2, "PCM")
+```
+
+  - uses a custom table map to modify symbols representing the mixer
+    state; on or off/mute
 
 
 Other
@@ -585,6 +630,10 @@ Read *"awesome"* manual pages:
 
 [Example *"awesome"* configuration](http://git.sysphere.org/awesome-configs/)
 
+Example "awesome" configuration:
+
+  - http://git.sysphere.org/awesome-configs/
+
 
 Authors
 -------
@@ -596,10 +645,8 @@ Vicious written by:
 
   - Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
-Vicious contributors:
+Vicious major contributors:
 
-  - Michael Unterkalmsteiner \<miciu gmx.de\>
-  - Martin Striz             \<striz raynet.cz\>
   - Benedikt Sauer           \<filmor gmail.com\>
   - Greg D.                  \<jabbas jabbas.pl\>
   - Henning Glawe            \<glaweh debian.org\>
@@ -608,4 +655,6 @@ Vicious contributors:
   - Hagen Schink             \<troja84 googlemail.com\>
   - Jörg Thalheim            \<jthalheim gmail.com\>
   - Arvydas Sidorenko        \<asido4 gmail.com\>
-
+  - Dodo The Last            <dodo.the.last gmail.com>
+  - ...
+  - Consult git log for a complete list of contributors
