@@ -7,10 +7,10 @@ ones:
 
   - http://git.sysphere.org/vicious/about/
 
-Vicious widget types are a framework for creating your own awesome
+Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
-and a few helper functions that make it easier to register timers,
-suspend widgets and so on.
+and a few "awesome" helper functions that make it easier to register
+timers, suspend widgets and so on.
 
 For now Vicious doesn't depend on any third party Lua libraries, to
 make it easier to install and use. That means some system utilities
@@ -24,10 +24,25 @@ are used instead, where available:
 
 Usage
 -----
-To use vicious move it to your awesome configuration directory in
-*$XDG\_CONFIG\_HOME* (usually ~/.config):
+When provided by an operating system package, or installed from source
+into the Lua library path Vicious can be used as a regular Lua
+library, to be used stand-alone or to feed widgets of any window
+manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
 
-  $ mv vicious $XDG\_CONFIG\_HOME/awesome/
+```bash
+  $ lua
+  > widgets = require("vicious.widgets")
+  > print(widgets.volume(nil, "Master")[1])
+    100
+```
+
+Usage within Awesome
+--------------------
+To use Vicious with Awesome, install the package from your operating
+system provider, or download the source code and move it to your
+awesome configuration directory in $XDG\_CONFIG\_HOME (usually ~/.config):
+
+    $ mv vicious $XDG\_CONFIG\_HOME/awesome/
 
 Vicious will only load modules for widget types you intend to use in
 your awesome configuration, to avoid having useless modules sitting in
@@ -49,7 +64,7 @@ vicious.register(widget, wtype, format, interval, warg)
 **widget**
 
  - widget created with widget() or awful.widget() (in case of a
-        graph or a progressbar)
+   graph or a progressbar)
 
 **wtype**
 
@@ -102,7 +117,8 @@ if keep is true widget will be suspended, waiting to be activated
 [example automation script](http://sysphere.org/~anrxc/local/sources/lmt-vicious.sh) for the "laptop-mode-tools" start-stop module:
 
 **Restart suspended widgets:**
-  vicious.activate(widget)
+
+    vicious.activate(widget)
 
 if widget is provided only that widget will be activated
 
@@ -172,8 +188,8 @@ string.
   - provides state, charge, and remaining time for a requested battery
   - takes battery ID as an argument, i.e. "BAT0"
   - returns 1st value as state of requested battery, 2nd as charge
-    level in percent and 3rd as remaining (charging or discharging)
-    time
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
 
 **vicious.widgets.mem**
 
@@ -236,7 +252,7 @@ string.
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link}, {linp} and {sign}
+    {link}, {linp} (link quality in percent) and {sign} (signal level)
 
 **vicious.widgets.mbox**
 
@@ -309,7 +325,8 @@ string.
   - provides weather information for a requested station
   - takes the ICAO station code as an argument, i.e. "LDRI"
   - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {press}
+    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
+    {dewc}, {press}
 
 **vicious.widgets.date**
 
@@ -333,7 +350,8 @@ in the contrib directory of Vicious. The contrib directory contains
 extra widgets you can use. Some are for less common hardware, and
 other were contributed by Vicious users. The contrib directory also
 holds widget types that were obsoleted or rewritten. Contrib widgets
-will not be imported by init unless you explicitly enable it.
+will not be imported by init unless you explicitly enable it, or load
+them in your rc.lua.
 
 Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
 branch. If you are also a BSD user you can find [his work.](http://git.sigil.org/vicious-fbsd/)
@@ -570,9 +588,26 @@ it.
         cgraph:add_value(args[4], 3) -- Core 3, color 3
       end, 3)
 ```
+
 enables graph stacking/multigraph and plots usage of all three CPU
 cores on a single graph, the textbox "ctext" is just an empty
 placeholder, graph is updated every 3 seconds
+
+A lot of users are not happy with default symbols used in volume,
+battery, cpufreq and other widget types. You can use your own symbols
+without any need to modify modules.
+
+```Lua
+  volumewidget = wibox.widget.textbox()
+  vicious.register(volumewidget, vicious.widgets.volume,
+    function(widget, args)
+      local label = { ["♫"] = "O", ["♩"] = "M" }
+      return "Volume: " .. args[1] .. "% State: " .. label[args[2]]
+    end, 2, "PCM")
+```
+
+  - uses a custom table map to modify symbols representing the mixer
+    state; on or off/mute
 
 
 Other
@@ -596,10 +631,8 @@ Vicious written by:
 
   - Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
-Vicious contributors:
+Vicious major contributors:
 
-  - Michael Unterkalmsteiner \<miciu gmx.de\>
-  - Martin Striz             \<striz raynet.cz\>
   - Benedikt Sauer           \<filmor gmail.com\>
   - Greg D.                  \<jabbas jabbas.pl\>
   - Henning Glawe            \<glaweh debian.org\>
@@ -608,4 +641,6 @@ Vicious contributors:
   - Hagen Schink             \<troja84 googlemail.com\>
   - Jörg Thalheim            \<jthalheim gmail.com\>
   - Arvydas Sidorenko        \<asido4 gmail.com\>
-
+  - Dodo The Last            <dodo.the.last gmail.com>
+  - ...
+  - Consult git log for a complete list of contributors
