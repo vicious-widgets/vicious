@@ -2,6 +2,27 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+6e16a41 bat: fix broken battery remaining time (was always N/A)
+bfbc1bd volume: get the normalized volume like alsamixer and DE's indicator
+3ef0f11 Next release, tag 2.1.2
+946271c bat: expose information on battery wear and tear
+7626989 README: write a list of major contributors to the project
+c51e13c init: stop allocating reg table functions with properties
+52cbb64 Revert "init: emit timeout instead of forced update"
+7961ca1 weather: add support for dew point
+dc556e5 bat: Use a real minus sign for the charging status
+f36997b README: explain wifi abbreviations linp and sign
+71ea0f3 README: enable caching in vicious.widgets.cpu example
+211d450 init: share timers when possible
+75cd103 Revert "mpd: workaround command termination bug in mpd server v0.18"
+a6a73f4 mpd: workaround command termination bug in mpd server v0.18
+c795642 README: update awesome usage examples for v3.5
+563cb6f pkg: revert to pacman as default Arch method, checkupdates optional
+01b2302 pkg: use checkupdates on Arch Linux.
+2641bf8 contrib: add Open Weather and ATi graphics widget types
+0fd4fc5 mboxc: Fixed typo in setmetatable after ported to lua 5.2
+052d19e README: explain vicious is a generic WM widget library
+bb891d6 Next release, tag 2.1.1
 fac688e wifi: add support for /usr/bin binary path
 f7fdd90 README: usage examples are for awesome version 3.4
 d63343e contrib: add buildbot monitoring widget

@@ -18,7 +18,8 @@ local string = {
     gmatch = string.gmatch
 }
 local math = {
-	floor = math.floor
+    floor = math.floor,
+    ceil = math.ceil
 }
 -- }}}
 
@@ -29,15 +30,19 @@ local pulse = {}
 
 -- {{{ Helper function
 local function pacmd(args)
-	local f = io.popen("pacmd "..args)
-	local line = f:read("*all")
-	f:close()
-	return line
+    local f = io.popen("pacmd "..args)
+    if f == nil then
+      return nil
+    else
+      local line = f:read("*all")
+      f:close()
+      return line
+    end
 end
 
 local function escape(text)
-	local special_chars = { ["."] = "%.", ["-"] = "%-" }
-	return text:gsub("[%.%-]", special_chars)
+    local special_chars = { ["."] = "%.", ["-"] = "%-" }
+    return text:gsub("[%.%-]", special_chars)
 end
 
 local cached_sinks = {}
@@ -47,10 +52,11 @@ local function get_sink_name(sink)
     local key = sink or 1
     -- Cache requests
     if not cached_sinks[key] then
-	local line = pacmd("list-sinks")
-	for s in string.gmatch(line, "name: <(.-)>") do
-		table.insert(cached_sinks, s)
-	end
+      local line = pacmd("list-sinks")
+      if line == nil then return nil end
+      for s in string.gmatch(line, "name: <(.-)>") do
+          table.insert(cached_sinks, s)
+      end
     end
 
     return cached_sinks[key]
@@ -66,10 +72,11 @@ local function worker(format, sink)
 
     -- Get sink data
     local data = pacmd("dump")
+    if sink == nil then return {0, "unknown"} end
 
     -- If mute return 0 (not "Mute") so we don't break progressbars
     if string.find(data,"set%-sink%-mute "..escape(sink).." yes") then
-	return {0, "off"}
+        return {0, "off"}
     end
 
     local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
@@ -92,6 +99,8 @@ function pulse.add(percent, sink)
     local vol = initial_vol + percent/100*0x10000
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
+
+    vol = math.ceil(vol)
 
     local cmd = string.format("pacmd set-sink-volume %s 0x%x >/dev/null", sink, vol)
     return os.execute(cmd)
