@@ -28,6 +28,8 @@ local _weather = {
     ["{weather}"] = "N/A",
     ["{tempf}"]   = "N/A",
     ["{tempc}"]   = "N/A",
+    ["{dewf}"]    = "N/A",
+    ["{dewc}"]    = "N/A",
     ["{humid}"]   = "N/A",
     ["{press}"]   = "N/A"
 }
@@ -38,8 +40,8 @@ local function worker(format, warg)
 
     -- Get weather forceast by the station ICAO code, from:
     -- * US National Oceanic and Atmospheric Administration
-    local noaa = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..noaa..warg..".TXT")
+    local url = "http://weather.noaa.gov/pub/data/observations/metar/decoded/"..warg
+    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..helpers.shellquote(url)..".TXT")
     local ws = f:read("*all")
     f:close()
 
@@ -58,6 +60,8 @@ local function worker(format, warg)
        string.match(ws, "Weather:[%s](.-)[%c]") or _weather["{weather}"]
     _weather["{tempf}"]   = -- Temperature in fahrenheit
        string.match(ws, "Temperature:[%s]([%-]?[%d%.]+).*[%c]") or _weather["{tempf}"]
+    _weather["{dewf}"]    = -- Dew Point in fahrenheit
+       string.match(ws, "Dew[%s]Point:[%s]([%-]?[%d%.]+).*[%c]") or _weather["{dewf}"]
     _weather["{humid}"]   = -- Relative humidity in percent
        string.match(ws, "Relative[%s]Humidity:[%s]([%d]+)%%") or _weather["{humid}"]
     _weather["{press}"]   = -- Pressure in hPa
@@ -71,6 +75,10 @@ local function worker(format, warg)
     if _weather["{tempf}"] ~= "N/A" then
        _weather["{tempf}"] = tonumber(_weather["{tempf}"])
        _weather["{tempc}"] = math.ceil((_weather["{tempf}"] - 32) * 5/9)
+    end -- Dew Point in °C if °F was available
+    if _weather["{dewf}"] ~= "N/A" then
+       _weather["{dewf}"] = tonumber(_weather["{dewf}"])
+       _weather["{dewc}"] = math.ceil((_weather["{dewf}"] - 32) * 5/9)
     end -- Capitalize some stats so they don't look so out of place
     if _weather["{sky}"] ~= "N/A" then
        _weather["{sky}"] = helpers.capitalize(_weather["{sky}"])

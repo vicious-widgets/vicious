@@ -58,7 +58,7 @@ local function worker(format, warg)
     end
 
     -- Get data from iwconfig where available
-    local f = io.popen(iwconfig .." ".. warg .. " 2>&1")
+    local f = io.popen(iwconfig .." ".. helpers.shellquote(warg) .. " 2>&1")
     local iw = f:read("*all")
     f:close()
 

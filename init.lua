@@ -10,7 +10,7 @@
 local type  = type
 local pairs = pairs
 local tonumber = tonumber
-local capi  = { timer = timer }
+local timer = (type(timer) == 'table' and timer or require("gears.timer"))
 local os    = { time = os.time }
 local table = {
     insert  = table.insert,
@@ -116,7 +116,7 @@ local function regregister(reg)
         -- Start the timer
         if reg.timer > 0 then
             local tm = timers[reg.timer] and timers[reg.timer].timer
-            tm = tm or capi.timer({ timeout = reg.timer })
+            tm = tm or timer({ timeout = reg.timer })
             if tm.connect_signal then
                 tm:connect_signal("timeout", reg.update)
             else
@@ -131,7 +131,7 @@ local function regregister(reg)
                 tm:start()
             end
             -- Initial update
-            tm:emit_signal("timeout")
+            reg.update()
         end
         reg.running = true
     end
@@ -151,12 +151,11 @@ function vicious.register(widget, wtype, format, timer, warg)
         timer  = timer,
         warg   = warg,
         widget = widget,
-
-        -- Update function
-        update = function ()
-            update(widget, reg)
-        end,
     }
+    -- Set functions
+    reg.update = function ()
+        update(widget, reg)
+    end
 
     -- Default to 2s timer
     if reg.timer == nil then
