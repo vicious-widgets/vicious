@@ -2,6 +2,9 @@
 Full changelog is available online:
     http://git.sysphere.org/vicious/log/?showmsg=1
 ---------------------------------------------------
+6e16a41 bat: fix broken battery remaining time (was always N/A)
+bfbc1bd volume: get the normalized volume like alsamixer and DE's indicator
+3ef0f11 Next release, tag 2.1.2
 946271c bat: expose information on battery wear and tear
 7626989 README: write a list of major contributors to the project
 c51e13c init: stop allocating reg table functions with properties
