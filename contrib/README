@@ -68,6 +68,11 @@ vicious.contrib.openweather
   - returns a table with string keys: {city}, {wind deg}, {wind aim},
     {wind kmh}, {wind mps}, {sky}, {weather}, {temp c}, {humid}, {press}
 
+vicious.contrib.nvsmi
+  - provides (very basic) information about Nvidia GPU status from SMI
+  - takes optional card ID as an argument, i.e. "1", or defaults to ID 0
+  - returns 1st value as temperature of requested graphics device
+
 vicious.contrib.ossvol
   -
 
