@@ -97,6 +97,15 @@ function helpers.escape(text)
 end
 -- }}}
 
+-- {{{ Escape a string for save usage on the command line
+function helpers.shellquote(s)
+   if s == nil then return "" end
+   -- use single quotes, and put single quotes into double quotes
+   -- the string $'b is then quoted as '$'"'"'b'"'"'
+   return "'" .. s:gsub("'", "'\"'\"'") .. "'"
+end
+-- }}}
+
 -- {{{ Capitalize a string
 function helpers.capitalize(text)
     return text and text:gsub("([%w])([%w]*)", function(c, s)

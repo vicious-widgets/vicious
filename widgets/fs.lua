@@ -27,7 +27,7 @@ local function worker(format, warg)
     if warg then warg = "" else warg = "-l" end
 
     local fs_info = {} -- Get data from df
-    local f = io.popen("LC_ALL=C df -kP " .. warg)
+    local f = io.popen("LC_ALL=C df -kP " .. helpers.shellquote(warg))
 
     for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
         local s     = string.match(line, "^.-[%s]([%d]+)")

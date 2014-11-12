@@ -7,6 +7,7 @@
 -- {{{ Grab environment
 local io = { popen = io.popen }
 local setmetatable = setmetatable
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -23,13 +24,14 @@ local function worker(format, warg)
     local count = { new = 0, cur = 0 }
 
     for i=1, #warg do
+        quoted_path = helpers.shellquote(warg[i])
         -- Recursively find new messages
-        local f = io.popen("find '"..warg[i].."' -type f -wholename '*/new/*'")
+        local f = io.popen("find "..quoted_path.." -type f -wholename '*/new/*'")
         for line in f:lines() do count.new = count.new + 1 end
         f:close()
 
         -- Recursively find "old" messages lacking the Seen flag
-        local f = io.popen("find '"..warg[i].."' -type f -regex '.*/cur/.*2,[^S]*$'")
+        local f = io.popen("find "..quoted_path.." -type f -regex '.*/cur/.*2,[^S]*$'")
         for line in f:lines() do count.cur = count.cur + 1 end
         f:close()
     end

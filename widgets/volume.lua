@@ -8,6 +8,7 @@ local tonumber = tonumber
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { match = string.match }
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -26,7 +27,7 @@ local function worker(format, warg)
     }
 
     -- Get mixer control contents
-    local f = io.popen("amixer -M get " .. warg)
+    local f = io.popen("amixer -M get " .. helpers.shellquote(warg))
     local mixer = f:read("*all")
     f:close()
 
