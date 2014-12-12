@@ -10,7 +10,7 @@
 local type  = type
 local pairs = pairs
 local tonumber = tonumber
-local capi  = { timer = timer }
+local timer = require("gears.timer")
 local os    = { time = os.time }
 local table = {
     insert  = table.insert,
@@ -116,7 +116,7 @@ local function regregister(reg)
         -- Start the timer
         if reg.timer > 0 then
             local tm = timers[reg.timer] and timers[reg.timer].timer
-            tm = tm or capi.timer({ timeout = reg.timer })
+            tm = tm or timer({ timeout = reg.timer })
             if tm.connect_signal then
                 tm:connect_signal("timeout", reg.update)
             else
