@@ -312,10 +312,10 @@ holds widget types that were obsoleted or rewritten. Contrib widgets
 will not be imported by init unless you explicitly enable it, or load
 them in your rc.lua.
 
-Richard Kolkovich, a FreeBSD user, published his vicious-fbsd
-branch. If you are also a BSD user you can find his work here:
+Rudi Siegel, a FreeBSD user, published his FreeBSD branch. If you are
+also a BSD user you can find his work here:
 
-  - http://git.sigil.org/vicious-fbsd/
+  - https://bitbucket.org/mutluyum/vicious_bsd/
 
 Some users would like to avoid writing new modules. For them Vicious
 kept the old Wicked functionality, possibility to register their own
