@@ -96,7 +96,7 @@ function helpers.escape(text)
 end
 -- }}}
 
--- {{{ Escape a string for save usage on the command line
+-- {{{ Escape a string for safe usage on the command line
 function helpers.shellquote(s)
    if s == nil then return "" end
    -- use single quotes, and put single quotes into double quotes
