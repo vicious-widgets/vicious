@@ -18,7 +18,7 @@ local string = {
     gmatch = string.gmatch
 }
 local math = {
-	floor = math.floor
+    floor = math.floor
 }
 -- }}}
 
@@ -29,15 +29,15 @@ local pulse = {}
 
 -- {{{ Helper function
 local function pacmd(args)
-	local f = io.popen("pacmd "..args)
-	local line = f:read("*all")
-	f:close()
-	return line
+    local f = io.popen("pacmd "..args)
+    local line = f:read("*all")
+    f:close()
+    return line
 end
 
 local function escape(text)
-	local special_chars = { ["."] = "%.", ["-"] = "%-" }
-	return text:gsub("[%.%-]", special_chars)
+    local special_chars = { ["."] = "%.", ["-"] = "%-" }
+    return text:gsub("[%.%-]", special_chars)
 end
 
 local cached_sinks = {}
@@ -47,10 +47,10 @@ local function get_sink_name(sink)
     local key = sink or 1
     -- Cache requests
     if not cached_sinks[key] then
-	local line = pacmd("list-sinks")
-	for s in string.gmatch(line, "name: <(.-)>") do
-		table.insert(cached_sinks, s)
-	end
+      local line = pacmd("list-sinks")
+      for s in string.gmatch(line, "name: <(.-)>") do
+          table.insert(cached_sinks, s)
+      end
     end
 
     return cached_sinks[key]
@@ -69,7 +69,7 @@ local function worker(format, sink)
 
     -- If mute return 0 (not "Mute") so we don't break progressbars
     if string.find(data,"set%-sink%-mute "..escape(sink).." yes") then
-	return {0, "off"}
+        return {0, "off"}
     end
 
     local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
