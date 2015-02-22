@@ -30,9 +30,13 @@ local pulse = {}
 -- {{{ Helper function
 local function pacmd(args)
     local f = io.popen("pacmd "..args)
-    local line = f:read("*all")
-    f:close()
-    return line
+    if f == nil then
+      return nil
+    else
+      local line = f:read("*all")
+      f:close()
+      return line
+    end
 end
 
 local function escape(text)
@@ -48,6 +52,7 @@ local function get_sink_name(sink)
     -- Cache requests
     if not cached_sinks[key] then
       local line = pacmd("list-sinks")
+      if line == nil then return nil end
       for s in string.gmatch(line, "name: <(.-)>") do
           table.insert(cached_sinks, s)
       end
@@ -66,6 +71,7 @@ local function worker(format, sink)
 
     -- Get sink data
     local data = pacmd("dump")
+    if sink == nil then return {0, "unknown"} end
 
     -- If mute return 0 (not "Mute") so we don't break progressbars
     if string.find(data,"set%-sink%-mute "..escape(sink).." yes") then
