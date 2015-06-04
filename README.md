@@ -290,7 +290,7 @@ string.
     you disabled 
     [two step verification](https://support.google.com/accounts/answer/1064203)
     and _then_ 
-	[allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
+    [allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
 
 **vicious.widgets.org**
 
