@@ -286,6 +286,11 @@ string.
   - keeps login information in the ~/.netrc file, example:
     machine mail.google.com login user password pass
   - returns a table with string keys: {count} and {subject}
+  - to be able to use this widget, make sure in your Gmail account 
+    you disabled 
+    [two step verification](https://support.google.com/accounts/answer/1064203)
+    and _then_ 
+	[allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
 
 **vicious.widgets.org**
 
