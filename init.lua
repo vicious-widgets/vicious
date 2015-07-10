@@ -73,7 +73,15 @@ local function update(widget, reg, disablecache)
     local function update_value(data)
         local fmtd_data = format_data(data)
         if widget.add_value ~= nil then
-            widget:add_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+            if widget.get_stack ~= nil and widget:get_stack() then
+                for idx, _ in ipairs(widget:get_stack_colors()) do
+                    if fmtd_data[idx] then
+                        widget:add_value(tonumber(fmtd_data[idx]) and tonumber(fmtd_data[idx]/100), idx)
+                    end
+                end
+            else
+                widget:add_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+            end
         elseif widget.set_value ~= nil then
             widget:set_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
         elseif widget.set_markup ~= nil then
