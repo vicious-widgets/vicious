@@ -18,7 +18,8 @@ local string = {
     gmatch = string.gmatch
 }
 local math = {
-    floor = math.floor
+    floor = math.floor,
+    ceil = math.ceil
 }
 -- }}}
 
@@ -98,6 +99,8 @@ function pulse.add(percent, sink)
     local vol = initial_vol + percent/100*0x10000
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
+
+    vol = math.ceil(vol)
 
     local cmd = string.format("pacmd set-sink-volume %s 0x%x >/dev/null", sink, vol)
     return os.execute(cmd)
