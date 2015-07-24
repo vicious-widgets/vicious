@@ -439,7 +439,7 @@ Battery widget
   batwidget:set_background_color("#494B4F")
   batwidget:set_border_color(nil)
   batwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 },
-      stops = { { 0, "#AECF96" }, { 0.5, "#88A175" }, { 1, "#FF5656" }})
+      stops = {{ 0, "#AECF96" }, { 0.5, "#88A175" }, { 1, "#FF5656" }}})
   vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
   - updated every 61 seconds, requests the current battery charge
