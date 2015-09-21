@@ -9,6 +9,7 @@ local tonumber = tonumber
 local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
+local math = { floor = math.floor }
 -- }}}
 
 
@@ -24,6 +25,7 @@ local function worker(format, warg)
     local zone = { -- Known temperature data sources
         ["sys"]  = {"/sys/class/thermal/",     file = "temp",       div = 1000},
         ["core"] = {"/sys/devices/platform/",  file = "temp2_input",div = 1000},
+        ["hwmon"] = {"/sys/class/hwmon/",      file = "temp1_input",div = 1000},
         ["proc"] = {"/proc/acpi/thermal_zone/",file = "temperature"}
     } --  Default to /sys/class/thermal
     warg = type(warg) == "table" and warg or { warg, "sys" }
@@ -34,7 +36,7 @@ local function worker(format, warg)
     local data = warg[3] and _thermal[warg[3]] or _thermal[zone[warg[2]].file]
     if data then
         if zone[warg[2]].div then
-            return {data / zone[warg[2]].div}
+            return {math.floor(data / zone[warg[2]].div)}
         else -- /proc/acpi "temperature: N C"
             return {tonumber(string.match(data, "[%d]+"))}
         end
