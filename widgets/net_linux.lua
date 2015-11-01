@@ -28,13 +28,14 @@ local unit = { ["b"] = 1, ["kb"] = 1024,
 
 -- {{{ Net widget type
 local function worker(format)
-    local args = {}
+    local args = { nets = {} }
 
     -- Get NET stats
     for line in io.lines("/proc/net/dev") do
         -- Match wmaster0 as well as rt0 (multiple leading spaces)
         local name = string.match(line, "^[%s]?[%s]?[%s]?[%s]?([%w]+):")
         if name ~= nil then
+            table.insert(args["nets"], name)
             -- Received bytes, first value after the name
             local recv = tonumber(string.match(line, ":[%s]*([%d]+)"))
             -- Transmited bytes, 7 fields from end of the line
