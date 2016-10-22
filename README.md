@@ -260,7 +260,7 @@ string.
   - provides wireless information for a requested interface
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {freq}, {txpw} (tx power) and {sign} (signal level)
+    {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
 
 
 **vicious.widgets.mbox**
