@@ -42,6 +42,7 @@ local function worker(format, warg)
         ["{rate}"] = 0,
         ["{freq}"] = 0,
 		["{txpw}"] = 0,
+		["{linp}"] = 0,
         ["{sign}"] = 0
     }
 
@@ -79,6 +80,8 @@ local function worker(format, warg)
       tonumber(string.match(iwresult, "freq: ([%d]+)") or winfo["{link}"])
     winfo["{sign}"] =  -- Signal level can be a negative value, don't display decibel notation
       tonumber(string.match(iwresult, "signal: (%-[%d]+)") or winfo["{sign}"])
+    winfo["{linp}"] =  -- Link Quality using the Windows definition (-50dBm->100%, -100dBm->0%)
+      100 - ((winfo["{sign}"] * -2) - 100)
     winfo["{txpw}"] =  -- TX Power can be a negative value, don't display decibel notation
       tonumber(string.match(iwresult, "txpower ([%-]?[%d]+)") or winfo["{txpw}"])
 
