@@ -253,6 +253,15 @@ string.
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
     {link}, {linp} (link quality in percent) and {sign} (signal level)
+	
+**vicious.widgets.wifiiw**
+
+  - similar to vicious.widgets.wifi, but uses iw instead of iwconfig
+  - provides wireless information for a requested interface
+  - takes the network interface as an argument, i.e. "wlan0"
+  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
+    {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
+
 
 **vicious.widgets.mbox**
 
