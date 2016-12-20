@@ -12,7 +12,10 @@ local pairs = pairs
 local rawget = rawget
 local require = require
 local tonumber = tonumber
-local io = { open = io.open }
+local io = { 
+    open = io.open, 
+    popen = io.popen 
+}
 local setmetatable = setmetatable
 local getmetatable = getmetatable
 local string = {
@@ -37,6 +40,7 @@ function helpers.wrequire(table, key)
     local module = rawget(table, key)
     return module or require(table._NAME .. "." .. key)
 end
+-- }}}
 
 -- {{{ Expose path as a Lua table
 function helpers.pathtotable(dir)
@@ -153,6 +157,44 @@ function helpers.scroll(text, maxlen, widget)
     end
 
     return text
+end
+-- }}}
+
+-- {{{ Return result from one sysctl variable as string
+function helpers.sysctl(path)
+    local fd = io.popen("sysctl -n " .. helpers.shellquote(path))
+
+    if not fd then
+        return
+    end
+
+    local ret = fd:read()
+
+    fd:close()
+
+    return ret
+end
+--  }}}
+
+-- {{{ Return result from multiple sysctl variables as table
+function helpers.sysctl_table(syspath)
+    return setmetatable({ _path = syspath },
+        { __index = function(table, index)
+            local path = "sysctl -n " .. table._path .. "." .. index
+            local f = io.popen(path)
+            if f then
+                local s = f:read("*all")
+                f:close()
+                if select(2, s:gsub("\n", "\n")) > 1 then
+                    local o = { _path = path}
+                    setmetatable(o, getmetatable(table))
+                    return o
+                else
+                    return s
+                end
+            end
+        end
+    })
 end
 -- }}}
 

@@ -146,6 +146,20 @@ argument given to vicious.register as the first argument, *warg* as
 the second, and return a table of values to insert in the format
 string.
 
+**Battery**
+
+- `vicious.widgets.bat`: Battery widget for GNU/Linux
+  - provides state, charge, and remaining time for a requested battery
+  - takes battery ID as an argument, i.e. "BAT0"
+  - returns 1st value as state of requested battery, 2nd as charge
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
+- `vicious.widgets.bat_freebsd`: Battery widget for FreeBSD
+  - provides state, charge, and remaining time for a battery
+  - returns 1st value as state of requested battery, 2nd as charge
+    level in percent, 3rd as remaining (charging or discharging)
+    time and 4th as the wear level in percent
+
 **vicious.widgets.cpu**
 
   - provides CPU usage for all available CPUs/cores
@@ -182,14 +196,6 @@ string.
   - returns 1st value as uptime in days, 2nd as uptime in hours, 3rd
     as uptime in minutes, 4th as load average for past 1 minute, 5th
     for 5 minutes and 6th for 15 minutes
-
-**vicious.widgets.bat**
-
-  - provides state, charge, and remaining time for a requested battery
-  - takes battery ID as an argument, i.e. "BAT0"
-  - returns 1st value as state of requested battery, 2nd as charge
-    level in percent, 3rd as remaining (charging or discharging)
-    time and 4th as the wear level in percent
 
 **vicious.widgets.mem**
 
