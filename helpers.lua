@@ -20,6 +20,7 @@ local setmetatable = setmetatable
 local getmetatable = getmetatable
 local string = {
     upper = string.upper,
+    lower = string.lower,
     format = string.format
 }
 local error = error
@@ -43,7 +44,7 @@ function helpers.getos()
     local uname = f:read("*line")
     f:close()
 
-    return uname:lower()
+    return string.lower(uname)
 end
 -- }}}
 
@@ -51,27 +52,34 @@ end
 function helpers.wrequire(table, key)
     local ret = rawget(table, key)
 
+    if ret then
+        return ret
+    end
+
+    local ostable = {
+        linux = { "linux", "all" },
+        freebsd = { "freebsd", "bsd", "all" }
+    }
+
+    os = ostable[helpers.getos()]
+
+    if not os then
+        error("Vicious: platform not supported.")
+    end
+
+    for i = 1, #os do
+        local status, value = 
+            pcall(function() 
+                      return require(table._NAME .. "." .. key .. "_" .. os[i]) 
+                  end)
+        if status then
+            ret = value
+            break
+        end
+    end
+
     if not ret then
-        os = helpers.getos()
-
-        if os == "linux" then
-            os = { "linux", "all" }
-        elseif os == "freebsd" then
-            os = { "freebsd", "bsd", "all" }
-        else
-            error("Vicious: platform not supported.")
-        end
-
-        for _, i in pairs(os) do -- there is a break in loop
-            local status, value = 
-                pcall(function() 
-                          return require(table._NAME .. "." .. key .. "_" .. i) 
-                      end)
-            if status then
-                ret = value
-                break
-            end
-        end
+        error("Vicious: widget not available for current platform.")
     end
 
     return ret
