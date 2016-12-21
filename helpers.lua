@@ -23,8 +23,8 @@ local string = {
     lower = string.lower,
     format = string.format
 }
-local error = error
 local pcall = pcall
+local assert = assert
 -- }}}
 
 
@@ -62,10 +62,7 @@ function helpers.wrequire(table, key)
     }
 
     os = ostable[helpers.getos()]
-
-    if not os then
-        error("Vicious: platform not supported.")
-    end
+    assert(os, "Vicious: platform not supported.")
 
     for i = 1, #os do
         local status, value = 
@@ -78,9 +75,7 @@ function helpers.wrequire(table, key)
         end
     end
 
-    if not ret then
-        error("Vicious: widget not available for current platform.")
-    end
+    assert(os, "Vicious: widget not available for current platform.")
 
     return ret
 end
