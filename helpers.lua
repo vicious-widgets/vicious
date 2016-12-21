@@ -22,6 +22,8 @@ local string = {
     upper = string.upper,
     format = string.format
 }
+local error = error
+local pcall = pcall
 -- }}}
 
 
@@ -35,10 +37,44 @@ local scroller = {}
 -- }}}
 
 -- {{{ Helper functions
+-- {{{ Determine operating system
+function helpers.getos()
+    local f = io.popen("uname -s")
+    local uname = f:read("*line")
+    f:close()
+
+    return uname:lower()
+end
+-- }}}
+
 -- {{{ Loader of vicious modules
 function helpers.wrequire(table, key)
-    local module = rawget(table, key)
-    return module or require(table._NAME .. "." .. key)
+    local ret = rawget(table, key)
+
+    if not ret then
+        os = helpers.getos()
+
+        if os == "linux" then
+            os = { "linux", "all" }
+        elseif os == "freebsd" then
+            os = { "freebsd", "bsd", "all" }
+        else
+            error("Vicious: platform not supported.")
+        end
+
+        for _, i in pairs(os) do -- there is a break in loop
+            local status, value = 
+                pcall(function() 
+                          return require(table._NAME .. "." .. key .. "_" .. i) 
+                      end)
+            if status then
+                ret = value
+                break
+            end
+        end
+    end
+
+    return ret
 end
 -- }}}
 

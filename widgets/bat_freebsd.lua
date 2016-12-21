@@ -1,9 +1,3 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2013, NormalRa  <normalrawr@gmail.com>
----------------------------------------------------
-
 -- {{{ Grab environment
 local tonumber = tonumber
 local setmetatable = setmetatable
