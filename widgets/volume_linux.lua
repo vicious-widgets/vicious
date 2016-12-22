@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 -- Volume: provides volume levels and state of requested ALSA mixers
 -- vicious.widgets.volume
-local volume = {}
+local volume_linux = {}
 
 
 -- {{{ Volume widget type
@@ -51,4 +51,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(volume, { __call = function(_, ...) return worker(...) end })
+return setmetatable(volume_linux, { __call = function(_, ...) return worker(...) end })
