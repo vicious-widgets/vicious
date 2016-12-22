@@ -5,7 +5,7 @@ catering to users of the "awesome" window manager. It was derived from
 the old "Wicked" widget library, and has some of the old Wicked widget
 types, a few of them rewritten, and a good number of new ones:
 
-  - http://git.sysphere.org/vicious/about/
+- http://git.sysphere.org/vicious/about/
 
 Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
@@ -16,10 +16,10 @@ For now Vicious doesn't depend on any third party Lua libraries, to
 make it easier to install and use. That means some system utilities
 are used instead, where available:
 
-  - hddtemp        for the HDD Temperature widget type
-  - alsa-utils     for the Volume widget type
-  - wireless\_tools for the Wireless widget type
-  - curl           for widget types accessing network resources
+- hddtemp           for the HDD Temperature widget type
+- alsa-utils        for the Volume widget type
+- wireless\_tools   for the Wireless widget type
+- curl              for widget types accessing network resources
 
 
 Usage
@@ -35,6 +35,7 @@ manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
   > print(widgets.volume(nil, "Master")[1])
     100
 ```
+
 
 Usage within Awesome
 --------------------
@@ -63,39 +64,37 @@ vicious.register(widget, wtype, format, interval, warg)
 
 **widget**
 
- - widget created with widget() or awful.widget() (in case of a
-   graph or a progressbar)
+- widget created with widget() or awful.widget() (in case of a
+  graph or a progressbar)
 
 **wtype**
 
- - widget type or a function
-  * any of the available (default, or custom) widget types can
-   be used here, see below for a list of those provided by
-   Vicious
- - function
-  * custom functions from your own "awesome" configuration can
-   be registered as widget types, see the "Custom widget types"
-   section
+- widget type or a function
+  * any of the available (default, or custom) widget types can be used here,
+    see below for a list of those provided by Vicious
+- function
+  * custom functions from your own "awesome" configuration can be registered
+    as widget types, see the "Custom widget types" section
 
 **format**
 
- - string argument or a function
-  * $1, $2, $3... will be replaced by their respective value
-    returned by the widget type, some widget types return tables
-    with string keys, in that case use: ${key}
- - function
-  * function(widget, args) can be used to manipulate data
-    returned by the widget type, more about this below
+- string argument or a function
+  * $1, $2, $3... will be replaced by their respective value returned by the
+    widget type, some widget types return tables with string keys, in that
+    case use: ${key}
+- function
+  * function(widget, args) can be used to manipulate data returned by the
+    widget type, more about this below
 
 **interval**
 
-  - number of seconds between updates of the widget, 2s by
-    default, also read the "Power" section below
+- number of seconds between updates of the widget, 2s by default, also read
+  the "Power" section below
 
 **warg**
 
-  - some widget types require an argument to be passed, for example
-    the battery ID
+- some widget types require an argument to be passed, for example the battery
+  ID
 
 
 Other functions
@@ -152,14 +151,52 @@ Provides state, charge, and remaining time for a requested battery.
 Supported platforms: Linux, FreeBSD.
 
 - Arguments (per platform):
-  - Linux: takes battery ID as an argument, i.e. "BAT0"
-  - FreeBSD: no arguments needed
+  * Linux: takes battery ID as an argument, i.e. "BAT0"
+  * FreeBSD: no arguments needed
 - Returns (per platform):
-  - Linux: returns 1st value as state of requested battery, 2nd as charge
+  * Linux: returns 1st value as state of requested battery, 2nd as charge
     level in percent, 3rd as remaining (charging or discharging) time and 4th
     as the wear level in percent
-  - FreeBSD: see Linux, but wear level is not supported right now and always
+  * FreeBSD: see Linux, but wear level is not supported right now and always
     set to `0`
+
+**vicious.widgets.date**
+
+Provides access to os.date, with optional time formatting provided as the
+format string - using regular date sequences.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes optional time offset, in seconds, as an argument for example to
+    calculate time zone differences, otherwise current time is formatted
+- Returns:
+  * returns the output of os.date, formatted by provided sequences
+
+**vicious.widgets.fs**
+
+Provides usage of file system disk space.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes an (optional) argument which, if true, includes remote file systems,
+    only local file systems are included by default
+- Returns:
+  * returns a table with string keys, using mount points as a base: 
+    `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, ``{/ used_gb}, `{/ used_p}`,
+    `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
+
+**vicious.widgets.volume**
+
+Provides volume levels and state of requested mixers.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: takes the ALSA mixer control as an argument, i.e. `"Master"`,
+    optionally append the card ID or other options, i.e. `"PCM -c 0"`
+  * FreeBSD: takes the mixer control as an argument, i.e. `"vol"`
+- Returns:
+  * returns 1st value as the volume level and 2nd as the mute state of the
+    requested channel
 
 **vicious.widgets.cpu**
 
@@ -213,15 +250,6 @@ Supported platforms: Linux, FreeBSD.
     release version, 3rd as your username, 4th the hostname, 5th as
     available system entropy and 6th value as available entropy in
     percent
-
-**vicious.widgets.fs**
-
-  - provides file system disk space usage
-  - takes an (optional) argument which, if true, includes remote file
-    systems, only local file systems are included by default
-  - returns a table with string keys, using mount points as a base:
-    {/ size_mb}, {/ size_gb}, {/ used_mb}, {/ used_gb}, {/ used_p},
-    {/ avail_mb}, {/ avail_gb}, {/ avail_p}, {/home size_mb} etc.
 
 **vicious.widgets.dio**
 
@@ -335,14 +363,6 @@ Supported platforms: Linux, FreeBSD.
   - returns a table with string keys: {volume}, {state}, {Artist},
     {Title}, {Album}, {Genre} and optionally {Name} and {file}
 
-**vicious.widgets.volume**
-
-  - provides volume levels and state of requested ALSA mixers
-  - takes the ALSA mixer control as an argument, i.e. "Master",
-    optionally append the card ID or other options, i.e. "PCM -c 0"
-  - returns 1st value as the volume level and 2nd as the mute state of
-    the requested channel
-
 **vicious.widgets.weather**
 
   - provides weather information for a requested station
@@ -350,15 +370,6 @@ Supported platforms: Linux, FreeBSD.
   - returns a table with string keys: {city}, {wind}, {windmph},
     {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
     {dewc}, {press}
-
-**vicious.widgets.date**
-
-  - provides access to os.date, with optional time formatting provided
-    as the format string - using regular date sequences
-  - takes optional time offset, in seconds, as an argument for example
-    to calculate time zone differences, otherwise current time is
-    formatted
-  - returns the output of os.date, formatted by provided sequences
 
 
 Custom widget types
@@ -368,18 +379,12 @@ own. Write a quick worker function that does the work and plug it
 in. How data will be formatted, will it be red or blue, should be
 defined in rc.lua (or somewhere else, outside the actual module).
 
-Before writing a widget type you should check if there is already one
-in the contrib directory of Vicious. The contrib directory contains
-extra widgets you can use. Some are for less common hardware, and
-other were contributed by Vicious users. The contrib directory also
-holds widget types that were obsoleted or rewritten. Contrib widgets
-will not be imported by init unless you explicitly enable it, or load
-them in your rc.lua.
-
-Rudi Siegel, a FreeBSD user, published his FreeBSD branch. If you are
-also a BSD user you can find his work here:
-
-  - https://bitbucket.org/mutluyum/vicious_bsd/
+Before writing a widget type you should check if there is already one in the
+contrib directory of Vicious. The contrib directory contains extra widgets you
+can use. Some are for less common hardware, and other were contributed by
+Vicious users. Most of the contrib widgets are obsolete. Contrib widgets will
+not be imported by init unless you explicitly enable it, or load them in your
+rc.lua.
 
 Some users would like to avoid writing new modules. For them Vicious
 kept the old Wicked functionality, possibility to register their own
@@ -415,17 +420,15 @@ enables you to have multiple widgets using the same widget type. With
 caching its worker function gets executed only once - which is also
 great for saving power.
 
-  - Some widget types keep internal data and if you call one multiple
-    times without caching, the widget that executes it first would
-    modify stored values. This can lead to problems and give you
-    inconsistent data. Remember it for widget types like CPU and
-    Network usage, which compare the old set of data with the new one
-    to calculate current usage.
+- Some widget types keep internal data and if you call one multiple times
+  without caching, the widget that executes it first would modify stored
+  values. This can lead to problems and give you inconsistent data. Remember
+  it for widget types like CPU and Network usage, which compare the old set of
+  data with the new one to calculate current usage.
 
-  - Widget types that require a widget argument to be passed should be
-    handled carefully. If you are requesting information for different
-    devices then caching should not be used, because you could get
-    inconsistent data.
+- Widget types that require a widget argument to be passed should be handled
+  carefully. If you are requesting information for different devices then
+  caching should not be used, because you could get inconsistent data.
 
 
 Security
@@ -543,8 +546,8 @@ change it or perform some action. You can change the color of the
 battery widget when it goes below a certain point, hide widgets when
 they return a certain value or maybe use string.format for padding.
 
-  - Do not confuse this with just coloring the widget, in those cases
-    standard pango markup can be inserted into the format string.
+- Do not confuse this with just coloring the widget, in those cases standard
+  pango markup can be inserted into the format string.
 
 The format function will get the widget as its first argument, table
 with the values otherwise inserted into the format string as its
@@ -640,7 +643,7 @@ Other
 -----
 Read *"awesome"* manual pages:
 
-  - awesome(1)  awesomerc(5)
+- awesome(1)  awesomerc(5)
 
 [Awesome widgets explained](http://awesome.naquadah.org/wiki/Widgets_in_awesome)
 
@@ -648,29 +651,29 @@ Read *"awesome"* manual pages:
 
 Example "awesome" configuration:
 
-  - http://git.sysphere.org/awesome-configs/
+- http://git.sysphere.org/awesome-configs/
 
 
 Authors
 -------
 Wicked written by:
 
-  - Lucas de Vries           \<lucas glacicle.com\>
+- Lucas de Vries           \<lucas glacicle.com\>
 
 Vicious written by:
 
-  - Adrian C. (anrxc)        \<anrxc sysphere.org\>
+- Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
 Vicious major contributors:
 
-  - Benedikt Sauer           \<filmor gmail.com\>
-  - Greg D.                  \<jabbas jabbas.pl\>
-  - Henning Glawe            \<glaweh debian.org\>
-  - Rémy C.                  \<shikamaru mandriva.org\>
-  - Hiltjo Posthuma          \<hiltjo codemadness.org\>
-  - Hagen Schink             \<troja84 googlemail.com\>
-  - Jörg Thalheim            \<jthalheim gmail.com\>
-  - Arvydas Sidorenko        \<asido4 gmail.com\>
-  - Dodo The Last            <dodo.the.last gmail.com>
-  - ...
-  - Consult git log for a complete list of contributors
+- Benedikt Sauer           \<filmor gmail.com\>
+- Greg D.                  \<jabbas jabbas.pl\>
+- Henning Glawe            \<glaweh debian.org\>
+- Rémy C.                  \<shikamaru mandriva.org\>
+- Hiltjo Posthuma          \<hiltjo codemadness.org\>
+- Hagen Schink             \<troja84 googlemail.com\>
+- Jörg Thalheim            \<jthalheim gmail.com\>
+- Arvydas Sidorenko        \<asido4 gmail.com\>
+- Dodo The Last            <dodo.the.last gmail.com>
+- ...
+- Consult git log for a complete list of contributors
