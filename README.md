@@ -185,6 +185,21 @@ Supported platforms: platform independent.
     `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, ``{/ used_gb}, `{/ used_p}`,
     `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
 
+**vicious.widgets.thermal**
+
+Provides temperature levels of several thermal zones.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: takes the thermal zone as an argument, i.e. `"thermal_zone0"`, or a
+    table with 1st field as thermal zone, 2nd as data source - available data
+    sources are "proc", "core" and "sys" (which is the default when only the
+    zone is provided) and 3rd optional argument as a temperature input file to
+    read
+  * FreeBSD: takes the thermal zone as an argument, i.e. `"0"`
+- Returns:
+  * returns 1st value as temperature of requested thermal zone
+
 **vicious.widgets.volume**
 
 Provides volume levels and state of requested mixers.
@@ -217,16 +232,6 @@ Supported platforms: Linux, FreeBSD.
   - returns 1st value as frequency of requested CPU in MHz, 2nd in
     GHz, 3rd as voltage in mV, 4th as voltage in V and 5th as the
     governor state
-
-**vicious.widgets.thermal**
-
-  - provides temperature levels of ACPI and coretemp thermal zones
-  - takes the thermal zone as an argument, i.e. "thermal\_zone0", or a
-    table with 1st field as thermal zone, 2nd as data source -
-    available data sources are "proc", "core" and "sys" (which is the
-    default when only the zone is provided) and 3rd optional argument
-    as a temperature input file to read
-  - returns 1st value as temperature of requested thermal zone
 
 **vicious.widgets.uptime**
 
