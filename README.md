@@ -182,8 +182,28 @@ Supported platforms: platform independent.
     only local file systems are included by default
 - Returns:
   * returns a table with string keys, using mount points as a base: 
-    `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, ``{/ used_gb}, `{/ used_p}`,
+    `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, `{/ used_gb}`, `{/ used_p}`,
     `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
+
+**vicious.widgets.net**
+
+Provides state and usage statistics of network interfaces.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: none
+  * FreeBSD: desired interface, e.g. `wlan0`
+- Returns (per platform):
+  * Linux: returns a table with string keys, using net interfaces as a base:
+    `{eth0 carrier}`, `{eth0 rx_b}`, `{eth0 tx_b}`, `{eth0 rx_kb}`, `{eth0 tx_kb}`,
+    `{eth0 rx_mb}`, `{eth0 tx_mb}`, `{eth0 rx_gb}`, `{eth0 tx_gb}`, `{eth0 down_b}`,
+    `{eth0 up_b}`, `{eth0 down_kb}`, `{eth0 up_kb}`, `{eth0 down_mb}`,
+    `{eth0 up_mb}`, `{eth0 down_gb}`, `{eth0 up_gb}`, `{eth1 rx_b}` etc.
+  * FreeBSD: returns a table with string keys:
+    `{carrier}`, `{rx_b}`, `{tx_b}`, `{rx_kb}`, `{tx_kb}`,
+    `{rx_mb}`, `{tx_mb}`, `{rx_gb}`, `{tx_gb}`, `{down_b}`,
+    `{up_b}`, `{down_kb}`, `{up_kb}`, `{down_mb}`,
+    `{up_mb}`, `{down_gb}`, `{up_gb}`
 
 **vicious.widgets.thermal**
 
@@ -199,6 +219,18 @@ Supported platforms: Linux, FreeBSD.
   * FreeBSD: takes the thermal zone as an argument, i.e. `"0"`
 - Returns:
   * returns 1st value as temperature of requested thermal zone
+
+**vicious.widgets.uptime**
+
+Provides system uptime and load information.
+Supported platform: Linux, FreeBSD.
+
+- Arguments:
+  * None
+- Returns:
+  * returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
+    in minutes, 4th as load average for past 1 minute, 5th for 5 minutes and
+    6th for 15 minutes
 
 **vicious.widgets.volume**
 
@@ -232,13 +264,6 @@ Supported platforms: Linux, FreeBSD.
   - returns 1st value as frequency of requested CPU in MHz, 2nd in
     GHz, 3rd as voltage in mV, 4th as voltage in V and 5th as the
     governor state
-
-**vicious.widgets.uptime**
-
-  - provides system uptime and load information
-  - returns 1st value as uptime in days, 2nd as uptime in hours, 3rd
-    as uptime in minutes, 4th as load average for past 1 minute, 5th
-    for 5 minutes and 6th for 15 minutes
 
 **vicious.widgets.mem**
 
@@ -277,15 +302,6 @@ Supported platforms: Linux, FreeBSD.
     port 7634
   - returns a table with string keys, using hard drives as a base:
     {/dev/sda} and {/dev/sdc} for example
-
-**vicious.widgets.net**
-
-  - provides state and usage statistics of all network interfaces
-  - returns a table with string keys, using net interfaces as a base:
-    {eth0 carrier}, {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb},
-    {eth0 rx_mb}, {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b},
-    {eth0 up_b}, {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb},
-    {eth0 up_mb}, {eth0 down_gb}, {eth0 up_gb}, {eth1 rx_b} etc.
 
 **vicious.widgets.wifi**
 
