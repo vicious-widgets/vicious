@@ -160,6 +160,17 @@ Supported platforms: Linux, FreeBSD.
   * FreeBSD: see Linux, but wear level is not supported right now and always
     set to `0`
 
+**vicious.widgets.cpu**
+
+Provides CPU usage for all available CPUs/cores.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments:
+  * None
+- Returns:
+  * returns 1st value as usage of all CPUs/cores, 2nd as usage of first
+    CPU/core, 3rd as usage of second CPU/core etc.
+
 **vicious.widgets.date**
 
 Provides access to os.date, with optional time formatting provided as the
@@ -244,12 +255,6 @@ Supported platforms: Linux, FreeBSD.
 - Returns:
   * returns 1st value as the volume level and 2nd as the mute state of the
     requested channel
-
-**vicious.widgets.cpu**
-
-  - provides CPU usage for all available CPUs/cores
-  - returns 1st value as usage of all CPUs/cores, 2nd as usage of
-    first CPU/core, 3rd as usage of second CPU/core etc.
 
 **vicious.widgets.cpuinf**
 
