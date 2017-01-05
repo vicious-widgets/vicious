@@ -171,6 +171,32 @@ Supported platforms: Linux, FreeBSD.
   * returns 1st value as usage of all CPUs/cores, 2nd as usage of first
     CPU/core, 3rd as usage of second CPU/core etc.
 
+**vicious.widgets.cpufreq**
+
+Provides freq, voltage and governor info for a requested CPU.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: takes the CPU ID as an argument, i.e. "cpu0"
+  * FreeBSD: takes the CPU ID as an argument, i.e. "0"
+- Returns (per platform):
+  * Linux: returns 1st value as frequency of requested CPU in MHz, 2nd in GHz,
+    3rd as voltage in mV, 4th as voltage in V and 5th as the governor state
+  * FreeBSD: returns 1st value as frequency of requested CPU in MHz, 2nd in GHz,
+    3rd as voltage in mV, 4th as voltage in V and 5th as the governor state,
+    but only the first two are supported (other values will be always `"N/A"`)
+
+**vicious.widgets.cpuinf**
+
+Provides speed and cache information for all available CPUs/cores.
+Supported platforms: Linux.
+
+- Arguments:
+  * None
+- Returns:
+  * returns a table with string keys, using CPU ID as a base: `{cpu0 mhz}`,
+    `{cpu0 ghz}`, `{cpu0 kb}`, `{cpu0 mb}`, `{cpu1 mhz}` etc.
+
 **vicious.widgets.date**
 
 Provides access to os.date, with optional time formatting provided as the
@@ -335,20 +361,6 @@ Supported platforms: platform independent.
   * returns a table with string keys: `{city}`, `{wind}`, `{windmph}`, 
   `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`, 
   `{dewf}`, `{dewc}` and `{press}`
-
-**vicious.widgets.cpuinf**
-
-  - provides speed and cache information for all available CPUs/cores
-  - returns a table with string keys, using CPU ID as a base:
-    {cpu0 mhz}, {cpu0 ghz}, {cpu0 kb}, {cpu0 mb}, {cpu1 mhz} etc.
-
-**vicious.widgets.cpufreq**
-
-  - provides freq, voltage and governor info for a requested CPU
-  - takes the CPU ID as an argument, i.e. "cpu0"
-  - returns 1st value as frequency of requested CPU in MHz, 2nd in
-    GHz, 3rd as voltage in mV, 4th as voltage in V and 5th as the
-    governor state
 
 **vicious.widgets.mem**
 

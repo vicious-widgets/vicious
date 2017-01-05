@@ -1,8 +1,3 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
----------------------------------------------------
-
 -- {{{ Grab environment
 local tonumber = tonumber
 local io = { popen = io.popen }

@@ -1,8 +1,3 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
----------------------------------------------------
-
 -- {{{ Grab environment
 local setmetatable = setmetatable
 local string = { match = string.match }

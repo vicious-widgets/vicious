@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 -- Cpufreq: provides freq, voltage and governor info for a requested CPU
 -- vicious.widgets.cpufreq
-local cpufreq = {}
+local cpufreq_linux = {}
 
 
 -- {{{ CPU frequency widget type
@@ -58,4 +58,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(cpufreq, { __call = function(_, ...) return worker(...) end })
+return setmetatable(cpufreq_linux, { __call = function(_, ...) return worker(...) end })

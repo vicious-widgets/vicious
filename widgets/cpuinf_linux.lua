@@ -13,7 +13,7 @@ local string = { gmatch = string.gmatch }
 
 -- Cpuinf: provides speed and cache information for all available CPUs/cores
 -- vicious.widgets.cpuinf
-local cpuinf = {}
+local cpuinf_linux = {}
 
 
 -- {{{ CPU Information widget type
@@ -41,4 +41,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(cpuinf, { __call = function(_, ...) return worker(...) end })
+return setmetatable(cpuinf_linux, { __call = function(_, ...) return worker(...) end })
