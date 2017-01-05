@@ -196,6 +196,74 @@ Supported platforms: platform independent.
     `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, `{/ used_gb}`, `{/ used_p}`,
     `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
 
+**vicious.widgets.gmail**
+
+Provides count of new and subject of last e-mail on Gmail.
+Supported platform: platform independent (required tools: `curl`).
+This widget expects login information in your `~/.netrc` file, e. g.
+`machine mail.google.com login user password pass` and you have to disable
+[two step verification](https://support.google.com/accounts/answer/1064203).
+[Allow access for less secure apps](https://www.google.com/settings/security/lesssecureapps)
+afterwards. BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
+
+- Arguments:
+  * takes an (optional) argument, if it's a number subject will be truncated,
+    if a table, with 1st field as maximum length and 2nd the widget name (i.e.
+    "gmailwidget"), scrolling will be used
+- Returns:
+  * returns a table with string keys: {count} and {subject}
+
+**vicious.widgets.mbox**
+
+Provides the subject of last e-mail in a mbox file.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes the full path to the mbox as an argument, or a table with 1st field
+    as path, 2nd as maximum length and 3rd (optional) as widget name - if 3rd
+    field is present scrolling will be used (note: the path will be escaped so
+    special variables like ~ will not work, use os.getenv("HOME").."mail"
+    instead to access environment variables)
+- Returns:
+  * returns 1st value as the subject of the last e-mail
+
+**vicious.widgets.mboxc**
+
+Provides the count of total, old and new messages in mbox files.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to mbox files as an argument
+- Returns:
+  * returns 1st value as the total count of messages, 2nd as the count of old
+    messages and 3rd as the count of new messages
+
+**vicious.widgets.mdir**
+
+Provides the number of new and unread messages in Maildir
+structures/directories.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to Maildir structures as an argument
+- Returns:
+  * returns 1st value as the count of new messages and 2nd as the count of
+    "old" messages lacking the Seen flag
+
+**vicious.widgets.mpd**
+
+Provides Music Player Daemon information.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table as an argument, 1st field should be the password (or nil),
+    2nd the hostname (or nil) and 3rd port (or nil) - if no argument is
+    provided connection attempt will be made to localhost port 6600 with no
+    password
+- Returns:
+  * returns a table with string keys: `{volume}`, `{state}`, `{Artist}`, `{Title}`,
+    `{Album}`, `{Genre}` and optionally `{Name}` and `{file}`
+
 **vicious.widgets.net**
 
 Provides state and usage statistics of network interfaces.
@@ -234,7 +302,7 @@ Supported platforms: Linux, FreeBSD.
 **vicious.widgets.uptime**
 
 Provides system uptime and load information.
-Supported platform: Linux, FreeBSD.
+Supported platforms: Linux, FreeBSD.
 
 - Arguments:
   * None
@@ -246,7 +314,7 @@ Supported platform: Linux, FreeBSD.
 **vicious.widgets.volume**
 
 Provides volume levels and state of requested mixers.
-Supported platforms: Linux, FreeBSD.
+Supported platforms: Linux (required tool: amixer), FreeBSD.
 
 - Arguments (per platform):
   * Linux: takes the ALSA mixer control as an argument, i.e. `"Master"`,
@@ -255,6 +323,18 @@ Supported platforms: Linux, FreeBSD.
 - Returns:
   * returns 1st value as the volume level and 2nd as the mute state of the
     requested channel
+
+**vicious.widgets.weather**
+
+Provides weather information for a requested station.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes the ICAO station code as an argument, i.e. "LDRI"
+- Returns:
+  * returns a table with string keys: `{city}`, `{wind}`, `{windmph}`, 
+  `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`, 
+  `{dewf}`, `{dewc}` and `{press}`
 
 **vicious.widgets.cpuinf**
 
@@ -324,46 +404,6 @@ Supported platforms: Linux, FreeBSD.
     {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
 
 
-**vicious.widgets.mbox**
-
-  - provides the subject of last e-mail in a mbox file
-  - takes the full path to the mbox as an argument, or a table with
-    1st field as path, 2nd as maximum length and 3rd (optional) as
-    widget name - if 3rd field is present scrolling will be used (note: the
-    path will be escaped so special variables like ~ will not work, use
-    os.getenv("HOME").."mail" instead to access environment variables)
-  - returns 1st value as the subject of the last e-mail
-
-**vicious.widgets.mboxc**
-
-  - provides the count of total, old and new messages in mbox files
-  - takes a table with full paths to mbox files as an argument
-  - returns 1st value as the total count of messages, 2nd as the count
-    of old messages and 3rd as the count of new messages
-
-**vicious.widgets.mdir**
-
-  - provides the number of new and unread messages in Maildir
-    structures/directories
-  - takes a table with full paths to Maildir structures as an argument
-  - returns 1st value as the count of new messages and 2nd as the
-    count of "old" messages lacking the Seen flag
-
-**vicious.widgets.gmail**
-
-  - provides count of new and subject of last e-mail on Gmail
-  - takes an (optional) argument, if it's a number subject will be
-    truncated, if a table, with 1st field as maximum length and 2nd
-    the widget name (i.e. "gmailwidget"), scrolling will be used
-  - keeps login information in the ~/.netrc file, example:
-    machine mail.google.com login user password pass
-  - returns a table with string keys: {count} and {subject}
-  - to be able to use this widget, make sure in your Gmail account 
-    you disabled 
-    [two step verification](https://support.google.com/accounts/answer/1064203)
-    and _then_ 
-    [allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
-
 **vicious.widgets.org**
 
   - provides agenda statistics for Emacs org-mode
@@ -378,24 +418,6 @@ Supported platforms: Linux, FreeBSD.
   - provides number of pending updates on UNIX systems
   - takes the distribution name as an argument, i.e. "Arch"
   - returns 1st value as the count of available updates
-
-**vicious.widgets.mpd**
-
-  - provides Music Player Daemon information
-  - takes a table as an argument, 1st field should be the password (or
-    nil), 2nd the hostname (or nil) and 3rd port (or nil) - if no
-    argument is provided connection attempt will be made to localhost
-    port 6600 with no password
-  - returns a table with string keys: {volume}, {state}, {Artist},
-    {Title}, {Album}, {Genre} and optionally {Name} and {file}
-
-**vicious.widgets.weather**
-
-  - provides weather information for a requested station
-  - takes the ICAO station code as an argument, i.e. "LDRI"
-  - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
-    {dewc}, {press}
 
 
 Custom widget types

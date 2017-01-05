@@ -15,7 +15,7 @@ local helpers = require("vicious.helpers")
 
 -- Weather: provides weather information for a requested station
 -- vicious.widgets.weather
-local weather = {}
+local weather_all = {}
 
 
 -- Initialize function tables
@@ -91,4 +91,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(weather, { __call = function(_, ...) return worker(...) end })
+return setmetatable(weather_all, { __call = function(_, ...) return worker(...) end })
