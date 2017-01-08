@@ -13,14 +13,19 @@ local thermal_freebsd = {}
 -- {{{ Thermal widget type
 local function worker(format, warg)
     if not warg then return end
+    local thermals = {}
+    local cnt = 1
+    while cnt <= #warg do
+        local output = helpers.sysctl( "" .. warg[cnt] .. "" )
 
-    local temp = helpers.sysctl("hw.acpi.thermal.tz" .. warg .. ".temperature")
-
-    if not temp then
-        return {0}
-    else
-        return {string.match(temp, "[%d]+%.[%d]+")}
+        if not output then
+            thermals[cnt] = 0
+        else
+            thermals[cnt] = tonumber( string.match(output, "[%d][%d]") )
+        end
+        cnt = cnt + 1
     end
+    return thermals
 end
 -- }}}
 
