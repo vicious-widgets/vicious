@@ -209,6 +209,18 @@ Supported platforms: platform independent.
 - Returns:
   * returns the output of os.date, formatted by provided sequences
 
+**vicious.widgets.dio**
+
+Provides I/O statistics for all available storage devices.
+Supported platforms: Linux.
+
+- Arguments:
+  * None 
+- Returns:
+  * returns a table with string keys: `{sda total_s}`, `{sda total_kb}`, 
+    `{sda total_mb}`, `{sda read_s}`, `{sda read_kb}`, `{sda read_mb}`, `{sda write_s}`,
+    `{sda write_kb}`, `{sda write_mb}`, `{sdb1 total_s}` etc.
+
 **vicious.widgets.fs**
 
 Provides usage of file system disk space.
@@ -377,13 +389,6 @@ Supported platforms: platform independent.
     release version, 3rd as your username, 4th the hostname, 5th as
     available system entropy and 6th value as available entropy in
     percent
-
-**vicious.widgets.dio**
-
-  - provides I/O statistics for all available storage devices
-  - returns a table with string keys: {sda total_s}, {sda total_kb},
-    {sda total_mb}, {sda read_s}, {sda read_kb}, {sda read_mb},
-    {sda write_s}, {sda write_kb}, {sda write_mb}, {sdb1 total_s} etc.
 
 **vicious.widgets.raid**
 
