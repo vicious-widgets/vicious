@@ -10,16 +10,9 @@ types, a few of them rewritten, and a good number of new ones:
 Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
 and a few "awesome" helper functions that make it easier to register
-timers, suspend widgets and so on.
-
-For now Vicious doesn't depend on any third party Lua libraries, to
-make it easier to install and use. That means some system utilities
-are used instead, where available:
-
-- hddtemp           for the HDD Temperature widget type
-- alsa-utils        for the Volume widget type
-- wireless\_tools   for the Wireless widget type
-- curl              for widget types accessing network resources
+timers, suspend widgets and so on. Vicious doesn't depend on any third party
+Lua libraries, but may depend on additional system utilities (see widget
+description).
 
 
 Usage
@@ -238,6 +231,7 @@ Supported platforms: platform independent.
 
 Provides count of new and subject of last e-mail on Gmail.
 Supported platform: platform independent (required tools: `curl`).
+
 This widget expects login information in your `~/.netrc` file, e. g.
 `machine mail.google.com login user password pass` and you have to disable
 [two step verification](https://support.google.com/accounts/answer/1064203).
@@ -250,6 +244,17 @@ afterwards. BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
     "gmailwidget"), scrolling will be used
 - Returns:
   * returns a table with string keys: {count} and {subject}
+
+**vicious.widgets.hddtemp**
+
+Provides hard drive temperatures using the hddtemp daemon.
+Supported platforms: Linux (required tools: `hddtemp`, `curl`).
+
+- Arguments:
+  * takes the hddtemp listening port as an argument, or defaults to port 7634
+- Returns:
+  * returns a table with string keys, using hard drives as a base: `{/dev/sda}`
+    and `{/dev/sdc}` for example
 
 **vicious.widgets.mbox**
 
@@ -291,7 +296,7 @@ Supported platforms: platform independent.
 **vicious.widgets.mpd**
 
 Provides Music Player Daemon information.
-Supported platforms: platform independent.
+Supported platforms: platform independent (required tools: `curl`).
 
 - Arguments:
   * takes a table as an argument, 1st field should be the password (or nil),
@@ -365,7 +370,7 @@ Supported platforms: Linux (required tool: amixer), FreeBSD.
 **vicious.widgets.weather**
 
 Provides weather information for a requested station.
-Supported platforms: platform independent.
+Supported platforms: platform independent (required tools: `curl`).
 
 - Arguments:
   * takes the ICAO station code as an argument, i.e. "LDRI"
@@ -396,14 +401,6 @@ Supported platforms: platform independent.
   - takes the RAID array ID as an argument
   - returns 1st value as the number of assigned, and 2nd as active,
     devices in the array
-
-**vicious.widgets.hddtemp**
-
-  - provides hard drive temperatures using the hddtemp daemon
-  - takes the hddtemp listening port as an argument, or defaults to
-    port 7634
-  - returns a table with string keys, using hard drives as a base:
-    {/dev/sda} and {/dev/sdc} for example
 
 **vicious.widgets.wifi**
 
