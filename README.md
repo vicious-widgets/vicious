@@ -327,6 +327,19 @@ Supported platforms: Linux, FreeBSD.
     `{up_b}`, `{down_kb}`, `{up_kb}`, `{down_mb}`,
     `{up_mb}`, `{down_gb}`, `{up_gb}`
 
+**vicious.widgets.org**
+
+Provides agenda statistics for Emacs org-mode.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to agenda files, that will be parsed, as an
+    argument
+- Returns:
+  * returns 1st value as count of tasks you forgot to do, 2nd as count of
+    tasks for today, 3rd as count of tasks for the next 3 days and 4th as
+    count of tasks to do in the week
+
 **vicious.widgets.thermal**
 
 Provides temperature levels of several thermal zones.
@@ -417,15 +430,6 @@ Supported platforms: platform independent (required tools: `curl`).
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
     {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
 
-
-**vicious.widgets.org**
-
-  - provides agenda statistics for Emacs org-mode
-  - takes a table with full paths to agenda files, that will be
-    parsed, as an argument
-  - returns 1st value as count of tasks you forgot to do, 2nd as count
-    of tasks for today, 3rd as count of tasks for the next 3 days and
-    4th as count of tasks to do in the week
 
 **vicious.widgets.pkg**
 
