@@ -212,6 +212,17 @@ Supported platforms: platform independent.
 - Returns:
   * returns the output of os.date, formatted by provided sequences
 
+**vicious.widget.fanspeed**
+
+Provides fanspeed information for specified fan.
+Supported platforms: FreeBSD
+
+- Arguments:
+ * FreeBSD: full sysctl string to entry, i.e. "dev.acpi_ibm.0.fan_speed"
+-Returns:
+ * FreeBSD: speed of specified fan as number,
+            -1 for error (probably wrong string)
+
 **vicious.widgets.fs**
 
 Provides usage of file system disk space.
