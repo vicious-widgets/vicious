@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 -- Hddtemp: provides hard drive temperatures using the hddtemp daemon
 -- vicious.widgets.hddtemp
-local hddtemp = {}
+local hddtemp_linux = {}
 
 
 -- {{{ HDD Temperature widget type
@@ -37,4 +37,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(hddtemp, { __call = function(_, ...) return worker(...) end })
+return setmetatable(hddtemp_linux, { __call = function(_, ...) return worker(...) end })

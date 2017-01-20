@@ -12,7 +12,7 @@ local setmetatable = setmetatable
 
 -- Pkg: provides number of pending updates on UNIX systems
 -- vicious.widgets.pkg
-local pkg = {}
+local pkg_all = {}
 
 
 -- {{{ Packages widget type
@@ -28,7 +28,7 @@ local function worker(format, warg)
         ["Debian"] = { cmd = "apt-show-versions -u -b" },
         ["Ubuntu"] = { cmd = "aptitude search '~U'" },
         ["Fedora"] = { cmd = "yum list updates", sub = 3 },
-        ["FreeBSD"] ={ cmd = "pkg_version -I -l '<'" },
+        ["FreeBSD"] ={ cmd = "pkg version -I -l '<'" },
         ["Mandriva"]={ cmd = "urpmq --auto-select" }
     }
 
@@ -45,4 +45,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(pkg, { __call = function(_, ...) return worker(...) end })
+return setmetatable(pkg_all, { __call = function(_, ...) return worker(...) end })
