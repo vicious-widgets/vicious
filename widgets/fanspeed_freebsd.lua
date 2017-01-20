@@ -20,7 +20,7 @@ local function worker(format, warg)
         -- use negative fanspeed to indicate error
         return {-1}
     else
-        return {string.match(fanspeed, "[%d]+")}
+        return {tonumber(fanspeed, 10)}
     end
 end
 
