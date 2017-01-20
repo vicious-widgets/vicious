@@ -65,10 +65,7 @@ function helpers.wrequire(table, key)
     assert(os, "Vicious: platform not supported.")
 
     for i = 1, #os do
-        local status, value = 
-            pcall(function() 
-                      return require(table._NAME .. "." .. key .. "_" .. os[i]) 
-                  end)
+        local status, value = pcall(require, table._NAME .. "." .. key .. "_" .. os[i])
         if status then
             ret = value
             break
