@@ -340,6 +340,19 @@ Supported platforms: platform independent.
     tasks for today, 3rd as count of tasks for the next 3 days and 4th as
     count of tasks to do in the week
 
+**vicious.widgets.pkg**
+
+Provides number of pending updates on UNIX systems. Be aware that some package
+managers need to update their local databases (as root) before showing the
+correct number of updates.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes the Linux or BSD distribution name as an argument, i.e. "Arch",
+    "FreeBSD"
+- Returns:
+  * returns 1st value as the count of available updates
+
 **vicious.widgets.thermal**
 
 Provides temperature levels of several thermal zones.
@@ -430,12 +443,6 @@ Supported platforms: platform independent (required tools: `curl`).
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
     {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
 
-
-**vicious.widgets.pkg**
-
-  - provides number of pending updates on UNIX systems
-  - takes the distribution name as an argument, i.e. "Arch"
-  - returns 1st value as the count of available updates
 
 
 Custom widget types
