@@ -3,6 +3,7 @@ local setmetatable = setmetatable
 local tonumber = tonumber
 local io = { popen = io.popen }
 local math = { floor = math.floor }
+local helpers = require("vicious.helpers")
 local string = {
     gmatch = string.gmatch,
     gsub = string.gsub,
@@ -15,7 +16,7 @@ local bat_freebsd = {}
 local function worker(format, warg)
     local battery = warg or "batt"
     local bat_info = {}
-    local f = io.popen("acpiconf -i " .. battery)
+    local f = io.popen("acpiconf -i " .. helpers.shellquote(battery))
     for line in f:lines("*line") do
         for key,value in string.gmatch(line, "(.+):%s+(.+)") do
             bat_info[key] = value

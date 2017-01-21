@@ -216,7 +216,7 @@ end
 function helpers.sysctl_table(syspath)
     return setmetatable({ _path = syspath },
         { __index = function(table, index)
-            local path = "sysctl -n " .. table._path .. "." .. index
+            local path = "sysctl -n " .. helpers.shellquote(table._path .. "." .. index)
             local f = io.popen(path)
             if f then
                 local s = f:read("*all")

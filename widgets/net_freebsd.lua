@@ -28,19 +28,15 @@ local function worker(format, warg)
     local now = os.time()
     
     for line in f:lines() do
-        if line:find("<Link") or line:find("Name ") then -- skipping missleading lines
-            goto continue
+        if not (line:find("<Link") or line:find("Name")) then -- skipping missleading lines
+            local split = { line:match(("([^%s]*)%s*"):rep(12)) }
+
+            if buffer == nil then
+                buffer = { tonumber(split[8]), tonumber(split[11]) } -- recv (field 8) and send (field 11)
+            else
+                buffer = { buffer[1] + tonumber(split[8]), buffer[2] + tonumber(split[11]) }
+            end
         end
-
-        local split = { line:match(("([^%s]*)%s*"):rep(12)) }
-
-        if buffer == nil then
-            buffer = { tonumber(split[8]), tonumber(split[11]) } -- recv (field 8) and send (field 11)
-        else
-            buffer = { buffer[1] + tonumber(split[8]), buffer[2] + tonumber(split[11]) }
-        end
-
-        ::continue::
     end
 
     f:close()
