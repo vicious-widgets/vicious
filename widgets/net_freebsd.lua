@@ -1,6 +1,6 @@
 -- {{{ Grab environment
 local tonumber = tonumber
-local os = { time = os.time }
+local os = { time = require("os").time }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 -- }}}

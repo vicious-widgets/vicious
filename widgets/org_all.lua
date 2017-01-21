@@ -9,8 +9,8 @@ local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { find = string.find }
 local os = {
-    time = os.time,
-    date = os.date
+    time = require("os").time,
+    date = require("os").date
 }
 -- }}}
 

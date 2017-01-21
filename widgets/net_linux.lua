@@ -6,7 +6,7 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local os = { time = os.time }
+local os = { time = require("os").time }
 local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { match = string.match }

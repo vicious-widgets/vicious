@@ -2,8 +2,8 @@
 local tonumber = tonumber
 local setmetatable = setmetatable
 local string = { format = string.format }
-local helpers = require("vicious.helpers")
 local math = { floor = math.floor }
+local helpers = require("vicious.helpers")
 -- }}}
 
 

@@ -7,8 +7,8 @@
 -- {{{ Grab environment
 local setmetatable = setmetatable
 local os = {
-    date = os.date,
-    time = os.time
+    date = require("os").date,
+    time = require("os").time
 }
 -- }}}
 

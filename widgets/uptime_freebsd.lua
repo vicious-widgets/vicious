@@ -4,7 +4,7 @@ local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
-local os = {time = os.time }
+local os = {time = require("os").time }
 -- }}}
 
 

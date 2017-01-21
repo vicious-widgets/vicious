@@ -10,8 +10,8 @@ local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
 local os = {
-    time = os.time,
-    difftime = os.difftime
+    time = require("os").time,
+    difftime = require("os").difftime
 }
 -- }}}
 
