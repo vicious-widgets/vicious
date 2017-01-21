@@ -454,7 +454,7 @@ Provides weather information for a requested station.
 Supported platforms: platform independent (required tools: `curl`).
 
 - Arguments:
-  * Takes the ICAO station code as an argument, i.e. "LDRI"
+  * Takes the ICAO station code as an argument, i.e. `"LDRI"`
 - Returns:
   * Returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
   `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`,
@@ -462,19 +462,27 @@ Supported platforms: platform independent (required tools: `curl`).
 
 **vicious.widgets.wifi**
 
-  - provides wireless information for a requested interface
-  - takes the network interface as an argument, i.e. "wlan0"
-  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link}, {linp} (link quality in percent) and {sign} (signal level)
+Provides wireless information for a requested interface.
+Supported platforms: Linux.
+
+- Arguments:
+  * Takes the network interface as an argument, i.e. "wlan0"
+- Returns:
+  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
+    `{link}`, `{linp}` (link quality in percent) and `{sign}` (signal level)
 
 **vicious.widgets.wifiiw**
 
-  - similar to vicious.widgets.wifi, but uses iw instead of iwconfig
-  - provides wireless information for a requested interface
-  - takes the network interface as an argument, i.e. "wlan0"
-  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
+Provides wireless information for a requested interface (similar to
+vicious.widgets.wifi, but uses iw instead of iwconfig).
+Supported platforms: Linux.
 
+- Arguments:
+  * Takes the network interface as an argument, i.e. "wlan0"
+- Returns:
+  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
+    `{freq}`, `{linp}` (link quality in percent), `{txpw}` (tx power) and
+    `{sign}` (signal level)
 
 
 Custom widget types
