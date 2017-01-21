@@ -1,19 +1,21 @@
------------------------------------------------------
--- Battery: use acpiconf to get more information
---          from the battery
------------------------------------------------------
+-- {{{ Grab environment
 local setmetatable = setmetatable
--- }}}
-local bat_acpi = {}
+local tonumber = tonumber
+local io = { popen = io.popen }
+local math = { floor = math.floor }
+local string = {
+    gmatch = string.gmatch,
+    gsub = string.gsub,
+    format = string.format
 
-local function worker(format)
-    local battery = "batt"
-    if warg then
-        battery = warg
-    end
+}
+-- }}}
+local bat_freebsd = {}
+
+local function worker(format, warg)
+    local battery = warg or "batt"
     local bat_info = {}
-    local pcall = "acpiconf -i " .. battery
-    local f = io.popen(pcall)
+    local f = io.popen("acpiconf -i " .. battery)
     for line in f:lines("*line") do
         for key,value in string.gmatch(line, "(.+):%s+(.+)") do
             bat_info[key] = value
@@ -47,12 +49,12 @@ local function worker(format)
     if bat_info["Last full capacity"] and bat_info["Design capacity"] then
         local l_full =  tonumber(string.gsub(bat_info["Last full capacity"], "[^%d]", ""), 10)
         local design = tonumber(string.gsub(bat_info["Design capacity"], "[^%d]", ""), 10)
-        wear = math.floor( 100 - (l_full / design * 100))
+        wear = math.floor(100 - (l_full / design * 100))
     end
 
     -- dis-/charging rate as presented by battery
-    local rate = string.gsub( string.gsub(bat_info["Present rate"], ".*mA[^%d]+", ""), "[%s]+mW.*", "")
-    rate = string.format( "% 2.1f", tonumber(rate / 1000))
+    local rate = string.gsub(string.gsub(bat_info["Present rate"], ".*mA[^%d]+", ""), "[%s]+mW.*", "")
+    rate = string.format("%2.1f", tonumber(rate / 1000))
 
     -- returns
     --  * state (high "↯", discharging "-", charging "+", N/A "⌁" }
@@ -63,4 +65,4 @@ local function worker(format)
     return {state, percent, time, wear, rate}
 end
 
-return setmetatable(bat_acpi, { __call = function(_, ...) return worker(...) end })
+return setmetatable(bat_freebsd, { __call = function(_, ...) return worker(...) end })

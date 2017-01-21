@@ -2,6 +2,7 @@
 local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
+local tonumber = tonumber
 -- }}}
 
 
@@ -13,18 +14,19 @@ local thermal_freebsd = {}
 -- {{{ Thermal widget type
 local function worker(format, warg)
     if not warg then return end
+
     local thermals = {}
-    local cnt = 1
-    while cnt <= #warg do
-        local output = helpers.sysctl( "" .. warg[cnt] .. "" )
+
+    for i=1, #warg do
+        local output = helpers.sysctl(warg[i])
 
         if not output then
-            thermals[cnt] = 0
+            thermals[i] = -1
         else
-            thermals[cnt] = tonumber( string.match(output, "[%d][%d]") )
+            thermals[i] = string.match(output, "[%d]+")
         end
-        cnt = cnt + 1
     end
+
     return thermals
 end
 -- }}}

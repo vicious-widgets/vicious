@@ -141,20 +141,18 @@ string.
 **vicious.widgets.bat**
 
 Provides state, charge, and remaining time for a requested battery.
-Supported platforms: Linux, FreeBSD.
+Supported platforms: Linux (required tools: `sysfs`), FreeBSD (required tools:
+`acpiconf`).
 
 - Arguments (per platform):
-  * Linux: takes battery ID as an argument, i.e. "BAT0"
-  * FreeBSD: takes optional battery ID as an argument, i.e. "batt"
+  * Linux: takes battery ID as an argument, i.e. `"BAT0"`
+  * FreeBSD: takes optional battery ID as an argument, i.e. `"batt"` or `"0"`
 - Returns (per platform):
   * Linux: returns 1st value as state of requested battery, 2nd as charge
     level in percent, 3rd as remaining (charging or discharging) time and 4th
     as the wear level in percent
   * FreeBSD: see Linux, but there's is 5th value for the present dis-/charge
     rate in mW.
-- Requirements (per platform):
-  * Linux: sysfs
-  * FreeBSD: "acpiconf", but can be called as user
 
 **vicious.widgets.cpu**
 
@@ -173,8 +171,8 @@ Provides freq, voltage and governor info for a requested CPU.
 Supported platforms: Linux, FreeBSD.
 
 - Arguments (per platform):
-  * Linux: takes the CPU ID as an argument, i.e. "cpu0"
-  * FreeBSD: takes the CPU ID as an argument, i.e. "0"
+  * Linux: takes the CPU ID as an argument, i.e. `"cpu0"`
+  * FreeBSD: takes the CPU ID as an argument, i.e. `"0"`
 - Returns (per platform):
   * Linux: returns 1st value as frequency of requested CPU in MHz, 2nd in GHz,
     3rd as voltage in mV, 4th as voltage in V and 5th as the governor state
@@ -220,13 +218,12 @@ Supported platforms: Linux.
 **vicious.widget.fanspeed**
 
 Provides fanspeed information for specified fan.
-Supported platforms: FreeBSD
+Supported platforms: FreeBSD.
 
 - Arguments:
- * FreeBSD: full sysctl string to entry, i.e. "dev.acpi_ibm.0.fan_speed"
--Returns:
- * FreeBSD: speed of specified fan as number,
-            -1 for error (probably wrong string)
+  * Full sysctl string to entry, i.e. `"dev.acpi_ibm.0.fan_speed"`
+- Returns:
+  * Speed of specified fan as number, `-1` for error (probably wrong string)
 
 **vicious.widgets.fs**
 
@@ -307,6 +304,22 @@ Supported platforms: platform independent.
   * returns 1st value as the count of new messages and 2nd as the count of
     "old" messages lacking the Seen flag
 
+**vicious.widgets.mem**
+
+Provides RAM and Swap usage statistics.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments:
+  * None
+- Returns (per platform):
+  * Linux: returns 1st value as memory usage in percent, 2nd as memory usage, 3rd as
+    total system memory, 4th as free memory, 5th as swap usage in percent, 6th
+    as swap usage, 7th as total system swap, 8th as free swap and 9th as
+    memory usage with buffers and cache
+  * FreeBSD: see above, but 10th value as memory usage with buffers and cache
+    as percent and 11th value as wired memory (memory used by kernel) is
+    reported
+
 **vicious.widgets.mpd**
 
 Provides Music Player Daemon information.
@@ -385,9 +398,9 @@ Provides state information for a requested RAID array.
 Supported platforms: Linux.
 
 - Arguments:
-  * takes the RAID array ID as an argument
+  * Takes the RAID array ID as an argument
 - Returns:
-  * returns 1st value as the number of assigned, and 2nd as active, devices in
+  * Returns 1st value as the number of assigned, and 2nd as active, devices in
     the array
 
 **vicious.widgets.thermal**
@@ -401,9 +414,11 @@ Supported platforms: Linux, FreeBSD.
     sources are "proc", "core" and "sys" (which is the default when only the
     zone is provided) and 3rd optional argument as a temperature input file to
     read
-  * FreeBSD: takes the thermal zone as an argument, i.e. `"0"`
+  * FreeBSD: takes the full sysctl path to a thermal zone as an argument, i.e.
+    `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
 - Returns:
-  * returns 1st value as temperature of requested thermal zone
+  * Linux: returns 1st value as temperature of requested thermal zone
+  * FreeBSD: returns a table with a entry for every input thermal zone
 
 **vicious.widgets.uptime**
 
@@ -413,7 +428,7 @@ Supported platforms: Linux, FreeBSD.
 - Arguments:
   * None
 - Returns:
-  * returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
+  * Returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
     in minutes, 4th as load average for past 1 minute, 5th for 5 minutes and
     6th for 15 minutes
 
@@ -439,19 +454,11 @@ Provides weather information for a requested station.
 Supported platforms: platform independent (required tools: `curl`).
 
 - Arguments:
-  * takes the ICAO station code as an argument, i.e. "LDRI"
+  * Takes the ICAO station code as an argument, i.e. "LDRI"
 - Returns:
-  * returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
+  * Returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
   `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`,
   `{dewf}`, `{dewc}` and `{press}`
-
-**vicious.widgets.mem**
-
-  - provides RAM and Swap usage statistics
-  - returns 1st value as memory usage in percent, 2nd as memory usage,
-    3rd as total system memory, 4th as free memory, 5th as swap usage
-    in percent, 6th as swap usage, 7th as total system swap, 8th as
-    free swap and 9th as memory usage with buffers and cache
 
 **vicious.widgets.wifi**
 
