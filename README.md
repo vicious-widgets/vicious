@@ -145,13 +145,16 @@ Supported platforms: Linux, FreeBSD.
 
 - Arguments (per platform):
   * Linux: takes battery ID as an argument, i.e. "BAT0"
-  * FreeBSD: no arguments needed
+  * FreeBSD: takes optional battery ID as an argument, i.e. "batt"
 - Returns (per platform):
   * Linux: returns 1st value as state of requested battery, 2nd as charge
     level in percent, 3rd as remaining (charging or discharging) time and 4th
     as the wear level in percent
-  * FreeBSD: see Linux, but wear level is not supported right now and always
-    set to `0`
+  * FreeBSD: see Linux, but there's is 5th value for the present dis-/charge
+    rate in mW.
+- Requirements (per platform):
+  * Linux: sysfs
+  * FreeBSD: "acpiconf", but can be called as user
 
 **vicious.widgets.cpu**
 
@@ -208,11 +211,22 @@ Provides I/O statistics for all available storage devices.
 Supported platforms: Linux.
 
 - Arguments:
-  * None 
+  * None
 - Returns:
-  * returns a table with string keys: `{sda total_s}`, `{sda total_kb}`, 
+  * returns a table with string keys: `{sda total_s}`, `{sda total_kb}`,
     `{sda total_mb}`, `{sda read_s}`, `{sda read_kb}`, `{sda read_mb}`, `{sda write_s}`,
     `{sda write_kb}`, `{sda write_mb}`, `{sdb1 total_s}` etc.
+
+**vicious.widget.fanspeed**
+
+Provides fanspeed information for specified fan.
+Supported platforms: FreeBSD
+
+- Arguments:
+ * FreeBSD: full sysctl string to entry, i.e. "dev.acpi_ibm.0.fan_speed"
+-Returns:
+ * FreeBSD: speed of specified fan as number,
+            -1 for error (probably wrong string)
 
 **vicious.widgets.fs**
 
@@ -223,7 +237,7 @@ Supported platforms: platform independent.
   * takes an (optional) argument which, if true, includes remote file systems,
     only local file systems are included by default
 - Returns:
-  * returns a table with string keys, using mount points as a base: 
+  * returns a table with string keys, using mount points as a base:
     `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, `{/ used_gb}`, `{/ used_p}`,
     `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
 
@@ -401,8 +415,8 @@ Supported platforms: platform independent (required tools: `curl`).
 - Arguments:
   * takes the ICAO station code as an argument, i.e. "LDRI"
 - Returns:
-  * returns a table with string keys: `{city}`, `{wind}`, `{windmph}`, 
-  `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`, 
+  * returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
+  `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`,
   `{dewf}`, `{dewc}` and `{press}`
 
 **vicious.widgets.mem**
@@ -434,7 +448,7 @@ Supported platforms: platform independent (required tools: `curl`).
   - takes the network interface as an argument, i.e. "wlan0"
   - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
     {link}, {linp} (link quality in percent) and {sign} (signal level)
-	
+
 **vicious.widgets.wifiiw**
 
   - similar to vicious.widgets.wifi, but uses iw instead of iwconfig
