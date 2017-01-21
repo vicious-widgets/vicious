@@ -413,8 +413,11 @@ Supported platforms: Linux (required tool: amixer), FreeBSD.
     optionally append the card ID or other options, i.e. `"PCM -c 0"`
   * FreeBSD: takes the mixer control as an argument, i.e. `"vol"`
 - Returns:
-  * returns 1st value as the volume level and 2nd as the mute state of the
-    requested channel
+  * Linux: returns 1st value as the volume level and 2nd as the mute state of
+    the requested control
+  * FreeBSD: returns 1st value as the volume level of the left channel, 2nd as
+    the volume level of the right channel and 3rd as the mute state of the
+    desired control
 
 **vicious.widgets.weather**
 

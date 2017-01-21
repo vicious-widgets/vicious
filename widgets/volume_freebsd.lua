@@ -27,13 +27,9 @@ local function worker(format, warg)
     local voll, volr = string.match(mixer, "([%d]+):([%d]+)$")
 
     if voll == "0" and volr == "0" then
-        return {0, mixer_state[2]}
-    end
-
-    if voll == volr then
-        return {voll, mixer_state[1]}
+        return {0, 0, mixer_state[2]}
     else
-        return {voll .. "/" .. volr, mixer_state[1]}
+        return {voll, volr, mixer_state[1]}
     end
 
 end
