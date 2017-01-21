@@ -340,6 +340,18 @@ Supported platforms: platform independent.
     tasks for today, 3rd as count of tasks for the next 3 days and 4th as
     count of tasks to do in the week
 
+**vicious.widgets.os**
+
+Provides operating system information.
+Supported platforms: platform independent.
+
+- Arguments:
+  * None
+- Returns:
+  * returns 1st value as the operating system in use, 2nd as the release
+    version, 3rd as your username, 4th the hostname, 5th as available system
+    entropy and 6th value as available entropy in percent
+
 **vicious.widgets.pkg**
 
 Provides number of pending updates on UNIX systems. Be aware that some package
@@ -352,6 +364,17 @@ Supported platforms: platform independent.
     "FreeBSD"
 - Returns:
   * returns 1st value as the count of available updates
+
+**vicious.widgets.raid**
+
+Provides state information for a requested RAID array.
+Supported platforms: Linux.
+
+- Arguments:
+  * takes the RAID array ID as an argument
+- Returns:
+  * returns 1st value as the number of assigned, and 2nd as active, devices in
+    the array
 
 **vicious.widgets.thermal**
 
@@ -412,21 +435,6 @@ Supported platforms: platform independent (required tools: `curl`).
     3rd as total system memory, 4th as free memory, 5th as swap usage
     in percent, 6th as swap usage, 7th as total system swap, 8th as
     free swap and 9th as memory usage with buffers and cache
-
-**vicious.widgets.os**
-
-  - provides operating system information
-  - returns 1st value as the operating system in use, 2nd as the
-    release version, 3rd as your username, 4th the hostname, 5th as
-    available system entropy and 6th value as available entropy in
-    percent
-
-**vicious.widgets.raid**
-
-  - provides state information for a requested RAID array
-  - takes the RAID array ID as an argument
-  - returns 1st value as the number of assigned, and 2nd as active,
-    devices in the array
 
 **vicious.widgets.wifi**
 
