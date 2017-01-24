@@ -89,7 +89,7 @@ local function worker(format, tignorelist)
                     ccarrier = tonumber(sysnet.carrier)
 
                     args["{"..name.." carrier}"] = ccarrier
-                    if ccarrier ~= 0 and not tignore[name] then
+                    if ccarrier == 1 and not tignore[name] then
                         any_up = 1
                     end
                 else
