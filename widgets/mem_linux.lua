@@ -14,7 +14,7 @@ local string = { gmatch = string.gmatch }
 
 -- Mem: provides RAM and Swap usage statistics
 -- vicious.widgets.mem
-local mem = {}
+local mem_linux = {}
 
 
 -- {{{ Memory widget type
@@ -49,4 +49,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(mem, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mem_linux, { __call = function(_, ...) return worker(...) end })
