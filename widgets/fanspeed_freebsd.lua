@@ -21,7 +21,7 @@ local function worker(format, warg)
         -- use negative fanspeed to indicate error
         return {-1}
     else
-        return {tonumber(fanspeed, 10)}
+        return {tonumber(fanspeed)}
     end
 end
 

@@ -22,7 +22,7 @@ local function worker(format, warg)
             bat_info[key] = value
         end
     end
-    f.close()
+    f:close()
 
     -- current state
     local state
