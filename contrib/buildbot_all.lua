@@ -17,10 +17,7 @@ local bb = {} --list of all buildbot builders
 local bs = {OK=1, FAILED=2, RUNNING=3}
 local bc = {"green", "red", "yellow"}
 
-module("vicious.contrib.buildbot")
-
-
-
+local buildbot_all = {}
 
 BB = {}
 BB.__index = BB
@@ -182,5 +179,5 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+setmetatable(buildbot_all, { __call = function(_, ...) return worker(...) end })
 

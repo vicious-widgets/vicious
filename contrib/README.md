@@ -131,12 +131,16 @@ vicious.contrib.wpa
   - takes the interface as an argument, i.e "wlan0" or "wlan1"
   - returns a table with string keys: {ssid}, {qual}, {ip}, {bssid}
 
-vicious.contrib.buildbot
-  - provides last build status for configured buildbot builders (http://trac.buildbot.net/)
-  - returns build status in the format: [<builderName>.<currentBuildNumber>.<lastSuccessfulBuildNumber>]
-  - if <currentBuildNumber> is the same as <lastSuccessfulBuildNumber> only one number is displayed
-  - <buildNumber> colors: red - failed, green - successful, yellow - in progress
-  - it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
+**vicious.contrib.buildbot**
+
+Provides last build status for configured buildbot builders (http://trac.buildbot.net/)
+Supported Platforms: platform independent
+
+- Returns:
+  * returns build status in the format: [<builderName>.<currentBuildNumber>.<lastSuccessfulBuildNumber>]
+  * if <currentBuildNumber> is the same as <lastSuccessfulBuildNumber> only one number is displayed
+  * <buildNumber> colors: red - failed, green - successful, yellow - in progress
+  * it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
 
 
 Usage examples
