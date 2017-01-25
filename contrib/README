@@ -44,9 +44,6 @@ vicious.contrib.ati
     {dpm_perf_level}, {profile}, {engine_clock mhz}, {engine_clock khz},
     {memory_clock mhz}, {memory_clock khz}, {voltage v}, {voltage mv}
 
-vicious.contrib.batacpi
-  -
-
 vicious.contrib.batpmu
   -
 
