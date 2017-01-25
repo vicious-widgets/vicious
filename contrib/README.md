@@ -60,11 +60,15 @@ Supported platforms: Linux (required tools: `sysfs`)
 
 **vicious.contrib.countfiles**
 
-vicious.contrib.dio
-  - provides I/O statistics for requested storage devices
+**vicious.contrib.dio**
+
+Provides I/O statistics for requested storage devices
+
+- Arguments:
   - takes the disk as an argument, i.e. "sda" (or a specific
     partition, i.e. "sda/sda2")
-  - returns a table with string keys: {total_s}, {total_kb}, {total_mb},
+- Returns:
+  - a table with string keys: {total_s}, {total_kb}, {total_mb},
     {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
     and {sched}
 

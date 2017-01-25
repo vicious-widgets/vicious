@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 -- Disk I/O: provides I/O statistics for requested storage devices
 -- vicious.contrib.dio
-local dio = {}
+local dio_linux = {}
 
 
 -- Initialize function tables
@@ -70,4 +70,4 @@ local function worker(format, disk)
 end
 -- }}}
 
-return setmetatable(dio, { __call = function(_, ...) return worker(...) end })
+return setmetatable(dio_linux, { __call = function(_, ...) return worker(...) end })
