@@ -20,7 +20,7 @@ local string = {
 
 -- OS: provides operating system information
 -- vicious.widgets.os
-local os = {}
+local os_all = {}
 
 
 -- {{{ Operating system widget type
@@ -70,4 +70,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(os, { __call = function(_, ...) return worker(...) end })
+return setmetatable(os_all, { __call = function(_, ...) return worker(...) end })
