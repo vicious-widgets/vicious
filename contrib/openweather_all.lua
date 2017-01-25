@@ -17,7 +17,7 @@ local math = {
 
 -- Openweather: provides weather information for a requested station
 -- vicious.widgets.openweather
-local openweather = {}
+local openweather_all = {}
 
 
 -- Initialize function tables
@@ -91,4 +91,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(openweather, { __call = function(_, ...) return worker(...) end })
+return setmetatable(openweather_all, { __call = function(_, ...) return worker(...) end })

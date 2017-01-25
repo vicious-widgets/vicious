@@ -79,10 +79,14 @@ vicious.contrib.netcfg
 
 **vicious.contrib.net**
 
-vicious.contrib.openweather
-  - provides weather information for a requested city
-  - takes OpenWeatherMap city ID as an argument, i.e. "1275339"
-  - returns a table with string keys: {city}, {wind deg}, {wind aim},
+**vicious.contrib.openweather**
+
+Provides weather information for a requested city
+
+- Arguments
+  * takes OpenWeatherMap city ID as an argument, i.e. "1275339"
+- Returns
+  * a table with string keys: {city}, {wind deg}, {wind aim},
     {wind kmh}, {wind mps}, {sky}, {weather}, {temp c}, {humid}, {press}
 
 **vicious.contrib.nvinf**
