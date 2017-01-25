@@ -72,8 +72,7 @@ Provides I/O statistics for requested storage devices
     {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
     and {sched}
 
-vicious.contrib.mpc
-  -
+**vicious.contrib.mpc**
 
 vicious.contrib.netcfg
   -
