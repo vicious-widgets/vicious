@@ -113,8 +113,7 @@ Supported Platforms: platform independent
 
 **vicious.contrib.ossvol**
 
-vicious.contrib.pop
-  -
+**vicious.contrib.pop**
 
 **vicious.contrib.pulse**
 

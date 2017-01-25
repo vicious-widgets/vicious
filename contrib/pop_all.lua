@@ -20,7 +20,7 @@ end)
 
 -- POP: provides the count of new messages in a POP3 mailbox
 -- vicious.contrib.pop
-local pop = {}
+local pop_all = {}
 
 
 -- {{{ POP3 count widget type
@@ -52,4 +52,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(pop, { __call = function(_, ...) return worker(...) end })
+return setmetatable(pop_all, { __call = function(_, ...) return worker(...) end })
