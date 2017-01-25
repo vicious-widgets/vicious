@@ -15,7 +15,7 @@ local setmetatable = setmetatable
 
 -- RSS: provides latest world news
 -- vicious.contrib.rss
-local rss = {}
+local rss_all = {}
 
 
 -- {{{ RSS widget type
@@ -65,4 +65,4 @@ local function worker(format, input)
 end
 -- }}}
 
-return setmetatable(rss, { __call = function(_, ...) return worker(...) end })
+return setmetatable(rss_all, { __call = function(_, ...) return worker(...) end })

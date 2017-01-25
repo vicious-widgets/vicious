@@ -138,8 +138,7 @@ manipulate them
   * @sink optional, same usage as in vicious.contrib.pulse
   * returns the exit status of pacmd
 
-vicious.contrib.rss
-  -
+**vicious.contrib.rss**
 
 vicious.contrib.sensors
   -
