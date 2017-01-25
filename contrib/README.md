@@ -142,11 +142,15 @@ manipulate them
 
 **vicious.contrib.sensors**
 
-vicious.contrib.wpa
-  - provides information about the wifi status
-  - requires 'wpa_cli' from wpa_supplicant
+**vicious.contrib.wpa**
+
+Provides information about the wifi status
+Supported Platforms: platform independent (`wpa_cli`)
+
+- Arguments
   - takes the interface as an argument, i.e "wlan0" or "wlan1"
-  - returns a table with string keys: {ssid}, {qual}, {ip}, {bssid}
+- Returns
+  - a table with string keys: {ssid}, {qual}, {ip}, {bssid}
 
 **vicious.contrib.buildbot**
 

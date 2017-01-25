@@ -20,7 +20,7 @@ local string = {
 
 
 -- Wifi: provides wireless information for a requested interface
-local wpa = {}
+local wpa_all = {}
 
 local info = {
   ["{ssid}"] = "N/A",
@@ -62,4 +62,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(wpa_all, { __call = function(_, ...) return worker(...) end })
