@@ -15,7 +15,7 @@ local math = { floor = math.floor }
 
 -- Thermal: provides temperature levels of ACPI and coretemp thermal zones
 -- vicious.widgets.thermal
-local thermal = {}
+local thermal_linux = {}
 
 
 -- {{{ Thermal widget type
@@ -46,4 +46,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(thermal, { __call = function(_, ...) return worker(...) end })
+return setmetatable(thermal_linux, { __call = function(_, ...) return worker(...) end })
