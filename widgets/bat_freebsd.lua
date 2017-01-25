@@ -6,7 +6,7 @@ local math = { floor = math.floor }
 local helpers = require("vicious.helpers")
 local string = {
     gmatch = string.gmatch,
-    gsub = string.gsub,
+    match = string.match,
     format = string.format
 
 }
@@ -37,7 +37,7 @@ local function worker(format, warg)
     end
 
     -- battery capacity in percent
-    local percent = tonumber(string.gsub(bat_info["Remaining capacity"], "[^%d]", ""), 10)
+    local percent = tonumber(string.match(bat_info["Remaining capacity"], "[%d]+"))
 
     -- use remaining (charging or discharging) time calculated by acpiconf
     local time = bat_info["Remaining time"]
@@ -48,13 +48,13 @@ local function worker(format, warg)
     -- calculate wear level from (last full / design) capacity
     local wear = "N/A"
     if bat_info["Last full capacity"] and bat_info["Design capacity"] then
-        local l_full =  tonumber(string.gsub(bat_info["Last full capacity"], "[^%d]", ""), 10)
-        local design = tonumber(string.gsub(bat_info["Design capacity"], "[^%d]", ""), 10)
+        local l_full =  tonumber(string.match(bat_info["Last full capacity"], "[%d]+"))
+        local design = tonumber(string.match(bat_info["Design capacity"], "[%d]+"))
         wear = math.floor(100 - (l_full / design * 100))
     end
 
     -- dis-/charging rate as presented by battery
-    local rate = string.gsub(string.gsub(bat_info["Present rate"], ".*mA[^%d]+", ""), "[%s]+mW.*", "")
+    local rate = string.match(bat_info["Present rate"], "([%d]+)%smW")
     rate = string.format("%2.1f", tonumber(rate / 1000))
 
     -- returns

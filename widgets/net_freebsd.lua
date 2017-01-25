@@ -3,6 +3,8 @@ local tonumber = tonumber
 local os = { time = require("os").time }
 local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
+local io = { popen = io.popen }
+local string = { match = string.match }
 -- }}}
 
 
