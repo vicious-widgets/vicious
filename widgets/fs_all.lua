@@ -15,7 +15,7 @@ local helpers = require("vicious.helpers")
 
 -- FS: provides file system disk space usage
 -- vicious.widgets.fs
-local fs = {}
+local fs_all = {}
 
 
 -- Variable definitions
@@ -49,4 +49,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(fs, { __call = function(_, ...) return worker(...) end })
+return setmetatable(fs_all, { __call = function(_, ...) return worker(...) end })
