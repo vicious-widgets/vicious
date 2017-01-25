@@ -10,15 +10,15 @@ local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
 local os = {
-    time = os.time,
-    difftime = os.difftime
+    time = require("os").time,
+    difftime = require("os").difftime
 }
 -- }}}
 
 
 -- Disk I/O: provides I/O statistics for requested storage devices
 -- vicious.widgets.dio
-local dio = {}
+local dio_linux = {}
 
 
 -- Initialize function tables
@@ -70,4 +70,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(dio, { __call = function(_, ...) return worker(...) end })
+return setmetatable(dio_linux, { __call = function(_, ...) return worker(...) end })

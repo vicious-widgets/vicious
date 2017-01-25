@@ -5,21 +5,14 @@ catering to users of the "awesome" window manager. It was derived from
 the old "Wicked" widget library, and has some of the old Wicked widget
 types, a few of them rewritten, and a good number of new ones:
 
-  - http://git.sysphere.org/vicious/about/
+- http://git.sysphere.org/vicious/about/
 
 Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
 and a few "awesome" helper functions that make it easier to register
-timers, suspend widgets and so on.
-
-For now Vicious doesn't depend on any third party Lua libraries, to
-make it easier to install and use. That means some system utilities
-are used instead, where available:
-
-  - hddtemp        for the HDD Temperature widget type
-  - alsa-utils     for the Volume widget type
-  - wireless\_tools for the Wireless widget type
-  - curl           for widget types accessing network resources
+timers, suspend widgets and so on. Vicious doesn't depend on any third party
+Lua libraries, but may depend on additional system utilities (see widget
+description).
 
 
 Usage
@@ -35,6 +28,7 @@ manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
   > print(widgets.volume(nil, "Master")[1])
     100
 ```
+
 
 Usage within Awesome
 --------------------
@@ -63,39 +57,37 @@ vicious.register(widget, wtype, format, interval, warg)
 
 **widget**
 
- - widget created with widget() or awful.widget() (in case of a
-   graph or a progressbar)
+- widget created with widget() or awful.widget() (in case of a
+  graph or a progressbar)
 
 **wtype**
 
- - widget type or a function
-  * any of the available (default, or custom) widget types can
-   be used here, see below for a list of those provided by
-   Vicious
- - function
-  * custom functions from your own "awesome" configuration can
-   be registered as widget types, see the "Custom widget types"
-   section
+- widget type or a function
+  * any of the available (default, or custom) widget types can be used here,
+    see below for a list of those provided by Vicious
+- function
+  * custom functions from your own "awesome" configuration can be registered
+    as widget types, see the "Custom widget types" section
 
 **format**
 
- - string argument or a function
-  * $1, $2, $3... will be replaced by their respective value
-    returned by the widget type, some widget types return tables
-    with string keys, in that case use: ${key}
- - function
-  * function(widget, args) can be used to manipulate data
-    returned by the widget type, more about this below
+- string argument or a function
+  * $1, $2, $3... will be replaced by their respective value returned by the
+    widget type, some widget types return tables with string keys, in that
+    case use: ${key}
+- function
+  * function(widget, args) can be used to manipulate data returned by the
+    widget type, more about this below
 
 **interval**
 
-  - number of seconds between updates of the widget, 2s by
-    default, also read the "Power" section below
+- number of seconds between updates of the widget, 2s by default, also read
+  the "Power" section below
 
 **warg**
 
-  - some widget types require an argument to be passed, for example
-    the battery ID
+- some widget types require an argument to be passed, for example the battery
+  ID
 
 
 Other functions
@@ -146,212 +138,351 @@ argument given to vicious.register as the first argument, *warg* as
 the second, and return a table of values to insert in the format
 string.
 
+**vicious.widgets.bat**
+
+Provides state, charge, and remaining time for a requested battery.
+Supported platforms: Linux (required tools: `sysfs`), FreeBSD (required tools:
+`acpiconf`).
+
+- Arguments (per platform):
+  * Linux: takes battery ID as an argument, i.e. `"BAT0"`
+  * FreeBSD: takes optional battery ID as an argument, i.e. `"batt"` or `"0"`
+- Returns (per platform):
+  * Linux: returns 1st value as state of requested battery, 2nd as charge
+    level in percent, 3rd as remaining (charging or discharging) time and 4th
+    as the wear level in percent
+  * FreeBSD: see Linux, but there's is 5th value for the present dis-/charge
+    rate in mW.
+
 **vicious.widgets.cpu**
 
-  - provides CPU usage for all available CPUs/cores
-  - returns 1st value as usage of all CPUs/cores, 2nd as usage of
-    first CPU/core, 3rd as usage of second CPU/core etc.
+Provides CPU usage for all available CPUs/cores.
+Supported platforms: Linux, FreeBSD.
 
-**vicious.widgets.cpuinf**
-
-  - provides speed and cache information for all available CPUs/cores
-  - returns a table with string keys, using CPU ID as a base:
-    {cpu0 mhz}, {cpu0 ghz}, {cpu0 kb}, {cpu0 mb}, {cpu1 mhz} etc.
+- Arguments:
+  * None
+- Returns:
+  * returns 1st value as usage of all CPUs/cores, 2nd as usage of first
+    CPU/core, 3rd as usage of second CPU/core etc.
 
 **vicious.widgets.cpufreq**
 
-  - provides freq, voltage and governor info for a requested CPU
-  - takes the CPU ID as an argument, i.e. "cpu0"
-  - returns 1st value as frequency of requested CPU in MHz, 2nd in
-    GHz, 3rd as voltage in mV, 4th as voltage in V and 5th as the
-    governor state
+Provides freq, voltage and governor info for a requested CPU.
+Supported platforms: Linux, FreeBSD.
 
-**vicious.widgets.thermal**
+- Arguments (per platform):
+  * Linux: takes the CPU ID as an argument, i.e. `"cpu0"`
+  * FreeBSD: takes the CPU ID as an argument, i.e. `"0"`
+- Returns (per platform):
+  * Linux: returns 1st value as frequency of requested CPU in MHz, 2nd in GHz,
+    3rd as voltage in mV, 4th as voltage in V and 5th as the governor state
+  * FreeBSD: returns 1st value as frequency of requested CPU in MHz, 2nd in GHz,
+    3rd as voltage in mV, 4th as voltage in V and 5th as the governor state,
+    but only the first two are supported (other values will be always `"N/A"`)
 
-  - provides temperature levels of ACPI and coretemp thermal zones
-  - takes the thermal zone as an argument, i.e. "thermal\_zone0", or a
-    table with 1st field as thermal zone, 2nd as data source -
-    available data sources are "proc", "core" and "sys" (which is the
-    default when only the zone is provided) and 3rd optional argument
-    as a temperature input file to read
-  - returns 1st value as temperature of requested thermal zone
+**vicious.widgets.cpuinf**
 
-**vicious.widgets.uptime**
+Provides speed and cache information for all available CPUs/cores.
+Supported platforms: Linux.
 
-  - provides system uptime and load information
-  - returns 1st value as uptime in days, 2nd as uptime in hours, 3rd
-    as uptime in minutes, 4th as load average for past 1 minute, 5th
-    for 5 minutes and 6th for 15 minutes
-
-**vicious.widgets.bat**
-
-  - provides state, charge, and remaining time for a requested battery
-  - takes battery ID as an argument, i.e. "BAT0"
-  - returns 1st value as state of requested battery, 2nd as charge
-    level in percent, 3rd as remaining (charging or discharging)
-    time and 4th as the wear level in percent
-
-**vicious.widgets.mem**
-
-  - provides RAM and Swap usage statistics
-  - returns 1st value as memory usage in percent, 2nd as memory usage,
-    3rd as total system memory, 4th as free memory, 5th as swap usage
-    in percent, 6th as swap usage, 7th as total system swap, 8th as
-    free swap and 9th as memory usage with buffers and cache
-
-**vicious.widgets.os**
-
-  - provides operating system information
-  - returns 1st value as the operating system in use, 2nd as the
-    release version, 3rd as your username, 4th the hostname, 5th as
-    available system entropy and 6th value as available entropy in
-    percent
-
-**vicious.widgets.fs**
-
-  - provides file system disk space usage
-  - takes an (optional) argument which, if true, includes remote file
-    systems, only local file systems are included by default
-  - returns a table with string keys, using mount points as a base:
-    {/ size_mb}, {/ size_gb}, {/ used_mb}, {/ used_gb}, {/ used_p},
-    {/ avail_mb}, {/ avail_gb}, {/ avail_p}, {/home size_mb} etc.
-
-**vicious.widgets.dio**
-
-  - provides I/O statistics for all available storage devices
-  - returns a table with string keys: {sda total_s}, {sda total_kb},
-    {sda total_mb}, {sda read_s}, {sda read_kb}, {sda read_mb},
-    {sda write_s}, {sda write_kb}, {sda write_mb}, {sdb1 total_s} etc.
-
-**vicious.widgets.raid**
-
-  - provides state information for a requested RAID array
-  - takes the RAID array ID as an argument
-  - returns 1st value as the number of assigned, and 2nd as active,
-    devices in the array
-
-**vicious.widgets.hddtemp**
-
-  - provides hard drive temperatures using the hddtemp daemon
-  - takes the hddtemp listening port as an argument, or defaults to
-    port 7634
-  - returns a table with string keys, using hard drives as a base:
-    {/dev/sda} and {/dev/sdc} for example
-
-**vicious.widgets.net**
-
-  - provides state and usage statistics of all network interfaces
-  - returns a table with string keys, using net interfaces as a base:
-    {eth0 carrier}, {eth0 rx_b}, {eth0 tx_b}, {eth0 rx_kb}, {eth0 tx_kb},
-    {eth0 rx_mb}, {eth0 tx_mb}, {eth0 rx_gb}, {eth0 tx_gb}, {eth0 down_b},
-    {eth0 up_b}, {eth0 down_kb}, {eth0 up_kb}, {eth0 down_mb},
-    {eth0 up_mb}, {eth0 down_gb}, {eth0 up_gb}, {eth1 rx_b} etc.
-
-**vicious.widgets.wifi**
-
-  - provides wireless information for a requested interface
-  - takes the network interface as an argument, i.e. "wlan0"
-  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {link}, {linp} (link quality in percent) and {sign} (signal level)
-	
-**vicious.widgets.wifiiw**
-
-  - similar to vicious.widgets.wifi, but uses iw instead of iwconfig
-  - provides wireless information for a requested interface
-  - takes the network interface as an argument, i.e. "wlan0"
-  - returns a table with string keys: {ssid}, {mode}, {chan}, {rate},
-    {freq}, {linp} (link quality in percent), {txpw} (tx power) and {sign} (signal level)
-
-
-**vicious.widgets.mbox**
-
-  - provides the subject of last e-mail in a mbox file
-  - takes the full path to the mbox as an argument, or a table with
-    1st field as path, 2nd as maximum length and 3rd (optional) as
-    widget name - if 3rd field is present scrolling will be used (note: the
-    path will be escaped so special variables like ~ will not work, use
-    os.getenv("HOME").."mail" instead to access environment variables)
-  - returns 1st value as the subject of the last e-mail
-
-**vicious.widgets.mboxc**
-
-  - provides the count of total, old and new messages in mbox files
-  - takes a table with full paths to mbox files as an argument
-  - returns 1st value as the total count of messages, 2nd as the count
-    of old messages and 3rd as the count of new messages
-
-**vicious.widgets.mdir**
-
-  - provides the number of new and unread messages in Maildir
-    structures/directories
-  - takes a table with full paths to Maildir structures as an argument
-  - returns 1st value as the count of new messages and 2nd as the
-    count of "old" messages lacking the Seen flag
-
-**vicious.widgets.gmail**
-
-  - provides count of new and subject of last e-mail on Gmail
-  - takes an (optional) argument, if it's a number subject will be
-    truncated, if a table, with 1st field as maximum length and 2nd
-    the widget name (i.e. "gmailwidget"), scrolling will be used
-  - keeps login information in the ~/.netrc file, example:
-    machine mail.google.com login user password pass
-  - returns a table with string keys: {count} and {subject}
-  - to be able to use this widget, make sure in your Gmail account 
-    you disabled 
-    [two step verification](https://support.google.com/accounts/answer/1064203)
-    and _then_ 
-    [allowed access to your account for less secure apps](https://www.google.com/settings/security/lesssecureapps)
-
-**vicious.widgets.org**
-
-  - provides agenda statistics for Emacs org-mode
-  - takes a table with full paths to agenda files, that will be
-    parsed, as an argument
-  - returns 1st value as count of tasks you forgot to do, 2nd as count
-    of tasks for today, 3rd as count of tasks for the next 3 days and
-    4th as count of tasks to do in the week
-
-**vicious.widgets.pkg**
-
-  - provides number of pending updates on UNIX systems
-  - takes the distribution name as an argument, i.e. "Arch"
-  - returns 1st value as the count of available updates
-
-**vicious.widgets.mpd**
-
-  - provides Music Player Daemon information
-  - takes a table as an argument, 1st field should be the password (or
-    nil), 2nd the hostname (or nil) and 3rd port (or nil) - if no
-    argument is provided connection attempt will be made to localhost
-    port 6600 with no password
-  - returns a table with string keys: {volume}, {state}, {Artist},
-    {Title}, {Album}, {Genre} and optionally {Name} and {file}
-
-**vicious.widgets.volume**
-
-  - provides volume levels and state of requested ALSA mixers
-  - takes the ALSA mixer control as an argument, i.e. "Master",
-    optionally append the card ID or other options, i.e. "PCM -c 0"
-  - returns 1st value as the volume level and 2nd as the mute state of
-    the requested channel
-
-**vicious.widgets.weather**
-
-  - provides weather information for a requested station
-  - takes the ICAO station code as an argument, i.e. "LDRI"
-  - returns a table with string keys: {city}, {wind}, {windmph},
-    {windkmh}, {sky}, {weather}, {tempf}, {tempc}, {humid}, {dewf},
-    {dewc}, {press}
+- Arguments:
+  * None
+- Returns:
+  * returns a table with string keys, using CPU ID as a base: `{cpu0 mhz}`,
+    `{cpu0 ghz}`, `{cpu0 kb}`, `{cpu0 mb}`, `{cpu1 mhz}` etc.
 
 **vicious.widgets.date**
 
-  - provides access to os.date, with optional time formatting provided
-    as the format string - using regular date sequences
-  - takes optional time offset, in seconds, as an argument for example
-    to calculate time zone differences, otherwise current time is
-    formatted
-  - returns the output of os.date, formatted by provided sequences
+Provides access to os.date, with optional time formatting provided as the
+format string - using regular date sequences.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes optional time offset, in seconds, as an argument for example to
+    calculate time zone differences, otherwise current time is formatted
+- Returns:
+  * returns the output of os.date, formatted by provided sequences
+
+**vicious.widgets.dio**
+
+Provides I/O statistics for all available storage devices.
+Supported platforms: Linux.
+
+- Arguments:
+  * None
+- Returns:
+  * returns a table with string keys: `{sda total_s}`, `{sda total_kb}`,
+    `{sda total_mb}`, `{sda read_s}`, `{sda read_kb}`, `{sda read_mb}`, `{sda write_s}`,
+    `{sda write_kb}`, `{sda write_mb}`, `{sdb1 total_s}` etc.
+
+**vicious.widget.fanspeed**
+
+Provides fanspeed information for specified fan.
+Supported platforms: FreeBSD.
+
+- Arguments:
+  * Full sysctl string to entry, i.e. `"dev.acpi_ibm.0.fan_speed"`
+- Returns:
+  * Speed of specified fan as number, `-1` for error (probably wrong string)
+
+**vicious.widgets.fs**
+
+Provides usage of file system disk space.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes an (optional) argument which, if true, includes remote file systems,
+    only local file systems are included by default
+- Returns:
+  * returns a table with string keys, using mount points as a base:
+    `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, `{/ used_gb}`, `{/ used_p}`,
+    `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}` etc.
+
+**vicious.widgets.gmail**
+
+Provides count of new and subject of last e-mail on Gmail.
+Supported platform: platform independent (required tools: `curl`).
+
+This widget expects login information in your `~/.netrc` file, e. g.
+`machine mail.google.com login user password pass` and you have to disable
+[two step verification](https://support.google.com/accounts/answer/1064203).
+[Allow access for less secure apps](https://www.google.com/settings/security/lesssecureapps)
+afterwards. BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
+
+- Arguments:
+  * takes an (optional) argument, if it's a number subject will be truncated,
+    if a table, with 1st field as maximum length and 2nd the widget name (i.e.
+    "gmailwidget"), scrolling will be used
+- Returns:
+  * returns a table with string keys: {count} and {subject}
+
+**vicious.widgets.hddtemp**
+
+Provides hard drive temperatures using the hddtemp daemon.
+Supported platforms: Linux (required tools: `hddtemp`, `curl`).
+
+- Arguments:
+  * takes the hddtemp listening port as an argument, or defaults to port 7634
+- Returns:
+  * returns a table with string keys, using hard drives as a base: `{/dev/sda}`
+    and `{/dev/sdc}` for example
+
+**vicious.widgets.mbox**
+
+Provides the subject of last e-mail in a mbox file.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes the full path to the mbox as an argument, or a table with 1st field
+    as path, 2nd as maximum length and 3rd (optional) as widget name - if 3rd
+    field is present scrolling will be used (note: the path will be escaped so
+    special variables like ~ will not work, use os.getenv("HOME").."mail"
+    instead to access environment variables)
+- Returns:
+  * returns 1st value as the subject of the last e-mail
+
+**vicious.widgets.mboxc**
+
+Provides the count of total, old and new messages in mbox files.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to mbox files as an argument
+- Returns:
+  * returns 1st value as the total count of messages, 2nd as the count of old
+    messages and 3rd as the count of new messages
+
+**vicious.widgets.mdir**
+
+Provides the number of new and unread messages in Maildir
+structures/directories.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to Maildir structures as an argument
+- Returns:
+  * returns 1st value as the count of new messages and 2nd as the count of
+    "old" messages lacking the Seen flag
+
+**vicious.widgets.mem**
+
+Provides RAM and Swap usage statistics.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments:
+  * None
+- Returns (per platform):
+  * Linux: returns 1st value as memory usage in percent, 2nd as memory usage, 3rd as
+    total system memory, 4th as free memory, 5th as swap usage in percent, 6th
+    as swap usage, 7th as total system swap, 8th as free swap and 9th as
+    memory usage with buffers and cache
+  * FreeBSD: see above, but 10th value as memory usage with buffers and cache
+    as percent and 11th value as wired memory (memory used by kernel) is
+    reported
+
+**vicious.widgets.mpd**
+
+Provides Music Player Daemon information.
+Supported platforms: platform independent (required tools: `curl`).
+
+- Arguments:
+  * takes a table as an argument, 1st field should be the password (or nil),
+    2nd the hostname (or nil) and 3rd port (or nil) - if no argument is
+    provided connection attempt will be made to localhost port 6600 with no
+    password
+- Returns:
+  * returns a table with string keys: `{volume}`, `{state}`, `{Artist}`, `{Title}`,
+    `{Album}`, `{Genre}` and optionally `{Name}` and `{file}`
+
+**vicious.widgets.net**
+
+Provides state and usage statistics of network interfaces.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: none
+  * FreeBSD: desired interface, e.g. `wlan0`
+- Returns (per platform):
+  * Linux: returns a table with string keys, using net interfaces as a base:
+    `{eth0 carrier}`, `{eth0 rx_b}`, `{eth0 tx_b}`, `{eth0 rx_kb}`, `{eth0 tx_kb}`,
+    `{eth0 rx_mb}`, `{eth0 tx_mb}`, `{eth0 rx_gb}`, `{eth0 tx_gb}`, `{eth0 down_b}`,
+    `{eth0 up_b}`, `{eth0 down_kb}`, `{eth0 up_kb}`, `{eth0 down_mb}`,
+    `{eth0 up_mb}`, `{eth0 down_gb}`, `{eth0 up_gb}`, `{eth1 rx_b}` etc.
+  * FreeBSD: returns a table with string keys:
+    `{carrier}`, `{rx_b}`, `{tx_b}`, `{rx_kb}`, `{tx_kb}`,
+    `{rx_mb}`, `{tx_mb}`, `{rx_gb}`, `{tx_gb}`, `{down_b}`,
+    `{up_b}`, `{down_kb}`, `{up_kb}`, `{down_mb}`,
+    `{up_mb}`, `{down_gb}`, `{up_gb}`
+
+**vicious.widgets.org**
+
+Provides agenda statistics for Emacs org-mode.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes a table with full paths to agenda files, that will be parsed, as an
+    argument
+- Returns:
+  * returns 1st value as count of tasks you forgot to do, 2nd as count of
+    tasks for today, 3rd as count of tasks for the next 3 days and 4th as
+    count of tasks to do in the week
+
+**vicious.widgets.os**
+
+Provides operating system information.
+Supported platforms: platform independent.
+
+- Arguments:
+  * None
+- Returns:
+  * returns 1st value as the operating system in use, 2nd as the release
+    version, 3rd as your username, 4th the hostname, 5th as available system
+    entropy and 6th value as available entropy in percent
+
+**vicious.widgets.pkg**
+
+Provides number of pending updates on UNIX systems. Be aware that some package
+managers need to update their local databases (as root) before showing the
+correct number of updates.
+Supported platforms: platform independent.
+
+- Arguments:
+  * takes the Linux or BSD distribution name as an argument, i.e. "Arch",
+    "FreeBSD"
+- Returns:
+  * returns 1st value as the count of available updates
+
+**vicious.widgets.raid**
+
+Provides state information for a requested RAID array.
+Supported platforms: Linux.
+
+- Arguments:
+  * Takes the RAID array ID as an argument
+- Returns:
+  * Returns 1st value as the number of assigned, and 2nd as active, devices in
+    the array
+
+**vicious.widgets.thermal**
+
+Provides temperature levels of several thermal zones.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments (per platform):
+  * Linux: takes the thermal zone as an argument, i.e. `"thermal_zone0"`, or a
+    table with 1st field as thermal zone, 2nd as data source - available data
+    sources are "proc", "core" and "sys" (which is the default when only the
+    zone is provided) and 3rd optional argument as a temperature input file to
+    read
+  * FreeBSD: takes the full sysctl path to a thermal zone as an argument, i.e.
+    `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
+- Returns:
+  * Linux: returns 1st value as temperature of requested thermal zone
+  * FreeBSD: returns a table with a entry for every input thermal zone
+
+**vicious.widgets.uptime**
+
+Provides system uptime and load information.
+Supported platforms: Linux, FreeBSD.
+
+- Arguments:
+  * None
+- Returns:
+  * Returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
+    in minutes, 4th as load average for past 1 minute, 5th for 5 minutes and
+    6th for 15 minutes
+
+**vicious.widgets.volume**
+
+Provides volume levels and state of requested mixers.
+Supported platforms: Linux (required tool: amixer), FreeBSD.
+
+- Arguments (per platform):
+  * Linux: takes the ALSA mixer control as an argument, i.e. `"Master"`,
+    optionally append the card ID or other options, i.e. `"PCM -c 0"`
+  * FreeBSD: takes the mixer control as an argument, i.e. `"vol"`
+- Returns:
+  * Linux: returns 1st value as the volume level and 2nd as the mute state of
+    the requested control
+  * FreeBSD: returns 1st value as the volume level of the left channel, 2nd as
+    the volume level of the right channel and 3rd as the mute state of the
+    desired control
+
+**vicious.widgets.weather**
+
+Provides weather information for a requested station.
+Supported platforms: platform independent (required tools: `curl`).
+
+- Arguments:
+  * Takes the ICAO station code as an argument, i.e. `"LDRI"`
+- Returns:
+  * Returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
+  `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`,
+  `{dewf}`, `{dewc}` and `{press}`
+
+**vicious.widgets.wifi**
+
+Provides wireless information for a requested interface.
+Supported platforms: Linux.
+
+- Arguments:
+  * Takes the network interface as an argument, i.e. "wlan0"
+- Returns:
+  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
+    `{link}`, `{linp}` (link quality in percent) and `{sign}` (signal level)
+
+**vicious.widgets.wifiiw**
+
+Provides wireless information for a requested interface (similar to
+vicious.widgets.wifi, but uses iw instead of iwconfig).
+Supported platforms: Linux.
+
+- Arguments:
+  * Takes the network interface as an argument, i.e. "wlan0"
+- Returns:
+  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
+    `{freq}`, `{linp}` (link quality in percent), `{txpw}` (tx power) and
+    `{sign}` (signal level)
 
 
 Custom widget types
@@ -361,18 +492,12 @@ own. Write a quick worker function that does the work and plug it
 in. How data will be formatted, will it be red or blue, should be
 defined in rc.lua (or somewhere else, outside the actual module).
 
-Before writing a widget type you should check if there is already one
-in the contrib directory of Vicious. The contrib directory contains
-extra widgets you can use. Some are for less common hardware, and
-other were contributed by Vicious users. The contrib directory also
-holds widget types that were obsoleted or rewritten. Contrib widgets
-will not be imported by init unless you explicitly enable it, or load
-them in your rc.lua.
-
-Rudi Siegel, a FreeBSD user, published his FreeBSD branch. If you are
-also a BSD user you can find his work here:
-
-  - https://bitbucket.org/mutluyum/vicious_bsd/
+Before writing a widget type you should check if there is already one in the
+contrib directory of Vicious. The contrib directory contains extra widgets you
+can use. Some are for less common hardware, and other were contributed by
+Vicious users. Most of the contrib widgets are obsolete. Contrib widgets will
+not be imported by init unless you explicitly enable it, or load them in your
+rc.lua.
 
 Some users would like to avoid writing new modules. For them Vicious
 kept the old Wicked functionality, possibility to register their own
@@ -408,17 +533,15 @@ enables you to have multiple widgets using the same widget type. With
 caching its worker function gets executed only once - which is also
 great for saving power.
 
-  - Some widget types keep internal data and if you call one multiple
-    times without caching, the widget that executes it first would
-    modify stored values. This can lead to problems and give you
-    inconsistent data. Remember it for widget types like CPU and
-    Network usage, which compare the old set of data with the new one
-    to calculate current usage.
+- Some widget types keep internal data and if you call one multiple times
+  without caching, the widget that executes it first would modify stored
+  values. This can lead to problems and give you inconsistent data. Remember
+  it for widget types like CPU and Network usage, which compare the old set of
+  data with the new one to calculate current usage.
 
-  - Widget types that require a widget argument to be passed should be
-    handled carefully. If you are requesting information for different
-    devices then caching should not be used, because you could get
-    inconsistent data.
+- Widget types that require a widget argument to be passed should be handled
+  carefully. If you are requesting information for different devices then
+  caching should not be used, because you could get inconsistent data.
 
 
 Security
@@ -536,8 +659,8 @@ change it or perform some action. You can change the color of the
 battery widget when it goes below a certain point, hide widgets when
 they return a certain value or maybe use string.format for padding.
 
-  - Do not confuse this with just coloring the widget, in those cases
-    standard pango markup can be inserted into the format string.
+- Do not confuse this with just coloring the widget, in those cases standard
+  pango markup can be inserted into the format string.
 
 The format function will get the widget as its first argument, table
 with the values otherwise inserted into the format string as its
@@ -633,7 +756,7 @@ Other
 -----
 Read *"awesome"* manual pages:
 
-  - awesome(1)  awesomerc(5)
+- awesome(1)  awesomerc(5)
 
 [Awesome widgets explained](http://awesome.naquadah.org/wiki/Widgets_in_awesome)
 
@@ -641,29 +764,29 @@ Read *"awesome"* manual pages:
 
 Example "awesome" configuration:
 
-  - http://git.sysphere.org/awesome-configs/
+- http://git.sysphere.org/awesome-configs/
 
 
 Authors
 -------
 Wicked written by:
 
-  - Lucas de Vries           \<lucas glacicle.com\>
+- Lucas de Vries           \<lucas glacicle.com\>
 
 Vicious written by:
 
-  - Adrian C. (anrxc)        \<anrxc sysphere.org\>
+- Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
 Vicious major contributors:
 
-  - Benedikt Sauer           \<filmor gmail.com\>
-  - Greg D.                  \<jabbas jabbas.pl\>
-  - Henning Glawe            \<glaweh debian.org\>
-  - Rémy C.                  \<shikamaru mandriva.org\>
-  - Hiltjo Posthuma          \<hiltjo codemadness.org\>
-  - Hagen Schink             \<troja84 googlemail.com\>
-  - Jörg Thalheim            \<jthalheim gmail.com\>
-  - Arvydas Sidorenko        \<asido4 gmail.com\>
-  - Dodo The Last            <dodo.the.last gmail.com>
-  - ...
-  - Consult git log for a complete list of contributors
+- Benedikt Sauer           \<filmor gmail.com\>
+- Greg D.                  \<jabbas jabbas.pl\>
+- Henning Glawe            \<glaweh debian.org\>
+- Rémy C.                  \<shikamaru mandriva.org\>
+- Hiltjo Posthuma          \<hiltjo codemadness.org\>
+- Hagen Schink             \<troja84 googlemail.com\>
+- Jörg Thalheim            \<jthalheim gmail.com\>
+- Arvydas Sidorenko        \<asido4 gmail.com\>
+- Dodo The Last            <dodo.the.last gmail.com>
+- ...
+- Consult git log for a complete list of contributors

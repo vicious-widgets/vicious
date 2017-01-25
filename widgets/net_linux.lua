@@ -6,7 +6,7 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local os = { time = os.time }
+local os = { time = require("os").time }
 local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { match = string.match }
@@ -16,7 +16,7 @@ local helpers = require("vicious.helpers")
 
 -- Net: provides state and usage statistics of all network interfaces
 -- vicious.widgets.net
-local net = {}
+local net_linux = {}
 
 
 -- Initialize function tables
@@ -77,4 +77,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(net, { __call = function(_, ...) return worker(...) end })
+return setmetatable(net_linux, { __call = function(_, ...) return worker(...) end })

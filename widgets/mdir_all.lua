@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 -- Mdir: provides the number of new and unread messages in Maildir structures/dirs
 -- vicious.widgets.mdir
-local mdir = {}
+local mdir_all = {}
 
 
 -- {{{ Maildir widget type
@@ -40,4 +40,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(mdir, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mdir_all, { __call = function(_, ...) return worker(...) end })

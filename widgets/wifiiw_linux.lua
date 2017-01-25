@@ -20,7 +20,7 @@ local string = {
 
 -- Wifiiw: provides wireless information for a requested interface using iw instead of deprecated iwconfig
 -- vicious.widgets.wifiiw
-local wifiiw = {}
+local wifiiw_linux = {}
 
 
 -- {{{ Wireless widget type
@@ -63,4 +63,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(wifiiw, { __call = function(_, ...) return worker(...) end })
+return setmetatable(wifiiw_linux, { __call = function(_, ...) return worker(...) end })

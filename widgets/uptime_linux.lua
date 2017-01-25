@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 -- Uptime: provides system uptime and load information
 -- vicious.widgets.uptime
-local uptime = {}
+local uptime_linux = {}
 
 
 -- {{{ Uptime widget type
@@ -33,4 +33,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(uptime, { __call = function(_, ...) return worker(...) end })
+return setmetatable(uptime_linux, { __call = function(_, ...) return worker(...) end })

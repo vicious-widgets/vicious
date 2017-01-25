@@ -12,7 +12,7 @@ local string = { find = string.find }
 
 -- Mboxc: provides the count of total, old and new messages in mbox files
 -- vicious.widgets.mboxc
-local mboxc = {}
+local mboxc_all = {}
 
 
 -- {{{ Mbox count widget type
@@ -55,4 +55,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(mboxc, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mboxc_all, { __call = function(_, ...) return worker(...) end })

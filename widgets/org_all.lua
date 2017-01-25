@@ -9,15 +9,15 @@ local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { find = string.find }
 local os = {
-    time = os.time,
-    date = os.date
+    time = require("os").time,
+    date = require("os").date
 }
 -- }}}
 
 
 -- Org: provides agenda statistics for Emacs org-mode
 -- vicious.widgets.org
-local org = {}
+local org_all = {}
 
 
 -- {{{ OrgMode widget type
@@ -59,4 +59,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(org, { __call = function(_, ...) return worker(...) end })
+return setmetatable(org_all, { __call = function(_, ...) return worker(...) end })

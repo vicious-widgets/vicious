@@ -7,15 +7,15 @@
 -- {{{ Grab environment
 local setmetatable = setmetatable
 local os = {
-    date = os.date,
-    time = os.time
+    date = require("os").date,
+    time = require("os").time
 }
 -- }}}
 
 
 -- Date: provides access to os.date with optional time formatting
 -- vicious.widgets.date
-local date = {}
+local date_all = {}
 
 
 -- {{{ Date widget type
@@ -24,4 +24,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(date, { __call = function(_, ...) return worker(...) end })
+return setmetatable(date_all, { __call = function(_, ...) return worker(...) end })
