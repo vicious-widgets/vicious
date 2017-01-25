@@ -17,7 +17,7 @@ local string = {
 
 -- Gmail: provides count of new and subject of last e-mail on Gmail
 -- vicious.widgets.gmail
-local gmail = {}
+local gmail_all = {}
 
 
 -- {{{ Variable definitions
@@ -74,4 +74,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(gmail, { __call = function(_, ...) return worker(...) end })
+return setmetatable(gmail_all, { __call = function(_, ...) return worker(...) end })
