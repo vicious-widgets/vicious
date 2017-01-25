@@ -117,24 +117,28 @@ vicious.contrib.ossvol
 vicious.contrib.pop
   -
 
-vicious.contrib.pulse
-    - provides volume levels of requested pulseaudio sinks and
-      functions to manipulate them
-    - takes the name of a sink as an optional argument.  a number will
-      be interpret as an index, if no argument is given, it will take
-      the first-best
-    - to get a list of available sinks use the command: pacmd
-      list-sinks | grep 'name:'
-    - returns 1st value as the volume level
-  - vicious.contrib.pulse.add(percent, sink)
-    - @percent is a number, which increments or decrements the volume
-      level by its value in percent
-    - @sink optional, same usage as in vicious.contrib.pulse
-    - returns the exit status of pacmd
-  - vicious.contrib.pulse.toggle(sink)
-    - inverts the volume state (mute -> unmute; unmute -> mute)
-    - @sink optional, same usage as in vicious.contrib.pulse
-    - returns the exit status of pacmd
+**vicious.contrib.pulse**
+
+Provides volume levels of requested pulseaudio sinks and functions to
+manipulate them
+
+- Arguments
+  * takes the name of a sink as an optional argument.  a number will
+    be interpret as an index, if no argument is given, it will take
+    the first-best
+  * to get a list of available sinks use the command: pacmd
+    list-sinks | grep 'name:'
+- Returns
+  * returns 1st value as the volume level
+- vicious.contrib.pulse.add(percent, sink)
+  * @percent is a number, which increments or decrements the volume
+    level by its value in percent
+  * @sink optional, same usage as in vicious.contrib.pulse
+  * returns the exit status of pacmd
+- vicious.contrib.pulse.toggle(sink)
+  * inverts the volume state (mute -> unmute; unmute -> mute)
+  * @sink optional, same usage as in vicious.contrib.pulse
+  * returns the exit status of pacmd
 
 vicious.contrib.rss
   -
