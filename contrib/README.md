@@ -28,12 +28,17 @@ could also depend on Lua libraries that are not distributed with the
 core Lua distribution. Ease of installation and use does not
 necessarily have to apply to contributed widgets.
 
-vicious.contrib.ac
-  - provide status about the power supply (AC)
-  - takes the AC device as an argument, i.e "AC" or "ACAD"
-  - the device is linked under /sys/class/power_supply/ and should
+**vicious.contrib.ac**
+
+Provide status about the power supply (AC)
+Supported platforms: Linux (required tools: `sysfs`)
+
+- Arguments:
+  * takes the AC device as an argument, i.e "AC" or "ACAD"
+  * the device is linked under /sys/class/power_supply/ and should
     have a file called "online"
-  - if AC is connected, $1 returns "On", if not it returns "Off",
+- Returns
+  * if AC is connected, $1 returns "On", if not it returns "Off",
     if AC doesn't exist, $1 is "N/A"
 
 vicious.contrib.ati

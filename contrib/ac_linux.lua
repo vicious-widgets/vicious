@@ -14,7 +14,7 @@ local math = {
 }
 -- }}}
 
-local ac = {}
+local ac_linux = {}
 
 -- {{{ AC widget type
 local function worker(format, warg)
@@ -32,4 +32,4 @@ end
 -- }}}
 
 
-return setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+return setmetatable(ac_linux, { __call = function(_, ...) return worker(...) end })
