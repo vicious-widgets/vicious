@@ -13,7 +13,7 @@ local helpers = require("vicious.helpers")
 
 
 -- vicious.widgets.nvinf
-local nvinf = {}
+local nvinf_all = {}
 
 
 -- {{{ NVIDIA infomation widget type
@@ -32,4 +32,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(nvinf, { __call = function(_, ...) return worker(...) end })
+return setmetatable(nvinf_all, { __call = function(_, ...) return worker(...) end })

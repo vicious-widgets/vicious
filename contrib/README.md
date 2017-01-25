@@ -85,11 +85,15 @@ vicious.contrib.openweather
   - returns a table with string keys: {city}, {wind deg}, {wind aim},
     {wind kmh}, {wind mps}, {sky}, {weather}, {temp c}, {humid}, {press}
 
-vicious.contrib.nvinf
-  - provides GPU utilization, core temperature, clock frequency information
-    about Nvidia GPU from nvidia-settings
-  - takes optional card ID as an argument, i.e. "1", or defaults to ID 0
-  - returns first 4 values as usage of GPU core, memory, video engine and
+**vicious.contrib.nvinf**
+
+provides GPU utilization, core temperature, clock frequency information about Nvidia GPU from nvidia-settings
+Supported Platforms: platform independent
+
+- Arguments 
+  * takes optional card ID as an argument, i.e. "1", or defaults to ID 0
+- Returns 
+  * first 4 values as usage of GPU core, memory, video engine and
     PCIe bandwidth, 5th as temperature of requested graphics device, 6th
     as frequency of GPU core, 7th as memory transfer rate
 
