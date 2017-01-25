@@ -21,7 +21,7 @@ local string = {
 
 -- Batpmu: provides state, charge and remaining time for a requested battery using PMU
 -- vicious.contrib.batpmu
-local batpmu = {}
+local batpmu_linux = {}
 
 
 -- {{{ Battery widget type
@@ -76,4 +76,4 @@ local function worker(format, batid)
 end
 -- }}}
 
-return setmetatable(batpmu, { __call = function(_, ...) return worker(...) end })
+return setmetatable(batpmu_linux, { __call = function(_, ...) return worker(...) end })

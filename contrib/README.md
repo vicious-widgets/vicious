@@ -54,8 +54,7 @@ Supported platforms: Linux (required tools: `sysfs`)
     {dpm_perf_level}, {profile}, {engine_clock mhz}, {engine_clock khz},
     {memory_clock mhz}, {memory_clock khz}, {voltage v}, {voltage mv}
 
-vicious.contrib.batpmu
-  -
+**vicious.contrib.batpmu**
 
 vicious.contrib.batproc
   -
