@@ -77,8 +77,7 @@ Provides I/O statistics for requested storage devices
 vicious.contrib.netcfg
   -
 
-vicious.contrib.net
-  -
+**vicious.contrib.net**
 
 vicious.contrib.openweather
   - provides weather information for a requested city
