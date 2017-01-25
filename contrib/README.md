@@ -58,6 +58,8 @@ Supported platforms: Linux (required tools: `sysfs`)
 
 **vicious.contrib.batproc**
 
+**vicious.contrib.countfiles**
+
 vicious.contrib.dio
   - provides I/O statistics for requested storage devices
   - takes the disk as an argument, i.e. "sda" (or a specific

@@ -17,8 +17,9 @@ local pairs = pairs
 -- Be carefull with directories, who contains a mass of files.
 -- "find" is usally fast, but will also produce delays, if the inodes get to big. 
 -- So if you want to count your music library, you may want to use locate/updatedb instead.
-module("vicious.contrib.countfiles")
 
+-- vicious.contrib.countfiles
+local countfiles_all = {}
 
 -- {{{ Sum up widget type
 local function worker(format, warg)
@@ -47,4 +48,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-setmetatable(_M, { __call = function(_, ...) return worker(...) end })
+setmetatable(countfiles_all, { __call = function(_, ...) return worker(...) end })
