@@ -140,8 +140,7 @@ manipulate them
 
 **vicious.contrib.rss**
 
-vicious.contrib.sensors
-  -
+**vicious.contrib.sensors**
 
 vicious.contrib.wpa
   - provides information about the wifi status

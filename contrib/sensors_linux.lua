@@ -17,7 +17,7 @@ local string = {
 
 -- Sensors: provides access to lm_sensors data
 -- vicious.contrib.sensors
-local sensors = {}
+local sensors_linux = {}
 
 
 -- {{{ Split helper function
@@ -66,4 +66,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(sensors, { __call = function(_, ...) return worker(...) end })
+return setmetatable(sensors_linux, { __call = function(_, ...) return worker(...) end })
