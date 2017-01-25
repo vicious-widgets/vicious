@@ -18,7 +18,7 @@ local math = {
 
 -- Bat: provides state, charge, remaining time, and wear for a requested battery
 -- vicious.widgets.bat
-local bat = {}
+local bat_linux = {}
 
 
 -- {{{ Battery widget type
@@ -91,4 +91,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(bat, { __call = function(_, ...) return worker(...) end })
+return setmetatable(bat_linux, { __call = function(_, ...) return worker(...) end })
