@@ -41,11 +41,16 @@ Supported platforms: Linux (required tools: `sysfs`)
   * if AC is connected, $1 returns "On", if not it returns "Off",
     if AC doesn't exist, $1 is "N/A"
 
-vicious.contrib.ati
-  - provides various info about ATI GPU status
-  - takes card ID as an argument, i.e. "card0" (and where possible,
+**vicious.contrib.ati**
+
+Provides various info about ATI GPU status.
+Supported platforms: Linux (required tools: `sysfs`)
+
+- Arguments:
+  * takes card ID as an argument, i.e. "card0" (and where possible,
     uses debugfs to gather data on radeon power management)
-  - returns a table with string keys: {method}, {dpm_state},
+- Returns:
+  * a table with string keys: {method}, {dpm_state},
     {dpm_perf_level}, {profile}, {engine_clock mhz}, {engine_clock khz},
     {memory_clock mhz}, {memory_clock khz}, {voltage v}, {voltage mv}
 

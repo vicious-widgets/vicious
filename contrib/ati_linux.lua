@@ -17,8 +17,8 @@ local string = {
 
 
 -- ATI: provides various info about ATI GPU status
--- vicious.widgets.ati
-local ati = {}
+-- vicious.contrib.ati
+local ati_linux = {}
 
 
 -- {{{ Define variables
@@ -76,4 +76,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(ati, { __call = function(_, ...) return worker(...) end })
+return setmetatable(ati_linux, { __call = function(_, ...) return worker(...) end })
