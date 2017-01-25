@@ -56,8 +56,7 @@ Supported platforms: Linux (required tools: `sysfs`)
 
 **vicious.contrib.batpmu**
 
-vicious.contrib.batproc
-  -
+**vicious.contrib.batproc**
 
 vicious.contrib.dio
   - provides I/O statistics for requested storage devices

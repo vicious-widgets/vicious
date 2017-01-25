@@ -21,7 +21,7 @@ local string = {
 
 -- Batproc: provides state, charge, and remaining time for a requested battery using procfs
 -- vicious.contrib.batproc
-local batproc = {}
+local batproc_linux = {}
 
 
 -- {{{ Battery widget type
@@ -83,4 +83,4 @@ local function worker(format, batid)
 end
 -- }}}
 
-return setmetatable(batproc, { __call = function(_, ...) return worker(...) end })
+return setmetatable(batproc_linux, { __call = function(_, ...) return worker(...) end })
