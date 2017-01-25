@@ -13,7 +13,7 @@ local string = { match = string.match }
 
 -- nvsmi: provides GPU information from nvidia SMI
 -- vicious.contrib.nvsmi
-local nvsmi = {}
+local nvsmi_all = {}
 
 
 -- {{{ GPU Information widget type
@@ -39,4 +39,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(nvsmi, { __call = function(_, ...) return worker(...) end })
+return setmetatable(nvsmi_all, { __call = function(_, ...) return worker(...) end })

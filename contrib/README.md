@@ -97,10 +97,15 @@ Supported Platforms: platform independent
     PCIe bandwidth, 5th as temperature of requested graphics device, 6th
     as frequency of GPU core, 7th as memory transfer rate
 
-vicious.contrib.nvsmi
-  - provides (very basic) information about Nvidia GPU status from SMI
-  - takes optional card ID as an argument, i.e. "1", or defaults to ID 0
-  - returns 1st value as temperature of requested graphics device
+**vicious.contrib.nvsmi**
+
+Provides (very basic) information about Nvidia GPU status from SMI
+Supported Platforms: platform independent
+
+- Arguments:
+  * takes optional card ID as an argument, i.e. "1", or defaults to ID 0
+- Returns:
+  * returns 1st value as temperature of requested graphics device
 
 vicious.contrib.ossvol
   -
