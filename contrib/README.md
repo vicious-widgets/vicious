@@ -111,8 +111,7 @@ Supported Platforms: platform independent
 - Returns:
   * returns 1st value as temperature of requested graphics device
 
-vicious.contrib.ossvol
-  -
+**vicious.contrib.ossvol**
 
 vicious.contrib.pop
   -
