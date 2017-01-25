@@ -14,7 +14,7 @@ local helpers = require("vicious.helpers")
 
 -- Mbox: provides the subject of last e-mail in a mbox file
 -- vicious.widgets.mbox
-local mbox = {}
+local mbox_all = {}
 
 
 -- Initialize variables
@@ -50,4 +50,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(mbox, { __call = function(_, ...) return worker(...) end })
+return setmetatable(mbox_all, { __call = function(_, ...) return worker(...) end })
