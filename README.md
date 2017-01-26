@@ -779,7 +779,7 @@ Vicious written by:
 
 Maintainer of the Freebsd Port:
 
-- @mutlusun
+- [@mutlusun](https://github.com/mutlusun)
 
 Vicious major contributors:
 
