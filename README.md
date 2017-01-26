@@ -777,6 +777,10 @@ Vicious written by:
 
 - Adrian C. (anrxc)        \<anrxc sysphere.org\>
 
+Maintainer of the Freebsd Port:
+
+- @mutlusun
+
 Vicious major contributors:
 
 - Benedikt Sauer           \<filmor gmail.com\>
