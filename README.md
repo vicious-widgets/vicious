@@ -152,7 +152,7 @@ Supported platforms: Linux (required tools: `sysfs`), FreeBSD (required tools:
     level in percent, 3rd as remaining (charging or discharging) time and 4th
     as the wear level in percent
   * FreeBSD: see Linux, but there's is 5th value for the present dis-/charge
-    rate in mW.
+    rate in Watt.
 
 **vicious.widgets.cpu**
 
@@ -276,7 +276,7 @@ Supported platforms: platform independent.
   * takes the full path to the mbox as an argument, or a table with 1st field
     as path, 2nd as maximum length and 3rd (optional) as widget name - if 3rd
     field is present scrolling will be used (note: the path will be escaped so
-    special variables like ~ will not work, use os.getenv("HOME").."mail"
+    special variables like `~` will not work, use `os.getenv("HOME").."mail"`
     instead to access environment variables)
 - Returns:
   * returns 1st value as the subject of the last e-mail
@@ -387,8 +387,8 @@ correct number of updates.
 Supported platforms: platform independent.
 
 - Arguments:
-  * takes the Linux or BSD distribution name as an argument, i.e. "Arch",
-    "FreeBSD"
+  * takes the Linux or BSD distribution name as an argument, i.e. `"Arch"`,
+    `"FreeBSD"`
 - Returns:
   * returns 1st value as the count of available updates
 
@@ -411,9 +411,9 @@ Supported platforms: Linux, FreeBSD.
 - Arguments (per platform):
   * Linux: takes the thermal zone as an argument, i.e. `"thermal_zone0"`, or a
     table with 1st field as thermal zone, 2nd as data source - available data
-    sources are "proc", "core" and "sys" (which is the default when only the
-    zone is provided) and 3rd optional argument as a temperature input file to
-    read
+    sources are `"proc"`, `"core"` and `"sys"` (which is the default when only
+    the zone is provided) and 3rd optional argument as a temperature input
+    file to read
   * FreeBSD: takes the full sysctl path to a thermal zone as an argument, i.e.
     `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
 - Returns:
@@ -466,7 +466,7 @@ Provides wireless information for a requested interface.
 Supported platforms: Linux.
 
 - Arguments:
-  * Takes the network interface as an argument, i.e. "wlan0"
+  * Takes the network interface as an argument, i.e. `"wlan0"`
 - Returns:
   * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
     `{link}`, `{linp}` (link quality in percent) and `{sign}` (signal level)
@@ -478,7 +478,7 @@ vicious.widgets.wifi, but uses iw instead of iwconfig).
 Supported platforms: Linux.
 
 - Arguments:
-  * Takes the network interface as an argument, i.e. "wlan0"
+  * Takes the network interface as an argument, i.e. `"wlan0"`
 - Returns:
   * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
     `{freq}`, `{linp}` (link quality in percent), `{txpw}` (tx power) and
