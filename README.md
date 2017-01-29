@@ -213,7 +213,7 @@ Supported platforms: Linux.
 - Returns:
   * returns a table with string keys: `{sda total_s}`, `{sda total_kb}`,
     `{sda total_mb}`, `{sda read_s}`, `{sda read_kb}`, `{sda read_mb}`, `{sda write_s}`,
-    `{sda write_kb}`, `{sda write_mb}`, `{sdb1 total_s}` etc.
+    `{sda write_kb}`, `{sda write_mb}`, `{sda iotime_ms}`, `{sda iotime_s}`, `{sdb1 total_s}` etc.
 
 **vicious.widget.fanspeed**
 
