@@ -44,7 +44,7 @@ local function worker(format, warg)
     -- Could be huge don't read it all at once, info we are after is at the top
     local xml = f:read(2000)
 
-    if xml ~= nil then
+    if xml == nil then
         return mail
     end
 
