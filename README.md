@@ -149,10 +149,10 @@ Supported platforms: Linux (required tools: `sysfs`), FreeBSD (required tools:
   * FreeBSD: takes optional battery ID as an argument, i.e. `"batt"` or `"0"`
 - Returns (per platform):
   * Linux: returns 1st value as state of requested battery, 2nd as charge
-    level in percent, 3rd as remaining (charging or discharging) time and 4th
-    as the wear level in percent
-  * FreeBSD: see Linux, but there's is 5th value for the present dis-/charge
+    level in percent, 3rd as remaining (charging or discharging) time, 4th
+    as the wear level in percent and 5th value for the present dis-/charge 
     rate in Watt.
+  * FreeBSD: see Linux 
 
 **vicious.widgets.cpu**
 
