@@ -125,10 +125,12 @@ enable caching of values returned by a widget type
 **Force update of widgets:**
 
 ```Lua
-    vicious.force({ widget, })
+    vicious.force(widget)
+    vicious.force({ widget1, widget2 })
 ```
 
-widget argument is a table with one or more widgets that will be updated
+widget argument is a single widget or a table with one or more widgets that
+will be updated
 
 
 Widget types
