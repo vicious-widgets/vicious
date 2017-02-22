@@ -234,8 +234,6 @@ function vicious.force(wtable)
         for _, w in pairs(wtable) do
             update(w, nil, true)
         end
-    else
-       update(wtable, nil, true)
     end
 end
 -- }}}
