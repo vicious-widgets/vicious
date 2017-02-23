@@ -260,6 +260,13 @@ function vicious.activate(widget)
 end
 -- }}}
 
+-- {{{ Get custom widget format data
+function vicious.getdata(myw, format, warg)
+    return helpers.format(format, myw(format, warg))
+end
+-- }}}
+
+
 return vicious
 
 -- }}}
