@@ -48,9 +48,9 @@ local function worker(format, warg)
     -- calculate wear level from (last full / design) capacity
     local wear = "N/A"
     if bat_info["Last full capacity"] and bat_info["Design capacity"] then
-        local l_full =  tonumber(string.match(bat_info["Last full capacity"], "[%d]+"))
+        local l_full = tonumber(string.match(bat_info["Last full capacity"], "[%d]+"))
         local design = tonumber(string.match(bat_info["Design capacity"], "[%d]+"))
-        wear = math.floor(100 - (l_full / design * 100))
+        wear = math.floor(l_full / design * 100)
     end
 
     -- dis-/charging rate as presented by battery
