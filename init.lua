@@ -260,6 +260,17 @@ function vicious.activate(widget)
 end
 -- }}}
 
+-- {{{ Get custom widget format data
+function vicious.call(myw, format, warg)
+    local mydata = myw(format, warg)
+    if type(format) == "string" then
+        return helpers.format(format, mydata)
+    elseif type(format) == "function" then
+        return format(myw, mydata)
+    end
+end
+-- }}}
+
 return vicious
 
 -- }}}
