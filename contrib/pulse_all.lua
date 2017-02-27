@@ -81,8 +81,9 @@ local function worker(format, sink)
 
     local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
     if vol == nil then vol = 0 end
+    volpercent = vol/0x10000*100
 
-    return { math.floor(vol/0x10000*100), "on"}
+    return { volpercent % 1 >= 0.5 and math.ceil(volpercent) or math.floor(volpercent), "on"}
 end
 -- }}}
 
