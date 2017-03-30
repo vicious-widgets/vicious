@@ -49,19 +49,19 @@ local function update(widget, reg, disablecache)
     local t = os.time()
     local data = {}
 
-    local function format_data(rformat, data)
+    local function format_data(data)
         local ret
         if type(data) == "table" then
-            if type(rformat) == "string" then
-                ret = helpers.format(rformat, data)
-            elseif type(rformat) == "function" then
-                ret = rformat(widget, data)
+            if type(reg.format) == "string" then
+                ret = helpers.format(reg.format, data)
+            elseif type(reg.format) == "function" then
+                ret = reg.format(widget, data)
             end
         end
         return ret or data
     end
 
-    local function update_value(data, widget, t, cache)
+    local function update_value(data, t, cache)
         if widget.add_value ~= nil then
             widget:add_value(tonumber(data) and tonumber(data)/100)
         elseif widget.set_value ~= nil then
@@ -75,22 +75,24 @@ local function update(widget, reg, disablecache)
         if t and cache then
             cache.time, cache.data = t, data
         end
-        -- Unlock task
-        reg.lock = false
     end
     
     -- Check for cached output newer than the last update
     local c = widget_cache[reg.wtype]
     if c and c.time and c.data and t < c.time+reg.timer and not disablecache then
-        return update_value(widget, format_data(reg.format, c.data))
+        return update_value(format_data(c.data))
     elseif reg.wtype then
         if reg.wtype.async then
             if not reg.lock then
                 reg.lock = true
-                return reg.wtype.async(reg.warg, function (data) update_value(format_data(reg.format, data), widget, t, c) end)
+                return reg.wtype.async(reg.warg, 
+                    function(data)
+                        update_value(format_data(data), t, c)
+                        reg.lock=false
+                    end)
             end
         else
-            return update_value(format_data(reg.format, reg.wtype(nil, reg.warg)), widget, t, c)
+            return update_value(format_data(reg.wtype(nil, reg.warg)), t, c)
         end
     end
 end
