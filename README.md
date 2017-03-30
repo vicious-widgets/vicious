@@ -395,9 +395,11 @@ Supported platforms: platform independent.
 
 - Arguments:
   * Takes the Linux or BSD distribution name as an argument, i.e. `"Arch"`,
-    `"FreeBSD"`
+    `"Arch C"`, `"Arch S"`, `"Debian"`, `"Ubuntu"`, `"Fedora"`, `"FreeBSD"`,
+    `"Mandriva"`
 - Returns:
-  * Returns 1st value as the count of available updates
+  * Returns 1st value as the count of available updates, 2nd as the list of
+    packages to update
 
 **vicious.widgets.raid**
 
