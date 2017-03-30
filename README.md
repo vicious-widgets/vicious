@@ -813,9 +813,13 @@ Wicked written by:
 
 - Lucas de Vries           \<lucas glacicle.com\>
 
-Vicious written by:
+Vicious was originally written by:
 
 - Adrian C. (anrxc)        \<anrxc sysphere.org\>
+
+Current maintainer:
+
+- Jörg Thalheim (Mic92)    \<joerg thalheim.io\>
 
 Maintainer of the Freebsd Port:
 
@@ -829,7 +833,6 @@ Vicious major contributors:
 - Rémy C.                  \<shikamaru mandriva.org\>
 - Hiltjo Posthuma          \<hiltjo codemadness.org\>
 - Hagen Schink             \<troja84 googlemail.com\>
-- Jörg Thalheim            \<jthalheim gmail.com\>
 - Arvydas Sidorenko        \<asido4 gmail.com\>
 - Dodo The Last            <dodo.the.last gmail.com>
 - ...
