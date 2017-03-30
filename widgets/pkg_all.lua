@@ -37,12 +37,17 @@ local function worker(format, warg)
     local _pkg = manager[warg]
     local f = io.popen(_pkg.cmd)
 
+    local size, lines, first = 0, "", _pkg.sub or 0
     for line in f:lines() do
-        updates = updates + 1
+        if size >= first then
+            lines = lines .. (size == first and "" or "\n") .. line
+        end
+        size = size + 1
     end
+    size = math.max(size-first, 0)
     f:close()
 
-    return {_pkg.sub and math.max(updates-_pkg.sub, 0) or updates}
+    return {size, lines}
 end
 -- }}}
 
