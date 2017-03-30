@@ -75,6 +75,8 @@ local function update(widget, reg, disablecache)
         if t and cache then
             cache.time, cache.data = t, data
         end
+        -- Unlock task
+        reg.lock = false
     end
     
     -- Check for cached output newer than the last update
@@ -83,7 +85,10 @@ local function update(widget, reg, disablecache)
         return update_value(widget, format_data(reg.format, c.data))
     elseif reg.wtype then
         if reg.wtype.async then
-            return reg.wtype.async(reg.warg, function (data) update_value(format_data(reg.format, data), widget, t, c) end)
+            if not reg.lock then
+                reg.lock = true
+                return reg.wtype.async(reg.warg, function (data) update_value(format_data(reg.format, data), widget, t, c) end)
+            end
         else
             return update_value(format_data(reg.format, reg.wtype(nil, reg.warg)), widget, t, c)
         end
@@ -154,6 +159,7 @@ function vicious.register(widget, wtype, format, timer, warg)
     local reg = {
         -- Set properties
         wtype  = wtype,
+        lock   = false,
         format = format,
         timer  = timer,
         warg   = warg,
