@@ -7,6 +7,7 @@
 local io = { popen = io.popen }
 local math = { max = math.max }
 local setmetatable = setmetatable
+local spawn = require("awful.spawn")
 -- }}}
 
 
@@ -42,6 +43,42 @@ local function worker(format, warg)
     f:close()
 
     return {_pkg.sub and math.max(updates-_pkg.sub, 0) or updates}
+end
+-- }}}
+
+-- {{{ Packages widget type
+function pkg_all.async(warg, callback)
+    if not warg then return end
+
+    -- Initialize counters
+    local manager = {
+        ["Arch"]   = { cmd = "pacman -Qu" },
+        ["Arch C"] = { cmd = "checkupdates" },
+        ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
+        ["Debian"] = { cmd = "apt-show-versions -u -b" },
+        ["Ubuntu"] = { cmd = "aptitude search '~U'" },
+        ["Fedora"] = { cmd = "yum list updates", sub = 3 },
+        ["FreeBSD"] ={ cmd = "pkg version -I -l '<'" },
+        ["Mandriva"]={ cmd = "urpmq --auto-select" }
+    }
+
+    -- Select command
+    local _pkg = manager[warg]
+
+    -- Check if updates are available
+    local function parse(str)
+        local size, lines, first = 0, "", _pkg.sub or 0
+        for line in str:gmatch("[^\r\n]+") do
+            if size >= first then
+                lines = lines .. (size == first and "" or "\n") .. line
+            end
+            size = size + 1
+        end
+        size = math.max(size-first, 0)
+        return {size, lines}
+    end
+    
+    spawn.easy_async(_pkg.cmd, function(stdout) callback(parse(stdout)) end)
 end
 -- }}}
 
