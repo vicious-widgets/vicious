@@ -32,12 +32,9 @@ function pkg_all.async(warg, callback)
         ["Mandriva"]={ cmd = "urpmq --auto-select" }
     }
 
-    -- Select command
-    local _pkg = manager[warg]
-
     -- Check if updates are available
-    local function parse(str)
-        local size, lines, first = 0, "", _pkg.sub or 0
+    local function parse(str, skiprows)
+        local size, lines, first = 0, "", skiprows or 0
         for line in str:gmatch("[^\r\n]+") do
             if size >= first then
                 lines = lines .. (size == first and "" or "\n") .. line
@@ -48,7 +45,9 @@ function pkg_all.async(warg, callback)
         return {size, lines}
     end
     
-    spawn.easy_async(_pkg.cmd, function(stdout) callback(parse(stdout)) end)
+    -- Select command
+    local _pkg = manager[warg]
+    spawn.easy_async(_pkg.cmd, function(stdout) callback(parse(stdout, _pkg.sub)) end)
 end
 -- }}}
 
