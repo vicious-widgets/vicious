@@ -630,11 +630,6 @@ argument
 
 ```lua
     batwidget = wibox.widget.progressbar()
-    batwidget:set_background_color("#FF5656")
-    batwidget:set_color("#AECF96")
-
-    -- Register battery widget
-    vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
     -- Create wibox with batwidget
     batbox = wibox.widget {
@@ -643,12 +638,25 @@ argument
         widget        = batwidget,
         border_width  = 0.5,
         border_color  = "#000000",
+        color         = {
+          type = "linear",
+          from = { 0, 0 },
+          to = { 0, 30 },
+          stops = {
+            { 0, "#AECF96" },
+            { 1, "#FF5656" }
+          }
+       }
       },
       forced_height = 10,
       forced_width  = 8,
       direction     = 'east',
+      color         = beautiful.fg_widget,
       layout        = wibox.container.rotate,
     }
+    batbox = wibox.layout.margin(batbox, 1, 1, 3, 3)
+    -- Register battery widget
+    vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 ```
 updated every 61 seconds, requests the current battery charge
 level and displays a progressbar, provides "BAT0" battery ID as an
