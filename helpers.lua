@@ -12,6 +12,7 @@ local pairs = pairs
 local rawget = rawget
 local require = require
 local tonumber = tonumber
+local tostring = tostring
 local io = { 
     open = io.open, 
     popen = io.popen 
@@ -137,7 +138,8 @@ end
 -- }}}
 
 -- {{{ Escape a string for safe usage on the command line
-function helpers.shellquote(s)
+function helpers.shellquote(arg)
+   local s = tostring(arg)
    if s == nil then return "" end
    -- use single quotes, and put single quotes into double quotes
    -- the string $'b is then quoted as '$'"'"'b'"'"'
