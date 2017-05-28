@@ -31,7 +31,7 @@ local function worker(format, warg)
         ["Unknown\n"]     = "⌁",
         ["Charged\n"]     = "↯",
         ["Charging\n"]    = "+",
-        ["Discharging\n"] = "−"
+        ["Discharging\n"] = "-"
     }
 
     -- Get current power usage in watt
@@ -80,7 +80,7 @@ local function worker(format, warg)
     if rate ~= nil and rate ~= 0 then
         if state == "+" then
             timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
-        elseif state == "−" then
+        elseif state == "-" then
             timeleft = tonumber(remaining) / tonumber(rate)
         else
             return {state, percent, time, wear, curpower}
