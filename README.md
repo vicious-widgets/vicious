@@ -588,7 +588,7 @@ order to actually display them.
 **Date widget**
 
 ```Lua
-    datewidget = widget({ type = "textbox" })
+    datewidget = wibox.widget.textbox()
     vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 ```
 
@@ -598,7 +598,7 @@ date sequences as the format string
 **Memory widget**
 
 ```Lua
-    memwidget = widget({ type = "textbox" })
+    memwidget = wibox.widget.textbox()
     vicious.cache(vicious.widgets.mem)
     vicious.register(memwidget, vicious.widgets.mem, "$1 ($2MB/$3MB)", 13)
 ```
@@ -609,7 +609,7 @@ values and enables caching of this widget type
 **HDD temperature widget**
 
 ```Lua
-    hddtempwidget = widget({ type = "textbox" })
+    hddtempwidget = wibox.widget.textbox()
     vicious.register(hddtempwidget, vicious.widgets.hddtemp, "${/dev/sda} °C", 19)
 ```
 
@@ -620,7 +620,7 @@ not provide the port argument so default port is used
 **Mbox widget**
 
 ```Lua
-    mboxwidget = widget({ type = "textbox" })
+    mboxwidget = wibox.widget.textbox()
     vicious.register(mboxwidget, vicious.widgets.mbox, "$1", 5, "/home/user/mail/Inbox")
 ```
 updated every 5 seconds, provides full path to the mbox as an
@@ -694,7 +694,7 @@ widget.
 
 **Example**
 ```Lua
-    mpdwidget = widget({ type = "textbox" })
+    mpdwidget = wibox.widget.textbox()
     vicious.register(mpdwidget, vicious.widgets.mpd,
      function (widget, args)
        if   args["{state}"] == "Stop" then return ""
@@ -708,7 +708,7 @@ seconds (the default interval)
 
 **Example**
 ```Lua
-    uptimewidget = widget({ type = "textbox" })
+    uptimewidget = wibox.widget.textbox()
     vicious.register(uptimewidget, vicious.widgets.uptime,
       function (widget, args)
         return string.format("Uptime: %2dd %02d:%02d ", args[1], args[2], args[3])
@@ -724,7 +724,7 @@ automatically adapted to text width).
 
 **Example**
 ```Lua
-    uptimewidget = widget({ type = "textbox" })
+    uptimewidget = wibox.widget.textbox()
     uptimewidget.width, uptimewidget.align = 50, "right"
     vicious.register(uptimewidget, vicious.widgets.uptime, "$1 $2:$3", 61)
 ```
@@ -738,7 +738,7 @@ it.
 
 **Example**
 ```Lua
-    ctext = widget({ type = "textbox"})
+    ctext = wibox.widget.textbox()
     cgraph = awful.widget.graph()
     cgraph:set_width(100):set_height(20)
     cgraph:set_stack(true):set_max_value(100)
