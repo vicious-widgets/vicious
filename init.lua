@@ -49,38 +49,52 @@ local function update(widget, reg, disablecache)
     local t = os.time()
     local data = {}
 
-    -- Check for chached output newer than the last update
-    if widget_cache[reg.wtype] ~= nil then
-        local c = widget_cache[reg.wtype]
-
-        if (c.time == nil or c.time <= t-reg.timer) or disablecache then
-            c.time, c.data = t, reg.wtype(reg.format, reg.warg)
+    local function format_data(data)
+        local ret
+        if type(data) == "table" then
+            if type(reg.format) == "string" then
+                ret = helpers.format(reg.format, data)
+            elseif type(reg.format) == "function" then
+                ret = reg.format(widget, data)
+            end
         end
-
-        data = c.data
-    else
-        data = reg.wtype and reg.wtype(reg.format, reg.warg)
+        return ret or data
     end
 
-    if type(data) == "table" then
-        if type(reg.format) == "string" then
-            data = helpers.format(reg.format, data)
-        elseif type(reg.format) == "function" then
-            data = reg.format(widget, data)
+    local function update_value(data, t, cache)
+        if widget.add_value ~= nil then
+            widget:add_value(tonumber(data) and tonumber(data)/100)
+        elseif widget.set_value ~= nil then
+            widget:set_value(tonumber(data) and tonumber(data)/100)
+        elseif widget.set_markup ~= nil then
+            widget:set_markup(data)
+        else
+            widget.text = data
+        end
+        -- Update cache
+        if t and cache then
+            cache.time, cache.data = t, data
         end
     end
-
-    if widget.add_value ~= nil then
-        widget:add_value(tonumber(data) and tonumber(data)/100)
-    elseif widget.set_value ~= nil then
-        widget:set_value(tonumber(data) and tonumber(data)/100)
-    elseif widget.set_markup ~= nil then
-        widget:set_markup(data)
-    else
-        widget.text = data
+    
+    -- Check for cached output newer than the last update
+    local c = widget_cache[reg.wtype]
+    if c and c.time and c.data and t < c.time+reg.timer and not disablecache then
+        return update_value(format_data(c.data))
+    elseif reg.wtype then
+        if reg.wtype.async then
+            if not reg.lock then
+                reg.lock = true
+                return reg.wtype.async(reg.warg, 
+                    function(data)
+                        update_value(format_data(data), t, c)
+                        reg.lock=false
+                    end)
+            end
+        else
+            return update_value(format_data(reg.wtype(nil, reg.warg)), t, c)
+        end
     end
-
-    return data
 end
 -- }}}
 
@@ -147,6 +161,7 @@ function vicious.register(widget, wtype, format, timer, warg)
     local reg = {
         -- Set properties
         wtype  = wtype,
+        lock   = false,
         format = format,
         timer  = timer,
         warg   = warg,
