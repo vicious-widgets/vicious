@@ -13,7 +13,7 @@ local volume_freebsd = {}
 
 
 -- {{{ Volume widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local mixer_state = { "♫", "♩" }

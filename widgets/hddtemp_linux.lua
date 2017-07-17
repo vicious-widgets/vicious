@@ -18,7 +18,7 @@ local hddtemp_linux = {}
 
 
 -- {{{ HDD Temperature widget type
-local function worker(format, warg)
+local function worker(warg)
     -- Fallback to default hddtemp port
     if warg == nil then warg = 7634 end
 

@@ -17,7 +17,7 @@ local cpuinf_linux = {}
 
 
 -- {{{ CPU Information widget type
-local function worker(format)
+local function worker(warg)
     local id = nil
 
     local cpu_info = {} -- Get CPU info

@@ -19,7 +19,7 @@ local thermal_linux = {}
 
 
 -- {{{ Thermal widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local zone = { -- Known temperature data sources

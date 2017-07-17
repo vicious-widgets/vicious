@@ -277,7 +277,7 @@ end
 
 -- {{{ Get custom widget format data
 function vicious.call(myw, format, warg)
-    local mydata = myw(format, warg)
+    local mydata = myw(warg)
     if type(format) == "string" then
         return helpers.format(format, mydata)
     elseif type(format) == "function" then

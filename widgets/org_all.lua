@@ -21,7 +21,7 @@ local org_all = {}
 
 
 -- {{{ OrgMode widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- Compute delays

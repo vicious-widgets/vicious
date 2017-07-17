@@ -30,7 +30,7 @@ local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 local time_unit = { ["ms"] = 1, ["s"] = 1000 }
 
 -- {{{ Disk I/O widget type
-local function worker(format)
+local function worker(warg)
     local disk_lines = {}
 
     for line in io.lines("/proc/diskstats") do

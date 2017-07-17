@@ -35,7 +35,7 @@ local _weather = {
 }
 
 -- {{{ Weather widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- Get weather forceast by the station ICAO code, from:

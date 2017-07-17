@@ -52,7 +52,7 @@ end
 -- }}}
 
 -- {{{ Packages widget type
-local function worker(format, warg)
+local function worker(warg)
     local ret = nil
     
     pkg_all.async(warg, function(data) ret = data end)

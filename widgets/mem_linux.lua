@@ -18,7 +18,7 @@ local mem_linux = {}
 
 
 -- {{{ Memory widget type
-local function worker(format)
+local function worker(warg)
     local _mem = { buf = {}, swp = {} }
 
     -- Get MEM info

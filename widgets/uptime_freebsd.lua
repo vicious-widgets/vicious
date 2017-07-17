@@ -14,7 +14,7 @@ local uptime_freebsd = {}
 
 
 -- {{{ Uptime widget type
-local function worker(format)
+local function worker(warg)
     local l1, l5, l15 = string.match(helpers.sysctl("vm.loadavg"), "{ ([%d]+%.[%d]+) ([%d]+%.[%d]+) ([%d]+%.[%d]+) }")
     local up_t = os.time() - tonumber(string.match(helpers.sysctl("kern.boottime"), "sec = ([%d]+)"))
 

@@ -22,7 +22,7 @@ local bat_linux = {}
 
 
 -- {{{ Battery widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local battery = helpers.pathtotable("/sys/class/power_supply/"..warg)

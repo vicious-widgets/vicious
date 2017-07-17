@@ -21,7 +21,7 @@ local unit = { ["b"] = 1, ["kb"] = 1024,
 }
 
 -- {{{ Net widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local args = {}

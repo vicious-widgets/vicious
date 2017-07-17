@@ -24,7 +24,7 @@ local os_all = {}
 
 
 -- {{{ Operating system widget type
-local function worker(format)
+local function worker(warg)
     local system = {
         ["ostype"]    = "N/A",
         ["hostname"]  = "N/A",

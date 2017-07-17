@@ -22,7 +22,7 @@ local fs_all = {}
 local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
-local function worker(format, warg)
+local function worker(warg)
     -- Fallback to listing local filesystems
     if warg then warg = "" else warg = "-l" end
 

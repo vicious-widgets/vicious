@@ -17,7 +17,7 @@ local cpufreq_linux = {}
 
 
 -- {{{ CPU frequency widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local _cpufreq = helpers.pathtotable("/sys/devices/system/cpu/"..warg.."/cpufreq")
