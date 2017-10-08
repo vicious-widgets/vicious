@@ -26,8 +26,22 @@ local function worker(format, warg)
         ["off"] = "♩"  -- "M"
     }
 
+    local mixer = nil
+    local device = nil
+    if type(warg) == "table" then
+	    mixer = warg.mixer or warg[1] or nil
+	    device = warg.device or warg[2] or nil
+    else
+	    mixer = warg
+    end
+
+    local f = nil
     -- Get mixer control contents
-    local f = io.popen("amixer -M get " .. helpers.shellquote(warg))
+    if device and not device == "" then
+	    f = io.popen("amixer -M get " .. helpers.shellquote(mixer) .. " -D " .. helpers.shellquote(device))
+    else
+	    f = io.popen("amixer -M get " .. helpers.shellquote(mixer))
+    end
     local mixer = f:read("*all")
     f:close()
 
