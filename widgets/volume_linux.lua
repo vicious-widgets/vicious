@@ -26,8 +26,17 @@ local function worker(format, warg)
         ["off"] = "♩"  -- "M"
     }
 
+    if type(warg) ~= "table" then
+      warg = { warg }
+    end
+
+    local cmd = "amixer -M get "
+    for _, arg in ipairs(warg) do
+      cmd = cmd .. " " .. helpers.shellquote(arg)
+    end
+
     -- Get mixer control contents
-    local f = io.popen("amixer -M get " .. helpers.shellquote(warg))
+    local f = io.popen(cmd)
     local mixer = f:read("*all")
     f:close()
 
