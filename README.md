@@ -448,9 +448,9 @@ Supported platforms: Linux (required tool: amixer), FreeBSD.
 
 - Arguments (per platform):
   * Linux: takes either a single argument containing the ALSA mixer control as
-    an argument, i.e. `"Master"`, or a table, with the first argument being the
-    ALSA mixer control and the second being the ALSA device ID, i.e.
-    `{"Master", "pulse"}`.
+    an argument, i.e. `"Master"`, or a table passed as command line arguments
+    to [amixer(1)](https://linux.die.net/man/1/amixer),
+    i.e `{"PCM", "-c", "0"}` or `{"Master", "-D", "pulse"}`.
   * FreeBSD: takes the mixer control as an argument, i.e. `"vol"`
 - Returns:
   * Linux: returns 1st value as the volume level and 2nd as the mute state of
