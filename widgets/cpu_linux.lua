@@ -29,7 +29,7 @@ local cpu_total  = {}
 local cpu_active = {}
 
 -- {{{ CPU widget type
-local function worker(format)
+local function worker(warg)
     local cpu_lines = {}
 
     -- Get CPU stats

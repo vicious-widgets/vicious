@@ -19,8 +19,12 @@ local date_all = {}
 
 
 -- {{{ Date widget type
-local function worker(format, warg)
-    return os.date(format or nil, warg and os.time()+warg or nil)
+local function worker(warg)
+    if warg then
+        return os.date(warg[1], warg[2] and os.time()+warg[2] or nil)
+    else
+        return os.date()
+    end
 end
 -- }}}
 

@@ -11,7 +11,7 @@ local mem_freebsd = {}
 
 
 -- {{{ Memory widget type
-local function worker(format)
+local function worker(warg)
     local pagesize = tonumber(helpers.sysctl("hw.pagesize"))
     local vm_stats = helpers.sysctl_table("vm.stats.vm")
     local _mem = { buf = {}, total = nil }

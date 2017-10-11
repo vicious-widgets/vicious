@@ -37,7 +37,7 @@ local mail = {
 
 
 -- {{{ Gmail widget type
-local function worker(format, warg)
+local function worker(warg)
     -- Get info from the Gmail atom feed
     local f = io.popen("curl --connect-timeout 1 -m 3 -fsn " .. helpers.shellquote(feed))
 

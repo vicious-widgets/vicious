@@ -21,7 +21,7 @@ local mbox_all = {}
 local subject = "N/A"
 
 -- {{{ Mailbox widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- mbox could be huge, get a 30kb chunk from EOF

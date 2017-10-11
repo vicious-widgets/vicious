@@ -92,7 +92,7 @@ local function update(widget, reg, disablecache)
                     end)
             end
         else
-            return update_value(format_data(reg.wtype(nil, reg.warg)), t, c)
+            return update_value(format_data(reg.wtype(reg.warg)), t, c)
         end
     end
 end
@@ -277,7 +277,7 @@ end
 
 -- {{{ Get custom widget format data
 function vicious.call(myw, format, warg)
-    local mydata = myw(format, warg)
+    local mydata = myw(warg)
     if type(format) == "string" then
         return helpers.format(format, mydata)
     elseif type(format) == "function" then

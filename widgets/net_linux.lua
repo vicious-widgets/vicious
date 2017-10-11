@@ -27,7 +27,7 @@ local unit = { ["b"] = 1, ["kb"] = 1024,
 }
 
 -- {{{ Net widget type
-local function worker(format)
+local function worker(warg)
     local args = {}
 
     -- Get NET stats

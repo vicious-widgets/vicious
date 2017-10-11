@@ -12,7 +12,7 @@ local tonumber = tonumber
 
 local fanspeed_freebsd = {}
 
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     local fanspeed = helpers.sysctl(warg)

@@ -16,7 +16,7 @@ local mboxc_all = {}
 
 
 -- {{{ Mbox count widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- Initialize counters

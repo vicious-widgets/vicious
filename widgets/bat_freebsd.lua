@@ -13,7 +13,7 @@ local string = {
 -- }}}
 local bat_freebsd = {}
 
-local function worker(format, warg)
+local function worker(warg)
     local battery = warg or "batt"
     local bat_info = {}
     local f = io.popen("acpiconf -i " .. helpers.shellquote(battery))

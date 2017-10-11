@@ -11,7 +11,7 @@ local cpufreq_freebsd = {}
 
 
 -- {{{ CPU frequency widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- Default frequency and voltage values

@@ -24,7 +24,7 @@ local raid_linux = {}
 local mddev = {}
 
 -- {{{ RAID widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
     mddev[warg] = {
         ["found"]    = false,

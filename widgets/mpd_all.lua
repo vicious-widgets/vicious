@@ -18,7 +18,7 @@ local mpd_all = {}
 
 
 -- {{{ MPD widget type
-local function worker(format, warg)
+local function worker(warg)
     local mpd_state  = {
         ["{volume}"] = 0,
         ["{state}"]  = "N/A",

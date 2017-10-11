@@ -18,7 +18,7 @@ local uptime_linux = {}
 
 
 -- {{{ Uptime widget type
-local function worker(format)
+local function worker(warg)
     local proc = helpers.pathtotable("/proc")
 
     -- Get system uptime

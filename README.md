@@ -205,8 +205,10 @@ format string - using regular date sequences.
 Supported platforms: platform independent.
 
 - Arguments:
-  * Takes optional time offset, in seconds, as an argument for example to
-    calculate time zone differences, otherwise current time is formatted
+  * Takes (optional) a table as an argument. First value specifies format
+    string (i.e. `{ "%b %d, %R" }`). An additional value may be given as a
+    time offset, in seconds, to calculate time zone differences 
+    (i.e. `{"%b %d, %R", 3600}`).
 - Returns:
   * Returns the output of os.date, formatted by provided sequences
 
@@ -261,7 +263,7 @@ afterwards. BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
     if a table, with 1st field as maximum length and 2nd the widget name (i.e.
     "gmailwidget"), scrolling will be used
 - Returns:
-  * Returns a table with string keys: {count} and {subject}
+  * Returns a table with string keys: `{count}` and `{subject}`
 
 **vicious.widgets.hddtemp**
 

@@ -11,7 +11,7 @@ local thermal_freebsd = {}
 
 
 -- {{{ Thermal widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
     if type(warg) ~= "table" then warg = { warg } end
 

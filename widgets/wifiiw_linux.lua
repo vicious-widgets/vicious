@@ -24,7 +24,7 @@ local wifiiw_linux = {}
 
 
 -- {{{ Wireless widget type
-local function worker(format, warg)
+local function worker(warg)
     if not warg then return end
 
     -- Default values

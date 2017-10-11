@@ -16,7 +16,7 @@ local cpu_total = {}
 local cpu_idle = {}
 
 -- {{{ CPU widget type
-local function worker(format)
+local function worker(warg)
     local cp_times = helpers.sysctl("kern.cp_times")
     local matches = {}
     local tmp_total = {}
