@@ -76,7 +76,7 @@ local function update(widget, reg, disablecache)
             cache.time, cache.data = t, data
         end
     end
-    
+
     -- Check for cached output newer than the last update
     local c = widget_cache[reg.wtype]
     if c and c.time and c.data and t < c.time+reg.timer and not disablecache then
@@ -85,14 +85,15 @@ local function update(widget, reg, disablecache)
         if reg.wtype.async then
             if not reg.lock then
                 reg.lock = true
-                return reg.wtype.async(reg.warg, 
+                return reg.wtype.async(reg.format,
+                    reg.warg,
                     function(data)
                         update_value(format_data(data), t, c)
                         reg.lock=false
                     end)
             end
         else
-            return update_value(format_data(reg.wtype(nil, reg.warg)), t, c)
+            return update_value(format_data(reg.wtype(reg.format, reg.warg)), t, c)
         end
     end
 end

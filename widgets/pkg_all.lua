@@ -17,7 +17,7 @@ local pkg_all = {}
 
 
 -- {{{ Packages widget type
-function pkg_all.async(warg, callback)
+function pkg_all.async(format, warg, callback)
     if not warg then return end
 
     -- Initialize counters
@@ -44,7 +44,7 @@ function pkg_all.async(warg, callback)
         size = math.max(size-first, 0)
         return {size, lines}
     end
-    
+
     -- Select command
     local _pkg = manager[warg]
     spawn.easy_async(_pkg.cmd, function(stdout) callback(parse(stdout, _pkg.sub)) end)
@@ -54,8 +54,8 @@ end
 -- {{{ Packages widget type
 local function worker(format, warg)
     local ret = nil
-    
-    pkg_all.async(warg, function(data) ret = data end)
+
+    pkg_all.async(format, warg, function(data) ret = data end)
 
     while ret==nil do end
     return ret
