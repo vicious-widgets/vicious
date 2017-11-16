@@ -5,7 +5,7 @@ catering to users of the "awesome" window manager. It was derived from
 the old "Wicked" widget library, and has some of the old Wicked widget
 types, a few of them rewritten, and a good number of new ones:
 
-- http://git.sysphere.org/vicious/about/
+- https://github.com/Mic92/vicious
 
 Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
@@ -24,7 +24,7 @@ manager (ie. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
 
 ```bash
   $ lua
-  > widgets = require("vicious.widgets")
+  > widgets = require("vicious.widgets.init")
   > print(widgets.volume(nil, "Master")[1])
     100
 ```
