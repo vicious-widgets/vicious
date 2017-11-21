@@ -25,22 +25,24 @@ local function worker(format, warg)
         ["{status}"] = "N/A",
         ["{title}"]  = "N/A",
         ["{artist}"]  = "N/A",
-        ["{continue}"]  = false,
-        ["{shuffle}"]  = false,
-        ["{repeat}"]  = false,
+        ["{continue}"]  = "off",
+        ["{shuffle}"]  = "off",
+        ["{repeat}"]  = "off",
     }
 
     -- Fallback to CMUS defaults
     local host = warg and (warg.host or warg[1]) or os.getenv("CMUS_SOCKET")
 
-    if not host and os.getenv("XDG_RUNTIME_DIR") then
+    if not host then
+      if os.getenv("XDG_RUNTIME_DIR") then
         host = os.getenv("XDG_RUNTIME_DIR") .. "/cmus-socket"
-    elseif not host then
+      else
         host = os.getenv("HOME") .. "/.config/cmus/socket"
+      end
     end
 
     -- Get data from CMUS server
-    local f = io.popen(string.format("cmus-remote --query --server %s", host))
+    local f = io.popen("cmus-remote --query --server " .. helpers.escape(host))
 
     for line in f:lines() do
         for module, value in string.gmatch(line, "([%w]+) (.*)$") do
@@ -54,11 +56,13 @@ local function worker(format, warg)
                 for k, v in string.gmatch(value, "([%w]+) (.*)$") do
                     if module == "tag" then
                         if k == "title" or k == "artist" then
-							cmus_state["{"..k.."}"] = helpers.escape(v)
+                            cmus_state["{"..k.."}"] = v
                         end
                     elseif module == "set" then
                         if k == "continue" or k == "shuffle" or k == "repeat" then
-							cmus_state["{"..k.."}"] = v == "true"
+                          if v == "true" then
+                            cmus_state["{"..k.."}"] = "on"
+                          end
                         end
                     end
                 end
