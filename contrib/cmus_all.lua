@@ -11,11 +11,9 @@ local string = { gmatch = string.gmatch, format = string.format }
 local helpers = require("vicious.helpers")
 -- }}}
 
-
 -- Cmus: provides CMUS information
 -- vicious.widgets.cmus
 local cmus_all = {}
-
 
 -- {{{ CMUS widget type
 local function worker(format, warg)
@@ -42,7 +40,7 @@ local function worker(format, warg)
     end
 
     -- Get data from CMUS server
-    local f = io.popen("cmus-remote --query --server " .. helpers.escape(host))
+    local f = io.popen("cmus-remote --query --server " .. helpers.shellquote(host))
 
     for line in f:lines() do
         for module, value in string.gmatch(line, "([%w]+) (.*)$") do
