@@ -31,8 +31,13 @@ local function worker(format, warg)
     }
 
     -- Fallback to CMUS defaults
-    local host = warg and (warg.host or warg[1]) or
-		os.getenv("XDG_RUNTIME_DIR") .. "/cmus-socket"
+    local host = warg and (warg.host or warg[1]) or os.getenv("CMUS_SOCKET")
+
+    if not host and os.getenv("XDG_RUNTIME_DIR") then
+        host = os.getenv("XDG_RUNTIME_DIR") .. "/cmus-socket"
+    elseif not host then
+        host = os.getenv("HOME") .. "/.config/cmus/socket"
+    end
 
     -- Get data from CMUS server
     local f = io.popen(string.format("cmus-remote --query --server %s", host))
