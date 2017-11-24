@@ -18,11 +18,11 @@ local string = {
 
 -- Btc: provides current bitcoin price
 -- vicious.widgets.btc
-local btc_linux = {}
+local btc_all = {}
 
 
 -- {{ Bitcoin widget type
-function btc_linux.async(format, warg, callback)
+function btc_all.async(format, warg, callback)
     -- Default values
     if not warg then warg = "usd" end
 
@@ -48,10 +48,4 @@ function btc_linux.async(format, warg, callback)
 end
 -- }}}
 
--- {{ Bitcoin widget type
-local function worker(format, warg)
-    btc_linux.async(format, warg, function(data) return data end)
-end
--- }}}
-
-return setmetatable(btc_linux, { __call = function(_, ...) return worker(...) end })
+return btc_all
