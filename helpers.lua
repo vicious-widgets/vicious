@@ -40,12 +40,17 @@ local scroller = {}
 
 -- {{{ Helper functions
 -- {{{ Determine operating system
+local kernel_name
 function helpers.getos()
+    if kernel_name ~= nil then
+      return kernel_name
+    end
+
     local f = io.popen("uname -s")
-    local uname = f:read("*line")
+    kernel_name = string.lower(f:read("*line"))
     f:close()
 
-    return string.lower(uname)
+    return kernel_name
 end
 -- }}}
 
@@ -63,17 +68,25 @@ function helpers.wrequire(table, key)
     }
 
     local os = ostable[helpers.getos()]
-    assert(os, "Vicious: platform not supported.")
+    assert(os, "Vicious: platform not supported: " .. helpers.getos())
 
     for i = 1, #os do
-        local status, value = pcall(require, table._NAME .. "." .. key .. "_" .. os[i])
+        local name = table._NAME .. "." .. key .. "_" .. os[i]
+        local status, value = pcall(require, name)
         if status then
             ret = value
             break
         end
+        not_found_msg = "module '"..name.."' not found"
+
+        -- ugly but there is afaik no other way to check if a module exists
+        if value:sub(1, #not_found_msg) ~= not_found_msg then
+          -- module found, but different issue -> let's raise the real error
+          require(name)
+        end
     end
 
-    assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform.")
+    assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform or does not exits")
 
     return ret
 end
