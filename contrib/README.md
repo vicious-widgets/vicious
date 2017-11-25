@@ -60,6 +60,21 @@ Supported platforms: Linux (required tools: `sysfs`)
 
 **vicious.contrib.batproc**
 
+**vicious.contrib.btc**
+
+Provides current Bitcoin price in any currency by code (
+https://en.wikipedia.org/wiki/ISO_4217).
+Requires `curl` and one of the following json libraries:
+ - [lua-cjson](https://github.com/mpx/lua-cjson/))
+ - [luajson](https://github.com/harningt/luajson/)
+Supported platforms: Linux, FreeBSD
+
+- Arguments:
+  * takes currency code, i.e. `"usd"`, `"rub"` and other. `"usd"` by
+    default
+- Returns
+  * a table with string keys: {price}
+
 **vicious.contrib.countfiles**
 
 **vicious.widgets.cmus**
