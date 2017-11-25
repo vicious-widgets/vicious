@@ -1,3 +1,14 @@
+# Changes in 2.3.0
+
+Features:
+- add btc widget
+- add cmus widget
+- alsa mixer also accept multiple arguments
+
+Fixes:
+
+- pkg now uses non-blocking asynchronous api
+
 # Changes in 2.2.0
 
 Notable changes:
