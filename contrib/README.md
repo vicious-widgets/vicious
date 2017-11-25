@@ -64,7 +64,10 @@ Supported platforms: Linux (required tools: `sysfs`)
 
 Provides current Bitcoin price in any currency by code (
 https://en.wikipedia.org/wiki/ISO_4217).
-Supported platforms: Linux, FreeBSD (required tools: `curl`)
+Requires `curl` and one of the following json libraries:
+ - [lua-cjson](https://github.com/mpx/lua-cjson/))
+ - [luajson](https://github.com/harningt/luajson/)
+Supported platforms: Linux, FreeBSD
 
 - Arguments:
   * takes currency code, i.e. `"usd"`, `"rub"` and other. `"usd"` by

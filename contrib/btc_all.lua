@@ -8,7 +8,12 @@ local setmetatable = setmetatable
 local pcall = pcall
 local helpers = require("vicious.helpers")
 local spawn = require("awful.spawn")
-local json = require("json")
+
+local success, json = pcall(require, "cjson")
+if not success then
+  json = require("json")
+end
+
 local string = {
     sub = string.sub,
     upper = string.upper,
