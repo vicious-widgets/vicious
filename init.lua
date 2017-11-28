@@ -82,7 +82,7 @@ local function update(widget, reg, disablecache)
     if c and c.time and c.data and t < c.time+reg.timer and not disablecache then
         return update_value(format_data(c.data))
     elseif reg.wtype then
-        if reg.wtype.async then
+        if type(reg.wtype) == "table" and reg.wtype.async then
             if not reg.lock then
                 reg.lock = true
                 return reg.wtype.async(reg.format,
