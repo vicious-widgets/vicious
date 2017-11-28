@@ -1,3 +1,9 @@
+# Changes in 2.3.1
+
+Fixes:
+
+- widgets can be a function again (regression introduced in 2.3.0)
+
 # Changes in 2.3.0
 
 Features:
