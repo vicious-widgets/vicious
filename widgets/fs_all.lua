@@ -23,11 +23,14 @@ local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
 
 -- {{{ Filesystem widget type
 local function worker(format, warg)
-    -- Fallback to listing local filesystems
-    if warg then warg = "" else warg = "-l" end
+    local cmd = "LC_ALL=C df -kP"
+    if not warg then
+      -- List only local filesystems by default
+      cmd = cmd .. " -l"
+    end
 
     local fs_info = {} -- Get data from df
-    local f = io.popen("LC_ALL=C df -kP " .. helpers.shellquote(warg))
+    local f = io.popen(cmd)
 
     for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
         local s     = string.match(line, "^.-[%s]([%d]+)")
