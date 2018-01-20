@@ -61,16 +61,20 @@ local function update(widget, reg, disablecache)
         return ret or data
     end
 
-    local function update_value(data, t, cache)
+    local function update_value(data)
+        local fmtd_data = format_data(data)
         if widget.add_value ~= nil then
-            widget:add_value(tonumber(data) and tonumber(data)/100)
+            widget:add_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
         elseif widget.set_value ~= nil then
-            widget:set_value(tonumber(data) and tonumber(data)/100)
+            widget:set_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
         elseif widget.set_markup ~= nil then
-            widget:set_markup(data)
+            widget:set_markup(fmtd_data)
         else
-            widget.text = data
+            widget.text = fmtd_data
         end
+    end
+
+    local function update_cache(data, t, cache)
         -- Update cache
         if t and cache then
             cache.time, cache.data = t, data
@@ -79,8 +83,8 @@ local function update(widget, reg, disablecache)
 
     -- Check for cached output newer than the last update
     local c = widget_cache[reg.wtype]
-        return update_value(format_data(c.data))
     if c and t < c.time + reg.timer and not disablecache then
+        update_value(c.data)
     elseif reg.wtype then
         if type(reg.wtype) == "table" and reg.wtype.async then
             if not reg.lock then
@@ -88,12 +92,15 @@ local function update(widget, reg, disablecache)
                 return reg.wtype.async(reg.format,
                     reg.warg,
                     function(data)
-                        update_value(format_data(data), t, c)
+                        update_cache(data, t, c)
+                        update_value(data)
                         reg.lock=false
                     end)
             end
         else
-            return update_value(format_data(reg.wtype(reg.format, reg.warg)), t, c)
+            local data = reg.wtype(reg.format, reg.warg)
+            update_cache(data, t, c)
+            update_value(data)
         end
     end
 end
