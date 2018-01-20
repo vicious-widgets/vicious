@@ -79,8 +79,8 @@ local function update(widget, reg, disablecache)
 
     -- Check for cached output newer than the last update
     local c = widget_cache[reg.wtype]
-    if c and c.time and c.data and t < c.time+reg.timer and not disablecache then
         return update_value(format_data(c.data))
+    if c and t < c.time + reg.timer and not disablecache then
     elseif reg.wtype then
         if type(reg.wtype) == "table" and reg.wtype.async then
             if not reg.lock then
@@ -238,7 +238,7 @@ end
 function vicious.cache(wtype)
     if wtype ~= nil then
         if widget_cache[wtype] == nil then
-            widget_cache[wtype] = {}
+            widget_cache[wtype] = { data = nil, time = 0 }
         end
     end
 end
