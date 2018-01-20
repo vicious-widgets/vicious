@@ -158,24 +158,18 @@ end
 -- {{{ Global functions
 -- {{{ Register a widget
 function vicious.register(widget, wtype, format, timer, warg)
-    local widget = widget
     local reg = {
         -- Set properties
         wtype  = wtype,
         lock   = false,
         format = format,
-        timer  = timer,
+        timer  = timer or 2,
         warg   = warg,
         widget = widget,
     }
     -- Set functions
-    reg.update = function ()
+    function reg.update()
         update(widget, reg)
-    end
-
-    -- Default to 2s timer
-    if reg.timer == nil then
-        reg.timer = 2
     end
 
     -- Register a reg object
