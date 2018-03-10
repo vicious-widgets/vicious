@@ -323,9 +323,8 @@ Supported platforms: Linux, FreeBSD.
     total system memory, 4th as free memory, 5th as swap usage in percent, 6th
     as swap usage, 7th as total system swap, 8th as free swap and 9th as
     memory usage with buffers and cache
-  * FreeBSD: see above, but 10th value as memory usage with buffers and cache
-    as percent and 11th value as wired memory (memory used by kernel) is
-    reported
+  * FreeBSD: see above, but 9th value is not returned (always `-1`) and there
+    is a 10th value giving wired memory
 
 **vicious.widgets.mpd**
 
