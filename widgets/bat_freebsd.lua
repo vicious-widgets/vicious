@@ -30,6 +30,8 @@ local function worker(format, warg)
         state =  "↯"
     elseif bat_info["State"] == "charging" then
         state = "+"
+    elseif bat_info["State"] == "critical charging" then
+        state = "+"
     elseif bat_info["State"] == "discharging" then
         state = "-"
     else
