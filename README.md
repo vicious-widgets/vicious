@@ -323,8 +323,10 @@ Supported platforms: Linux, FreeBSD.
     total system memory, 4th as free memory, 5th as swap usage in percent, 6th
     as swap usage, 7th as total system swap, 8th as free swap and 9th as
     memory usage with buffers and cache
-  * FreeBSD: see above, but there are two more values: the 9th value is wired memory
-    in percent and the 10th value giving wired memory
+  * FreeBSD: see above, but there are four more values: the 9th value is wired memory
+    in percent, the 10th value is wired memory. The 11th and 12th value return
+    'not freeable memory' (basically active+inactive+wired) in percent and megabytes,
+    respectively.
 
 **vicious.widgets.mpd**
 
@@ -804,8 +806,8 @@ Format functions can be used as well:
             naughty.notify({ title = "Battery indicator",
                              text = vicious.call(vicious.widgets.bat, function(widget, args)
                                  return string.format("%s: %10sh\n%s: %14d%%\n%s: %12dW",
-                                                      "Remaining time", args[3], 
-                                                      "Wear level", args[4], 
+                                                      "Remaining time", args[3],
+                                                      "Wear level", args[4],
                                                       "Present rate", args[5])
                              end, "0") })
         end)

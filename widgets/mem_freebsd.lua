@@ -31,12 +31,15 @@ local function worker(format)
     _mem.buf.wired = math.floor(_mem.buf.wired/1048576)
 
     -- Calculate memory percentage
-    _mem.free  = _mem.buf.free + _mem.buf.cache + _mem.buf.laundry
+    _mem.free  = _mem.buf.free + _mem.buf.cache
     -- used memory basically consists of active+inactive+wired
     _mem.inuse = _mem.total - _mem.free
+    _mem.notfreeable = _mem.inuse - _mem.buf.laundry
     _mem.wire  = _mem.buf.wired
+
     _mem.usep  = math.floor(_mem.inuse / _mem.total * 100)
     _mem.wirep = math.floor(_mem.wire / _mem.total * 100)
+    _mem.notfreeablep = math.floor(_mem.notfreeable / _mem.total * 100)
 
     -- Get swap states
     local vm_swap_total = tonumber(helpers.sysctl("vm.swap_total"))
@@ -46,23 +49,23 @@ local function worker(format)
     if vm_swap_enabled == 1 and vm_swap_total > 0 then
         -- Get swap space in bytes
         _swp.total = vm_swap_total
-        _swp.buf.f = _swp.total - tonumber(vm_stats.v_swapin)
+        _swp.buf.free = _swp.total - tonumber(vm_stats.v_swapin)
         -- Rework into megabytes
         _swp.total = math.floor(_swp.total/1048576)
-        _swp.buf.f = math.floor(_swp.buf.f/1048576)
+        _swp.buf.free = math.floor(_swp.buf.free/1048576)
         -- Calculate percentage
-        _swp.inuse = _swp.total - _swp.buf.f
+        _swp.inuse = _swp.total - _swp.buf.free
         _swp.usep  = math.floor(_swp.inuse / _swp.total * 100)
     else
          _swp.usep = -1
          _swp.inuse = -1
          _swp.total = -1
-         _swp.buf.f = -1
+         _swp.buf.free = -1
     end
 
     return { _mem.usep,  _mem.inuse, _mem.total, _mem.free,
-             _swp.usep,  _swp.inuse, _swp.total, _swp.buf.f,
-             _mem.wirep, _mem.wire }
+             _swp.usep,  _swp.inuse, _swp.total, _swp.buf.free,
+             _mem.wirep, _mem.wire, _mem.notfreeablep, _mem.notfreeable }
 end
 
 return setmetatable(mem_freebsd, { __call = function(_, ...) return worker(...) end })
