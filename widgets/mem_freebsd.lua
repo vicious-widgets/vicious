@@ -60,10 +60,6 @@ local function worker(format)
         -- Read content and sum up
         for line in f:lines() do
             local ltotal, lused, lfree = string.match(line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
-            print(ltotal)
-            print(lused)
-            print(lfree)
-            
             -- Add swap space in kbytes
             _swp.total = _swp.total + tonumber(ltotal)
             _swp.inuse = _swp.inuse + tonumber(lused)
