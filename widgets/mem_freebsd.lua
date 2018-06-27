@@ -2,6 +2,7 @@
 local tonumber = tonumber
 local setmetatable = setmetatable
 local math = { floor = math.floor }
+local io = { popen = io.popen }
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -47,14 +48,27 @@ local function worker(format)
     local _swp = { buf = {}, total = nil }
 
     if vm_swap_enabled == 1 and vm_swap_total > 0 then
-        -- Get swap space in bytes
-        _swp.total = vm_swap_total
-        _swp.buf.free = _swp.total - tonumber(vm_stats.v_swapin)
-        -- Rework into megabytes
-        _swp.total = math.floor(_swp.total/1048576)
-        _swp.buf.free = math.floor(_swp.buf.free/1048576)
+        -- Initialise variables
+        _swp.usep = 0
+        _swp.inuse = 0
+        _swp.total = 0
+        _swp.buf.free = 0
+
+        -- Read output of swapinfo in Mbytes
+        local f = io.popen("swapinfo -m")
+        -- Skip first line (table header)
+        f:read("*line")
+        -- Read content and sum up
+        for line in f:lines() do
+            local ltotal, lused, lfree = string.match(line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
+            -- Add swap space in Mbytes
+            _swp.total = _swp.total + tonumber(ltotal)
+            _swp.inuse = _swp.inuse + tonumber(lused)
+            _swp.buf.free = _swp.buf.free + tonumber(lfree)
+        end
+        f:close()
+
         -- Calculate percentage
-        _swp.inuse = _swp.total - _swp.buf.free
         _swp.usep  = math.floor(_swp.inuse / _swp.total * 100)
     else
          _swp.usep = -1
