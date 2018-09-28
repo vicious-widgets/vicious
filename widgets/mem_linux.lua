@@ -26,6 +26,7 @@ local function worker(format)
         for k, v in string.gmatch(line, "([%a]+):[%s]+([%d]+).+") do
             if     k == "MemTotal"  then _mem.total = math.floor(v/1024)
             elseif k == "MemFree"   then _mem.buf.f = math.floor(v/1024)
+            elseif k == "MemAvailable" then _mem.buf.a = math.floor(v/1024)
             elseif k == "Buffers"   then _mem.buf.b = math.floor(v/1024)
             elseif k == "Cached"    then _mem.buf.c = math.floor(v/1024)
             elseif k == "SwapTotal" then _mem.swp.t = math.floor(v/1024)
@@ -35,7 +36,7 @@ local function worker(format)
     end
 
     -- Calculate memory percentage
-    _mem.free  = _mem.buf.f + _mem.buf.b + _mem.buf.c
+    _mem.free  = _mem.buf.a
     _mem.inuse = _mem.total - _mem.free
     _mem.bcuse = _mem.total - _mem.buf.f
     _mem.usep  = math.floor(_mem.inuse / _mem.total * 100)
