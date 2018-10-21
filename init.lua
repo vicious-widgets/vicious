@@ -52,10 +52,19 @@ local function update(widget, reg, disablecache)
     local function format_data(data)
         local ret
         if type(data) == "table" then
+            local escaped_data = {}
+            for k, v in pairs(data) do
+                if type(v) == "string" then
+                    escaped_data[k] = helpers.escape(v)
+                else
+                    escaped_data[k] = v
+                end
+            end
+
             if type(reg.format) == "string" then
-                ret = helpers.format(reg.format, data)
+                ret = helpers.format(reg.format, escaped_data)
             elseif type(reg.format) == "function" then
-                ret = reg.format(widget, data)
+                ret = reg.format(widget, escaped_data)
             end
         end
         return ret or data
