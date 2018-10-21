@@ -1,28 +1,26 @@
-Contrib
--------
+# Contrib
+
 Contrib libraries, or widget types, are extra snippets of code you can
 use. Some are for less common hardware, and other were contributed by
 Vicious users. The contrib directory also holds widget types that were
 obsoleted or rewritten. Contrib widgets will not be imported by init
 unless you explicitly enable it, or load them in your rc.lua.
 
+## Usage within Awesome
 
-Usage within Awesome
---------------------
 To use contrib widgets uncomment the line that loads them in
 init.lua. Or you can load them in your rc.lua after you require
 Vicious:
 
 ```lua
-vicious = require("vicious")
+local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 ```
 
+## Widget types
 
-Widget types
-------------
-Most widget types consist of worker functions that take the "format"
-argument given to vicious.register as the first argument, "warg" as
+Most widget types consist of worker functions that take the `format`
+argument given to vicious.register as the first argument, `warg` as
 the second, and return a table of values to insert in the format
 string. But we have not insisted on this coding style in contrib. So
 widgets like PulseAudio have emerged that are different. These widgets
@@ -30,187 +28,183 @@ could also depend on Lua libraries that are not distributed with the
 core Lua distribution. Ease of installation and use does not
 necessarily have to apply to contributed widgets.
 
-**vicious.contrib.ac**
+### vicious.contrib.ac
 
-Provide status about the power supply (AC)
-Supported platforms: Linux (required tools: `sysfs`)
+Provide status about the power supply (AC).
 
-- Arguments:
-  * takes the AC device as an argument, i.e "AC" or "ACAD"
-  * the device is linked under /sys/class/power_supply/ and should
-    have a file called "online"
-- Returns
-  * if AC is connected, $1 returns "On", if not it returns "Off",
-    if AC doesn't exist, $1 is "N/A"
+Supported platforms: GNU/Linux, requiring `sysfs`.
 
-**vicious.contrib.ati**
+* Argument: the AC device, i.e `"AC"` or `"ACAD"`. The device is linked under
+  `/sys/class/power_supply/` and should have a file called `online`.
+* Returns `{"On"}` if AC is connected, else `{"Off"}`. If AC doesn't exist,
+  returns `{"N/A"}`.
+
+### vicious.contrib.ati
 
 Provides various info about ATI GPU status.
-Supported platforms: Linux (required tools: `sysfs`)
 
-- Arguments:
-  * takes card ID as an argument, i.e. "card0" (and where possible,
-    uses debugfs to gather data on radeon power management)
-- Returns:
-  * a table with string keys: {method}, {dpm_state},
-    {dpm_perf_level}, {profile}, {engine_clock mhz}, {engine_clock khz},
-    {memory_clock mhz}, {memory_clock khz}, {voltage v}, {voltage mv}
+Supported platforms: GNU/Linux, requiring `sysfs`.
 
-**vicious.contrib.batpmu**
+* Argument: card ID, e.g. `"card0"` (and where possible,
+  uses `debugfs` to gather data on radeon power management)
+* Returns a table with string keys: `${method}`, `${dpm_state}`,
+  `${dpm_perf_level}`, `${profile}`, `${engine_clock mhz}`,
+  `${engine_clock khz}`, `${memory_clock mhz}`, `${memory_clock khz}`,
+  `${voltage v}`, `${voltage mv}`
 
-**vicious.contrib.batproc**
+### vicious.contrib.batpmu
 
-**vicious.contrib.btc**
+### vicious.contrib.batproc
 
-Provides current Bitcoin price in any currency by [code](https://en.wikipedia.org/wiki/ISO_4217).
-Requires `curl` and one of the following json libraries:
- - [lua-cjson](https://github.com/mpx/lua-cjson/)
- - [luajson](https://github.com/harningt/luajson/)
+### vicious.contrib.btc
 
-Supported platforms: Linux, FreeBSD
+Provides current Bitcoin price in any currency by
+[code](https://en.wikipedia.org/wiki/ISO_4217).
 
-- Arguments:
-  * takes currency code, i.e. `"usd"`, `"rub"` and other. `"usd"` by
-    default
-- Returns
-  * a table with string keys: {price}
 
-**vicious.contrib.countfiles**
+Platform independent, although requiring `curl` and either
+[lua-cjson](https://github.com/mpx/lua-cjson/) or
+[luajson](https://github.com/harningt/luajson/).
 
-**vicious.widgets.cmus**
+* Argument: currency code, e.g. `"usd"`, `"rub"` and other. Default to `"usd"`.
+* Returns a table with string key `${price}`.
+
+### vicious.contrib.buildbot
+
+Provides last build status for configured buildbot builders
+(http://trac.buildbot.net/).
+
+Supported platforms: platform independent, though requiring Lua JSON parser
+[luajson](https://github.com/harningt/luajson/).
+
+Returns build status in the format:
+`[<builderName>.<currentBuildNumber>.<lastSuccessfulBuildNumber>]`.
+If `<currentBuildNumber>` is the same as `<lastSuccessfulBuildNumber>` only one
+number is displayed. `<buildNumber>` colors: red - failed, green - successful,
+yellow - in progress.
+
+### vicious.contrib.countfiles
+
+### vicious.contrib.cmus
 
 Provides cmus player information using `cmus-remote`.
+
 Supported platforms: platform independent.
 
-- Arguments:
-  * Takes a table as an argument, 1st field should be the socket including host
-    (or nil).
-- Returns:
-  * Returns a table with string keys: `{status}`, `{artist}`, `{title}`,
-    `{duration}`, `{file}`,  `{continue}`, `{shuffle}`, `{repeat}`.
+* Argument: a table whose first field is the socket including host (or nil).
+* Returns a table with string keys: `${status}`, `${artist}`, `${title}`,
+  `${duration}`, `${file}`,  `${continue}`, `${shuffle}`, `${repeat}`.
 
-**vicious.contrib.dio**
+### vicious.contrib.dio
 
-Provides I/O statistics for requested storage devices
+Provides I/O statistics for requested storage devices.
 
-- Arguments:
-  - takes the disk as an argument, i.e. "sda" (or a specific
-    partition, i.e. "sda/sda2")
-- Returns:
-  - a table with string keys: {total_s}, {total_kb}, {total_mb},
-    {read_s}, {read_kb}, {read_mb}, {write_s}, {write_kb}, {write_mb}
-    and {sched}
+* Argument: the disk as an argument, i.e. `"sda"`, or a specific
+  partition, i.e. `"sda/sda2"`
+* Returns a table with string keys: `${total_s}`, `${total_kb}`, `${total_mb}`,
+  `${read_s}`, `${read_kb}`, `${read_mb}`, `${write_s}`, `${write_kb}`,
+  `${write_mb}` and `${sched}`
 
-**vicious.contrib.mpc**
+### vicious.contrib.mpc
 
-vicious.contrib.netcfg
-  -
+### vicious.contrib.netcfg
 
-**vicious.contrib.net**
+### vicious.contrib.net
 
-**vicious.contrib.openweather**
+### vicious.contrib.openweather
 
 Provides weather information for a requested city
 
-- Arguments
-  * takes OpenWeatherMap city ID as an argument, i.e. "1275339"
-- Returns
-  * a table with string keys: {city}, {wind deg}, {wind aim},
-    {wind kmh}, {wind mps}, {sky}, {weather}, {temp c}, {humid}, {press}
+* Argument: OpenWeatherMap city ID, e.g. `"1275339"`
+* Returns a table with string keys: `${city}`, `${wind deg}`, `${wind aim}`,
+  `${wind kmh}`, `${wind mps}`, `${sky}`, `${weather}`, `${temp c}`,
+  `${humid}` and `${press}`
 
-**vicious.contrib.nvinf**
+### vicious.contrib.nvinf
 
-provides GPU utilization, core temperature, clock frequency information about Nvidia GPU from nvidia-settings
+Provides GPU utilization, core temperature, clock frequency information about
+Nvidia GPU from nvidia-settings
+
 Supported Platforms: platform independent
 
-- Arguments 
-  * takes optional card ID as an argument, i.e. "1", or defaults to ID 0
-- Returns 
-  * first 4 values as usage of GPU core, memory, video engine and
-    PCIe bandwidth, 5th as temperature of requested graphics device, 6th
-    as frequency of GPU core, 7th as memory transfer rate
+* Argument (optional): card ID as an argument, e.g. `"1"`, default to ID 0
+* Returns an array containing:
+    * `$1`: Usage of GPU core
+    * `$2`: Usage of GPU memory
+    * `$3`: Usage of video engine
+    * `$4`: Usage of PCIe bandwidth
+    * `$5`: Uemperature of requested graphics device
+    * `$6`: Urequency of GPU core
+    * `$7`: Uemory transfer rate
 
-**vicious.contrib.nvsmi**
+### vicious.contrib.nvsmi
 
 Provides (very basic) information about Nvidia GPU status from SMI
-Supported Platforms: platform independent
 
-- Arguments:
-  * takes optional card ID as an argument, i.e. "1", or defaults to ID 0
-- Returns:
-  * returns 1st value as temperature of requested graphics device
+Supported platforms: platform independent
 
-**vicious.contrib.ossvol**
+* Argument (optional): card ID as an argument, e.g. `"1"`, default to ID 0
+* Returns an array containing temperature of requested graphics device
 
-**vicious.contrib.pop**
+### vicious.contrib.ossvol
 
-**vicious.contrib.pulse**
+### vicious.contrib.pop
+
+### vicious.contrib.pulse
 
 Provides volume levels of requested pulseaudio sinks and functions to
 manipulate them
 
-- Arguments
-  * takes the name of a sink as an optional argument.  a number will
-    be interpret as an index, if no argument is given, it will take
-    the first-best
-  * to get a list of available sinks use the command: pacmd
-    list-sinks | grep 'name:'
-- Returns
-  * returns 1st value as the volume level
-- vicious.contrib.pulse.add(percent, sink)
-  * @percent is a number, which increments or decrements the volume
-    level by its value in percent
-  * @sink optional, same usage as in vicious.contrib.pulse
-  * returns the exit status of pacmd
-- vicious.contrib.pulse.toggle(sink)
-  * inverts the volume state (mute -> unmute; unmute -> mute)
-  * @sink optional, same usage as in vicious.contrib.pulse
-  * returns the exit status of pacmd
+* Argument (optional): name of a sink as an optional argument. A number will
+  be interpret as an index, if no argument is given, it will take the
+  first-best. To get a list of available sinks run
+  `pacmd list-sinks | grep 'name:'`.
+* Returns an array whose only element is the volume level
 
-**vicious.contrib.rss**
+#### vicious.contrib.pulse.add(percent[, sink])
 
-**vicious.contrib.sensors**
+* `percent` is the percentage to increment or decrement the volume from its
+  current value
+* Returns the exit status of `pacmd`
 
-**vicious.contrib.wpa**
+#### vicious.contrib.pulse.toggle([sink])
 
-Provides information about the wifi status
-Supported Platforms: platform independent (`wpa_cli`)
+* Toggles mute state
+* Returns the exit status of `pacmd`
 
-- Arguments
-  - takes the interface as an argument, i.e "wlan0" or "wlan1"
-- Returns
-  - a table with string keys: {ssid}, {qual}, {ip}, {bssid}
+### vicious.contrib.rss
 
-**vicious.contrib.buildbot**
+### vicious.contrib.sensors
 
-Provides last build status for configured buildbot builders (http://trac.buildbot.net/)
-Supported Platforms: platform independent
+### vicious.contrib.wpa
 
-- Returns:
-  * returns build status in the format: [<builderName>.<currentBuildNumber>.<lastSuccessfulBuildNumber>]
-  * if <currentBuildNumber> is the same as <lastSuccessfulBuildNumber> only one number is displayed
-  * <buildNumber> colors: red - failed, green - successful, yellow - in progress
-  * it depends on lua json parser (e.g. liblua5.1-json on Ubuntu 12.04)
+Provides information about the wifi status.
 
+Supported Platforms: platform independent, requiring `wpa_cli`.
 
-Usage examples
----------------------------------
+* Argument: the interface, e.g. `"wlan0"` or `"wlan1"`
+* Returns a table with string keys: `${ssid}`, `${qual}`, `${ip}`, `${bssid}`
+
+## Usage examples
+
+### Pulse Audio widget:
 
 ```lua
-Pulse Audio widget
-  vol = wibox.widget.textbox()
-  vicious.register(vol, vicious.contrib.pulse, " $1%", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
-  vol:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
-    awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
-    awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
-  ))
+vol = wibox.widget.textbox()
+local sink = "alsa_output.pci-0000_00_1b.0.analog-stereo"
+vicious.register(vol, vicious.contrib.pulse, " $1%", 2, sink)
+vol:buttons(awful.util.table.join(
+    awful.button({}, 1, function () awful.util.spawn("pavucontrol") end),
+    awful.button({}, 4, function () vicious.contrib.pulse.add(5, sink) end),
+    awful.button({}, 5, function () vicious.contrib.pulse.add(-5, sink) end)))
+```
 
-Buildbot widget
-  buildbotwidget = wibox.widget.textbox()
-  local buildbotwidget_warg = {
-    {builder="coverage", url="http://buildbot.buildbot.net"},
-    {builder="tarball-slave", url="http://buildbot.buildbot.net"}
-  }
-  vicious.register(buildbotwidget, vicious.contrib.buildbot, "$1,", 3600, buildbotwidget_warg)
+### Buildbot widget
+
+```lua
+buildbotwidget = wibox.widget.textbox()
+vicious.register(
+    buildbotwidget, vicious.contrib.buildbot, "$1,", 3600,
+    {{builder="coverage", url="http://buildbot.buildbot.net"},
+     {builder="tarball-slave", url="http://buildbot.buildbot.net"}})
 ```
