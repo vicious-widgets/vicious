@@ -77,7 +77,7 @@ Supported platforms: Linux, FreeBSD
 
 **vicious.contrib.countfiles**
 
-**vicious.widgets.cmus**
+**vicious.contrib.cmus**
 
 Provides cmus player information using `cmus-remote`.
 Supported platforms: platform independent.
