@@ -41,7 +41,7 @@ local function worker(format, warg)
         end
     end
 
-    return {helpers.escape(np)}
+    return {np}
 end
 -- }}}
 

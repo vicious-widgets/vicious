@@ -46,7 +46,7 @@ local function worker(format, warg)
         end
     end
 
-    return {helpers.escape(subject)}
+    return {subject}
 end
 -- }}}
 
