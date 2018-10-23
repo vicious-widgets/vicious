@@ -65,7 +65,7 @@ local function worker(format, warg)
         end
 
         -- Spam sanitize the subject and store
-        mail["{subject}"] = helpers.escape(title)
+        mail["{subject}"] = title
     end
 
     f:close()

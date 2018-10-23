@@ -44,14 +44,15 @@ local function worker(format, warg)
 
     for line in f:lines() do
         for k, v in string.gmatch(line, "([%w]+):[%s](.*)$") do
-            if     k == "volume" then mpd_state["{"..k.."}"] = v and tonumber(v)
-            elseif k == "state"  then mpd_state["{"..k.."}"] = helpers.capitalize(v)
-            elseif k == "Artist" then mpd_state["{"..k.."}"] = helpers.escape(v)
-            elseif k == "Title"  then mpd_state["{"..k.."}"] = helpers.escape(v)
-            elseif k == "Album"  then mpd_state["{"..k.."}"] = helpers.escape(v)
-            elseif k == "Genre"  then mpd_state["{"..k.."}"] = helpers.escape(v)
-            --elseif k == "Name" then mpd_state["{"..k.."}"] = helpers.escape(v)
-            --elseif k == "file" then mpd_state["{"..k.."}"] = helpers.escape(v)
+            local key = "{" .. k .. "}"
+            if k == "volume" then
+                mpd_state[key] = v and tonumber(v)
+            elseif k == "state" then
+                mpd_state[key] = helpers.capitalize(v)
+            elseif k == "Artist" or k == "Title"  or
+                   --k == "Name" or k == "file" or
+                   k == "Album" or k == "Genre" then
+                mpd_state[key] = v
             end
         end
     end

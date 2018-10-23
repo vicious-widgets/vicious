@@ -44,12 +44,10 @@ local function worker(format, warg)
 
     for line in f:lines() do
         for module, value in string.gmatch(line, "([%w]+) (.*)$") do
-            if module == "file" then
-                cmus_state["{"..module.."}"] = helpers.escape(value)
+            if module == "file"  or module == "status" then
+                cmus_state["{"..module.."}"] = value
             elseif module == "duration" then
                 cmus_state["{"..module.."}"] = tonumber(value)
-            elseif module == "status" then
-                cmus_state["{"..module.."}"] = value
             else
                 for k, v in string.gmatch(value, "([%w]+) (.*)$") do
                     if module == "tag" then
