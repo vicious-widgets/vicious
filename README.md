@@ -420,18 +420,22 @@ Supported platforms: GNU/Linux, FreeBSD.
     * GNU/Linux: either a string - the thermal zone, e.g. `"thermal_zone0"`,
       or a table of the form `{thermal_zone, data_source[, input_file]}`.
       Available `data_source`s and corresponding default `input_file` are given
-      in the table below.
-      | `data_source` |           Path           | Default `input_file` |
-      | :-----------: | ------------------------ | :------------------: |
-      |   `"sys"`     | /sys/class/thermal/      |    `"temp"`          |
-      |   `"core"`    | /sys/devices/platform/   |    `"temp2_input"`   |
-      |   `"hwmon"`   | /sys/class/hwmon/        |    `"temp1_input"`   |
-      |   `"proc"`    | /proc/acpi/thermal_zone/ |    `"temperature"`   |
+      in the table below. For instance, if `"thermal_zone0"` is passed,
+      temperature would be read from `/sys/class/thermal/thermal_zone0/temp`.
+      This widget type is confusing and ugly but it is kept for backward
+      compatibility.
     * FreeBSD: either a full `sysctl` path to a thermal zone, e.g.
       `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
 * Returns:
     * GNU/Linux: an array whose first value is the requested temperature
     * FreeBSD: a table whose keys are provided paths thermal zones
+
+| `data_source` |           Path           | Default `input_file` |
+| :-----------: | ------------------------ | :------------------: |
+|   `"sys"`     | /sys/class/thermal/      |    `"temp"`          |
+|   `"core"`    | /sys/devices/platform/   |    `"temp2_input"`   |
+|   `"hwmon"`   | /sys/class/hwmon/        |    `"temp1_input"`   |
+|   `"proc"`    | /proc/acpi/thermal_zone/ |    `"temperature"`   |
 
 **vicious.widgets.uptime**
 
