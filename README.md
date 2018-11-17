@@ -70,9 +70,10 @@ Type: Vicious widget or `function`:
 
 Type: `string` or `function`:
 
-* string: `$1`, `$2`, `$3`, etc. will be replaced by their respective value
-  returned by the widget type. In case the widget type returns a table with
-  string keys, use: `${key}`.
+* string: `$key` will be replaced by respective value in the table `t` returned
+  by the widget type. I.e. use `$1`, `$2`, etc. to retrieve data from an
+  integer-indexed table (a.k.a. array); `${foo bar}` will be substituted by
+  `t["{foo bar}"]`.
 * `function(widget, args)` can be used to manipulate data returned by the
   widget type (see [Format functions](#format-func)).
 
@@ -153,7 +154,6 @@ Provides CPU usage for all available CPUs/cores.
 
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Argument: None
 * Returns an array containing:
     * `$1`: usage of all CPUs/cores
     * `$2`, `$3`, etc. are respectively the usage of 1st, 2nd, etc. CPU/core
@@ -180,9 +180,8 @@ Provides speed and cache information for all available CPUs/cores.
 
 Supported platforms: GNU/Linux.
 
-* Argument: None
-* Returns a table with string keys, using CPU ID as a base, e.g. `{cpu0 mhz}`,
-  `{cpu0 ghz}`, `{cpu0 kb}`, `{cpu0 mb}`, `{cpu1 mhz}`, etc.
+* Returns a table whose keys using CPU ID as a base, e.g. `${cpu0 mhz}`,
+  `${cpu0 ghz}`, `${cpu0 kb}`, `${cpu0 mb}`, `${cpu1 mhz}`, etc.
 
 ### vicious.widgets.date
 
@@ -204,11 +203,10 @@ Provides I/O statistics for all available storage devices.
 
 Supported platforms: GNU/Linux.
 
-* Argument: None
-* Returns a table with string keys: `{sda total_s}`, `{sda total_kb}`,
-  `{sda total_mb}`, `{sda read_s}`, `{sda read_kb}`, `{sda read_mb}`,
-  `{sda write_s}`, `{sda write_kb}`, `{sda write_mb}`, `{sda iotime_ms}`,
-  `{sda iotime_s}`, `{sdb1 total_s}`, etc.
+* Returns a table with string keys: `${sda total_s}`, `${sda total_kb}`,
+  `${sda total_mb}`, `${sda read_s}`, `${sda read_kb}`, `${sda read_mb}`,
+  `${sda write_s}`, `${sda write_kb}`, `${sda write_mb}`, `${sda iotime_ms}`,
+  `${sda iotime_s}`, `${sdb1 total_s}`, etc.
 
 ### vicious.widget.fanspeed
 
@@ -226,10 +224,10 @@ Provides usage of disk space.
 Supported platforms: platform independent.
 
 * Argument (optional): if true includes remote filesystems, otherwise fallback
-  to default, where only local filesystems are included
+  to default, where only local filesystems are included.
 * Returns a table with string keys, using mount points as a base, e.g.
-  `{/ size_mb}`, `{/ size_gb}`, `{/ used_mb}`, `{/ used_gb}`, `{/ used_p}`,
-  `{/ avail_mb}`, `{/ avail_gb}`, `{/ avail_p}`, `{/home size_mb}`, etc.
+  `${/ size_mb}`, `${/ size_gb}`, `${/ used_mb}`, `${/ used_gb}`, `${/ used_p}`,
+  `${/ avail_mb}`, `${/ avail_gb}`, `${/ avail_p}`, `${/home size_mb}`, etc.
 
 ### vicious.widgets.gmail
 
@@ -241,13 +239,15 @@ This widget expects login information in your `~/.netrc` file, e.g.
 `machine mail.google.com login user password pass` and you have to disable
 [two step verification](https://support.google.com/accounts/answer/1064203).
 [Allow access for less secure apps](https://www.google.com/settings/security/lesssecureapps)
-afterwards. BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
+afterwards.
+
+**BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!**
 
 * Arguments (optional): either a number or a table
     * If it is a number, subject will be truncated.
     * If it is a table whose first field is the maximum length and second field
-      is the widget name (e.g. *gmailwidget*), scrolling will be used.
-* Returns a table with string keys: `{count}` and `{subject}`
+      is the widget name (e.g. `"gmailwidget"`), scrolling will be used.
+* Returns a table with string keys: `${count}` and `${subject}`
 
 ### vicious.widgets.hddtemp
 
@@ -257,7 +257,7 @@ Supported platforms: GNU/Linux, requiring `hddtemp` and `curl`.
 
 * Argument (optional): `hddtemp` listening port (default: 7634)
 * Returns a table with string keys, using hard drives as a base, e.g.
-  `{/dev/sda}` and `{/dev/sdc}`.
+  `${/dev/sda}` and `${/dev/sdc}`.
 
 ### vicious.widgets.mbox
 
@@ -267,19 +267,19 @@ Supported platforms: platform independent.
 
 * Argument: either a string or a table:
     * A string representing the full path to the mbox, or
-    * Table of the form `{path, maximum_length[, widget_name]}`.
+    * Array of the form `{path, maximum_length[, widget_name]}`.
       If the widget name is provided, scrolling will be used.
     * Note: the path will be escaped so special variables like `~` will not
       work, use `os.getenv` instead to access environment variables.
 * Returns an array whose first value is the subject of the last e-mail.
 
-**vicious.widgets.mboxc**
+### vicious.widgets.mboxc
 
 Provides the count of total, old and new messages in mbox files.
 
 Supported platforms: platform independent.
 
-* Argument: a table with full paths to mbox files.
+* Argument: an array full paths to mbox files.
 * Returns an array containing:
     * `$1`: Total number of messages
     * `$2`: Number of old messages
@@ -291,7 +291,7 @@ Provides the number of unread messages in Maildir structures/directories.
 
 Supported platforms: platform independent.
 
-* Argument: a table with full paths to Maildir structures.
+* Argument: an array with full paths to Maildir structures.
 * Returns an array containing:
     * `$1`: Number of new messages
     * `$2`: Number of *old* messages lacking the *Seen* flag
@@ -302,7 +302,6 @@ Provides RAM and Swap usage statistics.
 
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Argument: None
 * Returns (per platform):
     * GNU/Linux: an array consisting of:
         * `$1`: Memory usage in percent
@@ -328,115 +327,117 @@ Supported platforms: GNU/Linux, FreeBSD.
         * `$11`: Unfreeable memory (basically active+inactive+wired) in percent
         * `$12`: Unfreeable memory in MB
 
-**vicious.widgets.mpd**
+### vicious.widgets.mpd
 
 Provides Music Player Daemon information.
+
 Supported platforms: platform independent (required tools: `curl`).
 
-* Arguments:
-  * Takes a table as an argument, 1st field should be the password (or nil),
-    2nd the hostname (or nil) and 3rd port (or nil) - if no argument is
-    provided connection attempt will be made to localhost port 6600 with no
-    password
-* Returns:
-  * Returns a table with string keys: `{volume}`, `{state}`, `{Artist}`, `{Title}`,
-    `{Album}`, `{Genre}` and optionally `{Name}` and `{file}`
+* Argument: an array including password, hostname and port in that order. `nil`
+  fields will be fallen back to default (`localhost:6600` without password).
+* Returns a table with string keys: `${volume}`, `${state}`, `${Artist}`,
+  `${Title}`, `${Album}`, `${Genre}` and optionally `${Name}` and `${file}`.
 
-**vicious.widgets.net**
+### vicious.widgets.net
 
 Provides state and usage statistics of network interfaces.
+
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Arguments (per platform):
-  * GNU/Linux: none
-  * FreeBSD: desired interface, e.g. `wlan0`
+* Argument (FreeBSD only): desired interface, e.g. `"wlan0"`
 * Returns (per platform):
-  * GNU/Linux: returns a table with string keys, using net interfaces as a base:
-    `{eth0 carrier}`, `{eth0 rx_b}`, `{eth0 tx_b}`, `{eth0 rx_kb}`, `{eth0 tx_kb}`,
-    `{eth0 rx_mb}`, `{eth0 tx_mb}`, `{eth0 rx_gb}`, `{eth0 tx_gb}`, `{eth0 down_b}`,
-    `{eth0 up_b}`, `{eth0 down_kb}`, `{eth0 up_kb}`, `{eth0 down_mb}`,
-    `{eth0 up_mb}`, `{eth0 down_gb}`, `{eth0 up_gb}`, `{eth1 rx_b}` etc.
-  * FreeBSD: returns a table with string keys:
-    `{carrier}`, `{rx_b}`, `{tx_b}`, `{rx_kb}`, `{tx_kb}`,
-    `{rx_mb}`, `{tx_mb}`, `{rx_gb}`, `{tx_gb}`, `{down_b}`,
-    `{up_b}`, `{down_kb}`, `{up_kb}`, `{down_mb}`,
-    `{up_mb}`, `{down_gb}`, `{up_gb}`
+  * GNU/Linux: a table with string keys, using net interfaces as a base, e.g.
+    `${eth0 carrier}`, `${eth0 rx_b}`, `${eth0 tx_b}`, `${eth0 rx_kb}`,
+    `${eth0 tx_kb}`, `${eth0 rx_mb}`, `${eth0 tx_mb}`, `${eth0 rx_gb}`,
+    `${eth0 tx_gb}`, `${eth0 down_b}`, `${eth0 up_b}`, `${eth0 down_kb}`,
+    `${eth0 up_kb}`, `${eth0 down_mb}`, `${eth0 up_mb}`, `${eth0 down_gb}`,
+    `${eth0 up_gb}`, `${eth1 rx_b}`, etc.
+  * FreeBSD: a table with string keys: `${carrier}`, `${rx_b}`, `${tx_b}`,
+    `${rx_kb}`, `${tx_kb}`, `${rx_mb}`, `${tx_mb}`, `${rx_gb}`, `${tx_gb}`,
+    `${down_b}`, `${up_b}`, `${down_kb}`, `${up_kb}`, `${down_mb}`, `${up_mb}`,
+    `${down_gb}`, `${up_gb}`.
 
-**vicious.widgets.org**
+### vicious.widgets.org
 
 Provides agenda statistics for Emacs org-mode.
+
 Supported platforms: platform independent.
 
-* Arguments:
-  * Takes a table with full paths to agenda files, that will be parsed, as an
-    argument
-* Returns:
-  * Returns 1st value as count of tasks you forgot to do, 2nd as count of
-    tasks for today, 3rd as count of tasks for the next 3 days and 4th as
-    count of tasks to do in the week
+* Argument: an array of full paths to agenda files, which will be parsed as
+  arguments.
+* Returns an array consisting of
+    * `$1`: Number of tasks you forgot to do
+    * `$2`: Number of tasks for today
+    * `$3`: Number of tasks for the next 3 days
+    * `$4`: Number of tasks to do in the week
 
-**vicious.widgets.os**
+### vicious.widgets.os
 
 Provides operating system information.
+
 Supported platforms: platform independent.
 
-* Arguments:
-  * None
-* Returns:
-  * Returns 1st value as the operating system in use, 2nd as the release
-    version, 3rd as your username, 4th the hostname, 5th as available system
-    entropy and 6th value as available entropy in percent
+* Returns an array containing:
+    * `$1`: Operating system in use
+    * `$2`: Release version
+    * `$3`: Username
+    * `$4`: Hostname
+    * `$5`: Available system entropy
+    * `$6`: Available entropy in percent
 
-**vicious.widgets.pkg**
+### vicious.widgets.pkg
 
 Provides number of pending updates on UNIX systems. Be aware that some package
 managers need to update their local databases (as root) before showing the
 correct number of updates.
+
 Supported platforms: platform independent.
 
-* Arguments:
-  * Takes the GNU/Linux or BSD distribution name as an argument, e.g. `"Arch"`,
-    `"Arch C"`, `"Arch S"`, `"Debian"`, `"Ubuntu"`, `"Fedora"`, `"FreeBSD"`,
-    `"Mandriva"`
-* Returns:
-  * Returns 1st value as the count of available updates, 2nd as the list of
-    packages to update
+* Argument: distribution name, e.g. `"Arch"`, `"Arch C"`, `"Arch S"`,
+  `"Debian"`, `"Ubuntu"`, `"Fedora"`, `"FreeBSD"`, `"Mandriva"`.
+* Returns an array including:
+    * `$1`: Number of available updates
+    * `$2`: Packages available for update
 
-**vicious.widgets.raid**
+### vicious.widgets.raid
 
 Provides state information for a requested RAID array.
+
 Supported platforms: GNU/Linux.
 
-* Arguments:
-  * Takes the RAID array ID as an argument
-* Returns:
-  * Returns 1st value as the number of assigned, and 2nd as active, devices in
-    the array
+* Argument: the RAID array ID.
+* Returns an array containing:
+    * `$1`: Number of assigned devices
+    * `$2`: Number of active devices
 
-**vicious.widgets.thermal**
+### vicious.widgets.thermal
 
 Provides temperature levels of several thermal zones.
+
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Arguments (per platform):
-  * GNU/Linux: takes the thermal zone as an argument, e.g. `"thermal_zone0"`, or a
-    table with 1st field as thermal zone, 2nd as data source - available data
-    sources are `"proc"`, `"core"` and `"sys"` (which is the default when only
-    the zone is provided) and 3rd optional argument as a temperature input
-    file to read
-  * FreeBSD: takes the full sysctl path to a thermal zone as an argument, e.g.
-    `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
+* Argument (per platform):
+    * GNU/Linux: either a string - the thermal zone, e.g. `"thermal_zone0"`,
+      or a table of the form `{thermal_zone, data_source[, input_file]}`.
+      Available `data_source`s and corresponding default `input_file` are given
+      in the table below.
+      | `data_source` |           Path           | Default `input_file` |
+      | :-----------: | ------------------------ | :------------------: |
+      |   `"sys"`     | /sys/class/thermal/      |    `"temp"`          |
+      |   `"core"`    | /sys/devices/platform/   |    `"temp2_input"`   |
+      |   `"hwmon"`   | /sys/class/hwmon/        |    `"temp1_input"`   |
+      |   `"proc"`    | /proc/acpi/thermal_zone/ |    `"temperature"`   |
+    * FreeBSD: either a full `sysctl` path to a thermal zone, e.g.
+      `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
 * Returns:
-  * GNU/Linux: returns 1st value as temperature of requested thermal zone
-  * FreeBSD: returns a table with a entry for every input thermal zone
+    * GNU/Linux: an array whose first value is the requested temperature
+    * FreeBSD: a table whose keys are provided paths thermal zones
 
 **vicious.widgets.uptime**
 
 Provides system uptime and load information.
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Arguments:
-  * None
 * Returns:
   * Returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
     in minutes, 4th as load average for past 1 minute, 5th for 5 minutes and
@@ -465,12 +466,12 @@ Supported platforms: GNU/Linux (required tool: amixer), FreeBSD.
 Provides weather information for a requested station.
 Supported platforms: platform independent (required tools: `curl`).
 
-* Arguments:
+* Arguments
   * Takes the ICAO station code as an argument, e.g. `"LDRI"`
 * Returns:
-  * Returns a table with string keys: `{city}`, `{wind}`, `{windmph}`,
-  `{windkmh}`, `{sky}`, `{weather}`, `{tempf}`, `{tempc}`, `{humid}`,
-  `{dewf}`, `{dewc}` and `{press}`
+  * Returns a table with string keys: `${city}`, `${wind}`, `${windmph}`,
+  `${windkmh}`, `${sky}`, `${weather}`, `${tempf}`, `${tempc}`, `${humid}`,
+  `${dewf}`, `${dewc}` and `${press}`
 
 **vicious.widgets.wifi**
 
@@ -480,8 +481,8 @@ Supported platforms: GNU/Linux.
 * Arguments:
   * Takes the network interface as an argument, e.g. `"wlan0"`
 * Returns:
-  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
-    `{link}`, `{linp}` (link quality in percent) and `{sign}` (signal level)
+  * Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
+    `${link}`, `${linp}` (link quality in percent) and `${sign}` (signal level)
 
 **vicious.widgets.wifiiw**
 
@@ -492,9 +493,9 @@ Supported platforms: GNU/Linux.
 * Arguments:
   * Takes the network interface as an argument, e.g. `"wlan0"`
 * Returns:
-  * Returns a table with string keys: `{ssid}`, `{mode}`, `{chan}`, `{rate}`,
-    `{freq}`, `{linp}` (link quality in percent), `{txpw}` (tx power) and
-    `{sign}` (signal level)
+  * Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
+    `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
+    `${sign}` (signal level)
 
 
 ## <a name="custom-widget"></a>Custom widget types
@@ -686,7 +687,7 @@ You can use a function instead of a string as the format parameter.
 Then you are able to check the value returned by the widget type and
 change it or perform some action. You can change the color of the
 battery widget when it goes below a certain point, hide widgets when
-they return a certain value or maybe use string.format for padding.
+they return a certain value or maybe use `string.format` for padding.
 
 Do not confuse this with just coloring the widget, in those cases standard
 Pango markup can be inserted into the format string.
