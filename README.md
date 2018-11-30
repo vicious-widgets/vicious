@@ -74,7 +74,7 @@ Type: `string` or `function`:
   by the widget type. I.e. use `$1`, `$2`, etc. to retrieve data from an
   integer-indexed table (a.k.a. array); `${foo bar}` will be substituted by
   `t["{foo bar}"]`.
-* `function(widget, args)` can be used to manipulate data returned by the
+* `function (widget, args)` can be used to manipulate data returned by the
   widget type (see [Format functions](#format-func)).
 
 ### interval
@@ -305,27 +305,27 @@ Supported platforms: GNU/Linux, FreeBSD.
 * Returns (per platform):
     * GNU/Linux: an array consisting of:
         * `$1`: Memory usage in percent
-        * `$2`: Memory usage in MB
-        * `$3`: Total system memory in MB
-        * `$4`: Free memory in MB
+        * `$2`: Memory usage in MiB
+        * `$3`: Total system memory in MiB
+        * `$4`: Free memory in MiB
         * `$5`: Swap usage in percent
-        * `$6`: Swap usage in MB
-        * `$7`: Total system swap in MB
-        * `$8`: Free swap in MB
-        * `$9`: Memory usage with buffers and cache, in MB
+        * `$6`: Swap usage in MiB
+        * `$7`: Total system swap in MiB
+        * `$8`: Free swap in MiB
+        * `$9`: Memory usage with buffers and cache, in MiB
     * FreeBSD: an array including:
         * `$1`: Memory usage in percent
-        * `$2`: Memory usage in MB
-        * `$3`: Total system memory in MB
-        * `$4`: Free memory in MB
+        * `$2`: Memory usage in MiB
+        * `$3`: Total system memory in MiB
+        * `$4`: Free memory in MiB
         * `$5`: Swap usage in percent
-        * `$6`: Swap usage in MB
-        * `$7`: Total system swap in MB
-        * `$8`: Free swap in MB
+        * `$6`: Swap usage in MiB
+        * `$7`: Total system swap in MiB
+        * `$8`: Free swap in MiB
         * `$9`: Wired memory in percent
-        * `$10`: Wired memory in MB
+        * `$10`: Wired memory in MiB
         * `$11`: Unfreeable memory (basically active+inactive+wired) in percent
-        * `$12`: Unfreeable memory in MB
+        * `$12`: Unfreeable memory in MiB
 
 ### vicious.widgets.mpd
 
@@ -425,10 +425,10 @@ Supported platforms: GNU/Linux, FreeBSD.
       This widget type is confusing and ugly but it is kept for backward
       compatibility.
     * FreeBSD: either a full `sysctl` path to a thermal zone, e.g.
-      `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths
-* Returns:
-    * GNU/Linux: an array whose first value is the requested temperature
-    * FreeBSD: a table whose keys are provided paths thermal zones
+      `"hw.acpi.thermal.tz0.temperature"`, or a table with multiple paths.
+* Returns (per platform):
+    * GNU/Linux: an array whose first value is the requested temperature.
+    * FreeBSD: a table whose keys are provided paths thermal zones.
 
 | `data_source` |           Path           | Default `input_file` |
 | :-----------: | ------------------------ | :------------------: |
@@ -437,69 +437,71 @@ Supported platforms: GNU/Linux, FreeBSD.
 |   `"hwmon"`   | /sys/class/hwmon/        |    `"temp1_input"`   |
 |   `"proc"`    | /proc/acpi/thermal_zone/ |    `"temperature"`   |
 
-**vicious.widgets.uptime**
+### vicious.widgets.uptime
 
 Provides system uptime and load information.
+
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Returns:
-  * Returns 1st value as uptime in days, 2nd as uptime in hours, 3rd as uptime
-    in minutes, 4th as load average for past 1 minute, 5th for 5 minutes and
-    6th for 15 minutes
+* Returns an array containing:
+    * `$1`: Uptime in days
+    * `$2`: Uptime in hours
+    * `$3`: Uptime in minutes
+    * `$4`: Load average in the past minute
+    * `$5`: Load average in the past 5 minutes
+    * `$6`: Load average in the past 15 minutes
 
-**vicious.widgets.volume**
+### vicious.widgets.volume
 
 Provides volume levels and state of requested mixers.
-Supported platforms: GNU/Linux (required tool: amixer), FreeBSD.
 
-* Arguments (per platform):
-  * GNU/Linux: takes either a single argument containing the ALSA mixer control as
-    an argument, e.g. `"Master"`, or a table passed as command line arguments
-    to [amixer(1)](https://linux.die.net/man/1/amixer),
-    i.e `{"PCM", "-c", "0"}` or `{"Master", "-D", "pulse"}`.
-  * FreeBSD: takes the mixer control as an argument, e.g. `"vol"`
-* Returns:
-  * GNU/Linux: returns 1st value as the volume level and 2nd as the mute state of
-    the requested control
-  * FreeBSD: returns 1st value as the volume level of the left channel, 2nd as
-    the volume level of the right channel and 3rd as the mute state of the
-    desired control
+Supported platforms: GNU/Linux (requiring `amixer`), FreeBSD.
 
-**vicious.widgets.weather**
+* Argument (per platform):
+    * GNU/Linux: either a string containing the ALSA mixer control
+      (e.g. `"Master"`) or a table including command line arguments to be
+      passed to [amixer(1)](https://linux.die.net/man/1/amixer),
+      e.g. `{"PCM", "-c", "0"}` or `{"Master", "-D", "pulse"}`
+    * FreeBSD: the mixer control, e.g. `"vol"`
+* Returns an array consisting of (per platform):
+    * GNU/Linux: `$1` as the volume level and `$2` as the mute state of
+      the requested control
+    * FreeBSD: `$1` as the volume level of the *left* channel, `$2` as the
+      volume level of the *right* channel and `$3` as the mute state of the
+      desired control
+
+### vicious.widgets.weather
 
 Provides weather information for a requested station.
-Supported platforms: platform independent (required tools: `curl`).
 
-* Arguments
-  * Takes the ICAO station code as an argument, e.g. `"LDRI"`
-* Returns:
-  * Returns a table with string keys: `${city}`, `${wind}`, `${windmph}`,
+Supported platforms: any having `curl` installed.
+
+* Argument: the ICAO station code, e.g. `"LDRI"`
+* Returns a table with string keys: `${city}`, `${wind}`, `${windmph}`,
   `${windkmh}`, `${sky}`, `${weather}`, `${tempf}`, `${tempc}`, `${humid}`,
   `${dewf}`, `${dewc}` and `${press}`
 
-**vicious.widgets.wifi**
+### vicious.widgets.wifi
 
 Provides wireless information for a requested interface.
+
 Supported platforms: GNU/Linux.
 
-* Arguments:
-  * Takes the network interface as an argument, e.g. `"wlan0"`
-* Returns:
-  * Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-    `${link}`, `${linp}` (link quality in percent) and `${sign}` (signal level)
+* Argument: the network interface, e.g. `"wlan0"`
+* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
+  `${link}`, `${linp}` (link quality in percent) and `${sign}` (signal level)
 
-**vicious.widgets.wifiiw**
+### vicious.widgets.wifiiw
 
 Provides wireless information for a requested interface (similar to
-vicious.widgets.wifi, but uses iw instead of iwconfig).
+vicious.widgets.wifi, but uses `iw` instead of `iwconfig`).
+
 Supported platforms: GNU/Linux.
 
-* Arguments:
-  * Takes the network interface as an argument, e.g. `"wlan0"`
-* Returns:
-  * Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-    `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
-    `${sign}` (signal level)
+* Argument: the network interface, e.g. `"wlan0"`
+* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
+  `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
+  `${sign}` (signal level)
 
 
 ## <a name="custom-widget"></a>Custom widget types
@@ -519,7 +521,7 @@ rc.lua.
 Some users would like to avoid writing new modules. For them Vicious
 kept the old Wicked functionality, possibility to register their own
 functions as widget types. By providing them as the second argument to
-vicious.register. Your function can accept "format" and "warg"
+vicious.register. Your function can accept `format` and `warg`
 arguments, just like workers.
 
 
@@ -536,7 +538,7 @@ Vicious takes advantage of that. But suspending Vicious widgets is one
 way to prevent them from draining your battery, despite that.
 
 Update intervals also play a big role, and you can save a lot of power
-with a smart approach. Don't use intervals like: 5, 10, 30, 60... to
+with a smart approach. Don't use intervals like: 5, 10, 30, 60, … to
 avoid harmonics. If you take the 60-second mark as an example, all of
 your widgets would be executed at that point. Instead think about
 using only prime numbers, in that case you will have only a few
@@ -579,7 +581,7 @@ plaintext but it's just security trough obscurity.
 Here are some ideas actually worth your time. Users that have KDE (or
 parts of it) installed could store their login information into the
 Kwallet service and request it via DBus from the widget type. It can
-be done with tools like "dbus-send" and "qdbus". The Gnome keyring
+be done with tools like `dbus-send` and `qdbus`. The Gnome keyring
 should support the same, so those with parts of Gnome installed could
 use that keyring.
 
@@ -594,96 +596,86 @@ there, one widget at a time. Also remember that besides creating and
 registering widgets you have to add them to a `wibox` (statusbar) in
 order to actually display them.
 
-**Date widget**
+### Date widget
 
-```Lua
-    datewidget = wibox.widget.textbox()
-    vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
-```
-
-updated every 2 seconds (the default interval), uses standard
-date sequences as the format string
-
-**Memory widget**
-
-```Lua
-    memwidget = wibox.widget.textbox()
-    vicious.cache(vicious.widgets.mem)
-    vicious.register(memwidget, vicious.widgets.mem, "$1 ($2MB/$3MB)", 13)
-```
-
-updated every 13 seconds, appends "MB" to 2nd and 3rd returned
-values and enables caching of this widget type
-
-**HDD temperature widget**
-
-```Lua
-    hddtempwidget = wibox.widget.textbox()
-    vicious.register(hddtempwidget, vicious.widgets.hddtemp, "${/dev/sda} °C", 19)
-```
-
-updated every 19 seconds, requests the temperature level of the
-{/dev/sda} key/disk and appends "°C" to the returned value, does
-not provide the port argument so default port is used
-
-**Mbox widget**
-
-```Lua
-    mboxwidget = wibox.widget.textbox()
-    vicious.register(mboxwidget, vicious.widgets.mbox, "$1", 5, "/home/user/mail/Inbox")
-```
-updated every 5 seconds, provides full path to the mbox as an
-argument
-
-**Battery widget**
+Update every 2 seconds (the default interval), use standard date sequences as
+the format string:
 
 ```lua
-    batwidget = wibox.widget.progressbar()
-
-    -- Create wibox with batwidget
-    batbox = wibox.widget {
-      {
-        max_value     = 1,
-        widget        = batwidget,
-        border_width  = 0.5,
-        border_color  = "#000000",
-        color         = {
-          type = "linear",
-          from = { 0, 0 },
-          to = { 0, 30 },
-          stops = {
-            { 0, "#AECF96" },
-            { 1, "#FF5656" }
-          }
-       }
-      },
-      forced_height = 10,
-      forced_width  = 8,
-      direction     = 'east',
-      color         = beautiful.fg_widget,
-      layout        = wibox.container.rotate,
-    }
-    batbox = wibox.layout.margin(batbox, 1, 1, 3, 3)
-    -- Register battery widget
-    vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+datewidget = wibox.widget.textbox()
+vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 ```
-updated every 61 seconds, requests the current battery charge
-level and displays a progressbar, provides "BAT0" battery ID as an
-argument
 
-**CPU usage widget**
+### Memory widget
 
-```Lua
-    cpuwidget = awful.widget.graph()
-    cpuwidget:set_width(50)
-    cpuwidget:set_background_color("#494B4F")
-    cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 50, 0 },
-      stops = { { 0, "#FF5656" }, { 0.5, "#88A175" }, { 1, "#AECF96" }}})
-    vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
+Update every 13 seconds, append `MiB` to 2nd and 3rd returned values and
+enables caching.
+
+```lua
+memwidget = wibox.widget.textbox()
+vicious.cache(vicious.widgets.mem)
+vicious.register(memwidget, vicious.widgets.mem, "$1 ($2MiB/$3MiB)", 13)
 ```
-updated every 3 seconds, feeds the graph with total usage
-percentage of all CPUs/cores
 
+### HDD temperature widget
+
+Update every 19 seconds, request the temperature level of the /dev/sda and
+append *°C* to the returned value. Since the listening port is not provided,
+default one is used.
+
+```lua
+hddtempwidget = wibox.widget.textbox()
+vicious.register(hddtempwidget, vicious.widgets.hddtemp, "${/dev/sda} °C", 19)
+```
+
+### Mbox widget
+
+Updated every 5 seconds, provide full path to the mbox as argument:
+
+```lua
+mboxwidget = wibox.widget.textbox()
+vicious.register(mboxwidget, vicious.widgets.mbox, "$1", 5,
+                 "/home/user/mail/Inbox")
+```
+
+### Battery widget
+
+Update every 61 seconds, request the current battery charge level and displays
+a progressbar, provides `"BAT0"` as battery ID:
+
+```lua
+batwidget = wibox.widget.progressbar()
+
+-- Create wibox with batwidget
+batbox = wibox.layout.margin(
+    wibox.widget{{max_value = 1, widget = batwidget,
+                  border_width = 0.5, border_color = "#000000",
+                  color = {type = "linear",
+                           from = {0, 0},
+                           to = {0, 30},
+                           stops = {{0, "#AECF96"}, {1, "#FF5656"}}}},
+                 forced_height = 10, forced_width = 8,
+                 direction = 'east', color = beautiful.fg_widget,
+                 layout = wibox.container.rotate},
+    1, 1, 3, 3)
+
+-- Register battery widget
+vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+```
+
+### CPU usage widget
+
+Update every 3 seconds, feed the graph with total usage percentage of all
+CPUs/cores:
+
+```lua
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_background_color"#494B4F"
+cpuwidget:set_color{type = "linear", from = {0, 0}, to = {50, 0},
+                    stops = {{0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96"}}}
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
+```
 
 ## <a name="format-func"></a>Format functions
 
@@ -707,15 +699,17 @@ widget.
 
 ```lua
 mpdwidget = wibox.widget.textbox()
-vicious.register(mpdwidget, vicious.widgets.mpd,
-                 function (widget, args)
-                     if args["{state}"] == "Stop" then
-                         return ""
-                     else
-                         return '<span color="white">MPD:</span> '..
-                                args["{Artist}"]..' - '.. args["{Title}"]
-                     end
-                 end)
+vicious.register(
+    mpdwidget,
+    vicious.widgets.mpd,
+    function (widget, args)
+        if args["{state}"] == "Stop" then
+            return ''
+        else
+            return ('<span color="white">MPD:</span> %s - %s'):format(
+                args["{Artist}"], args["{Title}"])
+        end
+    end)
 ```
 
 #### Use string.format for padding
@@ -724,16 +718,16 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 uptimewidget = wibox.widget.textbox()
 vicious.register(uptimewidget, vicious.widgets.uptime,
                  function (widget, args)
-                     return string.format("Uptime: %2dd %02d:%02d ",
-                                          args[1], args[2], args[3])
+                     return ("Uptime: %02d %02d:%02d "):format(
+                         args[1], args[2], args[3])
                  end, 61)
 ```
 
-When it comes to padding it is also useful to mention how a widget can
-be configured to have a fixed width. You can set a fixed width on your
-textbox widgets by changing their .width field (by default width is
-automatically adapted to text width). The following code forces a fixed width
-of 50px to the uptime widget, and aligns its text to the right:
+When it comes to padding it is also useful to mention how a widget can be
+configured to have a fixed width. You can set a fixed width on your textbox
+widgets by changing their `width` field (by default width is automatically
+adapted to text width). The following code forces a fixed width of 50 px to the
+uptime widget, and aligns its text to the right:
 
 ```lua
 uptimewidget = wibox.widget.textbox()
@@ -775,9 +769,10 @@ the mixer state: on or off/mute.
 ```lua
 volumewidget = wibox.widget.textbox()
 vicious.register(volumewidget, vicious.widgets.volume,
-                 function(widget, args)
-                     local label = { ["♫"] = "O", ["♩"] = "M" }
-                     return "Volume: " .. args[1] .. "% State: " .. label[args[2]]
+                 function (widget, args)
+                     local label = {["♫"] = "O", ["♩"] = "M"}
+                     return ("Volume: %d%% State: %s"):format(
+                         args[1], label[args[2]])
                  end, 2, "PCM")
 ```
 
@@ -789,35 +784,33 @@ vicious.register(volumewidget, vicious.widgets.volume,
 mybattery = wibox.widget.textbox()
 vicious.register(mybattery, vicious.widgets.bat, "$2%", 17, "0")
 mybattery:buttons(awful.util.table.join(
-    awful.button({}, 1,
-                 function()
-                     naughty.notify({
-                         title = "Battery indicator",
-                         text = vicious.call(vicious.widgets.bat,
-                                             "Remaining time: $3", "0")
-                     })
-                 end)
-))
+    awful.button(
+        {}, 1,
+        function ()
+            naughty.notify{title = "Battery indicator",
+                           text = vicious.call(vicious.widgets.bat,
+                                               "Remaining time: $3", "0")}
+        end)))
 ```
 
 Format functions can be used as well:
 
 ```lua
 mybattery:buttons(awful.util.table.join(
-    awful.button({}, 1,
-                 function()
-                     naughty.notify({
-                         title = "Battery indicator",
-                         text = vicious.call(
-                             vicious.widgets.bat,
-                             function(widget, args)
-                                 return ("%s: %10sh\n%s: %14d%%\n%s: %12dW"):format(
-                                     "Remaining time", args[3],
-                                     "Wear level", args[4],
-                                     "Present rate", args[5])
-                             end, "0")})
-                 end)
-))
+    awful.button(
+        {}, 1,
+        function ()
+            naughty.notify{
+                title = "Battery indicator",
+                text = vicious.call(
+                    vicious.widgets.bat,
+                    function (widget, args)
+                        return ("%s: %10sh\n%s: %14d%%\n%s: %12dW"):format(
+                            "Remaining time", args[3],
+                            "Wear level", args[4],
+                            "Present rate", args[5])
+                    end, "0")}
+        end)))
 ```
 
 ## See also
@@ -854,6 +847,6 @@ Vicious major contributors:
 * Hiltjo Posthuma          \<hiltjo codemadness.org\>
 * Hagen Schink             \<troja84 googlemail.com\>
 * Arvydas Sidorenko        \<asido4 gmail.com\>
-* Dodo The Last            <dodo.the.last gmail.com>
-* ...
+* Dodo The Last            \<dodo.the.last gmail.com\>
+* …
 * Consult git log for a complete list of contributors
