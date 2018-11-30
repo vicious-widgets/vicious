@@ -1,5 +1,5 @@
-Vicious
-=======
+# Vicious
+
 Vicious is a modular widget library for window managers, but mostly
 catering to users of the *awesome* window manager. It was derived from
 the old *Wicked* widget library, and has some of the old *Wicked* widget
@@ -834,7 +834,7 @@ Vicious was originally written by:
 
 Current maintainers:
 
-* Jörg Thalheim (Mic92) \<joerg thalheim.io\> (no longer using Awesome)
+* Jörg Thalheim (Mic92) \<joerg thalheim.io\>
 * [mutlusun](https://github.com/mutlusun) (especially the FreeBSD port)
 * Daniel Hahler (blueyed) \<github thequod.de\>
 * Nguyễn Gia Phong (McSinyx) \<vn.mcsinyx gmail.com\>
