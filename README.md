@@ -154,9 +154,9 @@ Provides CPU usage for all available CPUs/cores.
 
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Returns an array containing:
-    * `$1`: usage of all CPUs/cores
-    * `$2`, `$3`, etc. are respectively the usage of 1st, 2nd, etc. CPU/core
+Returns an array containing:
+* `$1`: usage of all CPUs/cores
+* `$2`, `$3`, etc. are respectively the usage of 1st, 2nd, etc. CPU/core
 
 ### vicious.widgets.cpufreq
 
@@ -180,8 +180,8 @@ Provides speed and cache information for all available CPUs/cores.
 
 Supported platforms: GNU/Linux.
 
-* Returns a table whose keys using CPU ID as a base, e.g. `${cpu0 mhz}`,
-  `${cpu0 ghz}`, `${cpu0 kb}`, `${cpu0 mb}`, `${cpu1 mhz}`, etc.
+Returns a table whose keys using CPU ID as a base, e.g. `${cpu0 mhz}`,
+`${cpu0 ghz}`, `${cpu0 kb}`, `${cpu0 mb}`, `${cpu1 mhz}`, etc.
 
 ### vicious.widgets.date
 
@@ -203,10 +203,10 @@ Provides I/O statistics for all available storage devices.
 
 Supported platforms: GNU/Linux.
 
-* Returns a table with string keys: `${sda total_s}`, `${sda total_kb}`,
-  `${sda total_mb}`, `${sda read_s}`, `${sda read_kb}`, `${sda read_mb}`,
-  `${sda write_s}`, `${sda write_kb}`, `${sda write_mb}`, `${sda iotime_ms}`,
-  `${sda iotime_s}`, `${sdb1 total_s}`, etc.
+Returns a table with string keys: `${sda total_s}`, `${sda total_kb}`,
+`${sda total_mb}`, `${sda read_s}`, `${sda read_kb}`, `${sda read_mb}`,
+`${sda write_s}`, `${sda write_kb}`, `${sda write_mb}`, `${sda iotime_ms}`,
+`${sda iotime_s}`, `${sdb1 total_s}`, etc.
 
 ### vicious.widget.fanspeed
 
@@ -302,30 +302,30 @@ Provides RAM and Swap usage statistics.
 
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Returns (per platform):
-    * GNU/Linux: an array consisting of:
-        * `$1`: Memory usage in percent
-        * `$2`: Memory usage in MiB
-        * `$3`: Total system memory in MiB
-        * `$4`: Free memory in MiB
-        * `$5`: Swap usage in percent
-        * `$6`: Swap usage in MiB
-        * `$7`: Total system swap in MiB
-        * `$8`: Free swap in MiB
-        * `$9`: Memory usage with buffers and cache, in MiB
-    * FreeBSD: an array including:
-        * `$1`: Memory usage in percent
-        * `$2`: Memory usage in MiB
-        * `$3`: Total system memory in MiB
-        * `$4`: Free memory in MiB
-        * `$5`: Swap usage in percent
-        * `$6`: Swap usage in MiB
-        * `$7`: Total system swap in MiB
-        * `$8`: Free swap in MiB
-        * `$9`: Wired memory in percent
-        * `$10`: Wired memory in MiB
-        * `$11`: Unfreeable memory (basically active+inactive+wired) in percent
-        * `$12`: Unfreeable memory in MiB
+Returns (per platform):
+* GNU/Linux: an array consisting of:
+    * `$1`: Memory usage in percent
+    * `$2`: Memory usage in MiB
+    * `$3`: Total system memory in MiB
+    * `$4`: Free memory in MiB
+    * `$5`: Swap usage in percent
+    * `$6`: Swap usage in MiB
+    * `$7`: Total system swap in MiB
+    * `$8`: Free swap in MiB
+    * `$9`: Memory usage with buffers and cache, in MiB
+* FreeBSD: an array including:
+    * `$1`: Memory usage in percent
+    * `$2`: Memory usage in MiB
+    * `$3`: Total system memory in MiB
+    * `$4`: Free memory in MiB
+    * `$5`: Swap usage in percent
+    * `$6`: Swap usage in MiB
+    * `$7`: Total system swap in MiB
+    * `$8`: Free swap in MiB
+    * `$9`: Wired memory in percent
+    * `$10`: Wired memory in MiB
+    * `$11`: Unfreeable memory (basically active+inactive+wired) in percent
+    * `$12`: Unfreeable memory in MiB
 
 ### vicious.widgets.mpd
 
@@ -377,13 +377,13 @@ Provides operating system information.
 
 Supported platforms: platform independent.
 
-* Returns an array containing:
-    * `$1`: Operating system in use
-    * `$2`: Release version
-    * `$3`: Username
-    * `$4`: Hostname
-    * `$5`: Available system entropy
-    * `$6`: Available entropy in percent
+Returns an array containing:
+* `$1`: Operating system in use
+* `$2`: Release version
+* `$3`: Username
+* `$4`: Hostname
+* `$5`: Available system entropy
+* `$6`: Available entropy in percent
 
 ### vicious.widgets.pkg
 
@@ -443,13 +443,13 @@ Provides system uptime and load information.
 
 Supported platforms: GNU/Linux, FreeBSD.
 
-* Returns an array containing:
-    * `$1`: Uptime in days
-    * `$2`: Uptime in hours
-    * `$3`: Uptime in minutes
-    * `$4`: Load average in the past minute
-    * `$5`: Load average in the past 5 minutes
-    * `$6`: Load average in the past 15 minutes
+Returns an array containing:
+* `$1`: Uptime in days
+* `$2`: Uptime in hours
+* `$3`: Uptime in minutes
+* `$4`: Load average in the past minute
+* `$5`: Load average in the past 5 minutes
+* `$6`: Load average in the past 15 minutes
 
 ### vicious.widgets.volume
 
@@ -824,19 +824,18 @@ mybattery:buttons(awful.util.table.join(
 
 Wicked was written by:
 
-* Lucas de Vries           \<lucas glacicle.com\>
+* Lucas de Vries \<lucas glacicle.com\>
 
 Vicious was originally written by:
 
-* Adrian C. (anrxc)        \<anrxc sysphere.org\>
+* Adrian C. (@anrxc) \<anrxc sysphere.org\>
 
-Current maintainer:
+Current maintainers:
 
-* Jörg Thalheim (Mic92)    \<joerg thalheim.io\>
-
-Maintainer of the Freebsd Port:
-
-* [@mutlusun](https://github.com/mutlusun)
+* Jörg Thalheim (@Mic92) \<joerg thalheim.io\> (no longer using Awesome)
+* @mutlusun (especially the FreeBSD port)
+* Daniel Hahler (@blueyed) \<github thequod.de\>
+* Nguyễn Gia Phong (@McSinyx) \<vn.mcsinyx gmail.com\>
 
 Vicious major contributors:
 
