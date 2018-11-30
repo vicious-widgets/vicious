@@ -828,24 +828,24 @@ Wicked was written by:
 
 Vicious was originally written by:
 
-* Adrian C. (@anrxc) \<anrxc sysphere.org\>
+* Adrian C. (anrxc) \<anrxc sysphere.org\>
 
 Current maintainers:
 
-* Jörg Thalheim (@Mic92) \<joerg thalheim.io\> (no longer using Awesome)
-* @mutlusun (especially the FreeBSD port)
-* Daniel Hahler (@blueyed) \<github thequod.de\>
-* Nguyễn Gia Phong (@McSinyx) \<vn.mcsinyx gmail.com\>
+* Jörg Thalheim (Mic92) \<joerg thalheim.io\> (no longer using Awesome)
+* [mutlusun](https://github.com/mutlusun) (especially the FreeBSD port)
+* Daniel Hahler (blueyed) \<github thequod.de\>
+* Nguyễn Gia Phong (McSinyx) \<vn.mcsinyx gmail.com\>
 
 Vicious major contributors:
 
-* Benedikt Sauer           \<filmor gmail.com\>
-* Greg D.                  \<jabbas jabbas.pl\>
-* Henning Glawe            \<glaweh debian.org\>
-* Rémy C.                  \<shikamaru mandriva.org\>
-* Hiltjo Posthuma          \<hiltjo codemadness.org\>
-* Hagen Schink             \<troja84 googlemail.com\>
-* Arvydas Sidorenko        \<asido4 gmail.com\>
-* Dodo The Last            \<dodo.the.last gmail.com\>
+* Benedikt Sauer \<filmor gmail.com\>
+* Greg D. \<jabbas jabbas.pl\>
+* Henning Glawe \<glaweh debian.org\>
+* Rémy C. \<shikamaru mandriva.org\>
+* Hiltjo Posthuma \<hiltjo codemadness.org\>
+* Hagen Schink \<troja84 googlemail.com\>
+* Arvydas Sidorenko \<asido4 gmail.com\>
+* Dodo The Last \<dodo.the.last gmail.com\>
 * …
 * Consult git log for a complete list of contributors
