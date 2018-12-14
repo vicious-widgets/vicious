@@ -17,39 +17,52 @@ local helpers = require("vicious.helpers")
 local mpd_all = {}
 
 
+-- {{{ Return true if number is nonzero
+local function cbool(number)
+    return type(number) == "number" and number ~= 0 or number
+end
+-- }}}
+
+
 -- {{{ MPD widget type
 local function worker(format, warg)
-    local mpd_state  = {
-        ["{volume}"] = 0,
-        ["{state}"]  = "N/A",
-        ["{Artist}"] = "N/A",
-        ["{Title}"]  = "N/A",
-        ["{Album}"]  = "N/A",
-        ["{Genre}"]  = "N/A",
-        --["{Name}"] = "N/A",
-        --["{file}"] = "N/A",
+    -- Fallback values
+    local mpd_state = {
+        ["{volume}"]   = 0,
+        ["{bitrate}"]  = 0,
+        ["{elapsed}"]  = 0,
+        ["{duration}"] = 0,
+        ["{repeat}"]   = false,
+        ["{random}"]   = false,
+        ["{state}"]    = "N/A",
+        ["{Artist}"]   = "N/A",
+        ["{Title}"]    = "N/A",
+        ["{Album}"]    = "N/A",
+        ["{Genre}"]    = "N/A",
+        --["{Name}"]   = "N/A",
+        --["{file}"]   = "N/A",
     }
 
-    -- Fallback to MPD defaults
-    local pass = warg and (warg.password or warg[1]) or "\"\""
-    local host = warg and (warg.host or warg[2]) or "127.0.0.1"
-    local port = warg and (warg.port or warg[3]) or "6600"
-
-    -- Construct MPD client options
-    local mpdh = "telnet://"..host..":"..port
-    local echo = "echo 'password "..pass.."\nstatus\ncurrentsong\nclose'"
+    -- Construct MPD client options, fallback to defaults when necessary
+    local query = ("printf 'password %s\nstatus\ncurrentsong\nclose\n'"):format(
+        warg and (warg.password or warg[1]) or '""')
+    local connect = ("curl --connect-timeout 1 -fsm 3 telnet://%s:%s"):format(
+        warg and (warg.host or warg[2]) or "127.0.0.1",
+        warg and (warg.port or warg[3]) or "6600")
 
     -- Get data from MPD server
-    local f = io.popen(echo.." | curl --connect-timeout 1 -fsm 3 "..mpdh)
-
+    local f = io.popen(query .. "|" .. connect)
     for line in f:lines() do
         for k, v in string.gmatch(line, "([%w]+):[%s](.*)$") do
             local key = "{" .. k .. "}"
-            if k == "volume" then
+            if k == "volume" or k == "bitrate" or
+               k == "elapsed" or k == "duration" then
                 mpd_state[key] = v and tonumber(v)
+            elseif k == "repeat" or k == "random" then
+                mpd_state[key] = cbool(v)
             elseif k == "state" then
                 mpd_state[key] = helpers.capitalize(v)
-            elseif k == "Artist" or k == "Title"  or
+            elseif k == "Artist" or k == "Title" or
                    --k == "Name" or k == "file" or
                    k == "Album" or k == "Genre" then
                 mpd_state[key] = v
@@ -57,6 +70,10 @@ local function worker(format, warg)
         end
     end
     f:close()
+
+    -- Formatted elapsed and duration
+    mpd_state["{Elapsed}"], mpd_state["{Duration}"] = helpers.format_progress(
+        mpd_state["{elapsed}"], mpd_state["{duration}"])
 
     return mpd_state
 end

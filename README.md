@@ -335,8 +335,10 @@ Supported platforms: platform independent (required tools: `curl`).
 
 * Argument: an array including password, hostname and port in that order. `nil`
   fields will be fallen back to default (`localhost:6600` without password).
-* Returns a table with string keys: `${volume}`, `${state}`, `${Artist}`,
-  `${Title}`, `${Album}`, `${Genre}` and optionally `${Name}` and `${file}`.
+* Returns a table with string keys: `${volume}`, `${bitrate}`, `${elapsed}`,
+  `${duration}` (in seconds), `${Elapsed}`, `${Duration}` (in [hh:]mm:ss),
+  `${random}`, `${repeat}`, `${state}`, `${Artist}`, `${Title}`, `${Album}`,
+  `${Genre}` and optionally `${Name}` and `${file}`.
 
 ### vicious.widgets.net
 
