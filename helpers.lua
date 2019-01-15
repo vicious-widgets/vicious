@@ -86,7 +86,7 @@ function helpers.wrequire(table, key)
         end
     end
 
-    assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform or does not exits")
+    assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform or does not exist")
 
     return ret
 end
