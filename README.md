@@ -259,6 +259,22 @@ Supported platforms: GNU/Linux, requiring `hddtemp` and `curl`.
 * Returns a table with string keys, using hard drives as a base, e.g.
   `${/dev/sda}` and `${/dev/sdc}`.
 
+### vicious.widgets.hwmontemp
+
+Provides name-based access to hwmon devices via sysfs.
+
+Supported platforms: GNU/Linux
+
+* Argument: table with sensor name and (optional) input number, e.g.
+  `{ "radeon", 2 }` (input no. is assumed to be 1 if omitted)
+* Returns a table with just the temperature value: `$1`
+* Usage example:
+
+```lua
+gputemp = wibox.widget.textbox()
+vicious.register(gputemp, vicious.contrib.hwmontemp, " $1°C", 5, { "radeon" })
+```
+
 ### vicious.widgets.mbox
 
 Provides the subject of last e-mail in a mbox file.
