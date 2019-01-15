@@ -105,6 +105,20 @@ Provides I/O statistics for requested storage devices.
   `${read_s}`, `${read_kb}`, `${read_mb}`, `${write_s}`, `${write_kb}`,
   `${write_mb}` and `${sched}`
 
+### vicious.contrib.hwmontemp
+
+Provides name-based access to hwmon devices via sysfs.
+
+* Argument: table with sensor name and (optional) input number, e.g.
+  `{ "radeon", 2 }` (input no. is assumed to be 1 if omitted)
+* Returns a table with just the temperature value: `$1`
+* Usage example:
+
+```lua
+gputemp = wibox.widget.textbox()
+vicious.register(gputemp, vicious.contrib.hwmontemp, " $1°C", 5, { "radeon" })
+```
+
 ### vicious.contrib.mpc
 
 ### vicious.contrib.netcfg
