@@ -46,8 +46,7 @@ local function update(widget, reg, disablecache)
         return
     end
 
-    local t = os.time()
-    local data = {}
+    local update_time = os.time()
 
     local function format_data(data)
         local ret
@@ -92,7 +91,7 @@ local function update(widget, reg, disablecache)
 
     -- Check for cached output newer than the last update
     local c = widget_cache[reg.wtype]
-    if c and t < c.time + reg.timer and not disablecache then
+    if c and update_time < c.time + reg.timeout and not disablecache then
         update_value(c.data)
     elseif reg.wtype then
         if type(reg.wtype) == "table" and reg.wtype.async then
@@ -101,14 +100,14 @@ local function update(widget, reg, disablecache)
                 return reg.wtype.async(reg.format,
                     reg.warg,
                     function(data)
-                        update_cache(data, t, c)
+                        update_cache(data, update_time, c)
                         update_value(data)
                         reg.lock=false
                     end)
             end
         else
             local data = reg.wtype(reg.format, reg.warg)
-            update_cache(data, t, c)
+            update_cache(data, update_time, c)
             update_value(data)
         end
     end
@@ -145,18 +144,18 @@ local function regregister(reg)
         end
 
         -- Start the timer
-        if reg.timer > 0 then
-            local tm = timers[reg.timer] and timers[reg.timer].timer
-            tm = tm or timer({ timeout = reg.timer })
+        if reg.timeout > 0 then
+            local tm = timers[reg.timeout] and timers[reg.timeout].timer
+            tm = tm or timer({ timeout = reg.timeout })
             if tm.connect_signal then
                 tm:connect_signal("timeout", reg.update)
             else
                 tm:add_signal("timeout", reg.update)
             end
-            if not timers[reg.timer] then
-                timers[reg.timer] = { timer = tm, refs = 1 }
+            if not timers[reg.timeout] then
+                timers[reg.timeout] = { timer = tm, refs = 1 }
             else
-                timers[reg.timer].refs = timers[reg.timer].refs + 1
+                timers[reg.timeout].refs = timers[reg.timeout].refs + 1
             end
             if not tm.started then
                 tm:start()
@@ -173,16 +172,18 @@ end
 
 -- {{{ Global functions
 -- {{{ Register a widget
-function vicious.register(widget, wtype, format, timer, warg)
+function vicious.register(widget, wtype, format, timeout, warg)
     local reg = {
         -- Set properties
-        wtype  = wtype,
-        lock   = false,
-        format = format,
-        timer  = timer or 2,
-        warg   = warg,
-        widget = widget,
+        wtype   = wtype,
+        lock    = false,
+        format  = format,
+        timeout = timeout or 2,
+        warg    = warg,
+        widget  = widget,
     }
+    reg.timer = timeout  -- For backward compatibility.
+
     -- Set functions
     function reg.update()
         update(widget, reg)
@@ -227,7 +228,7 @@ function vicious.unregister(widget, keep, reg)
     end
 
     -- Disconnect from timer
-    local tm  = timers[reg.timer]
+    local tm  = timers[reg.timeout]
     if tm.timer.disconnect_signal then
         tm.timer:disconnect_signal("timeout", reg.update)
     else
