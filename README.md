@@ -739,27 +739,21 @@ vicious.register(uptimewidget, vicious.widgets.uptime, "$1 $2:$3", 61)
 
 #### Stacked graph
 
-Stacked graphs (aka multigraphs) are not handled by Vicious at the moment, as
-it's hard to pass on color index arguments elegantly. But they are not
-unusable, far from it.
+Stacked graphs are handled specially by Vicious: `format` functions passed to
+the corresponding widget types must return an array instead of a string.
 
 ```lua
-ctext = wibox.widget.textbox()
-cgraph = awful.widget.graph()
-cgraph:set_width(100):set_height(20)
-cgraph:set_stack(true):set_max_value(100)
-cgraph:set_background_color("#494B4F")
-cgraph:set_stack_colors({ "#FF5656", "#88A175", "#AECF96" })
-vicious.register(ctext, vicious.widgets.cpu,
+cpugraph = wibox.widget.graph()
+cpugraph:set_stack(true)
+cpugraph:set_stack_colors({"red", "yellow", "green", "blue"})
+vicious.register(cpugraph, vicious.widgets.cpu,
                  function (widget, args)
-                     cgraph:add_value(args[2], 1) -- Core 1, color 1
-                     cgraph:add_value(args[3], 2) -- Core 2, color 2
-                     cgraph:add_value(args[4], 3) -- Core 3, color 3
+                     return {args[2], args[3], args[4], args[5]}
                  end, 3)
 ```
 
-The snipet above enables graph stacking/multigraph and plots usage of all three
-CPU cores on a single graph. The textbox `ctext` is just an empty placeholder.
+The snipet above enables graph stacking/multigraph and plots usage of all four
+CPU cores on a single graph.
 
 #### Substitute widget types' symbols
 
