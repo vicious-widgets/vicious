@@ -88,6 +88,11 @@ Some widget types require an argument to be passed, for example the battery ID.
 
 ## Other functions
 
+`vicious.register` alone is not much different from
+[awful.widget.watch](https://awesomewm.org/doc/api/classes/awful.widget.watch.html),
+which has been added to Awesome since version 4.0. However, Vicious offers more
+advanced control of widgets' behavior by providing the following functions.
+
 ### Unregister a widget
 
     vicious.unregister(widget, keep)
@@ -123,7 +128,7 @@ Enable caching of values returned by a widget type.
 
     vicious.call(wtype, format, warg)
 
-Fetch data from `widget` to use it outside from the wibox
+Fetch data from `wtype` to use it outside from the wibox
 ([example](#call-example)).
 
 ## <a name="widgets"></a>Widget types
