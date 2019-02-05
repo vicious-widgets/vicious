@@ -40,7 +40,7 @@ local function worker(format, warg)
 
     -- Get weather forceast by the station ICAO code, from:
     -- * US National Oceanic and Atmospheric Administration
-    local url = "http://tgftp.nws.noaa.gov/data/observations/metar/decoded/"..warg
+    local url = "https://tgftp.nws.noaa.gov/data/observations/metar/decoded/"..warg
     local f = io.popen("curl --connect-timeout 1 -fsm 3 "..helpers.shellquote(url)..".TXT")
     local ws = f:read("*all")
     f:close()
