@@ -9,6 +9,10 @@ local io = { popen = io.popen }
 local setmetatable = setmetatable
 local math = { ceil = math.ceil }
 local string = { match = string.match }
+
+-- Awesome library for spawning programs
+local spawn = require"awful.spawn"
+
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -18,35 +22,26 @@ local helpers = require("vicious.helpers")
 local weather_all = {}
 
 
--- Initialize function tables
-local _weather = {
-    ["{city}"]    = "N/A",
-    ["{wind}"]    = "N/A",
-    ["{windmph}"] = "N/A",
-    ["{windkmh}"] = "N/A",
-    ["{sky}"]     = "N/A",
-    ["{weather}"] = "N/A",
-    ["{tempf}"]   = "N/A",
-    ["{tempc}"]   = "N/A",
-    ["{dewf}"]    = "N/A",
-    ["{dewc}"]    = "N/A",
-    ["{humid}"]   = "N/A",
-    ["{press}"]   = "N/A"
-}
-
 -- {{{ Weather widget type
-local function worker(format, warg)
-    if not warg then return end
-
-    -- Get weather forceast by the station ICAO code, from:
-    -- * US National Oceanic and Atmospheric Administration
-    local url = "https://tgftp.nws.noaa.gov/data/observations/metar/decoded/"..warg
-    local f = io.popen("curl --connect-timeout 1 -fsm 3 "..helpers.shellquote(url)..".TXT")
-    local ws = f:read("*all")
-    f:close()
+local function parse(ws)
+    -- Initialize function tables
+    local _weather = {
+        ["{city}"]    = "N/A",
+        ["{wind}"]    = "N/A",
+        ["{windmph}"] = "N/A",
+        ["{windkmh}"] = "N/A",
+        ["{sky}"]     = "N/A",
+        ["{weather}"] = "N/A",
+        ["{tempf}"]   = "N/A",
+        ["{tempc}"]   = "N/A",
+        ["{dewf}"]    = "N/A",
+        ["{dewc}"]    = "N/A",
+        ["{humid}"]   = "N/A",
+        ["{press}"]   = "N/A"
+    }
 
     -- Check if there was a timeout or a problem with the station
-    if ws == nil then return _weather end
+    if ws == '' then return _weather end
 
     _weather["{city}"]    = -- City and/or area
        string.match(ws, "^(.+)%,.*%([%u]+%)") or _weather["{city}"]
@@ -88,6 +83,23 @@ local function worker(format, warg)
     end
 
     return _weather
+end
+
+function weather_all.async(format, warg, callback)
+    if not warg then return end
+
+    -- Get weather forceast by the station ICAO code, from:
+    -- * US National Oceanic and Atmospheric Administration
+    local url = ("https://tgftp.nws.noaa.gov/data/observations/metar/decoded/%s.TXT"):format(warg)
+    local cmd = "curl -fs " .. helpers.shellquote(url)
+    spawn.easy_async(cmd, function (stdout) callback(parse(stdout)) end)
+end
+
+local function worker(format, warg)
+    local ret
+    weather_all.async(format, warg, function (weather) ret = weather end)
+    while ret == nil do end
+    return ret
 end
 -- }}}
 

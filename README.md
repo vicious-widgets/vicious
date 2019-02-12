@@ -398,7 +398,8 @@ Provides number of pending updates on UNIX systems. Be aware that some package
 managers need to update their local databases (as root) before showing the
 correct number of updates.
 
-Supported platforms: platform independent.
+Supported platforms: platform independent, although it requires Awesome
+`awful.spawn` library for non-blocking spawning.
 
 * Argument: distribution name, e.g. `"Arch"`, `"Arch C"`, `"Arch S"`,
   `"Debian"`, `"Ubuntu"`, `"Fedora"`, `"FreeBSD"`, `"Mandriva"`.
@@ -481,7 +482,7 @@ Supported platforms: GNU/Linux (requiring `amixer`), FreeBSD.
 
 Provides weather information for a requested station.
 
-Supported platforms: any having `curl` installed.
+Supported platforms: any having Awesome and `curl` installed.
 
 * Argument: the ICAO station code, e.g. `"LDRI"`
 * Returns a table with string keys: `${city}`, `${wind}`, `${windmph}`,
