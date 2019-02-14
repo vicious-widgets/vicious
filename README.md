@@ -155,7 +155,9 @@ Supported platforms: GNU/Linux (require `sysfs`), FreeBSD (require `acpiconf`).
 
 ### vicious.widgets.cpu
 
-Provides CPU usage for all available CPUs/cores.
+Provides CPU usage for all available CPUs/cores. Since this widget type give
+CPU utilization between two consecutive calls, it is recommended to enable
+caching if it is used to register multiple widgets (#71).
 
 Supported platforms: GNU/Linux, FreeBSD.
 
@@ -270,15 +272,14 @@ Provides name-based access to hwmon devices via sysfs.
 
 Supported platforms: GNU/Linux
 
-* Argument: table with sensor name and (optional) input number, e.g.
-  `{ "radeon", 2 }` (input no. is assumed to be 1 if omitted)
+* Argument: an array with sensor name and input number (optional, falling back
+  to `1`), e.g. `{"radeon", 2}`
 * Returns a table with just the temperature value: `$1`
 * Usage example:
-
-```lua
-gputemp = wibox.widget.textbox()
-vicious.register(gputemp, vicious.contrib.hwmontemp, " $1°C", 5, { "radeon" })
-```
+    ```lua
+    gputemp = wibox.widget.textbox()
+    vicious.register(gputemp, vicious.widgets.hwmontemp, " $1°C", 5, {"radeon"})
+    ```
 
 ### vicious.widgets.mbox
 

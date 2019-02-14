@@ -1,3 +1,24 @@
+# Changes in 2.3.2
+
+Features:
+
+- Support stacked graphs
+- [hwmontemp\_linux] Provide name-based access to hwmon sensors via sysfs
+- [mpd\_all] Expose more informations and format time in [hh:]mm:ss
+
+Fixes:
+
+- Improve defaults and mechanism for data caching
+- Escape XML entities in results by default
+- [weather\_all] Update NOAA link and use Awesome asynchronous API
+- [mem\_linux] Use MemAvailable to calculate free amount
+- [mem\_freebsd] Correct calculation and switch to swapinfo for swap
+- [bat\_freebsd] Add critical charging state
+- [fs\_all] Fix shell quoting of option arguments
+
+Moreover, `.luacheckrc` was added and `README.md` was refomatted for the ease
+of development.
+
 # Changes in 2.3.1
 
 Fixes:
