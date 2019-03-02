@@ -9,6 +9,7 @@ local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { gmatch = string.gmatch }
 local helpers = require("vicious.helpers")
+local math = require("math")
 -- }}}
 
 
@@ -25,8 +26,8 @@ end
 
 -- {{{ Format playing progress
 function format_progress(elapsed, duration)
-    local em, es = elapsed / 60, elapsed % 60
-    local dm, ds = duration / 60, duration % 60
+    local em, es = math.floor(elapsed / 60), math.floor(elapsed % 60)
+    local dm, ds = math.floor(duration / 60), math.floor(duration % 60)
 
     if dm < 10 then
         return ("%d:%02d"):format(em, es), ("%d:%02d"):format(dm, ds)
