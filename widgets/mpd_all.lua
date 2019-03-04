@@ -9,7 +9,7 @@ local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { gmatch = string.gmatch }
 local helpers = require("vicious.helpers")
-local math = require("math")
+local math = { floor = math.floor }
 -- }}}
 
 
