@@ -9,7 +9,6 @@ local string = {
     gmatch = string.gmatch,
     match = string.match,
     format = string.format
-
 }
 -- }}}
 local bat_openbsd = {}
