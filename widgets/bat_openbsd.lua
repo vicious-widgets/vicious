@@ -27,7 +27,6 @@ local function worker(format, warg)
 	    bat_info[key] = value
         end
     end
-    proc:close()
 
     -- current state
     local states = {[0] = "↯", -- high
