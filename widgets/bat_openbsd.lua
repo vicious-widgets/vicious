@@ -28,12 +28,12 @@ local function worker(format, warg)
     end
 
     -- current state
-    local states = {[0] = "↯", -- high
-                    [1] = "-", -- low
+    local states = {[0] = "↯", -- not charging
+                    [1] = "-", -- discharging
                     [2] = "!", -- critical
                     [3] = "+", -- charging
-                    [4] = "n/a", -- critical
-                    [255] = "⌁"} -- unknown
+                    [4] = "N/A", -- unknown status
+                    [255] = "N/A"} -- unimplemented by the driver
     local state = states[tonumber(bat_info.raw0)]
 
     -- battery capacity in percent
