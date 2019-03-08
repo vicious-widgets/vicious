@@ -8,8 +8,8 @@ local string = {
     gmatch = string.gmatch,
     match = string.match,
     format = string.format
-
 }
+
 -- }}}
 local bat_freebsd = {}
 
@@ -22,9 +22,9 @@ local function worker(format, warg)
             bat_info[key] = value
         end
     end
-    f:close()
 
     -- current state
+    -- see: https://github.com/freebsd/freebsd/blob/master/usr.sbin/acpi/acpiconf/acpiconf.c
     local state
     if bat_info["State"] == "high" then
         state =  "↯"
@@ -34,8 +34,12 @@ local function worker(format, warg)
         state = "+"
     elseif bat_info["State"] == "discharging" then
         state = "-"
+    elseif bat_info["State"] == "critical discharging" then
+        state = "!"
+    elseif bat_info["State"] == "critical" then
+        state = "!"
     else
-        state = "⌁"
+        state = "N/A"
     end
 
     -- battery capacity in percent
