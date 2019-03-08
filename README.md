@@ -141,11 +141,12 @@ return a table of values to be formatted by `format`.
 
 Provides state, charge, and remaining time for a requested battery.
 
-Supported platforms: GNU/Linux (require `sysfs`), FreeBSD (require `acpiconf`).
+Supported platforms: GNU/Linux (require `sysfs`), FreeBSD (require `acpiconf`), OpenBSD (no extra requirements).
 
 * `warg` (from now on will be called *argument*):
     * On GNU/Linux: battery ID, e.g. `"BAT0"`
     * On FreeBSD (optional): battery ID, e.g. `"batt"` or `"0"`
+    * On OpenBSD (optional): `bat` followed by battery index, e.g. `bat0` or `bat1` on systems with more than one battery
 * Returns an array (integer-indexed table) consisting of:
     * `$1`: State of requested battery
     * `$2`: Charge level in percent
