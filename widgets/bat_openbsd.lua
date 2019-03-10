@@ -4,13 +4,8 @@ local tonumber = tonumber
 local string = { format = string.format, gmatch = string.gmatch }
 local io = { popen = io.popen }
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
-local string = {
-    gmatch = string.gmatch,
-    match = string.match,
-    format = string.format
-}
 -- }}}
+
 local bat_openbsd = {}
 
 local function worker(format, warg)
