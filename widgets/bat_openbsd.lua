@@ -38,10 +38,10 @@ local function worker(format, warg)
     if tonumber(bat_info.power0) < 1 then
         time = "∞"
     else
-	local raw_time = bat_info.watthour3 / bat_info.power0
-	local hours = math.floor(raw_time)
-	local minutes = raw_time % 1
-	time = string.format("%d:%0.2d", hours, minutes)
+        local raw_time = bat_info.watthour3 / bat_info.power0
+        local hours, hour_fraction = math.modf(raw_time)
+        local minutes = math.floor(60 * hour_fraction)
+        time = string.format("%d:%0.2d", hours, minutes)
     end
 
     -- calculate wear level from (last full / design) capacity
