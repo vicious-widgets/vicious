@@ -3,7 +3,7 @@ local setmetatable = setmetatable
 local tonumber = tonumber
 local string = { format = string.format, gmatch = string.gmatch }
 local io = { popen = io.popen }
-local math = { floor = math.floor }
+local math = { floor = math.floor, modf = math.modf }
 -- }}}
 
 local bat_openbsd = {}
