@@ -1,3 +1,12 @@
+# Changes in 2.3.3
+
+Feature: Add battery widget type for OpenBSD
+
+Fixes:
+
+- [mpd] Lua 5.3 compatibility
+- [bat\_freebsd] Update battery state symbols
+
 # Changes in 2.3.2
 
 Features:
