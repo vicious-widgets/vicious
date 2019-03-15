@@ -34,11 +34,11 @@ function format_progress(elapsed, duration)
     elseif dm < 60 then
         return ("%02d:%02d"):format(em, es), ("%02d:%02d"):format(dm, ds)
     elseif dm < 600 then
-        return ("%d:%02d:%02d"):format(em / 60, em % 60, es),
-               ("%d:%02d:%02d"):format(dm / 60, dm % 60, ds)
+        return ("%d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
+               ("%d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
     else
-        return ("%02d:%02d:%02d"):format(em / 60, em % 60, es),
-               ("%02d:%02d:%02d"):format(dm / 60, dm % 60, ds)
+        return ("%02d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
+               ("%02d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
     end
 end
 -- }}}
