@@ -46,7 +46,7 @@ end
 -- {{{ Format playing progress (percentage)
 function format_progress_percentage(elapsed, duration)
     if duration > 0 then
-        local percentage = math.floor((elapsed / duration) * 100)
+        local percentage = math.floor((elapsed / duration) * 100 + 0.5)
         return ("%d%%"):format(percentage)
     else
         return("0%")
