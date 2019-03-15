@@ -104,6 +104,7 @@ local function worker(format, warg)
     mpd_state["{Elapsed}"], mpd_state["{Duration}"] = format_progress(
         mpd_state["{elapsed}"], mpd_state["{duration}"])
 
+    -- Formatted playing progress percentage
     mpd_state["{Progress}"] = format_progress_percentage(
         mpd_state["{elapsed}"], mpd_state["{duration}"])
 
