@@ -43,6 +43,14 @@ function format_progress(elapsed, duration)
 end
 -- }}}
 
+-- {{{ Format playing progress (percentage)
+function format_progress_percentage(elapsed, duration)
+    local percentage = math.floor((elapsed / duration) * 100)
+    
+    return ("%d%%"):format(percentage)
+end
+-- }}}
+
 -- {{{ MPD widget type
 local function worker(format, warg)
     -- Fallback values
@@ -92,6 +100,9 @@ local function worker(format, warg)
 
     -- Formatted elapsed and duration
     mpd_state["{Elapsed}"], mpd_state["{Duration}"] = format_progress(
+        mpd_state["{elapsed}"], mpd_state["{duration}"])
+
+    mpd_state["{Progress}"] = format_progress_percentage(
         mpd_state["{elapsed}"], mpd_state["{duration}"])
 
     return mpd_state
