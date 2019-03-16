@@ -360,7 +360,7 @@ Supported platforms: platform independent (required tools: `curl`).
   fields will be fallen back to default (`localhost:6600` without password).
 * Returns a table with string keys: `${volume}`, `${bitrate}`, `${elapsed}` (in seconds),
   `${duration}` (in seconds), `${Elapsed}` (formatted as [hh:]mm:ss), `${Duration}` (formatted as [hh:]mm:ss),
-  `${random}`, `${repeat}`, `${state}`, `${Artist}`, `${Title}`, `${Album}`,
+  `${Progress}` (in percentage), ${random}`, `${repeat}`, `${state}`, `${Artist}`, `${Title}`, `${Album}`,
   `${Genre}` and optionally `${Name}` and `${file}`.
 
 ### vicious.widgets.net
