@@ -50,6 +50,7 @@ function format_progress_percentage(elapsed, duration)
         return ("%d%%"):format(percentage)
     else
         return("0%")
+    end
 end
 -- }}}
 
