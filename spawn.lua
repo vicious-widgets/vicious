@@ -52,7 +52,9 @@ local spawn = {}
 -- @treturn boolean|nil true if cmd terminated successfully, or nil otherwise
 function spawn.with_line_callback_with_shell(cmd, callbacks)
     local stdout_callback, stdout = callbacks.stdout, io.popen(cmd)
-    for line in stdout:lines() do stdout_callback(line) end
+    if stdout_callback then
+        for line in stdout:lines() do stdout_callback(line) end
+    end
     if callbacks.output_done then callbacks.output_done() end
 
     local success, reason, code = stdout:close()    -- this requires Lua 5.2

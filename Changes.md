@@ -1,3 +1,16 @@
+Feature:
+
+- Add `spawn.lua` as a fallback for `awful.spawn` in case Vicious is used as
+  a stand-alone library. This wrapper, however, does NOT provide the facilities
+  to asynchronously spawn new processes. It also lacks a few features such as
+  parsing `stderr` and returning PID.
+
+Fixes:
+
+- [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
+- [pkg,weather,contrib/btc] Allow function call without Awesome
+- [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
+
 # Changes in 2.3.3
 
 Feature: Add battery widget type for OpenBSD

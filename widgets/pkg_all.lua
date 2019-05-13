@@ -4,8 +4,6 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local io = { popen = io.popen }
-local math = { max = math.max }
 local setmetatable = setmetatable
 local spawn = require("vicious.spawn")
 -- }}}
