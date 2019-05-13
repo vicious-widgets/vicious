@@ -7,7 +7,7 @@
 local io = { popen = io.popen }
 local math = { max = math.max }
 local setmetatable = setmetatable
-local spawn = require("awful.spawn")
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -15,39 +15,32 @@ local spawn = require("awful.spawn")
 -- vicious.widgets.pkg
 local pkg_all = {}
 
+local PKGMGR = {
+    ["Arch"] = { cmd = "pacman -Qu" },
+    ["Arch C"] = { cmd = "checkupdates" },
+    ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
+    ["Debian"] = { cmd = "apt list --upgradable", sub = 1 },
+    ["Ubuntu"] = { cmd = "apt list --upgradable", sub = 1 },
+    ["Fedora"] = { cmd = "dnf check-update", sub = 2 },
+    ["FreeBSD"] = { cmd = "pkg version -I -l '<'" },
+    ["Mandriva"] = { cmd = "urpmq --auto-select" }
+}
 
 -- {{{ Packages widget type
 function pkg_all.async(format, warg, callback)
-    if not warg then return end
+    if not warg then return callback{} end
+    local pkgmgr = PKGMGR[warg]
 
-    -- Initialize counters
-    local manager = {
-        ["Arch"]   = { cmd = "pacman -Qu" },
-        ["Arch C"] = { cmd = "checkupdates" },
-        ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
-        ["Debian"] = { cmd = "apt-show-versions -u -b" },
-        ["Ubuntu"] = { cmd = "aptitude search '~U'" },
-        ["Fedora"] = { cmd = "yum list updates", sub = 3 },
-        ["FreeBSD"] ={ cmd = "pkg version -I -l '<'" },
-        ["Mandriva"]={ cmd = "urpmq --auto-select" }
-    }
-
-    -- Check if updates are available
-    local function parse(str, skiprows)
-        local size, lines, first = 0, "", skiprows or 0
-        for line in str:gmatch("[^\r\n]+") do
-            if size >= first then
-                lines = lines .. (size == first and "" or "\n") .. line
-            end
+    local size, lines = -pkgmgr.sub, ""
+    spawn.with_line_callback_with_shell(pkgmgr.cmd, {
+        stdout = function (str)
             size = size + 1
+            if size > 0 then lines = lines .. str .. "\n" end
+        end,
+        output_done = function ()
+            callback{ size, lines }
         end
-        size = math.max(size-first, 0)
-        return {size, lines}
-    end
-
-    -- Select command
-    local _pkg = manager[warg]
-    spawn.easy_async(_pkg.cmd, function(stdout) callback(parse(stdout, _pkg.sub)) end)
+    })
 end
 -- }}}
 

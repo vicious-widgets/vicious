@@ -9,6 +9,7 @@ local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -16,6 +17,11 @@ local helpers = require("vicious.helpers")
 -- vicious.widgets.volume
 local volume_linux = {}
 
+local STATES = { on = '🔉', off = '🔈' }
+
+function volume_linux.async(format, warg, callback)
+    if not warg then return callback{} end
+end
 
 -- {{{ Volume widget type
 local function worker(format, warg)

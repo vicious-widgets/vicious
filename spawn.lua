@@ -16,8 +16,14 @@
 -- You should have received a copy of the GNU Affero General Public License
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
-local status, spawn = pcall(require, "awful.spawn")
-if status then return spawn end
+local status, awful = pcall(require, "awful")
+if status then
+    local spawn = awful.spawn
+    function spawn.with_line_callback_with_shell(cmd, callbacks)
+        spawn.with_line_callback({ awful.util.shell, "-c", cmd }, callbacks)
+    end
+    return spawn
+end
 
 local io = { popen = io.popen }
 
@@ -26,7 +32,7 @@ local io = { popen = io.popen }
 local spawn = {}
 
 --- Spawn a program and capture its output line by line.
--- @tparam string|table cmd The command.
+-- @tparam string cmd The command.
 -- @tab callbacks Table containing callbacks that should be invoked on
 --   various conditions.
 -- @tparam[opt] function callbacks.stdout Function that is called with each
@@ -44,7 +50,7 @@ local spawn = {}
 --   For "signal", the second argument is the signal causing process
 --   termination.
 -- @treturn boolean|nil true if cmd terminated successfully, or nil otherwise
-function spawn.with_line_callback(cmd, callbacks)
+function spawn.with_line_callback_with_shell(cmd, callbacks)
     local stdout_callback, stdout = callbacks.stdout, io.popen(cmd)
     for line in stdout:lines() do stdout_callback(line) end
     if callbacks.output_done then callbacks.output_done() end
@@ -55,7 +61,7 @@ function spawn.with_line_callback(cmd, callbacks)
 end
 
 --- Spawn a program and capture its output.
--- @tparam string|table cmd The command.
+-- @tparam string cmd The command.
 -- @tab callback Function with the following arguments
 --   @tparam string callback.stdout Output on stdout.
 --   @tparam string callback.stderr Output on stderr,
@@ -64,13 +70,17 @@ end
 --   @tparam integer callback.exitcode Exit code (exit code or signal number,
 --     depending on "exitreason").
 -- @treturn boolean|nil true if cmd terminated successfully, or nil otherwise
-function spawn.easy_async(cmd, callback)
+function spawn.easy_async_with_shell(cmd, callback)
     local out_stream = io.popen(cmd)
     local stdout = out_stream:read("*all")
     local success, reason, code = out_stream:close()    -- requiring Lua 5.2
     callback(stdout, "", reason, code)
     return success
 end
+
+-- Since io.popen always use a shell
+spawn.easy_async = spawn.easy_async_with_shell
+spawn.with_line_callback = spawn.with_line_callback_with_shell
 
 return spawn
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

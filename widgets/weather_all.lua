@@ -11,7 +11,7 @@ local math = { ceil = math.ceil }
 local string = { match = string.match }
 
 -- Awesome library for spawning programs
-local spawn = require"awful.spawn"
+local spawn = require"vicious.spawn"
 
 local helpers = require("vicious.helpers")
 -- }}}
@@ -86,12 +86,12 @@ local function parse(ws)
 end
 
 function weather_all.async(format, warg, callback)
-    if not warg then return end
+    if not warg then return callback{} end
 
     -- Get weather forceast by the station ICAO code, from:
     -- * US National Oceanic and Atmospheric Administration
     local url = ("https://tgftp.nws.noaa.gov/data/observations/metar/decoded/%s.TXT"):format(warg)
-    local cmd = "curl -fs " .. helpers.shellquote(url)
+    local cmd = "curl -fs " .. url
     spawn.easy_async(cmd, function (stdout) callback(parse(stdout)) end)
 end
 
