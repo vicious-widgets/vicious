@@ -13,10 +13,7 @@ local rawget = rawget
 local require = require
 local tonumber = tonumber
 local tostring = tostring
-local io = { 
-    open = io.open, 
-    popen = io.popen 
-}
+local io = { open = io.open, popen = io.popen }
 local setmetatable = setmetatable
 local getmetatable = getmetatable
 local string = {
@@ -78,7 +75,7 @@ function helpers.wrequire(table, key)
             ret = value
             break
         end
-        not_found_msg = "module '"..name.."' not found"
+        local not_found_msg = "module '"..name.."' not found"
 
         -- ugly but there is afaik no other way to check if a module exists
         if value:sub(1, #not_found_msg) ~= not_found_msg then
@@ -90,6 +87,19 @@ function helpers.wrequire(table, key)
     assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform or does not exist")
 
     return ret
+end
+-- }}}
+
+-- {{{ Set __call metamethod to widget type table having async key
+function helpers.setasyncall(wtype)
+    local function worker(format, warg)
+        local ret
+        wtype.async(format, warg, function (data) ret = data end)
+        while ret == nil do end
+        return ret
+    end
+    local metatable = { __call = function (_, ...) return worker(...) end }
+    return setmetatable(wtype, metatable)
 end
 -- }}}
 

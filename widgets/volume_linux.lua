@@ -5,7 +5,6 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local string = { match = string.match }
 local table  = { concat = table.concat }
 
@@ -25,7 +24,7 @@ local function parse(stdout, stderr, exitreason, exitcode)
     -- Capture mixer control state, e.g.        [  42    % ]   [  on    ]
     local volume, state = string.match(stdout, "%[([%d]+)%%%].*%[([%l]*)%]")
     -- Handle mixers without data
-    if volume == nil then return { 0, STATE.off } end
+    if volume == nil then return {} end
 
     if state == "" and volume == "0"    -- handle mixers without mute
        or state == "off" then           -- handle muted mixers
@@ -41,13 +40,6 @@ function volume_linux.async(format, warg, callback)
     spawn.easy_async("amixer -M get " .. table.concat(warg, " "),
                      function (...) callback(parse(...)) end)
 end
-
-local function worker(format, warg)
-    local ret
-    volume_linux.async(format, warg, function (volume) ret = volume end)
-    while ret == nil do end
-    return ret
-end
 -- }}}
 
-return setmetatable(volume_linux, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(volume_linux)
