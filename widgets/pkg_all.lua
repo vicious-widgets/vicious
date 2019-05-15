@@ -4,8 +4,8 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local setmetatable = setmetatable
 local spawn = require("vicious.spawn")
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -42,16 +42,4 @@ function pkg_all.async(format, warg, callback)
 end
 -- }}}
 
--- {{{ Packages widget type
-local function worker(format, warg)
-    local ret = nil
-
-    pkg_all.async(format, warg, function(data) ret = data end)
-
-    while ret==nil do end
-    return ret
-end
--- }}}
-
-
-return setmetatable(pkg_all, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(pkg_all)

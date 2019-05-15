@@ -4,7 +4,6 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
-local setmetatable = setmetatable
 local pcall = pcall
 local helpers = require("vicious.helpers")
 local spawn = require("vicious.spawn")
@@ -51,13 +50,6 @@ function btc_all.async(format, warg, callback)
 
     spawn.easy_async(cmd, function(stdout) callback(parse(stdout)) end)
 end
-
-local function worker(format, warg)
-    local ret
-    btc_all.async(format, warg, function (price) ret = price end)
-    while ret == nil do end
-    return ret
-end
 -- }}}
 
-return setmetatable(btc_all, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(btc_all)

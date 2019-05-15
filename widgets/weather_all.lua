@@ -5,7 +5,6 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local math = { ceil = math.ceil }
 local string = { match = string.match }
 
@@ -91,13 +90,6 @@ function weather_all.async(format, warg, callback)
     spawn.easy_async("curl -fs " .. url,
                      function (...) callback(parse(...)) end)
 end
-
-local function worker(format, warg)
-    local ret
-    weather_all.async(format, warg, function (weather) ret = weather end)
-    while ret == nil do end
-    return ret
-end
 -- }}}
 
-return setmetatable(weather_all, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(weather_all)
