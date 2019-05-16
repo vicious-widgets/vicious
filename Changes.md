@@ -1,6 +1,6 @@
 IMPORTANT:
 
-- `volume_linux` now uses 🔉 and 🔈 instead of ♫ and ♩ to show mute state.
+- `volume` now uses 🔉 and 🔈 instead of ♫ and ♩ to show mute state.
   This BREAKS backward compatibility if users substitute custom symbols
   from these default.
 
@@ -16,7 +16,7 @@ Added:
 
 Fixed:
 
-- [volume_linux] Deprecate `io.popen`
+- [volume] Deprecate `io.popen`
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
