@@ -16,7 +16,7 @@ Added:
 
 Fixed:
 
-- [volume] Deprecate `io.popen`
+- [volume,gmail] Deprecate `io.popen`
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
