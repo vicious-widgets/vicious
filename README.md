@@ -505,7 +505,7 @@ Supported platforms: any having Awesome and `curl` installed.
 * Argument: the ICAO station code, e.g. `"LDRI"`
 * Returns a table with string keys: `${city}`, `${wind}`, `${windmph}`,
   `${windkmh}`, `${sky}`, `${weather}`, `${tempf}`, `${tempc}`, `${humid}`,
-  `${dewf}`, `${dewc}` and `${press}`
+  `${dewf}`, `${dewc}` and `${press}`, `${when}`
 
 ### vicious.widgets.wifi
 
