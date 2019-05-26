@@ -1,23 +1,23 @@
 -- {{{ Grab environment
-local setmetatable = setmetatable
 local tonumber = tonumber
-local io = { popen = io.popen }
 local math = { floor = math.floor }
 local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 local string = {
     gmatch = string.gmatch,
     match = string.match,
     format = string.format
 }
-
 -- }}}
+
+-- Battery: provides battery level of requested battery
+-- vicious.widgets.battery_freebsd
 local bat_freebsd = {}
 
-local function worker(format, warg)
-    local battery = warg or "batt"
+-- {{{ Battery widget type
+local function parse(stdout, stderr, exitreason, exitcode)
     local bat_info = {}
-    local f = io.popen("acpiconf -i " .. helpers.shellquote(battery))
-    for line in f:lines("*line") do
+    for line in string.gmatch(s,"[^\n]+") do
         for key,value in string.gmatch(line, "(.+):%s+(.+)") do
             bat_info[key] = value
         end
@@ -25,22 +25,15 @@ local function worker(format, warg)
 
     -- current state
     -- see: https://github.com/freebsd/freebsd/blob/master/usr.sbin/acpi/acpiconf/acpiconf.c
-    local state
-    if bat_info["State"] == "high" then
-        state =  "↯"
-    elseif bat_info["State"] == "charging" then
-        state = "+"
-    elseif bat_info["State"] == "critical charging" then
-        state = "+"
-    elseif bat_info["State"] == "discharging" then
-        state = "-"
-    elseif bat_info["State"] == "critical discharging" then
-        state = "!"
-    elseif bat_info["State"] == "critical" then
-        state = "!"
-    else
-        state = "N/A"
-    end
+    local battery_state = {
+        ["high"]                    = "↯",
+        ["charging"]                = "+",
+        ["critical charging"]       = "+",
+        ["discharging"]             = "-",
+        ["critical discharging"]    = "!",
+        ["critical"]                = "!",
+    }
+    local state = battery_state[bat_info["State"]] or "N/A"
 
     -- battery capacity in percent
     local percent = tonumber(string.match(bat_info["Remaining capacity"], "[%d]+"))
@@ -72,4 +65,11 @@ local function worker(format, warg)
     return {state, percent, time, wear, rate}
 end
 
-return setmetatable(bat_freebsd, { __call = function(_, ...) return worker(...) end })
+function battery_freebsd.async(format, warg, callback)
+    local battery = warg or "batt"
+    spawn.easy_async("acpiconf -i " .. helpers.shellquote(battery),
+                     function (...) callback(parse(...)) end)
+end
+-- }}}
+
+return helpers.setasyncall(battery_freebsd)

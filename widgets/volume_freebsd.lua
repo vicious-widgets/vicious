@@ -1,8 +1,8 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local string = { match = string.match }
-local helpers = require"vicious.helpers"
-local spawn = require"vicious.spawn"
+local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 -- }}}
 
 
