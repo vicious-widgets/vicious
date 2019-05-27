@@ -1,9 +1,12 @@
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local math = { floor = math.floor }
-local io = { popen = io.popen }
 local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
+local string = { 
+    match = string.match,
+    gmatch = string.gmatch 
+}
 -- }}}
 
 -- Mem: provides RAM and Swap usage statistics
@@ -12,7 +15,7 @@ local mem_freebsd = {}
 
 
 -- {{{ Memory widget type
-local function worker(format)
+local function parse(stdout, stderr, exitreason, exitcode)
     local pagesize = tonumber(helpers.sysctl("hw.pagesize"))
     local vm_stats = helpers.sysctl_table("vm.stats.vm")
     local _mem = { buf = {}, total = nil }
@@ -54,19 +57,20 @@ local function worker(format)
         _swp.total = 0
         _swp.buf.free = 0
 
-        -- Read output of swapinfo in Mbytes
-        local f = io.popen("swapinfo -m")
-        -- Skip first line (table header)
-        f:read("*line")
+        -- Read output of swapinfo in Mbytes (from async function call)
         -- Read content and sum up
-        for line in f:lines() do
-            local ltotal, lused, lfree = string.match(line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
-            -- Add swap space in Mbytes
-            _swp.total = _swp.total + tonumber(ltotal)
-            _swp.inuse = _swp.inuse + tonumber(lused)
-            _swp.buf.free = _swp.buf.free + tonumber(lfree)
+        local counter = 1
+        for line in string.gmatch(stdout, "[^\n]+") do
+            -- Skip first line (table header)
+            if counter ~= 1 then
+                local ltotal, lused, lfree = string.match(line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
+                -- Add swap space in Mbytes
+                _swp.total = _swp.total + tonumber(ltotal)
+                _swp.inuse = _swp.inuse + tonumber(lused)
+                _swp.buf.free = _swp.buf.free + tonumber(lfree)
+            end
+            counter = counter + 1
         end
-        f:close()
 
         -- Calculate percentage
         _swp.usep  = math.floor(_swp.inuse / _swp.total * 100)
@@ -82,4 +86,10 @@ local function worker(format)
              _mem.wirep, _mem.wire, _mem.notfreeablep, _mem.notfreeable }
 end
 
-return setmetatable(mem_freebsd, { __call = function(_, ...) return worker(...) end })
+function mem_freebsd.async(format, warg, callback)
+    spawn.easy_async("swapinfo -m",
+                     function (...) callback(parse(...)) end)
+end
+-- }}}
+
+return helpers.setasyncall(mem_freebsd)

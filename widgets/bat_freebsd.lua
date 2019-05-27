@@ -17,7 +17,7 @@ local bat_freebsd = {}
 -- {{{ Battery widget type
 local function parse(stdout, stderr, exitreason, exitcode)
     local bat_info = {}
-    for line in string.gmatch(s,"[^\n]+") do
+    for line in string.gmatch(stdout, "[^\n]+") do
         for key,value in string.gmatch(line, "(.+):%s+(.+)") do
             bat_info[key] = value
         end
@@ -65,11 +65,11 @@ local function parse(stdout, stderr, exitreason, exitcode)
     return {state, percent, time, wear, rate}
 end
 
-function battery_freebsd.async(format, warg, callback)
+function bat_freebsd.async(format, warg, callback)
     local battery = warg or "batt"
     spawn.easy_async("acpiconf -i " .. helpers.shellquote(battery),
                      function (...) callback(parse(...)) end)
 end
 -- }}}
 
-return helpers.setasyncall(battery_freebsd)
+return helpers.setasyncall(bat_freebsd)
