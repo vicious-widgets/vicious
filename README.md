@@ -514,8 +514,10 @@ Provides wireless information for a requested interface.
 Supported platforms: GNU/Linux.
 
 * Argument: the network interface, e.g. `"wlan0"`
-* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-  `${link}`, `${linp}` (link quality in percent) and `${sign}` (signal level)
+* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`,
+  `${rate}` (Mb/s), `${freq}` (MHz), `${txpw}` (transmission power, in dBm),
+  `${sign}` (signal level), `${link}` and `${linp}` (link quality
+  per 70 and per cent)
 
 ### vicious.widgets.wifiiw
 
@@ -525,9 +527,9 @@ vicious.widgets.wifi, but uses `iw` instead of `iwconfig`).
 Supported platforms: GNU/Linux.
 
 * Argument: the network interface, e.g. `"wlan0"`
-* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-  `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
-  `${sign}` (signal level)
+* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`,
+  `${rate}` (Mb/s), `${freq}` (MHz), `${linp}` (link quality in percent),
+  `${txpw}` (transmission power, in dBm) and `${sign}` (signal level, in dBm)
 
 
 ## <a name="custom-widget"></a>Custom widget types

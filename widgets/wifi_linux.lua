@@ -4,89 +4,50 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
 local tonumber = tonumber
-local math = { ceil = math.ceil }
-local setmetatable = setmetatable
-local helpers = require("vicious.helpers")
-local io = {
-    open  = io.open,
-    popen = io.popen
-}
-local string = {
-    find  = string.find,
-    match = string.match
-}
+local math = { floor = math.floor }
+
+local helpers = require"vicious.helpers"
+local spawn = require"vicious.spawn"
 -- }}}
 
 
--- Wifi: provides wireless information for a requested interface
+-- Wifi: provides wireless information for a requested interface using iwconfig
 -- vicious.widgets.wifi
 local wifi_linux = {}
 
-
--- {{{ Variable definitions
-local iwconfig = "iwconfig"
-local iwcpaths = { "/sbin", "/usr/sbin", "/usr/local/sbin", "/usr/bin" }
--- }}}
-
-
 -- {{{ Wireless widget type
-local function worker(format, warg)
-    if not warg then return end
-
-    -- Default values
-    local winfo = {
-        ["{ssid}"] = "N/A",
-        ["{mode}"] = "N/A",
-        ["{chan}"] = 0,
-        ["{rate}"] = 0,
-        ["{link}"] = 0,
-        ["{linp}"] = 0,
-        ["{sign}"] = 0
-    }
-
-    -- Sbin paths aren't in user PATH, search for the binary
-    if iwconfig == "iwconfig" then
-        for _, p in ipairs(iwcpaths) do
-            local f = io.open(p .. "/iwconfig", "rb")
-            if f then
-                iwconfig = p .. "/iwconfig"
-                f:close()
-                break
-            end
-        end
-    end
-
-    -- Get data from iwconfig where available
-    local f = io.popen(iwconfig .." ".. helpers.shellquote(warg) .. " 2>&1")
-    local iw = f:read("*all")
-    f:close()
-
-    -- iwconfig wasn't found, isn't executable, or non-wireless interface
-    if iw == nil or string.find(iw, "No such device") then
-        return winfo
-    end
-
-    -- Output differs from system to system, some stats can be
-    -- separated by =, and not all drivers report all stats
-    -- SSID can have almost anything in it
-    winfo["{ssid}"] = string.match(iw, 'ESSID[=:]"(.-)"') or winfo["{ssid}"]
-    winfo["{mode}"] =  -- Modes are simple, but also match the "-" in Ad-Hoc
-      string.match(iw, "Mode[=:]([%w%-]*)") or winfo["{mode}"]
-    winfo["{chan}"] =  -- Channels are plain digits
-      tonumber(string.match(iw, "Channel[=:]([%d]+)") or winfo["{chan}"])
-    winfo["{rate}"] =  -- Bitrate can start with a space, we don't want to display Mb/s
-      tonumber(string.match(iw, "Bit Rate[=:]([%s]?[%d%.]*)") or winfo["{rate}"])
-    winfo["{link}"] =  -- Link quality can contain a slash (32/70), match only the first number
-      tonumber(string.match(iw, "Link Quality[=:]([%d]+)") or winfo["{link}"])
-    winfo["{sign}"] =  -- Signal level can be a negative value, don't display decibel notation
-      tonumber(string.match(iw, "Signal level[=:]([%-]?[%d]+)") or winfo["{sign}"])
-
-    -- Link quality percentage if quality was available
-    if winfo["{link}"] ~= 0 then winfo["{linp}"] = math.ceil(winfo["{link}"] / 0.7) end
-
+local function parser(stdout, stderr, exitreason, exitcode)
+    local winfo = {}
+    -- Output differs from system to system, stats can be separated by
+    -- either = or :. Some stats may not be supported by driver.
+    -- SSID can have almost anything in it.
+    winfo["{ssid}"] = stdout:match'ESSID[=:]"(.-)"' or "N/A"
+    -- Modes are simple, but also match the "-" in Ad-Hoc
+    winfo["{mode}"] = stdout:match"Mode[=:]([%w%-]+)" or "N/A"
+    winfo["{chan}"] = tonumber(stdout:match"Channel[=:](%d+)" or 0)
+    winfo["{rate}"] = -- Bitrate without unit (Mb/s)
+        tonumber(stdout:match"Bit Rate[=:]%s?([%d%.]+)" or 0)
+    winfo["{freq}"] = -- Frequency in MHz (is output always in GHz?)
+        tonumber(stdout:match"Frequency[=:]%s?([%d%.]+)" or 0) * 1000
+    winfo["{txpw}"] = -- Transmission power in dBm
+        tonumber(stdout:match"Tx%-Power[=:](%d+)" or 0)
+    winfo["{link}"] = -- Link quality over 70
+        tonumber(stdout:match"Link Quality[=:](%d+)" or 0)
+    winfo["{linp}"] = -- Link quality percentage if quality was available
+        winfo["{link}"] ~= 0 and math.floor(winfo["{link}"]/0.7 + 0.5) or 0
+    -- Signal level without unit (dBm), can be negative value
+    winfo["{sign}"] = tonumber(stdout:match"Signal level[=:](%-?%d+)" or 0)
     return winfo
+end
+
+function wifi_linux.async(format, warg, callback)
+    if type(warg) ~= "string" then return callback{} end
+    spawn.easy_async_with_shell(
+        "PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin iwconfig " .. warg,
+        function (...) callback(parser(...)) end)
 end
 -- }}}
 
-return setmetatable(wifi_linux, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(wifi_linux)

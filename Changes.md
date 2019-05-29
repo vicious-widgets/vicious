@@ -6,6 +6,7 @@ IMPORTANT:
 
 Added:
 
+- [wifi_linux] Expose frequency and transmission power
 - `spawn` as a fallback for `awful.spawn` in case Vicious is used as
   a stand-alone library. This wrapper, however, does NOT provide the facilities
   to asynchronously spawn new processes. It also lacks a few features such as
@@ -16,7 +17,10 @@ Added:
 
 Fixed:
 
-- [volume,gmail,bat_freebsd,mem_freebsd,net_freebsd,mdir] Deprecate `io.popen`
+- Deprecate the use of `io.popen` in following widgets:
+    * wifi_linux, wifiiw_linux
+    * bat_freebsd, mem_freebsd, net_freebsd
+    * volume, gmail, mdir
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
