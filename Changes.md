@@ -20,7 +20,7 @@ Fixed:
 - Deprecate the use of `io.popen` in following widgets:
     * wifi_linux, wifiiw_linux
     * bat_freebsd, mem_freebsd, net_freebsd
-    * volume, gmail, mdir
+    * volume, gmail, mdir, mpd
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
