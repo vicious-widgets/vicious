@@ -236,6 +236,7 @@ Supported platforms: platform independent.
 * Returns a table with string keys, using mount points as a base, e.g.
   `${/ size_mb}`, `${/ size_gb}`, `${/ used_mb}`, `${/ used_gb}`, `${/ used_p}`,
   `${/ avail_mb}`, `${/ avail_gb}`, `${/ avail_p}`, `${/home size_mb}`, etc.
+  mb and gb refer to mebibyte and gibibyte respectively.
 
 ### vicious.widgets.gmail
 
