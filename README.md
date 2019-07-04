@@ -154,6 +154,16 @@ Supported platforms: GNU/Linux (require `sysfs`), FreeBSD (require `acpiconf`), 
     * `$4`: Wear level in percent
     * `$5`: Current (dis)charge rate in Watt
 
+### vicious.contrib.cmus
+
+Provides cmus player information using `cmus-remote`.
+
+Supported platforms: platform independent.
+
+* Argument: a table whose first field is the socket including host (or nil).
+* Returns a table with string keys: `${status}`, `${artist}`, `${title}`,
+  `${duration}`, `${file}`,  `${continue}`, `${shuffle}`, `${repeat}`.
+
 ### vicious.widgets.cpu
 
 Provides CPU usage for all available CPUs/cores. Since this widget type give
