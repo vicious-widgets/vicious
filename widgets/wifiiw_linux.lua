@@ -26,6 +26,7 @@ function wifiiw_linux.async(format, warg, callback)
     local winfo = {}
 
     local function parse_link(stdout)
+        winfo["{bssid}"] = stdout:match"Connected to ([%x:]*)" or "N/A"
         winfo["{ssid}"] = stdout:match"SSID: ([^\n]*)" or "N/A"
         winfo["{freq}"] = tonumber(stdout:match"freq: (%d+)" or 0)
         winfo["{sign}"] = -- Signal level can be negative; w/o unit (dBm)
