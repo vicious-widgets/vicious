@@ -41,7 +41,9 @@ local function worker(format, warg)
     if iwresult == nil or string.find(iwresult, "No such device") then
         return winfo
     end
-	-- string match is simple in most cases, because iw uses a new line for every info
+  -- string match is simple in most cases, because iw uses a new line for every info
+    winfo["{bssid}"] = -- BSSID has hex digits and colons
+      string.match(iwresult, "Connected to ([%x:]*)") or "N/A"
     winfo["{ssid}"] =  -- SSID can have almost anything in it until new line
       string.match(iwresult, "SSID: ([^\n]*)") or "N/A"
     winfo["{mode}"] =  -- everything after 'type ' until new line
