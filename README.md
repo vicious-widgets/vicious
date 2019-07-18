@@ -525,7 +525,7 @@ vicious.widgets.wifi, but uses `iw` instead of `iwconfig`).
 Supported platforms: GNU/Linux.
 
 * Argument: the network interface, e.g. `"wlan0"`
-* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
+* Returns a table with string keys: `${bssid}`, `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
   `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
   `${sign}` (signal level)
 
