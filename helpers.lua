@@ -21,7 +21,9 @@ local string = {
     lower = string.lower,
     format = string.format,
     match = string.match,
+    find = string.find,
 }
+local table = { concat = table.concat }
 local pcall = pcall
 local assert = assert
 local spawn = require("vicious.spawn")
@@ -263,14 +265,22 @@ end
 -- }}}
 
 -- {{{ Return result from sysctl variable as table (async)
-function helpers.sysctl_async(path, parse)
+function helpers.sysctl_async(path_table, parse)
     local ret = {}
-    local path = table.concat(path, " ")
+    local path = {}
 
-    spawn.with_line_callback("sysctl " .. helpers.shellquote(path), {
+    for i=1,#path_table do
+        path[i] = helpers.shellquote(path_table[i])
+    end
+
+    path = table.concat(path, " ")
+
+    spawn.with_line_callback("sysctl " .. path, {
         stdout = function(line)
-            local key, value = string.match(line, "(.+): (.+)")
-            ret[key] = value
+            if not string.find(line, "sysctl: unknown oid") then
+                local key, value = string.match(line, "(.+): (.+)")
+                ret[key] = value
+            end
         end,
         output_done = function() parse(ret) end
     })

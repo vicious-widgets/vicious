@@ -13,10 +13,18 @@ function thermal_freebsd.async(format, warg, callback)
     if not warg then return callback{} end
     if type(warg) ~= "table" then warg = { warg } end
 
-    local thermals = {}
-
     helpers.sysctl_async(warg, function(ret)
-        for i=1, #warg do
+        local thermals = {}
+
+        for k, v in pairs(ret) do
+            print(k, v)
+        end
+
+        for i=1,#warg do
+            print(warg[i])
+            print(ret[warg[i]])
+            print(ret["hw.acpi.thermal.tz0.temperature"])
+            print(ret['hw.acpi.thermal.tz0.temperature'])
             if ret[warg[i]] ~= nil then
                 thermals[i] = string.match(ret[warg[i]], "[%d]+")
             else

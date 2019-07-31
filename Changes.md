@@ -19,7 +19,7 @@ Fixed:
 
 - Deprecate the use of `io.popen` in following widgets:
     * wifi_linux, wifiiw_linux, hwmontemp_linux, hddtemp_linux
-    * bat_freebsd, mem_freebsd, net_freebsd, thermal_freebsd
+    * bat_freebsd, mem_freebsd, net_freebsd, thermal_freebsd, uptime_freebsd
     * volume, gmail, mdir, mpd, fs
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome

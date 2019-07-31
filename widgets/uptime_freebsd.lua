@@ -14,17 +14,21 @@ local uptime_freebsd = {}
 
 
 -- {{{ Uptime widget type
-local function worker(format)
-    local l1, l5, l15 = string.match(helpers.sysctl("vm.loadavg"), "{ ([%d]+%.[%d]+) ([%d]+%.[%d]+) ([%d]+%.[%d]+) }")
-    local up_t = os.time() - tonumber(string.match(helpers.sysctl("kern.boottime"), "sec = ([%d]+)"))
+function uptime_freebsd.async(format, warg, callback)
+    helpers.sysctl_async({ "vm.loadavg", 
+                           "kern.boottime" }, 
+                         function(ret)
+        local l1, l5, l15 = string.match(ret["vm.loadavg"], "{ ([%d]+%.[%d]+) ([%d]+%.[%d]+) ([%d]+%.[%d]+) }")
+        local up_t = os.time() - tonumber(string.match(ret["kern.boottime"], "sec = ([%d]+)"))
 
-    -- Get system uptime
-    local up_d = math.floor(up_t   / (3600 * 24))
-    local up_h = math.floor((up_t  % (3600 * 24)) / 3600)
-    local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
+        -- Get system uptime
+        local up_d = math.floor(up_t   / (3600 * 24))
+        local up_h = math.floor((up_t  % (3600 * 24)) / 3600)
+        local up_m = math.floor(((up_t % (3600 * 24)) % 3600) / 60)
 
-    return {up_d, up_h, up_m, l1, l5, l15}
+        return callback({ up_d, up_h, up_m, l1, l5, l15 })
+    end)
 end
 -- }}}
 
-return setmetatable(uptime_freebsd, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(uptime_freebsd)
