@@ -1,6 +1,5 @@
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local math = { floor = math.floor }
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
