@@ -1,6 +1,5 @@
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -11,24 +10,24 @@ local cpufreq_freebsd = {}
 
 
 -- {{{ CPU frequency widget type
-local function worker(format, warg)
-    if not warg then return end
+function cpufreq_freebsd.async(format, warg, callback)
+    if not warg then return callback({}) end
 
     -- Default frequency and voltage values
     local freqv = {
         ["mhz"] = "N/A", ["ghz"] = "N/A",
         ["v"]   = "N/A", ["mv"]  = "N/A",
+        ["governor"] = "N/A",
     }
 
-    local freq = tonumber(helpers.sysctl("dev.cpu." .. warg .. ".freq"))
+    helpers.sysctl_async({ "dev.cpu." .. warg .. ".freq" }, function(ret)
+        freqv.mhz = tonumber(ret["dev.cpu." .. warg .. ".freq"])
+        freqv.ghz = freqv.mhz / 1000
 
-    freqv.mhz = freq
-    freqv.ghz = freq / 1000
+        return callback({freqv.mhz, freqv.ghz, freqv.mv, freqv.v, freqv.governor})
+    end)
 
-    local governor = "N/A"
-
-    return {freqv.mhz, freqv.ghz, freqv.mv, freqv.v, governor}
 end
 -- }}}
 
-return setmetatable(cpufreq_freebsd, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(cpufreq_freebsd)
