@@ -19,10 +19,12 @@ local getmetatable = getmetatable
 local string = {
     upper = string.upper,
     lower = string.lower,
-    format = string.format
+    format = string.format,
+    match = string.match,
 }
 local pcall = pcall
 local assert = assert
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -259,6 +261,21 @@ function helpers.sysctl_table(syspath)
     })
 end
 -- }}}
+
+-- {{{ Return result from sysctl variable as table (async)
+function helpers.sysctl_async(path, parse)
+    local ret = {}
+    local path = table.concat(path, " ")
+
+    spawn.with_line_callback("sysctl " .. helpers.shellquote(path), {
+        stdout = function(line)
+            local key, value = string.match(line, "(.+): (.+)")
+            ret[key] = value
+        end,
+        output_done = function() parse(ret) end
+    })
+end
+--  }}}
 
 return helpers
 
