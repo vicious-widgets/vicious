@@ -21,15 +21,16 @@ Fixed:
     * wifi_linux, wifiiw_linux, hwmontemp_linux, hddtemp_linux
     * bat_freebsd, mem_freebsd, net_freebsd, thermal_freebsd, uptime_freebsd,
       cpu_freebsd, cpufreq_freebsd, fanspeed_freebsd
+    * bat_openbsd
     * volume, gmail, mdir, mpd, fs
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 
 Removed:
+
 - `helpers.sysctl` and `helpers.sysctl_table` were removed in favour of
   `helpers.sysctl_async`.
-
 
 # Changes in 2.3.3
 
