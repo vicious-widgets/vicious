@@ -226,7 +226,7 @@ function helpers.scroll(text, maxlen, widget)
 end
 -- }}}
 
--- {{{ Return result from sysctl variable as table (async)
+-- {{{ Parse output of sysctl command calling the `parse` function
 function helpers.sysctl_async(path_table, parse)
     local ret = {}
     local path = {}
