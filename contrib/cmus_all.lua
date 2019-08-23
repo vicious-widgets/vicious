@@ -1,1 +1,1 @@
-widgets/cmus_all.lua
+../widgets/cmus_all.lua
