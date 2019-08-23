@@ -1,3 +1,5 @@
+# Changes in 2.4.0 (WIP)
+
 IMPORTANT:
 
 - `volume` now uses 🔉 and 🔈 instead of ♫ and ♩ to show mute state.
@@ -27,6 +29,7 @@ Fixed:
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 - [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
+- Tweak `.luacheckrc` to suit functional style and soft-limit text width to 80
 
 Removed:
 

@@ -1,13 +1,13 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
 local string = {
     gmatch = string.gmatch,
-    match = string.match,
     format = string.format
 }
+
+local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 -- }}}
 
 -- Battery: provides battery level of requested battery
@@ -36,7 +36,7 @@ local function parse(stdout, stderr, exitreason, exitcode)
     local state = battery_state[bat_info["State"]] or "N/A"
 
     -- battery capacity in percent
-    local percent = tonumber(string.match(bat_info["Remaining capacity"], "[%d]+"))
+    local percent = tonumber(bat_info["Remaining capacity"]:match"[%d]+")
 
     -- use remaining (charging or discharging) time calculated by acpiconf
     local time = bat_info["Remaining time"]
@@ -47,13 +47,13 @@ local function parse(stdout, stderr, exitreason, exitcode)
     -- calculate wear level from (last full / design) capacity
     local wear = "N/A"
     if bat_info["Last full capacity"] and bat_info["Design capacity"] then
-        local l_full = tonumber(string.match(bat_info["Last full capacity"], "[%d]+"))
-        local design = tonumber(string.match(bat_info["Design capacity"], "[%d]+"))
+        local l_full = tonumber(bat_info["Last full capacity"]:match"[%d]+")
+        local design = tonumber(bat_info["Design capacity"]:match"[%d]+")
         wear = math.floor(l_full / design * 100)
     end
 
     -- dis-/charging rate as presented by battery
-    local rate = string.match(bat_info["Present rate"], "([%d]+)%smW")
+    local rate = bat_info["Present rate"]:match"([%d]+)%smW"
     rate = string.format("%2.1f", tonumber(rate / 1000))
 
     -- returns

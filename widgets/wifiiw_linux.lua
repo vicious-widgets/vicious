@@ -46,8 +46,8 @@ function wifiiw_linux.async(format, warg, callback)
 
     spawn.easy_async_with_shell(
         LINK:format(warg),
-        function (stdout, stderr, exitreason, exitcode)
-            parse_link(stdout)
+        function (std_out, std_err, exit_reason, exit_code)
+            parse_link(std_out)
             spawn.easy_async_with_shell(
                 INFO:format(warg),
                 function (stdout, stderr, exitreason, exitcode)

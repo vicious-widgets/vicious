@@ -21,7 +21,7 @@ local mdir_all = {}
 function mdir_all.async(format, warg, callback)
     if type(warg) ~= "table" then return callback{} end
     local starting_points = ""
-    for i,dir in ipairs(warg) do
+    for _,dir in ipairs(warg) do
         starting_points = starting_points .. " " .. helpers.shellquote(dir)
     end
     if starting_points == "" then return callback{ 0, 0 } end

@@ -1,7 +1,8 @@
 -- {{{ Grab environment
-local helpers = require("vicious.helpers")
 local tonumber = tonumber
 local type = type
+
+local helpers = require("vicious.helpers")
 -- }}}
 
 

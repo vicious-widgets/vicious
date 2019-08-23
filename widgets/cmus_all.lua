@@ -12,6 +12,8 @@ local helpers = require"vicious.helpers"
 local spawn = require"vicious.spawn"
 -- }}}
 
+local CMUS_SOCKET = helpers.shellquote(os.getenv"CMUS_SOCKET")
+
 -- Cmus: provides CMUS information
 -- vicious.widgets.cmus
 return helpers.setasyncall{
@@ -19,8 +21,8 @@ return helpers.setasyncall{
         local server = ""
         if type(warg) == "table" then
             server = " --server " .. helpers.shellquote(warg.host or warg[1])
-        elseif CMUS_SOCKET then
-            server = " --server " .. helpers.shellquote(os.getenv"CMUS_SOCKET")
+        elseif CMUS_SOCKET ~= nil then
+            server = " --server " .. CMUS_SOCKET
         end
 
         local cmus_state = { ["{duration}"] = 0, ["{file}"] = "N/A",

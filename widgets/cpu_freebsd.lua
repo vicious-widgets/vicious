@@ -1,7 +1,8 @@
 -- {{{ Grab environment
-local helpers = require("vicious.helpers")
 local math = { floor = math.floor }
 local string = { gmatch = string.gmatch }
+
+local helpers = require("vicious.helpers")
 -- }}}
 
 
@@ -39,7 +40,7 @@ function cpu_freebsd.async(format, warg, callback)
             tmp_usage[i] = 0
         end
 
-        -- CPU usage 
+        -- CPU usage
         for i, v in ipairs(matches) do
             local index = math.floor((i-1) / 5) + 2 -- current cpu
 
@@ -54,7 +55,9 @@ function cpu_freebsd.async(format, warg, callback)
 
         for i = 1, #tmp_usage do
             tmp_usage[i] = tmp_total[i] - cpu_total[i]
-            tmp_usage[i] = math.floor((tmp_usage[i] - (tmp_idle[i] - cpu_idle[i])) / tmp_usage[i] * 100)
+            tmp_usage[i] = math.floor(
+                (tmp_usage[i] - (tmp_idle[i] - cpu_idle[i]))
+                / tmp_usage[i] * 100)
         end
 
         cpu_total = tmp_total

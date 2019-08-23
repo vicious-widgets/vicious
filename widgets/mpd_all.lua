@@ -7,6 +7,7 @@
 local tonumber = tonumber
 local math = { floor = math.floor }
 local type = type
+
 local helpers = require"vicious.helpers"
 local spawn = require"vicious.spawn"
 -- }}}
@@ -24,7 +25,7 @@ end
 -- }}}
 
 -- {{{ Format playing progress
-function format_progress(elapsed, duration)
+local function format_progress(elapsed, duration)
     local em, es = math.floor(elapsed / 60), math.floor(elapsed % 60)
     local dm, ds = math.floor(duration / 60), math.floor(duration % 60)
 
@@ -32,18 +33,22 @@ function format_progress(elapsed, duration)
         return ("%d:%02d"):format(em, es), ("%d:%02d"):format(dm, ds)
     elseif dm < 60 then
         return ("%02d:%02d"):format(em, es), ("%02d:%02d"):format(dm, ds)
-    elseif dm < 600 then
-        return ("%d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
-               ("%d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
+    end
+
+    local eh, dh = math.floor(em / 60), math.floor(dm / 60)
+    em, dm = math.floor(em % 60), math.floor(dm % 60)
+    if dm < 600 then
+        return ("%d:%02d:%02d"):format(eh, em, es),
+               ("%d:%02d:%02d"):format(dh, dm, ds)
     else
-        return ("%02d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
-               ("%02d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
+        return ("%02d:%02d:%02d"):format(eh, em, es),
+               ("%02d:%02d:%02d"):format(dh, dm, ds)
     end
 end
 -- }}}
 
 -- {{{ Format playing progress (percentage)
-function format_progress_percentage(elapsed, duration)
+local function format_progress_percentage(elapsed, duration)
     if duration > 0 then
         local percentage = math.floor((elapsed / duration) * 100 + 0.5)
         return ("%d%%"):format(percentage)

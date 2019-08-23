@@ -1,12 +1,13 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local os = { time = os.time }
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
-local string = { 
+local string = {
     match = string.match,
     gmatch = string.gmatch
 }
+
+local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -28,7 +29,7 @@ local function parse(stdout, stderr, exitreason, exitcode)
     local args = {}
     local buffer = nil
     local now = os.time()
-    
+
     for line in string.gmatch(stdout, "[^\n]+") do
         if not (line:find("<Link") or line:find("Name")) then -- skipping missleading lines
             local split = { line:match(("([^%s]*)%s*"):rep(12)) }
@@ -36,7 +37,8 @@ local function parse(stdout, stderr, exitreason, exitcode)
             if buffer == nil then
                 buffer = { tonumber(split[8]), tonumber(split[11]) } -- recv (field 8) and send (field 11)
             else
-                buffer = { buffer[1] + tonumber(split[8]), buffer[2] + tonumber(split[11]) }
+                buffer = { buffer[1] + tonumber(split[8]),
+                           buffer[2] + tonumber(split[11]) }
             end
         end
     end
@@ -65,7 +67,7 @@ local function parse(stdout, stderr, exitreason, exitcode)
             helpers.uformat(args, "down", down, unit)
             helpers.uformat(args, "up",   up,   unit)
         end
-        
+
         nets["time"] = now
 
         -- Store totals

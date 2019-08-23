@@ -1,13 +1,14 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
-local string = { 
+local string = {
     match = string.match,
     gmatch = string.gmatch,
     find = string.find
 }
+
+local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 -- }}}
 
 -- Mem: provides RAM and Swap usage statistics
@@ -17,21 +18,21 @@ local mem_freebsd = {}
 
 -- {{{ Memory widget type
 function mem_freebsd.async(format, warg, callback)
-    helpers.sysctl_async({ "hw.pagesize", 
+    helpers.sysctl_async({ "hw.pagesize",
                            "vm.stats.vm",
                            "vm.swap_total",
                            "vm.swap_enabled" },
                          function(ret)
 
-        local pagesize = tonumber(ret["hw.pagesize"])
+        local pgsz = tonumber(ret["hw.pagesize"])
         local _mem = { buf = {}, total = nil }
 
         -- Get memory space in bytes
-        _mem.total = tonumber(ret["vm.stats.vm.v_page_count"]) * pagesize
-        _mem.buf.free = tonumber(ret["vm.stats.vm.v_free_count"]) * pagesize
-        _mem.buf.laundry = tonumber(ret["vm.stats.vm.v_laundry_count"]) * pagesize
-        _mem.buf.cache = tonumber(ret["vm.stats.vm.v_cache_count"]) * pagesize
-        _mem.buf.wired = tonumber(ret["vm.stats.vm.v_wire_count"]) * pagesize
+        _mem.total = tonumber(ret["vm.stats.vm.v_page_count"]) * pgsz
+        _mem.buf.free = tonumber(ret["vm.stats.vm.v_free_count"]) * pgsz
+        _mem.buf.laundry = tonumber(ret["vm.stats.vm.v_laundry_count"]) * pgsz
+        _mem.buf.cache = tonumber(ret["vm.stats.vm.v_cache_count"]) * pgsz
+        _mem.buf.wired = tonumber(ret["vm.stats.vm.v_wire_count"]) * pgsz
 
         -- Rework into megabytes
         _mem.total = math.floor(_mem.total/1048576)
@@ -68,46 +69,47 @@ function mem_freebsd.async(format, warg, callback)
             spawn.with_line_callback("swapinfo -m", {
                 stdout = function(line)
                     if not string.find(line, "Device") then
-                        local ltotal, lused, lfree = string.match(line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
+                        local ltotal, lused, lfree = string.match(
+                            line, "%s+([%d]+)%s+([%d]+)%s+([%d]+)")
                         -- Add swap space in Mbytes
                         _swp.total = _swp.total + tonumber(ltotal)
                         _swp.inuse = _swp.inuse + tonumber(lused)
                         _swp.buf.free = _swp.buf.free + tonumber(lfree)
                     end
                 end,
-                output_done = function() 
+                output_done = function()
                     print(_swp.inuse, _swp.total)
                     _swp.usep = math.floor(_swp.inuse / _swp.total * 100)
-                    callback({ _mem.usep,  
-                               _mem.inuse, 
-                               _mem.total, 
+                    callback({ _mem.usep,
+                               _mem.inuse,
+                               _mem.total,
                                _mem.free,
-                               _swp.usep,  
-                               _swp.inuse, 
-                               _swp.total, 
+                               _swp.usep,
+                               _swp.inuse,
+                               _swp.total,
                                _swp.buf.free,
-                               _mem.wirep, 
-                               _mem.wire, 
-                               _mem.notfreeablep, 
+                               _mem.wirep,
+                               _mem.wire,
+                               _mem.notfreeablep,
                                _mem.notfreeable })
-                end 
+                end
             })
         else
              _swp.usep = -1
              _swp.inuse = -1
              _swp.total = -1
              _swp.buf.free = -1
-             callback({ _mem.usep,  
-                        _mem.inuse, 
-                        _mem.total, 
+             callback({ _mem.usep,
+                        _mem.inuse,
+                        _mem.total,
                         _mem.free,
-                        _swp.usep,  
-                        _swp.inuse, 
-                        _swp.total, 
+                        _swp.usep,
+                        _swp.inuse,
+                        _swp.total,
                         _swp.buf.free,
-                        _mem.wirep, 
-                        _mem.wire, 
-                        _mem.notfreeablep, 
+                        _mem.wirep,
+                        _mem.wire,
+                        _mem.notfreeablep,
                         _mem.notfreeable })
         end
     end)

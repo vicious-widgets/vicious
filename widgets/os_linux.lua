@@ -9,8 +9,9 @@ local tonumber = tonumber
 local math = { ceil = math.ceil }
 local los = { getenv = os.getenv }
 local setmetatable = setmetatable
-local helpers = require("vicious.helpers")
 local string = { gsub = string.gsub }
+
+local helpers = require"vicious.helpers"
 -- }}}
 
 
@@ -32,7 +33,7 @@ local function worker(format)
 
     -- Linux manual page: uname(2)
     local kernel = helpers.pathtotable("/proc/sys/kernel")
-    for k, v in pairs(system) do
+    for k, _ in pairs(system) do
         if kernel[k] then
             system[k] = string.gsub(kernel[k], "[%s]*$", "")
         end
@@ -56,4 +57,5 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(os_linux, { __call = function(_, ...) return worker(...) end })
+return setmetatable(os_linux,
+                    { __call = function(_, ...) return worker(...) end })
