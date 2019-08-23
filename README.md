@@ -228,12 +228,13 @@ Returns a table with string keys: `${sda total_s}`, `${sda total_kb}`,
 
 ### vicious.widget.fanspeed
 
-Provides fanspeed information for specified fan.
+Provides fanspeed information for specified fans.
 
 Supported platforms: FreeBSD.
 
-* Argument: full `sysctl` string to entry, e.g. `"dev.acpi_ibm.0.fan_speed"`
-* Returns speed of specified fan in RPM, `-1` on error (probably wrong string)
+* Argument: full `sysctl` string to one or multiple entries, e.g.
+  `"dev.acpi_ibm.0.fan_speed"`
+* Returns speed of specified fan in RPM, `"N/A"` on error (probably wrong string)
 
 ### vicious.widgets.fs
 

@@ -4,15 +4,10 @@ local tonumber = tonumber
 -- }}}
 
 
--- fanspeed: provides speed level of main fan
---
--- expects one (1) full sysctl string to entry
---   e.g.: "dev.acpi_ibm.0.fan_speed"
-
--- fanspeed: provides speed level of main fan
+-- fanspeed: provides speed level of fans
 -- vicious.widgets.fanspeed
 --
--- expects one (1) full sysctl string to entry
+-- expects one or multiple full sysctl strings to entry
 --   e.g.: "dev.acpi_ibm.0.fan_speed"
 local fanspeed_freebsd = {}
 
