@@ -25,6 +25,7 @@ Fixed:
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
+- [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
 
 Removed:
 - `helpers.sysctl` and `helpers.sysctl_table` were removed in favour of
