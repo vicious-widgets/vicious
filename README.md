@@ -542,7 +542,6 @@ Supported platforms: GNU/Linux.
   `${rate}` (Mb/s), `${freq}` (MHz), `${linp}` (link quality in percent),
   `${txpw}` (transmission power, in dBm) and `${sign}` (signal level, in dBm)
 
-
 ## <a name="custom-widget"></a>Custom widget types
 
 Use any of the existing widget types as a starting point for your
