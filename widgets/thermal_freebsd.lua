@@ -1,6 +1,7 @@
 -- {{{ Grab environment
 local string = { match = string.match }
 local helpers = require("vicious.helpers")
+local type = type
 -- }}}
 
 
