@@ -34,49 +34,52 @@ local STATES = { [0] = "↯",         -- not charging
 
 return helpers.setasyncall{
     async = function (format, warg, callback)
-        if warg == nil then warg = 'bat0' end
-        local pattern = ("hw.sensors.acpi%s.(%S+)=(%S+)"):format(warg)
+        local filter = "hw.sensors.acpi" .. (warg or "bat0")
+        local pattern = filter .. ".(%S+)=(%S+)"
+        local bat_info = {}
 
-        spawn.async(
-            "sysctl -a",
-            function (stdout, stderr, exitreason, exitcode)
-                local bat_info = {}
-                for key, value in stdout:gmatch(pattern) do
-                    bat_info[key] = value
-                end
+        spawn.with_line_callback_with_shell(
+            ("sysctl -a | grep '^%s'"):format(filter),
+            { stdout = function (line)
+                  for key, value in line:gmatch(pattern) do
+                      bat_info[key] = value
+                  end
+              end,
+              output_done = function ()
+                  -- current state
+                  local state = STATES[tonumber(bat_info.raw0)]
 
-                -- current state
-                local state = STATES[tonumber(bat_info.raw0)]
+                  -- battery capacity in percent
+                  local percent = tonumber(
+                      bat_info.watthour3 / bat_info.watthour0 * 100)
 
-                -- battery capacity in percent
-                local percent = tonumber(
-                    bat_info.watthour3 / bat_info.watthour0 * 100)
+                  local time
+                  if tonumber(bat_info.power0) < 1 then
+                      time = "∞"
+                  else
+                      local raw_time = bat_info.watthour3 / bat_info.power0
+                      local hours, hour_fraction = math.modf(raw_time)
+                      local minutes = math.floor(60 * hour_fraction)
+                      time = ("%d:%0.2d"):format(hours, minutes)
+                  end
 
-                local time = "∞"
-                if tonumber(bat_info.power0) >= 1 then
-                    local raw_time = bat_info.watthour3 / bat_info.power0
-                    local hours, hour_fraction = math.modf(raw_time)
-                    local minutes = math.floor(60 * hour_fraction)
-                    time = ("%d:%0.2d"):format(hours, minutes)
-                end
+                  -- calculate wear level from (last full / design) capacity
+                  local wear = "N/A"
+                  if bat_info.watthour0 and bat_info.watthour4 then
+                      local l_full = tonumber(bat_info.watthour0)
+                      local design = tonumber(bat_info.watthour4)
+                      wear = math.floor(l_full / design * 100)
+                  end
 
-                -- calculate wear level from (last full / design) capacity
-                local wear = "N/A"
-                if bat_info.watthour0 and bat_info.watthour4 then
-                    local l_full = tonumber(bat_info.watthour0)
-                    local design = tonumber(bat_info.watthour4)
-                    wear = math.floor(l_full / design * 100)
-                end
+                  -- dis-/charging rate as presented by battery
+                  local rate = bat_info.power0
 
-                -- dis-/charging rate as presented by battery
-                local rate = bat_info.power0
-
-                -- Pass the following arguments to callback function:
-                --  * battery state symbol (↯, -, !, + or N/A)
-                --  * remaining_capacity (in percent)
-                --  * remaining_time, by battery
-                --  * wear level (in percent)
-                --  * present_rate (in Watts)
-                callback{state, percent, time, wear, rate}
-            end)
+                  -- Pass the following arguments to callback function:
+                  --  * battery state symbol (↯, -, !, + or N/A)
+                  --  * remaining_capacity (in percent)
+                  --  * remaining_time, by battery
+                  --  * wear level (in percent)
+                  --  * present_rate (in Watts)
+                  callback{state, percent, time, wear, rate}
+              end })
     end }
