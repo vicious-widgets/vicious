@@ -4,6 +4,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local type = type
 local tonumber = tonumber
 local string = { match = string.match }
 local table  = { concat = table.concat }

@@ -87,6 +87,8 @@ yellow - in progress.
 
 ### vicious.contrib.cmus
 
+NOTE: This widget type has been promoted to `widgets`.
+
 Provides cmus player information using `cmus-remote`.
 
 Supported platforms: platform independent.

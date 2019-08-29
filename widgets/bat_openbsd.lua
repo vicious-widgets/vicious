@@ -1,67 +1,85 @@
+-- bat_openbsd.lua - provide battery information on OpenBSD
+-- Copyright (C) 2019  Enric Morales
+-- Copyright (C) 2019  Nguyễn Gia Phong
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU Affero General Public License for more details.
+--
+-- You should have received a copy of the GNU Affero General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
+
 -- {{{ Grab environment
-local setmetatable = setmetatable
 local tonumber = tonumber
-local string = { format = string.format, gmatch = string.gmatch }
-local io = { popen = io.popen }
 local math = { floor = math.floor, modf = math.modf }
+
+local helpers = require"vicious.helpers"
+local spawn = require"vicious.spawn"
 -- }}}
 
-local bat_openbsd = {}
+local STATES = { [0] = "↯",         -- not charging
+                 [1] = "-",         -- discharging
+                 [2] = "!",         -- critical
+                 [3] = "+",         -- charging
+                 [4] = "N/A",       -- unknown status
+                 [255] = "N/A" }    -- unimplemented by the driver
 
-local function worker(format, warg)
-    local battery = warg or "bat0"
-    local filter = string.format("hw.sensors.acpi%s", battery)
-    local cmd = string.format("sysctl -a | grep '^%s'", filter)
-    local proc = io.popen(cmd)
+return helpers.setasyncall{
+    async = function (format, warg, callback)
+        local filter = "hw.sensors.acpi" .. (warg or "bat0")
+        local pattern = filter .. ".(%S+)=(%S+)"
+        local bat_info = {}
 
-    local bat_info = {}
-    for line in proc:lines("*l") do
-        for key, value in string.gmatch(line, "(%S+)=(%S+)") do
-	    key = key:gsub(filter .. ".", "")
-	    bat_info[key] = value
-        end
-    end
+        spawn.with_line_callback_with_shell(
+            ("sysctl -a | grep '^%s'"):format(filter),
+            { stdout = function (line)
+                  for key, value in line:gmatch(pattern) do
+                      bat_info[key] = value
+                  end
+              end,
+              output_done = function ()
+                  -- current state
+                  local state = STATES[tonumber(bat_info.raw0)]
 
-    -- current state
-    local states = {[0] = "↯", -- not charging
-                    [1] = "-", -- discharging
-                    [2] = "!", -- critical
-                    [3] = "+", -- charging
-                    [4] = "N/A", -- unknown status
-                    [255] = "N/A"} -- unimplemented by the driver
-    local state = states[tonumber(bat_info.raw0)]
+                  -- battery capacity in percent
+                  local percent = tonumber(
+                      bat_info.watthour3 / bat_info.watthour0 * 100)
 
-    -- battery capacity in percent
-    local percent = tonumber(bat_info.watthour3 / bat_info.watthour0 * 100)
+                  local time
+                  if tonumber(bat_info.power0) < 1 then
+                      time = "∞"
+                  else
+                      local raw_time = bat_info.watthour3 / bat_info.power0
+                      local hours, hour_fraction = math.modf(raw_time)
+                      local minutes = math.floor(60 * hour_fraction)
+                      time = ("%d:%0.2d"):format(hours, minutes)
+                  end
 
-    local time
-    if tonumber(bat_info.power0) < 1 then
-        time = "∞"
-    else
-        local raw_time = bat_info.watthour3 / bat_info.power0
-        local hours, hour_fraction = math.modf(raw_time)
-        local minutes = math.floor(60 * hour_fraction)
-        time = string.format("%d:%0.2d", hours, minutes)
-    end
+                  -- calculate wear level from (last full / design) capacity
+                  local wear = "N/A"
+                  if bat_info.watthour0 and bat_info.watthour4 then
+                      local l_full = tonumber(bat_info.watthour0)
+                      local design = tonumber(bat_info.watthour4)
+                      wear = math.floor(l_full / design * 100)
+                  end
 
-    -- calculate wear level from (last full / design) capacity
-    local wear = "N/A"
-    if bat_info.watthour0 and bat_info.watthour4 then
-        local l_full = tonumber(bat_info.watthour0)
-        local design = tonumber(bat_info.watthour4)
-        wear = math.floor(l_full / design * 100)
-    end
+                  -- dis-/charging rate as presented by battery
+                  local rate = bat_info.power0
 
-    -- dis-/charging rate as presented by battery
-    local rate = bat_info.power0
-
-    -- returns
-    --  * state (high "↯", discharging "-", charging "+", N/A "⌁" }
-    --  * remaining_capacity (percent)
-    --  * remaining_time, by battery
-    --  * wear level (percent)
-    --  * present_rate (W)
-    return {state, percent, time, wear, rate}
-end
-
-return setmetatable(bat_openbsd, { __call = function(_, ...) return worker(...) end })
+                  -- Pass the following arguments to callback function:
+                  --  * battery state symbol (↯, -, !, + or N/A)
+                  --  * remaining_capacity (in percent)
+                  --  * remaining_time, by battery
+                  --  * wear level (in percent)
+                  --  * present_rate (in Watts)
+                  callback{state, percent, time, wear, rate}
+              end })
+    end }

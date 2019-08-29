@@ -6,12 +6,10 @@
 -- {{{ Grab environment
 local type = type
 local tonumber = tonumber
-local io = { popen = io.popen }
-local setmetatable = setmetatable
+local string = { match = string.match }
+
 local helpers = require("vicious.helpers")
-local string = {
-    match = string.match
-}
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -19,59 +17,33 @@ local string = {
 -- vicious.widgets.gmail
 local gmail_all = {}
 
-
--- {{{ Variable definitions
-local rss = {
-  inbox   = "https://mail.google.com/mail/feed/atom",
-  unread  = "https://mail.google.com/mail/feed/atom/unread",
-  --labelname = "https://mail.google.com/mail/feed/atom/labelname",
-}
-
--- Default is just Inbox
-local feed = rss.inbox
-local mail = {
-    ["{count}"]   = 0,
-    ["{subject}"] = "N/A"
-}
--- }}}
-
-
 -- {{{ Gmail widget type
-local function worker(format, warg)
-    -- Get info from the Gmail atom feed
-    local f = io.popen("curl --connect-timeout 1 -m 3 -fsn " .. helpers.shellquote(feed))
-
-    -- Could be huge don't read it all at once, info we are after is at the top
-    local xml = f:read(2000)
-
-    if xml == nil then
-        return mail
-    end
-
-    mail["{count}"] = -- Count comes before messages and matches at least 0
-      tonumber(string.match(xml, "<fullcount>([%d]+)</fullcount>")) or mail["{count}"]
+local function parse(warg, stdout, stderr, exitreason, exitcode)
+    local count =   -- Count comes before messages and matches at least 0
+        tonumber(string.match(stdout, "<fullcount>([%d]+)</fullcount>")) or 0
 
     -- Find subject tag
-    local title = string.match(xml, "<entry>.-<title>(.-)</title>")
+    local title = string.match(stdout, "<entry>.-<title>(.-)</title>") or "N/A"
 
-    if title ~= nil then
-        -- Check if we should scroll, or maybe truncate
-        if warg then
-            if type(warg) == "table" then
-                title = helpers.scroll(title, warg[1], warg[2])
-            else
-                title = helpers.truncate(title, warg)
-            end
-        end
-
-        -- Spam sanitize the subject and store
-        mail["{subject}"] = title
+    -- Check if we should scroll, or maybe truncate
+    if type(warg) == "number" then
+        title = helpers.truncate(title, warg)
+    elseif type(warg) == "table" then
+        title = helpers.scroll(title, warg[1], warg[2])
     end
 
-    f:close()
+    return { ["{count}"] = count, ["{subject}"] = title }
+end
 
-    return mail
+function gmail_all.async(format, warg, callback)
+    -- Get info from the Gmail atom feed using curl --netrc.
+    -- With username 'user' and password 'pass'
+    -- $HOME/.netrc should look similar to:
+    -- machine mail.google.com login user password pass
+    -- BE AWARE THAT MAKING THESE SETTINGS IS A SECURITY RISK!
+    spawn.easy_async("curl -fsn https://mail.google.com/mail/feed/atom",
+                     function (...) callback(parse(warg, ...)) end)
 end
 -- }}}
 
-return setmetatable(gmail_all, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(gmail_all)
