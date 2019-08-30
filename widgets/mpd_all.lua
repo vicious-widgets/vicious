@@ -5,11 +5,11 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = { popen = io.popen }
-local setmetatable = setmetatable
-local string = { gmatch = string.gmatch }
-local helpers = require("vicious.helpers")
 local math = { floor = math.floor }
+local type = type
+
+local helpers = require"vicious.helpers"
+local spawn = require"vicious.spawn"
 -- }}}
 
 
@@ -25,7 +25,7 @@ end
 -- }}}
 
 -- {{{ Format playing progress
-function format_progress(elapsed, duration)
+local function format_progress(elapsed, duration)
     local em, es = math.floor(elapsed / 60), math.floor(elapsed % 60)
     local dm, ds = math.floor(duration / 60), math.floor(duration % 60)
 
@@ -33,18 +33,22 @@ function format_progress(elapsed, duration)
         return ("%d:%02d"):format(em, es), ("%d:%02d"):format(dm, ds)
     elseif dm < 60 then
         return ("%02d:%02d"):format(em, es), ("%02d:%02d"):format(dm, ds)
-    elseif dm < 600 then
-        return ("%d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
-               ("%d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
+    end
+
+    local eh, dh = math.floor(em / 60), math.floor(dm / 60)
+    em, dm = math.floor(em % 60), math.floor(dm % 60)
+    if dm < 600 then
+        return ("%d:%02d:%02d"):format(eh, em, es),
+               ("%d:%02d:%02d"):format(dh, dm, ds)
     else
-        return ("%02d:%02d:%02d"):format(math.floor(em / 60), math.floor(em % 60), es),
-               ("%02d:%02d:%02d"):format(math.floor(dm / 60), math.floor(dm % 60), ds)
+        return ("%02d:%02d:%02d"):format(eh, em, es),
+               ("%02d:%02d:%02d"):format(dh, dm, ds)
     end
 end
 -- }}}
 
 -- {{{ Format playing progress (percentage)
-function format_progress_percentage(elapsed, duration)
+local function format_progress_percentage(elapsed, duration)
     if duration > 0 then
         local percentage = math.floor((elapsed / duration) * 100 + 0.5)
         return ("%d%%"):format(percentage)
@@ -55,7 +59,7 @@ end
 -- }}}
 
 -- {{{ MPD widget type
-local function worker(format, warg)
+function mpd_all.async(format, warg, callback)
     -- Fallback values
     local mpd_state = {
         ["{volume}"]   = 0,
@@ -81,36 +85,34 @@ local function worker(format, warg)
         warg and (warg.port or warg[3]) or "6600")
 
     -- Get data from MPD server
-    local f = io.popen(query .. "|" .. connect)
-    for line in f:lines() do
-        for k, v in string.gmatch(line, "([%w]+):[%s](.*)$") do
-            local key = "{" .. k .. "}"
-            if k == "volume" or k == "bitrate" or
-               k == "elapsed" or k == "duration" then
-                mpd_state[key] = v and tonumber(v)
-            elseif k == "repeat" or k == "random" then
-                mpd_state[key] = cbool(v)
-            elseif k == "state" then
-                mpd_state[key] = helpers.capitalize(v)
-            elseif k == "Artist" or k == "Title" or
-                   --k == "Name" or k == "file" or
-                   k == "Album" or k == "Genre" then
-                mpd_state[key] = v
+    spawn.with_line_callback_with_shell(query .. "|" .. connect, {
+        stdout = function (line)
+            for k, v in line:gmatch"([%w]+):[%s](.*)$" do
+                local key = "{" .. k .. "}"
+                if k == "volume" or k == "bitrate" or
+                   k == "elapsed" or k == "duration" then
+                    mpd_state[key] = v and tonumber(v)
+                elseif k == "repeat" or k == "random" then
+                    mpd_state[key] = cbool(v)
+                elseif k == "state" then
+                    mpd_state[key] = helpers.capitalize(v)
+                elseif k == "Artist" or k == "Title" or
+                       --k == "Name" or k == "file" or
+                       k == "Album" or k == "Genre" then
+                    mpd_state[key] = v
+                end
             end
-        end
-    end
-    f:close()
-
-    -- Formatted elapsed and duration
-    mpd_state["{Elapsed}"], mpd_state["{Duration}"] = format_progress(
-        mpd_state["{elapsed}"], mpd_state["{duration}"])
-
-    -- Formatted playing progress percentage
-    mpd_state["{Progress}"] = format_progress_percentage(
-        mpd_state["{elapsed}"], mpd_state["{duration}"])
-
-    return mpd_state
+        end,
+        output_done = function ()
+            -- Formatted elapsed and duration
+            mpd_state["{Elapsed}"], mpd_state["{Duration}"] = format_progress(
+                mpd_state["{elapsed}"], mpd_state["{duration}"])
+            -- Formatted playing progress percentage
+            mpd_state["{Progress}"] = format_progress_percentage(
+                mpd_state["{elapsed}"], mpd_state["{duration}"])
+            callback(mpd_state)
+        end })
 end
 -- }}}
 
-return setmetatable(mpd_all, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(mpd_all)

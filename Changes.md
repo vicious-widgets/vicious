@@ -1,11 +1,14 @@
+# Changes in 2.4.0 (WIP)
+
 IMPORTANT:
 
-- `volume_linux` now uses 🔉 and 🔈 instead of ♫ and ♩ to show mute state.
+- `volume` now uses 🔉 and 🔈 instead of ♫ and ♩ to show mute state.
   This BREAKS backward compatibility if users substitute custom symbols
   from these default.
 
 Added:
 
+- [wifi_linux] Expose frequency and transmission power
 - `spawn` as a fallback for `awful.spawn` in case Vicious is used as
   a stand-alone library. This wrapper, however, does NOT provide the facilities
   to asynchronously spawn new processes. It also lacks a few features such as
@@ -16,10 +19,22 @@ Added:
 
 Fixed:
 
-- [volume_linux] Deprecate `io.popen`
+- Deprecate the use of `io.popen` in following widgets:
+    * wifi_linux, wifiiw_linux, hwmontemp_linux, hddtemp_linux
+    * bat_freebsd, mem_freebsd, net_freebsd, thermal_freebsd, uptime_freebsd,
+      cpu_freebsd, cpufreq_freebsd, fanspeed_freebsd
+    * bat_openbsd
+    * volume, gmail, mdir, mpd, fs
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
+- [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
+- Tweak `.luacheckrc` to suit functional style and soft-limit text width to 80
+
+Removed:
+
+- `helpers.sysctl` and `helpers.sysctl_table` were removed in favour of
+  `helpers.sysctl_async`.
 
 # Changes in 2.3.3
 

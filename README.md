@@ -154,6 +154,16 @@ Supported platforms: GNU/Linux (require `sysfs`), FreeBSD (require `acpiconf`), 
     * `$4`: Wear level in percent
     * `$5`: Current (dis)charge rate in Watt
 
+### vicious.contrib.cmus
+
+Provides cmus player information using `cmus-remote`.
+
+Supported platforms: platform independent.
+
+* Argument: a table whose first field is the socket including host (or nil).
+* Returns a table with string keys: `${status}`, `${artist}`, `${title}`,
+  `${duration}`, `${file}`,  `${continue}`, `${shuffle}`, `${repeat}`.
+
 ### vicious.widgets.cpu
 
 Provides CPU usage for all available CPUs/cores. Since this widget type give
@@ -218,12 +228,13 @@ Returns a table with string keys: `${sda total_s}`, `${sda total_kb}`,
 
 ### vicious.widget.fanspeed
 
-Provides fanspeed information for specified fan.
+Provides fanspeed information for specified fans.
 
 Supported platforms: FreeBSD.
 
-* Argument: full `sysctl` string to entry, e.g. `"dev.acpi_ibm.0.fan_speed"`
-* Returns speed of specified fan in RPM, `-1` on error (probably wrong string)
+* Argument: full `sysctl` string to one or multiple entries, e.g.
+  `"dev.acpi_ibm.0.fan_speed"`
+* Returns speed of specified fan in RPM, `"N/A"` on error (probably wrong string)
 
 ### vicious.widgets.fs
 
@@ -236,6 +247,7 @@ Supported platforms: platform independent.
 * Returns a table with string keys, using mount points as a base, e.g.
   `${/ size_mb}`, `${/ size_gb}`, `${/ used_mb}`, `${/ used_gb}`, `${/ used_p}`,
   `${/ avail_mb}`, `${/ avail_gb}`, `${/ avail_p}`, `${/home size_mb}`, etc.
+  mb and gb refer to mebibyte and gibibyte respectively.
 
 ### vicious.widgets.gmail
 
@@ -514,8 +526,10 @@ Provides wireless information for a requested interface.
 Supported platforms: GNU/Linux.
 
 * Argument: the network interface, e.g. `"wlan0"`
-* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-  `${link}`, `${linp}` (link quality in percent) and `${sign}` (signal level)
+* Returns a table with string keys: `${ssid}`, `${mode}`, `${chan}`,
+  `${rate}` (Mb/s), `${freq}` (MHz), `${txpw}` (transmission power, in dBm),
+  `${sign}` (signal level), `${link}` and `${linp}` (link quality
+  per 70 and per cent)
 
 ### vicious.widgets.wifiiw
 
@@ -525,10 +539,9 @@ vicious.widgets.wifi, but uses `iw` instead of `iwconfig`).
 Supported platforms: GNU/Linux.
 
 * Argument: the network interface, e.g. `"wlan0"`
-* Returns a table with string keys: `${bssid}`, `${ssid}`, `${mode}`, `${chan}`, `${rate}`,
-  `${freq}`, `${linp}` (link quality in percent), `${txpw}` (tx power) and
-  `${sign}` (signal level)
-
+* Returns a table with string keys: `${bssid}`, `${ssid}`, `${mode}`, `${chan}`,
+  `${rate}` (Mb/s), `${freq}` (MHz), `${linp}` (link quality in percent),
+  `${txpw}` (transmission power, in dBm) and `${sign}` (signal level, in dBm)
 
 ## <a name="custom-widget"></a>Custom widget types
 

@@ -19,10 +19,14 @@ local getmetatable = getmetatable
 local string = {
     upper = string.upper,
     lower = string.lower,
-    format = string.format
+    format = string.format,
+    match = string.match,
+    find = string.find,
 }
+local table = { concat = table.concat }
 local pcall = pcall
 local assert = assert
+local spawn = require("vicious.spawn")
 -- }}}
 
 
@@ -30,6 +34,12 @@ local assert = assert
 -- vicious.helpers
 local helpers = {}
 
+-- {{{ Constants definitions
+local OS_UNSUPPORTED_ERR = "Vicious: platform not supported: %s"
+local NOT_FOUND_MSG = "module '%s' not found"
+local NOT_FOUND_ERR = [[
+Vicious: %s is not available for the current platform or does not exist]]
+-- }}}
 
 -- {{{ Variable definitions
 local scroller = {}
@@ -52,8 +62,8 @@ end
 -- }}}
 
 -- {{{ Loader of vicious modules
-function helpers.wrequire(table, key)
-    local ret = rawget(table, key)
+function helpers.wrequire(collection, key)
+    local ret = rawget(collection, key)
 
     if ret then
         return ret
@@ -65,27 +75,26 @@ function helpers.wrequire(table, key)
         openbsd = { "openbsd", "bsd", "all" }
     }
 
-    local os = ostable[helpers.getos()]
-    assert(os, "Vicious: platform not supported: " .. helpers.getos())
+    local platform = ostable[helpers.getos()]
+    assert(platform, OS_UNSUPPORTED_ERR:format(helpers.getos()))
 
-    for i = 1, #os do
-        local name = table._NAME .. "." .. key .. "_" .. os[i]
+    local basename = collection._NAME .. '.' .. key
+    for i = 1, #platform do
+        local name = basename .. '_' .. platform[i]
         local status, value = pcall(require, name)
         if status then
             ret = value
             break
         end
-        local not_found_msg = "module '"..name.."' not found"
 
-        -- ugly but there is afaik no other way to check if a module exists
-        if value:sub(1, #not_found_msg) ~= not_found_msg then
-          -- module found, but different issue -> let's raise the real error
-          require(name)
+        -- This is ugly but AFAWK there is no other way to check for
+        -- the type of error. If other error get caught, raise it.
+        if value:find(NOT_FOUND_MSG:format(name), 1, true) == nil then
+            require(name)
         end
     end
 
-    assert(ret, "Vicious: widget " .. table._NAME .. "." .. key .. " not available for current platform or does not exist")
-
+    assert(ret, NOT_FOUND_ERR:format(basename))
     return ret
 end
 -- }}}
@@ -106,8 +115,8 @@ end
 -- {{{ Expose path as a Lua table
 function helpers.pathtotable(dir)
     return setmetatable({ _path = dir },
-        { __index = function(table, index)
-            local path = table._path .. '/' .. index
+        { __index = function(self, index)
+            local path = self._path .. '/' .. index
             local f = io.open(path)
             if f then
                 local s = f:read("*all")
@@ -116,7 +125,7 @@ function helpers.pathtotable(dir)
                     return s
                 else
                     local o = { _path = path }
-                    setmetatable(o, getmetatable(table))
+                    setmetatable(o, getmetatable(self))
                     return o
                 end
             end
@@ -222,43 +231,28 @@ function helpers.scroll(text, maxlen, widget)
 end
 -- }}}
 
--- {{{ Return result from one sysctl variable as string
-function helpers.sysctl(path)
-    local fd = io.popen("sysctl -n " .. helpers.shellquote(path))
+-- {{{ Parse output of sysctl command calling the `parse` function
+function helpers.sysctl_async(path_table, parse)
+    local ret = {}
+    local path = {}
 
-    if not fd then
-        return
+    for i=1,#path_table do
+        path[i] = helpers.shellquote(path_table[i])
     end
 
-    local ret = fd:read()
+    path = table.concat(path, " ")
 
-    fd:close()
-
-    return ret
-end
---  }}}
-
--- {{{ Return result from multiple sysctl variables as table
-function helpers.sysctl_table(syspath)
-    return setmetatable({ _path = syspath },
-        { __index = function(table, index)
-            local path = "sysctl -n " .. helpers.shellquote(table._path .. "." .. index)
-            local f = io.popen(path)
-            if f then
-                local s = f:read("*all")
-                f:close()
-                if select(2, s:gsub("\n", "\n")) > 1 then
-                    local o = { _path = path}
-                    setmetatable(o, getmetatable(table))
-                    return o
-                else
-                    return s
-                end
+    spawn.with_line_callback("sysctl " .. path, {
+        stdout = function(line)
+            if not string.find(line, "sysctl: unknown oid") then
+                local key, value = string.match(line, "(.+): (.+)")
+                ret[key] = value
             end
-        end
+        end,
+        output_done = function() parse(ret) end
     })
 end
--- }}}
+--  }}}
 
 return helpers
 

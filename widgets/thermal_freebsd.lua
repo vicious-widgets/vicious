@@ -1,6 +1,7 @@
 -- {{{ Grab environment
-local setmetatable = setmetatable
 local string = { match = string.match }
+local type = type
+
 local helpers = require("vicious.helpers")
 -- }}}
 
@@ -9,26 +10,25 @@ local helpers = require("vicious.helpers")
 -- vicious.widgets.thermal
 local thermal_freebsd = {}
 
-
 -- {{{ Thermal widget type
-local function worker(format, warg)
-    if not warg then return end
+function thermal_freebsd.async(format, warg, callback)
+    if not warg then return callback{} end
     if type(warg) ~= "table" then warg = { warg } end
 
-    local thermals = {}
+    helpers.sysctl_async(warg, function(ret)
+        local thermals = {}
 
-    for i=1, #warg do
-        local output = helpers.sysctl(warg[i])
-
-        if not output then
-            thermals[i] = -1
-        else
-            thermals[i] = string.match(output, "[%d]+")
+        for i=1,#warg do
+            if ret[warg[i]] ~= nil then
+                thermals[i] = string.match(ret[warg[i]], "[%d]+")
+            else
+                thermals[i] = "N/A"
+            end
         end
-    end
 
-    return thermals
+        callback(thermals)
+    end)
 end
 -- }}}
 
-return setmetatable(thermal_freebsd, { __call = function(_, ...) return worker(...) end })
+return helpers.setasyncall(thermal_freebsd)

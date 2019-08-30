@@ -6,50 +6,34 @@
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = { popen = io.popen }
-local setmetatable = setmetatable
-local string = { match = string.match }
-local helpers = require("vicious.helpers")
+
+local helpers = require"vicious.helpers"
+local spawn = require"vicious.spawn"
 -- }}}
 
+-- Mebibyte and gibibyte respectively, because backward compatibility
+local UNIT = { mb = 1024, gb = 1024^2 }
 
 -- FS: provides file system disk space usage
 -- vicious.widgets.fs
-local fs_all = {}
+return helpers.setasyncall{
+    async = function(format, warg, callback)
+        local fs_info = {} -- Get data from df
+        spawn.with_line_callback_with_shell(
+            warg and "LC_ALL=C df -kP" or "LC_ALL=C df -klP",
+            { stdout = function (line)
+                  -- (1024-blocks) (Used) (Available) (Capacity)% (Mounted on)
+                  local s, u, a, p, m = line:match(
+                     "^.-%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%%%s+([%p%w]+)")
 
+                  if u and m then -- Handle 1st line and broken regexp
+                      helpers.uformat(fs_info, m .. " size",  s, UNIT)
+                      helpers.uformat(fs_info, m .. " used",  u, UNIT)
+                      helpers.uformat(fs_info, m .. " avail", a, UNIT)
 
--- Variable definitions
-local unit = { ["mb"] = 1024, ["gb"] = 1024^2 }
-
--- {{{ Filesystem widget type
-local function worker(format, warg)
-    local cmd = "LC_ALL=C df -kP"
-    if not warg then
-      -- List only local filesystems by default
-      cmd = cmd .. " -l"
-    end
-
-    local fs_info = {} -- Get data from df
-    local f = io.popen(cmd)
-
-    for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
-        local s     = string.match(line, "^.-[%s]([%d]+)")
-        local u,a,p = string.match(line, "([%d]+)[%D]+([%d]+)[%D]+([%d]+)%%")
-        local m     = string.match(line, "%%[%s]+([%p%w]+)")
-
-        if u and m then -- Handle 1st line and broken regexp
-            helpers.uformat(fs_info, m .. " size",  s, unit)
-            helpers.uformat(fs_info, m .. " used",  u, unit)
-            helpers.uformat(fs_info, m .. " avail", a, unit)
-
-            fs_info["{" .. m .. " used_p}"]  = tonumber(p)
-            fs_info["{" .. m .. " avail_p}"] = 100 - tonumber(p)
-        end
-    end
-    f:close()
-
-    return fs_info
-end
--- }}}
-
-return setmetatable(fs_all, { __call = function(_, ...) return worker(...) end })
+                      fs_info["{" .. m .. " used_p}"]  = tonumber(p)
+                      fs_info["{" .. m .. " avail_p}"] = 100 - tonumber(p)
+                  end
+              end,
+              output_done = function () callback(fs_info) end })
+    end }
