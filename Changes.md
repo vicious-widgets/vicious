@@ -16,6 +16,7 @@ Added:
 - `helpers.setasyncall` to avoid writing redundant workers for asynchronous
   widget types. Note that these workers are only needed in case Vicious is used
   as a stand-alone library.
+- `headergen` script for automatic generation of copyright notices.
 
 Fixed:
 
@@ -30,6 +31,7 @@ Fixed:
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 - [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
 - Tweak `.luacheckrc` to suit functional style and soft-limit text width to 80
+- Update copyright headers for libraries
 
 Removed:
 
