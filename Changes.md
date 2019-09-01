@@ -16,6 +16,7 @@ Added:
 - `helpers.setasyncall` to avoid writing redundant workers for asynchronous
   widget types. Note that these workers are only needed in case Vicious is used
   as a stand-alone library.
+- [xbacklight_all] Widget that provides the brightness level of a display.
 
 Fixed:
 

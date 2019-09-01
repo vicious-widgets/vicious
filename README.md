@@ -543,6 +543,18 @@ Supported platforms: GNU/Linux.
   `${rate}` (Mb/s), `${freq}` (MHz), `${linp}` (link quality in percent),
   `${txpw}` (transmission power, in dBm) and `${sign}` (signal level, in dBm)
 
+### vicious.widgets.xbacklight
+
+Provides brightness level of the requested display.
+
+Supported platforms: any that uses Xorg with `xbacklight` installed.
+
+* Argument: A table including command line arguments to be passed to
+  [xbacklight(1)](https://linux.die.net/man/1/xbacklight),
+  e.g. `{"-display", "eDP1"}`
+* Returns an array containing:
+    * `$1`: The brightness level
+
 ## <a name="custom-widget"></a>Custom widget types
 
 Use any of the existing widget types as a starting point for your
