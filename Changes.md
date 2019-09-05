@@ -16,6 +16,7 @@ Added:
 - `helpers.setasyncall` to avoid writing redundant workers for asynchronous
   widget types. Note that these workers are only needed in case Vicious is used
   as a stand-alone library.
+- `helpers.setcall` for registering functions as widget types.
 - `headergen` script for automatic generation of copyright notices.
 
 Fixed:

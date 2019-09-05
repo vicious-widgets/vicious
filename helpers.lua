@@ -122,6 +122,13 @@ function helpers.wrequire(collection, key)
 end
 -- }}}
 
+-- {{{ Set widget type's __call metamethod to given worker function
+function helpers.setcall(wtype, worker)
+    return setmetatable(
+        wtype, { __call = function(_, ...) return worker(...) end })
+end
+-- }}}
+
 -- {{{ Set __call metamethod to widget type table having async key
 function helpers.setasyncall(wtype)
     local function worker(format, warg)

@@ -1,27 +1,40 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2011, Adrian C. <anrxc@sysphere.org>
---  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
---  * (c) 2011, Jörg Thalheim <jthalheim@gmail.com>
----------------------------------------------------
+-- CPU usage widget type for GNU/Linux
+-- Copyright (C) 2009  Lucas de Vries <lucas@glacicle.com>
+-- Copyright (C) 2011  Adrian C. <anrxc@sysphere.org>
+-- Copyright (C) 2011  Jörg Thalheim <jthalheim@gmail.com>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local ipairs = ipairs
 local io = { open = io.open }
-local setmetatable = setmetatable
 local math = { floor = math.floor }
 local table = { insert = table.insert }
 local string = {
     sub = string.sub,
     gmatch = string.gmatch
 }
--- }}}
 
+local helpers = require"vicious.helpers"
+-- }}}
 
 -- Cpu: provides CPU usage for all available CPUs/cores
 -- vicious.widgets.cpu
 local cpu_linux = {}
-
 
 -- Initialize function tables
 local cpu_usage  = {}
@@ -52,7 +65,6 @@ local function worker(format)
         cpu_active[i] = 0
     end
 
-
     for i, v in ipairs(cpu_lines) do
         -- Calculate totals
         local total_new = 0
@@ -77,4 +89,4 @@ local function worker(format)
 end
 -- }}}
 
-return setmetatable(cpu_linux, { __call = function(_, ...) return worker(...) end })
+return helpers.setcall(cpu_linux, worker)
