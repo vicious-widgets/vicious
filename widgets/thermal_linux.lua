@@ -1,22 +1,33 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
----------------------------------------------------
+-- temperature widget type for GNU/Linux
+-- Copyright (C) 2010  Adrian C. <anrxc@sysphere.org>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local type = type
 local tonumber = tonumber
-local setmetatable = setmetatable
 local string = { match = string.match }
-local helpers = require("vicious.helpers")
 local math = { floor = math.floor }
+local helpers = require("vicious.helpers")
 -- }}}
-
 
 -- Thermal: provides temperature levels of ACPI and coretemp thermal zones
 -- vicious.widgets.thermal
 local thermal_linux = {}
-
 
 -- {{{ Thermal widget type
 local function worker(format, warg)
@@ -46,4 +57,4 @@ local function worker(format, warg)
 end
 -- }}}
 
-return setmetatable(thermal_linux, { __call = function(_, ...) return worker(...) end })
+return helpers.setcall(thermal_linux, worker)
