@@ -32,7 +32,7 @@ Fixed:
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 - [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
 - Tweak `.luacheckrc` to suit functional style and soft-limit text width to 80
-- Update copyright headers for libraries and official widget types
+- Update copyright headers for libraries and widget types
 
 Removed:
 
