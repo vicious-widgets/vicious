@@ -28,6 +28,7 @@ Fixed:
     * bat_openbsd
     * volume, gmail, mdir, mpd, fs
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
+- [mbox] Update the deprecated `string.gfind` to `string.gmatch`
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 - [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
