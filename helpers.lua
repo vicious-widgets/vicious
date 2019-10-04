@@ -244,8 +244,17 @@ function helpers.sysctl_async(path_table, parse)
 
     spawn.with_line_callback("sysctl " .. path, {
         stdout = function(line)
+	    local separators = {
+	       openbsd = "=",
+	       linux = " = ",
+	       freebsd = ": "
+	    }
+
+	    local pattern = "(.+)%s(.+)"
+	    pattern = pattern:format(separators[helpers.getos()])
+
             if not string.find(line, "sysctl: unknown oid") then
-                local key, value = string.match(line, "(.+): (.+)")
+                local key, value = string.match(line, pattern)
                 ret[key] = value
             end
         end,
