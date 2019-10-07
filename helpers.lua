@@ -1,5 +1,6 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
+--  * (c) 2019, Enric Morales <me@enric.me>
 --  * (c) 2010, Adrian C. <anrxc@sysphere.org>
 --  * (c) 2009, Rémy C. <shikamaru@mandriva.org>
 --  * (c) 2009, Benedikt Sauer <filmor@gmail.com>
