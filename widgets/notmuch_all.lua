@@ -1,5 +1,5 @@
 -- notmuch_all - count messages that match a notmuch query
--- Copyright (C) 2019  Enric Morales
+-- Copyright (C) 2019  Enric Morales <me@enric.me>
 --
 -- This file is part of Vicious.
 --
@@ -17,26 +17,22 @@
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 local tonumber = tonumber
-local helpers = require "vicious.helpers"
-local spawn = require "vicious.spawn"
+local helpers = require("vicious.helpers")
+local spawn = require("vicious.spawn")
 
 
 local notmuch = {}
-local output = {}
 
 local function parse(stdout, stderr, exitreason, exitcode)
-   if exitcode == 0 then
-      output.count = tonumber(stdout)
-   else
-      output.count = "N/A"
-   end
-   return output
+    local output = {count = "N/A"}
+    if exitcode == 0 then output.count = tonumber(stdout) end
+    return output
 end
 
 function notmuch.async(format, warg, callback)
-   local cmd = ("notmuch count '^%s'"):format(warg)
+    local cmd = ("notmuch count '^%s'"):format(warg)
 
-   spawn.easy_async(cmd, function (...) callback(parse(...)) end)
+    spawn.easy_async(cmd, function(...) callback(parse(...)) end)
 end
 
 return helpers.setasyncall(notmuch)
