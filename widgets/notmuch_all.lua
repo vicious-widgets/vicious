@@ -24,7 +24,7 @@ local spawn = require("vicious.spawn")
 local notmuch = {}
 
 local function parse(stdout, stderr, exitreason, exitcode)
-    local output = {count = "N/A"}
+    local output = { count = "N/A" }
     if exitcode == 0 then output.count = tonumber(stdout) end
     return output
 end
@@ -32,7 +32,7 @@ end
 function notmuch.async(format, warg, callback)
     local cmd = ("notmuch count '^%s'"):format(warg)
 
-    spawn.easy_async(cmd, function(...) callback(parse(...)) end)
+    spawn.easy_async(cmd, function (...) callback(parse(...)) end)
 end
 
 return helpers.setasyncall(notmuch)
