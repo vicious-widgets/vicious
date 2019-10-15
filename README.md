@@ -398,6 +398,20 @@ Supported platforms: GNU/Linux, FreeBSD.
     `${down_b}`, `${up_b}`, `${down_kb}`, `${up_kb}`, `${down_mb}`, `${up_mb}`,
     `${down_gb}`, `${up_gb}`.
 
+### vicious.widgets.notmuch
+
+Provides a message count according to an arbitrary Notmuch query.
+
+Supported platforms: platform independent.
+
+Argument: the query that is passed to Notmuch. For instance:
+`tag:inbox AND tag:unread` returns the number of unread messages with
+tag "inbox".
+
+Returns a table with string keys containing:
+* `${count}`: the count of messages that match the query
+
+
 ### vicious.widgets.org
 
 Provides agenda statistics for Emacs org-mode.
