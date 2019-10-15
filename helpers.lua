@@ -245,32 +245,32 @@ function helpers.sysctl_async(path_table, parse)
 
     spawn.with_line_callback("sysctl " .. path, {
         stdout = function(line)
-	    local separators = {
-		freebsd = ": ",
-		linux = " = ",
-		openbsd = "="
-	    }
+            local separators = {
+                freebsd = ": ",
+                linux = " = ",
+                openbsd = "="
+            }
             local pattern = ("(.+)%s(.+)"):format(separators[helpers.getos()])
             local key, value = string.match(line, pattern)
             ret[key] = value
-	end,
+        end,
         stderr = function(line)
             local messages = {
-                openbsd = {"level name .+ in (.+) is invalid"},
-                linux = {"cannot stat /proc/sys/(.+):",
-                         "permission denied on key '(.+)'"},
-                freebsd = {"unknown oid '(.+)'"}
+                openbsd = { "level name .+ in (.+) is invalid" },
+                linux = { "cannot stat /proc/sys/(.+):",
+                          "permission denied on key '(.+)'" },
+                freebsd = { "unknown oid '(.+)'" }
             }
 
-            for i=1,#messages[helpers.getos()] do
-                local key = line:match(messages[helpers.getos()][i])
+            for _, error_message in ipairs(messages[helpers.getos()]) do
+                local key = line:match(error_message)
                 if key then
                     key = key:gsub("/", ".")
                     ret[key] = "N/A"
                 end
             end
         end,
-        output_done = function() parse(ret) end
+        output_done = function () parse(ret) end
     })
 end
 --  }}}
