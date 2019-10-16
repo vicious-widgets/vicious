@@ -24,12 +24,8 @@ local string = { match = string.match }
 local helpers = require("vicious.helpers")
 -- }}}
 
--- Uptime: provides system uptime and load information
--- vicious.widgets.uptime
-local uptime_linux = {}
-
 -- {{{ Uptime widget type
-local function worker(format)
+return helpers.setcall(function ()
     local proc = helpers.pathtotable("/proc")
 
     -- Get system uptime
@@ -41,7 +37,5 @@ local function worker(format)
     local l1, l5, l15 = -- Get load averages for past 1, 5 and 15 minutes
         string.match(proc.loadavg, "([%d%.]+)[%s]([%d%.]+)[%s]([%d%.]+)")
     return {up_d, up_h, up_m, l1, l5, l15}
-end
+end)
 -- }}}
-
-return helpers.setcall(uptime_linux, worker)

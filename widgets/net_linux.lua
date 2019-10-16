@@ -26,10 +26,6 @@ local string = { match = string.match }
 local helpers = require("vicious.helpers")
 -- }}}
 
--- Net: provides state and usage statistics of all network interfaces
--- vicious.widgets.net
-local net_linux = {}
-
 -- Initialize function tables
 local nets = {}
 -- Variable definitions
@@ -38,7 +34,7 @@ local unit = { ["b"] = 1, ["kb"] = 1024,
 }
 
 -- {{{ Net widget type
-local function worker(format)
+return helpers.setcall(function ()
     local args = {}
 
     -- Get NET stats
@@ -85,7 +81,5 @@ local function worker(format)
     end
 
     return args
-end
+end)
 -- }}}
-
-return helpers.setcall(net_linux, worker)

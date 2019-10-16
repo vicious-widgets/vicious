@@ -24,6 +24,6 @@ local os = { date = os.date, time = os.time }
 local helpers = require"vicious.helpers"
 -- }}}
 
-return helpers.setcall({}, function (format, warg)
+return helpers.setcall(function (format, warg)
     return os.date(format or nil, warg and os.time()+warg or nil)
 end)

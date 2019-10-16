@@ -31,12 +31,8 @@ local math = {
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Bat: provides state, charge, remaining time, and wear for a requested battery
--- vicious.widgets.bat
-local bat_linux = {}
-
 -- {{{ Battery widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     local battery = helpers.pathtotable("/sys/class/power_supply/"..warg)
@@ -109,7 +105,5 @@ local function worker(format, warg)
     end
 
     return {state, percent, time, wear, curpower}
-end
+end)
 -- }}}
-
-return helpers.setcall(bat_linux, worker)

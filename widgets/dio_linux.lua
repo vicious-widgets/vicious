@@ -26,10 +26,6 @@ local os = { time = os.time, difftime = os.difftime }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Disk I/O: provides I/O statistics for requested storage devices
--- vicious.widgets.dio
-local dio_linux = {}
-
 -- Initialize function tables
 local disk_usage = {}
 local disk_stats = {}
@@ -39,7 +35,7 @@ local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 local time_unit = { ["ms"] = 1, ["s"] = 1000 }
 
 -- {{{ Disk I/O widget type
-local function worker(format)
+return helpers.setcall(function ()
     local disk_lines = {}
 
     for line in io.lines("/proc/diskstats") do
@@ -79,7 +75,5 @@ local function worker(format)
     disk_stats = disk_lines
 
     return disk_usage
-end
+end)
 -- }}}
-
-return helpers.setcall(dio_linux, worker)

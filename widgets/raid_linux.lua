@@ -29,15 +29,11 @@ local string = {
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Raid: provides state information for a requested RAID array
--- vicious.widgets.raid
-local raid_linux = {}
-
 -- Initialize function tables
 local mddev = {}
 
 -- {{{ RAID widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
     mddev[warg] = {
         ["found"]    = false,
@@ -67,7 +63,5 @@ local function worker(format, warg)
     f:close()
 
     return {mddev[warg]["assigned"], mddev[warg]["active"]}
-end
+end)
 -- }}}
-
-return helpers.setcall(raid_linux, worker)

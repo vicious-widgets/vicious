@@ -28,12 +28,8 @@ local string = { gsub = string.gsub }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- OS: provides operating system information
--- vicious.widgets.os
-local os_linux = {}
-
 -- {{{ Operating system widget type
-local function worker(format)
+return helpers.setcall(function ()
     local system = {
         ["ostype"]    = "N/A",
         ["hostname"]  = "N/A",
@@ -66,7 +62,5 @@ local function worker(format)
 
     return {system["ostype"], system["osrelease"], system["username"],
             system["hostname"], system["entropy"], system["entropy_p"]}
-end
+end)
 -- }}}
-
-return helpers.setcall(os_linux, worker)

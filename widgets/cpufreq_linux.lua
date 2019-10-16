@@ -22,10 +22,6 @@ local tonumber = tonumber
 local helpers = require("vicious.helpers")
 -- }}}
 
--- Cpufreq: provides freq, voltage and governor info for a requested CPU
--- vicious.widgets.cpufreq
-local cpufreq_linux = {}
-
 local GOVERNOR_STATE = {
     ["ondemand\n"]     = "↯",
     ["powersave\n"]    = "⌁",
@@ -35,7 +31,7 @@ local GOVERNOR_STATE = {
 }
 
 -- {{{ CPU frequency widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     local _cpufreq = helpers.pathtotable(
@@ -68,7 +64,5 @@ local function worker(format, warg)
     governor = GOVERNOR_STATE[governor] or governor or "N/A"
 
     return {freqv.mhz, freqv.ghz, freqv.mv, freqv.v, governor}
-end
+end)
 -- }}}
-
-return helpers.setcall(cpufreq_linux, worker)

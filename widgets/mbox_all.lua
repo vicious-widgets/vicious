@@ -24,14 +24,11 @@ local io = { open = io.open }
 local helpers = require("vicious.helpers")
 -- }}}
 
--- vicious.widgets.mbox
-local mbox_all = {}
-
 -- Initialize variables
 local subject = "N/A"
 
 -- {{{ Mailbox widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     local f = io.open(type(warg) == "table" and warg[1] or warg)
@@ -54,7 +51,5 @@ local function worker(format, warg)
     end
 
     return { subject }
-end
+end)
 -- }}}
-
-return helpers.setcall(mbox_all, worker)

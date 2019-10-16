@@ -123,9 +123,9 @@ end
 -- }}}
 
 -- {{{ Set widget type's __call metamethod to given worker function
-function helpers.setcall(wtype, worker)
+function helpers.setcall(worker)
     return setmetatable(
-        wtype, { __call = function(_, ...) return worker(...) end })
+        {}, { __call = function(_, ...) return worker(...) end })
 end
 -- }}}
 
@@ -285,5 +285,4 @@ end
 --  }}}
 
 return helpers
-
 -- }}}

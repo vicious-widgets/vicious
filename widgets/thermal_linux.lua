@@ -25,12 +25,8 @@ local math = { floor = math.floor }
 local helpers = require("vicious.helpers")
 -- }}}
 
--- Thermal: provides temperature levels of ACPI and coretemp thermal zones
--- vicious.widgets.thermal
-local thermal_linux = {}
-
 -- {{{ Thermal widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     local zone = { -- Known temperature data sources
@@ -54,7 +50,5 @@ local function worker(format, warg)
     end
 
     return {0}
-end
+end)
 -- }}}
-
-return helpers.setcall(thermal_linux, worker)

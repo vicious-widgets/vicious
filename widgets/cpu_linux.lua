@@ -32,17 +32,13 @@ local string = {
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Cpu: provides CPU usage for all available CPUs/cores
--- vicious.widgets.cpu
-local cpu_linux = {}
-
 -- Initialize function tables
 local cpu_usage  = {}
 local cpu_total  = {}
 local cpu_active = {}
 
 -- {{{ CPU widget type
-local function worker(format)
+return helpers.setcall(function ()
     local cpu_lines = {}
 
     -- Get CPU stats
@@ -86,7 +82,5 @@ local function worker(format)
     end
 
     return cpu_usage
-end
+end)
 -- }}}
-
-return helpers.setcall(cpu_linux, worker)

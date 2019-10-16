@@ -22,11 +22,8 @@ local io = { open = io.open }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- vicious.widgets.mboxc
-local mboxc_all = {}
-
 -- {{{ Mbox count widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     -- Initialize counters
@@ -62,7 +59,5 @@ local function worker(format, warg)
     count.new = count.total - count.old
 
     return {count.total, count.old, count.new}
-end
+end)
 -- }}}
-
-return helpers.setcall(mboxc_all, worker)

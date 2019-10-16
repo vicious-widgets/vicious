@@ -864,6 +864,14 @@ mybattery:buttons(awful.util.table.join(
 * [My first awesome](https://awesomewm.org/doc/api/documentation/07-my-first-awesome.md.html)
 
 
+## Contributing
+
+For details, see CONTRIBUTING.md.  Vicious is licensed under GNU GPLv2+,
+which require all code within the package to be released under
+a compatible license.  All contributors retain their copyright to their code,
+so please make sure you add your name to the header of every file you touch.
+
+
 ## Authors
 
 Wicked was written by:

@@ -24,12 +24,8 @@ local os = { time = os.time, date = os.date }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Org: provides agenda statistics for Emacs org-mode
--- vicious.widgets.org
-local org_all = {}
-
 -- {{{ OrgMode widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     -- Compute delays
@@ -65,7 +61,5 @@ local function worker(format, warg)
     end
 
     return { count.past, count.today, count.soon, count.future }
-end
+end)
 -- }}}
-
-return helpers.setcall(org_all, worker)

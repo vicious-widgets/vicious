@@ -1,4 +1,4 @@
-# Changes in 2.4.0 (WIP)
+# Changes in 2.4.0
 
 IMPORTANT:
 
@@ -18,6 +18,9 @@ Added:
   as a stand-alone library.
 - `helpers.setcall` for registering functions as widget types.
 - `headergen` script for automatic generation of copyright notices.
+- `templates` for the ease of adding new widget types.
+- `CONTRIBUTING.md` which guide contributors through the steps
+  of filing an issue or submitting a patch.
 
 Fixed:
 

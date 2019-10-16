@@ -26,12 +26,8 @@ local string = { gmatch = string.gmatch }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Mem: provides RAM and Swap usage statistics
--- vicious.widgets.mem
-local mem_linux = {}
-
 -- {{{ Memory widget type
-local function worker(format)
+return helpers.setcall(function ()
     local _mem = { buf = {}, swp = {} }
 
     -- Get MEM info
@@ -60,7 +56,5 @@ local function worker(format)
     return {_mem.usep,     _mem.inuse,     _mem.total, _mem.free,
             _mem.swp.usep, _mem.swp.inuse, _mem.swp.t, _mem.swp.f,
             _mem.bcuse }
-end
+end)
 -- }}}
-
-return helpers.setcall(mem_linux, worker)

@@ -24,12 +24,8 @@ local string = { gmatch = string.gmatch }
 local helpers = require"vicious.helpers"
 -- }}}
 
--- Cpuinf: provides speed and cache information for all available CPUs/cores
--- vicious.widgets.cpuinf
-local cpuinf_linux = {}
-
 -- {{{ CPU Information widget type
-local function worker(format)
+return helpers.setcall(function ()
     local id = nil
 
     local cpu_info = {} -- Get CPU info
@@ -50,7 +46,5 @@ local function worker(format)
     end
 
     return cpu_info
-end
+end)
 -- }}}
-
-return helpers.setcall(cpuinf_linux, worker)

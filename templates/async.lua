@@ -1,5 +1,5 @@
 -- template for asynchronous widet types
--- Copyright (C) 2019  Nguyễn Gia Phong
+-- Copyright (C) 2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
 --
 -- This file is part of Vicious.
 --

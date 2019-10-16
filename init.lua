@@ -35,7 +35,7 @@
 local type  = type
 local pairs = pairs
 local tonumber = tonumber
-local timer = (type(timer) == 'table' and timer or require("gears.timer"))
+local timer = type(timer) == "table" and timer or require("gears.timer")
 local os    = { time = os.time }
 local table = {
     insert  = table.insert,
@@ -94,20 +94,22 @@ local function update(widget, reg, disablecache)
         return ret or data
     end
 
+    local function topercent(e) return tonumber(e) and tonumber(e) / 100 end
+
     local function update_value(data)
         local fmtd_data = format_data(data)
         if widget.add_value ~= nil then
             if widget.get_stack ~= nil and widget:get_stack() then
                 for idx, _ in ipairs(widget:get_stack_colors()) do
                     if fmtd_data[idx] then
-                        widget:add_value(tonumber(fmtd_data[idx]) and tonumber(fmtd_data[idx]/100), idx)
+                        widget:add_value(topercent(fmtd_data[idx]), idx)
                     end
                 end
             else
-                widget:add_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+                widget:add_value(topercent(fmtd_data))
             end
         elseif widget.set_value ~= nil then
-            widget:set_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+            widget:set_value(topercent(fmtd_data))
         elseif widget.set_markup ~= nil then
             widget:set_markup(fmtd_data)
         else
