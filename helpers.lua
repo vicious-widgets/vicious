@@ -1,5 +1,6 @@
 ---------------------------------------------------
 -- Licensed under the GNU General Public License v2
+--  * (c) 2019, Enric Morales <me@enric.me>
 --  * (c) 2010, Adrian C. <anrxc@sysphere.org>
 --  * (c) 2009, Rémy C. <shikamaru@mandriva.org>
 --  * (c) 2009, Benedikt Sauer <filmor@gmail.com>
@@ -8,6 +9,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local ipairs = ipairs
 local pairs = pairs
 local rawget = rawget
 local require = require
@@ -243,13 +245,33 @@ function helpers.sysctl_async(path_table, parse)
     path = table.concat(path, " ")
 
     spawn.with_line_callback("sysctl " .. path, {
-        stdout = function(line)
-            if not string.find(line, "sysctl: unknown oid") then
-                local key, value = string.match(line, "(.+): (.+)")
-                ret[key] = value
+        stdout = function (line)
+            local separators = {
+                freebsd = ": ",
+                linux = " = ",
+                openbsd = "="
+            }
+            local pattern = ("(.+)%s(.+)"):format(separators[helpers.getos()])
+            local key, value = string.match(line, pattern)
+            ret[key] = value
+        end,
+        stderr = function (line)
+            local messages = {
+                openbsd = { "level name .+ in (.+) is invalid" },
+                linux = { "cannot stat /proc/sys/(.+):",
+                          "permission denied on key '(.+)'" },
+                freebsd = { "unknown oid '(.+)'" }
+            }
+
+            for _, error_message in ipairs(messages[helpers.getos()]) do
+                local key = line:match(error_message)
+                if key then
+                    key = key:gsub("/", ".")
+                    ret[key] = "N/A"
+                end
             end
         end,
-        output_done = function() parse(ret) end
+        output_done = function () parse(ret) end
     })
 end
 --  }}}
