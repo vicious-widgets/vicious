@@ -18,6 +18,7 @@
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
+local pairs = pairs
 local tonumber = tonumber
 local table = {
     insert = table.insert

@@ -9,6 +9,7 @@
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local ipairs = ipairs
 local pairs = pairs
 local rawget = rawget
 local require = require
@@ -244,7 +245,7 @@ function helpers.sysctl_async(path_table, parse)
     path = table.concat(path, " ")
 
     spawn.with_line_callback("sysctl " .. path, {
-        stdout = function(line)
+        stdout = function (line)
             local separators = {
                 freebsd = ": ",
                 linux = " = ",
@@ -254,7 +255,7 @@ function helpers.sysctl_async(path_table, parse)
             local key, value = string.match(line, pattern)
             ret[key] = value
         end,
-        stderr = function(line)
+        stderr = function (line)
             local messages = {
                 openbsd = { "level name .+ in (.+) is invalid" },
                 linux = { "cannot stat /proc/sys/(.+):",
