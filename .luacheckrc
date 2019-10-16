@@ -6,6 +6,12 @@ read_globals = {
     "timer",    -- deprecated, but used in older versions.
 }
 
+include_files = {
+    "*.lua",            -- libraries
+    "widgets/*.lua",    -- officially supported widget types
+    "templates/*.lua",    -- officially supported widget types
+}
+
 -- Warnings to be ignored
 ignore = {
     "212",  -- Unused argument.
