@@ -30,7 +30,7 @@ local cpu_openbsd = {}
 
 -- Initialize the table that will contain the ticks spent in each subsystem
 -- values: user, nice, system, spin, interrupts, idle
-cpu_openbsd.ticks = { 0, 0, 0, 0, 0, 0 }
+local ticks = { 0, 0, 0, 0, 0, 0 }
 
 function cpu_openbsd.async(format, warg, callback)
     helpers.sysctl_async({ "kern.cp_time" },
@@ -43,7 +43,7 @@ function cpu_openbsd.async(format, warg, callback)
             local period_ticks = {}
             for i = 1, 6 do
                 table.insert(period_ticks,
-                             current_ticks[i] - cpu_openbsd.ticks[i])
+                             current_ticks[i] - ticks[i])
             end
 
             local cpu_total, cpu_busy = 0, 0
@@ -52,7 +52,7 @@ function cpu_openbsd.async(format, warg, callback)
 
             local cpu_usage = math.ceil((cpu_busy / cpu_total) * 100)
 
-            cpu_openbsd.ticks = current_ticks
+            ticks = current_ticks
             return callback({ cpu_usage })
         end)
 end
