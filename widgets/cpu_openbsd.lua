@@ -1,5 +1,4 @@
--- cpu_openbsd.lua - provide CPU usage on OpenBSD
--- Copyright (C) 2019  Enric Morales
+-- Copyright (C) 2019 Enric Morales
 --
 -- This file is part of Vicious.
 --
@@ -11,9 +10,9 @@
 -- Vicious is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU Affero General Public License for more details.
+-- GNU General Public License for more details.
 --
--- You should have received a copy of the GNU Affero General Public License
+-- You should have received a copy of the GNU General Public License
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 local math = { ceil = math.ceil }
