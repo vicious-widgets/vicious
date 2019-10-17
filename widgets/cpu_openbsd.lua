@@ -1,4 +1,5 @@
--- Copyright (C) 2019 Enric Morales
+-- CPU usage widget type for OpenBSD
+-- Copyright (C) 2019  Enric Morales
 --
 -- This file is part of Vicious.
 --
