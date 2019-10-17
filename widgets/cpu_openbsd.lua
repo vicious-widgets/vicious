@@ -50,7 +50,7 @@ function cpu_openbsd.async(format, warg, callback)
             for i = 1, 6 do cpu_total = cpu_total + period_ticks[i] end
             for i = 1, 5 do cpu_busy = cpu_busy + period_ticks[i] end
 
-            local cpu_usage = math.ceil((cpu_busy / cpu_total) * 100 )
+            local cpu_usage = math.ceil((cpu_busy / cpu_total) * 100)
 
             cpu_openbsd.ticks = current_ticks
             return callback({ cpu_usage })
