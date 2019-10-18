@@ -170,11 +170,14 @@ Provides CPU usage for all available CPUs/cores. Since this widget type give
 CPU utilization between two consecutive calls, it is recommended to enable
 caching if it is used to register multiple widgets (#71).
 
-Supported platforms: GNU/Linux, FreeBSD.
+Supported platforms: GNU/Linux, FreeBSD, OpenBSD.
 
-Returns an array containing:
+On FreeBSD and Linux returns an array containing:
 * `$1`: usage of all CPUs/cores
 * `$2`, `$3`, etc. are respectively the usage of 1st, 2nd, etc. CPU/core
+
+On OpenBSD returns an array containing:
+* `$1`: usage of all CPUs/cores
 
 ### vicious.widgets.cpufreq
 
