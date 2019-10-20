@@ -78,7 +78,7 @@ In any case, thank you very much for your contributions!
 This section introduces a guideline for writing idiomatic, robust
 and future-proof widget type code.
 
-### Whitespces in Expressions and Statements
+### Whitespace in Expressions and Statements
 
 Avoid extraneous whitespace in the following situations:
 
@@ -92,7 +92,7 @@ Avoid extraneous whitespace in the following situations:
 
 * Immediately before a comma, semicolon, or colon.
 * Immediately before the open parenthesis, braces, quote, etc.
-  that starts the argument list of a function call; or the open braket
+  that starts the argument list of a function call; or the open bracket
   that starts an indexing.  In other words, prefer these:
 
   ```lua
@@ -133,7 +133,7 @@ long_function_call(
     baz)
 ```
 
-The closing brace or braket on multiline constructs may either line up under
+The closing brace or bracket on multi-line constructs may either line up under
 the first character of the line that starts the construct, as in:
 
 ```lua
@@ -152,12 +152,14 @@ Trailing right parentheses, however, are not allowed.
 
 ### Maximum Line Length
 
-Limit all *code* lines to a maximum of 80 characters.
-Comments and long strings need not to follow this restriction.
+If possible, try to limit all *code* lines to a maximum
+of 80 characters.  In case you find some lines in your patch would be
+more readable exceeding this limit, feel free to discuss with us.
+Comments and long strings need not to follow this restriction however.
 
-As one might have noticed, the syntatic sugars `f{<fields>}`
+As one might have noticed, the syntactic sugars `f{<fields>}`
 (for `f({<fields>})`) and `f'<string>'` (or `f"<string>"`/`f[[<string>]]`,
-for `f('<string>')`) are espescially prefered to squeeze
+for `f('<string>')`) are especially preferred to squeeze
 the line length to this limit.
 
 ### Blank Lines
@@ -187,9 +189,9 @@ For example,
 local type = type
 local table = { concat = table.concat, insert = table.insert }
 
-local awful = require"awful"
+local awful = require("awful")
 
-local helpers = require"vicious.helpers"
+local helpers = require("vicious.helpers")
 ```
 
 ### String Quotes
