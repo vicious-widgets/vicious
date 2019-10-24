@@ -1,12 +1,34 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2019, Enric Morales <me@enric.me>
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2009, Rémy C. <shikamaru@mandriva.org>
---  * (c) 2009, Benedikt Sauer <filmor@gmail.com>
---  * (c) 2009, Henning Glawe <glaweh@debian.org>
---  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
----------------------------------------------------
+-- helper functions
+-- Copyright (C) 2009  Benedikt Sauer <filmor@gmail.com>
+-- Copyright (C) 2009  Henning Glawe <glaweh@debian.org>
+-- Copyright (C) 2009  Lucas de Vries <lucas@glacicle.com>
+-- Copyright (C) 2009  Rémy C. <shikamaru@mandriva.org>
+-- Copyright (C) 2009-2012  Adrian C. (anrxc) <anrxc@sysphere.org>
+-- Copyright (C) 2011  Joerg T. (Mic92) <jthalheim@gmail.com>
+-- Copyright (C) 2012  Arvydas Sidorenko <asido4@gmail.com>
+-- Copyright (C) 2012  Jörg Thalheim <jthalheim@gmail.com>
+-- Copyright (C) 2014-2015  Jörg Thalheim <joerg@higgsboson.tk>
+-- Copyright (C) 2017  Joerg Thalheim <joerg@thalheim.io>
+-- Copyright (C) 2017,2019  mutlusun <mutlusun@github.com>
+-- Copyright (C) 2017-2018  Jörg Thalheim <joerg@thalheim.io>
+-- Copyright (C) 2018-2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
+-- Copyright (C) 2019  Alexander Koch <lynix47@gmail.com>
+-- Copyright (C) 2019  Enric Morales <me@enric.me>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local ipairs = ipairs
@@ -98,6 +120,13 @@ function helpers.wrequire(collection, key)
 
     assert(ret, NOT_FOUND_ERR:format(basename))
     return ret
+end
+-- }}}
+
+-- {{{ Set widget type's __call metamethod to given worker function
+function helpers.setcall(worker)
+    return setmetatable(
+        {}, { __call = function(_, ...) return worker(...) end })
 end
 -- }}}
 
@@ -277,5 +306,4 @@ end
 --  }}}
 
 return helpers
-
 -- }}}

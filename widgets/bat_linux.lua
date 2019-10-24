@@ -1,28 +1,38 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2013, NormalRa  <normalrawr@gmail.com>
----------------------------------------------------
+-- battery widget type for GNU/Linux
+-- Copyright (C) 2010  Adrian C. <anrxc@sysphere.org>
+-- Copyright (C) 2013  NormalRa <normalrawr@gmail.com>
+-- Copyright (C) 2017  David Udelson <dru5@cornell.edu>
+-- Copyright (C) 2017  Roberto <empijei@users.noreply.github.com>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local tonumber = tonumber
-local setmetatable = setmetatable
 local string = { format = string.format }
-local helpers = require("vicious.helpers")
 local math = {
     min = math.min,
     floor = math.floor
 }
+
+local helpers = require"vicious.helpers"
 -- }}}
 
-
--- Bat: provides state, charge, remaining time, and wear for a requested battery
--- vicious.widgets.bat
-local bat_linux = {}
-
-
 -- {{{ Battery widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     local battery = helpers.pathtotable("/sys/class/power_supply/"..warg)
@@ -45,11 +55,11 @@ local function worker(format, warg)
         return {battery_state["Unknown\n"], 0, "N/A", 0, curpower}
     end
 
-
     -- Get state information
     local state = battery_state[battery.status] or battery_state["Unknown\n"]
 
     -- Get capacity information
+    local remaining, capacity, capacity_design
     if battery.charge_now then
         remaining, capacity = battery.charge_now, battery.charge_full
         capacity_design = battery.charge_full_design or capacity
@@ -64,8 +74,8 @@ local function worker(format, warg)
     local percent = math.min(math.floor(remaining / capacity * 100), 100)
     local wear = math.floor(100 - capacity / capacity_design * 100)
 
-
     -- Get charge information
+    local rate
     if battery.current_now then
         rate = tonumber(battery.current_now)
     elseif battery.power_now then
@@ -78,8 +88,9 @@ local function worker(format, warg)
     local time = "N/A"
 
     if rate ~= nil and rate ~= 0 then
+        local timeleft
         if state == "+" then
-            timeleft = (tonumber(capacity) - tonumber(remaining)) / tonumber(rate)
+            timeleft = (tonumber(capacity)-tonumber(remaining)) / tonumber(rate)
         elseif state == "-" then
             timeleft = tonumber(remaining) / tonumber(rate)
         else
@@ -94,7 +105,5 @@ local function worker(format, warg)
     end
 
     return {state, percent, time, wear, curpower}
-end
+end)
 -- }}}
-
-return setmetatable(bat_linux, { __call = function(_, ...) return worker(...) end })

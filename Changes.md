@@ -1,4 +1,4 @@
-# Changes in 2.4.0 (WIP)
+# Changes in 2.4.0
 
 IMPORTANT:
 
@@ -16,6 +16,11 @@ Added:
 - `helpers.setasyncall` to avoid writing redundant workers for asynchronous
   widget types. Note that these workers are only needed in case Vicious is used
   as a stand-alone library.
+- `helpers.setcall` for registering functions as widget types.
+- `headergen` script for automatic generation of copyright notices.
+- `templates` for the ease of adding new widget types.
+- `CONTRIBUTING.md` which guide contributors through the steps
+  of filing an issue or submitting a patch.
 
 Fixed:
 
@@ -26,10 +31,12 @@ Fixed:
     * bat_openbsd
     * volume, gmail, mdir, mpd, fs
 - [mpd] Lua 5.3 compatibility (for real this time); also correct a typo
+- [mbox] Update the deprecated `string.gfind` to `string.gmatch`
 - [pkg,weather,contrib/btc] Allow function call without Awesome
 - [pkg] Use more updated front-ends for Debian/Ubuntu (apt) and Fedora (dnf)
 - [os] Splitted os_all into os_linux and os_bsd (and refactored to async)
 - Tweak `.luacheckrc` to suit functional style and soft-limit text width to 80
+- Update copyright headers for libraries and widget types
 
 Removed:
 

@@ -1,25 +1,30 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2011, Jörg T. <jthalheim@gmail.com>
----------------------------------------------------
+-- disk I/O widget type for GNU/Linux
+-- Copyright (C) 2011  Jörg T. <jthalheim@gmail.com>
+-- Copyright (C) 2017  Elric Milon <whirm@gmx.com>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local pairs = pairs
 local io = { lines = io.lines }
-local setmetatable = setmetatable
-local string = { match = string.match }
-local helpers = require("vicious.helpers")
-local os = {
-    time = os.time,
-    difftime = os.difftime
-}
+local os = { time = os.time, difftime = os.difftime }
+
+local helpers = require"vicious.helpers"
 -- }}}
-
-
--- Disk I/O: provides I/O statistics for requested storage devices
--- vicious.widgets.dio
-local dio_linux = {}
-
 
 -- Initialize function tables
 local disk_usage = {}
@@ -30,13 +35,13 @@ local unit = { ["s"] = 1, ["kb"] = 2, ["mb"] = 2048 }
 local time_unit = { ["ms"] = 1, ["s"] = 1000 }
 
 -- {{{ Disk I/O widget type
-local function worker(format)
+return helpers.setcall(function ()
     local disk_lines = {}
 
     for line in io.lines("/proc/diskstats") do
         local device, read, write, iotime =
             -- Linux kernel documentation: Documentation/iostats.txt
-          string.match(line, "([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+) %d+ %d+ (%d+)")
+            line:match"([^%s]+) %d+ %d+ (%d+) %d+ %d+ %d+ (%d+) %d+ %d+ (%d+)"
         disk_lines[device] = { read, write, iotime }
     end
 
@@ -50,7 +55,7 @@ local function worker(format)
 
         -- Check for overflows and counter resets (> 2^32)
         if stats[1] < last_stats[1] or stats[2] < last_stats[2] then
-            last_stats[1], last_stats[2], last_stats[3] = stats[1], stats[2], stats[3]
+            for i = 1,3 do last_stats[i] = stats[i] end
         end
 
         -- Diskstats are absolute, substract our last reading
@@ -70,7 +75,5 @@ local function worker(format)
     disk_stats = disk_lines
 
     return disk_usage
-end
+end)
 -- }}}
-
-return setmetatable(dio_linux, { __call = function(_, ...) return worker(...) end })

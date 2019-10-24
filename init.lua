@@ -1,16 +1,41 @@
----------------------------------------------------
--- Vicious widgets for the awesome window manager
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
---  * (c) 2009, Lucas de Vries <lucas@glacicle.com>
----------------------------------------------------
+-- Vicious module initialization
+-- Copyright (C) 2009  Lucas de Vries <lucas@glacicle.com>
+-- Copyright (C) 2009-2013  Adrian C. (anrxc) <anrxc@sysphere.org>
+-- Copyright (C) 2011  Joerg T. (Mic92) <jthalheim@gmail.com>
+-- Copyright (C) 2012  Arvydas Sidorenko <asido4@gmail.com>
+-- Copyright (C) 2012  Jörg Thalheim <jthalheim@gmail.com>
+-- Copyright (C) 2013  Dodo <dodo.the.last@gmail.com>
+-- Copyright (C) 2013-2014,2017  Jörg Thalheim <joerg@higgsboson.tk>
+-- Copyright (C) 2014  blastmaster <blastmaster@tuxcode.org>
+-- Copyright (C) 2015  Daniel Hahler <git@thequod.de>
+-- Copyright (C) 2017  James Reed <supplantr@users.noreply.github.com>
+-- Copyright (C) 2017  Joerg Thalheim <joerg@thalheim.io>
+-- Copyright (C) 2017  getzze <getzze@gmail.com>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+-- Copyright (C) 2018  Beniamin Kalinowski <beniamin.kalinowski@gmail.com>
+-- Copyright (C) 2018  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
+-- Copyright (C) 2019  Daniel Hahler <github@thequod.de>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Setup environment
 local type  = type
 local pairs = pairs
 local tonumber = tonumber
-local timer = (type(timer) == 'table' and timer or require("gears.timer"))
+local timer = type(timer) == "table" and timer or require("gears.timer")
 local os    = { time = os.time }
 local table = {
     insert  = table.insert,
@@ -69,20 +94,22 @@ local function update(widget, reg, disablecache)
         return ret or data
     end
 
+    local function topercent(e) return tonumber(e) and tonumber(e) / 100 end
+
     local function update_value(data)
         local fmtd_data = format_data(data)
         if widget.add_value ~= nil then
             if widget.get_stack ~= nil and widget:get_stack() then
                 for idx, _ in ipairs(widget:get_stack_colors()) do
                     if fmtd_data[idx] then
-                        widget:add_value(tonumber(fmtd_data[idx]) and tonumber(fmtd_data[idx]/100), idx)
+                        widget:add_value(topercent(fmtd_data[idx]), idx)
                     end
                 end
             else
-                widget:add_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+                widget:add_value(topercent(fmtd_data))
             end
         elseif widget.set_value ~= nil then
-            widget:set_value(tonumber(fmtd_data) and tonumber(fmtd_data)/100)
+            widget:set_value(topercent(fmtd_data))
         elseif widget.set_markup ~= nil then
             widget:set_markup(fmtd_data)
         else

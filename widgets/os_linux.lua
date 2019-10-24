@@ -1,27 +1,35 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
----------------------------------------------------
+-- operating system widget type for GNU/Linux
+-- Copyright (C) 2010  Adrian C. <anrxc@sysphere.org>
+-- Copyright (C) 2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
+-- Copyright (C) 2019  mutlusun <mutlusun@users.noreply.github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local pairs = pairs
 local tonumber = tonumber
 local math = { ceil = math.ceil }
 local los = { getenv = os.getenv }
-local setmetatable = setmetatable
 local string = { gsub = string.gsub }
 
 local helpers = require"vicious.helpers"
 -- }}}
 
-
--- OS: provides operating system information
--- vicious.widgets.os
-local os_linux = {}
-
-
 -- {{{ Operating system widget type
-local function worker(format)
+return helpers.setcall(function ()
     local system = {
         ["ostype"]    = "N/A",
         ["hostname"]  = "N/A",
@@ -54,8 +62,5 @@ local function worker(format)
 
     return {system["ostype"], system["osrelease"], system["username"],
             system["hostname"], system["entropy"], system["entropy_p"]}
-end
+end)
 -- }}}
-
-return setmetatable(os_linux,
-                    { __call = function(_, ...) return worker(...) end })

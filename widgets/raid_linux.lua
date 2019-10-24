@@ -1,30 +1,39 @@
------------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Hagen Schink <troja84@googlemail.com>
------------------------------------------------------
+-- widget type providing RAID array information on GNU/Linux
+-- Copyright (C) 2010  Hagen Schink <troja84@googlemail.com>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local io = { open = io.open }
-local setmetatable = setmetatable
 local string = {
     len = string.len,
     sub = string.sub,
     match = string.match,
     gmatch = string.gmatch
 }
+
+local helpers = require"vicious.helpers"
 -- }}}
-
-
--- Raid: provides state information for a requested RAID array
--- vicious.widgets.raid
-local raid_linux = {}
-
 
 -- Initialize function tables
 local mddev = {}
 
 -- {{{ RAID widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
     mddev[warg] = {
         ["found"]    = false,
@@ -38,7 +47,7 @@ local function worker(format, warg)
         if mddev[warg]["found"] then
             local updev = string.match(line, "%[[_U]+%]")
 
-            for i in string.gmatch(updev, "U") do
+            for _ in string.gmatch(updev, "U") do
                 mddev[warg]["active"] = mddev[warg]["active"] + 1
             end
 
@@ -46,7 +55,7 @@ local function worker(format, warg)
         elseif string.sub(line, 1, string.len(warg)) == warg then
             mddev[warg]["found"] = true
 
-            for i in string.gmatch(line, "%[[%d]%]") do
+            for _ in string.gmatch(line, "%[[%d]%]") do
                 mddev[warg]["assigned"] = mddev[warg]["assigned"] + 1
             end
         end
@@ -54,7 +63,5 @@ local function worker(format, warg)
     f:close()
 
     return {mddev[warg]["assigned"], mddev[warg]["active"]}
-end
+end)
 -- }}}
-
-return setmetatable(raid_linux, { __call = function(_, ...) return worker(...) end })

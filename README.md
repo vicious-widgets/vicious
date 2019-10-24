@@ -3,9 +3,7 @@
 Vicious is a modular widget library for window managers, but mostly
 catering to users of the *awesome* window manager. It was derived from
 the old *Wicked* widget library, and has some of the old *Wicked* widget
-types, a few of them rewritten, and a good number of new ones:
-
-* https://github.com/vicious-widgets/vicious
+types, a few of them rewritten, and a good number of new ones.
 
 Vicious widget types are a framework for creating your own
 widgets. Vicious contains modules that gather data about your system,
@@ -14,18 +12,20 @@ timers, suspend widgets and so on. Vicious doesn't depend on any third party
 Lua libraries, but may depend on additional system utilities (see widget
 description).
 
+
 ## Usage
 
 When provided by an operating system package, or installed from source
 into the Lua library path Vicious can be used as a regular Lua
 library, to be used stand-alone or to feed widgets of any window
-manager (e.g. Ion, WMII). It is compatible with both Lua v5.1 and v5.2.
+manager (e.g. Ion, WMII). It is compatible with Lua version 5.1 and above.
 
 ```lua
 > widgets = require("vicious.widgets.init")
 > print(widgets.volume(nil, "Master")[1])
 100
 ```
+
 
 ## Usage within Awesome
 
@@ -34,6 +34,7 @@ system provider, or download the source code and move it to your
 awesome configuration directory in `$XDG_CONFIG_HOME` (usually `~/.config`):
 
 ```bash
+$ git clone https://github.com/vicious-widgets/vicious.git
 $ mv vicious $XDG_CONFIG_HOME/awesome/
 ```
 
@@ -47,17 +48,19 @@ Then add the following to the top of your `rc.lua`:
 local vicious = require("vicious")
 ```
 
+### Register a widget
+
 Once you create a widget (a textbox, graph or a progressbar) call
 `vicious.register()` to register it with Vicious:
 
     vicious.register(widget, wtype, format, interval, warg)
 
-### widget
+#### widget
 
 *Awesome* widget created with `widget()` or `awful.widget()` (in case of a
 graph or a progressbar).
 
-### wtype
+#### wtype
 
 Type: Vicious widget or `function`:
 
@@ -66,7 +69,7 @@ Type: Vicious widget or `function`:
 * function: custom function from your own *Awesome* configuration can be
   registered as widget types (see [Custom widget types](#custom-widget)).
 
-### format
+#### format
 
 Type: `string` or `function`:
 
@@ -77,16 +80,14 @@ Type: `string` or `function`:
 * `function (widget, args)` can be used to manipulate data returned by the
   widget type (see [Format functions](#format-func)).
 
-### interval
+#### interval
 
 Number of seconds between updates of the widget (default: 2). Read section
 [Power and Caching](#power) for more information.
 
-### warg
+#### warg
 
 Some widget types require an argument to be passed, for example the battery ID.
-
-## Other functions
 
 `vicious.register` alone is not much different from
 [awful.widget.watch](https://awesomewm.org/doc/api/classes/awful.widget.watch.html),
@@ -130,6 +131,7 @@ Enable caching of values returned by a widget type.
 
 Fetch data from `wtype` to use it outside from the wibox
 ([example](#call-example)).
+
 
 ## <a name="widgets"></a>Widget types
 
@@ -373,9 +375,11 @@ Supported platforms: platform independent (required tools: `curl`).
 
 * Argument: an array including password, hostname and port in that order. `nil`
   fields will be fallen back to default (`localhost:6600` without password).
-* Returns a table with string keys: `${volume}`, `${bitrate}`, `${elapsed}` (in seconds),
-  `${duration}` (in seconds), `${Elapsed}` (formatted as [hh:]mm:ss), `${Duration}` (formatted as [hh:]mm:ss),
-  `${Progress}` (in percentage), ${random}`, `${repeat}`, `${state}`, `${Artist}`, `${Title}`, `${Album}`,
+* Returns a table with string keys: `${volume}`, `${bitrate}`,
+  `${elapsed}` (in seconds), `${duration}` (in seconds),
+  `${Elapsed}` (formatted as [hh:]mm:ss),
+  `${Duration}` (formatted as [hh:]mm:ss), `${Progress}` (in percentage),
+  `${random}`, `${repeat}`, `${state}`, `${Artist}`, `${Title}`, `${Album}`,
   `${Genre}` and optionally `${Name}` and `${file}`.
 
 ### vicious.widgets.net
@@ -560,6 +564,7 @@ Supported platforms: GNU/Linux.
   `${rate}` (Mb/s), `${freq}` (MHz), `${linp}` (link quality in percent),
   `${txpw}` (transmission power, in dBm) and `${sign}` (signal level, in dBm)
 
+
 ## <a name="custom-widget"></a>Custom widget types
 
 Use any of the existing widget types as a starting point for your
@@ -644,6 +649,7 @@ use that keyring.
 Users of GnuPG (and its agent) could consider encrypting the netrc
 file with their GPG key. Trough the GPG Passphrase Agent they could
 then decrypt the file transparently while their session is active.
+
 
 ## Usage examples
 
@@ -732,6 +738,7 @@ cpuwidget:set_color{type = "linear", from = {0, 0}, to = {50, 0},
                     stops = {{0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96"}}}
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
 ```
+
 
 ## <a name="format-func"></a>Format functions
 
@@ -863,6 +870,7 @@ mybattery:buttons(awful.util.table.join(
         end)))
 ```
 
+
 ## See also
 
 * Manual pages: [awesome(1)](https://awesomewm.org/doc/manpages/awesome),
@@ -871,6 +879,15 @@ mybattery:buttons(awful.util.table.join(
 * [Example *awesome* configuration](http://git.sysphere.org/awesome-configs/)
   (outdated)
 * [My first awesome](https://awesomewm.org/doc/api/documentation/07-my-first-awesome.md.html)
+
+
+## Contributing
+
+For details, see CONTRIBUTING.md.  Vicious is licensed under GNU GPLv2+,
+which require all code within the package to be released under
+a compatible license.  All contributors retain their copyright to their code,
+so please make sure you add your name to the header of every file you touch.
+
 
 ## Authors
 
@@ -889,15 +906,63 @@ Current maintainers:
 * Daniel Hahler (blueyed) \<github thequod.de\>
 * Nguyễn Gia Phong (McSinyx) \<vn.mcsinyx gmail.com\>
 
-Vicious major contributors:
+Contributors, listed in alphabetic order:
 
-* Benedikt Sauer \<filmor gmail.com\>
-* Greg D. \<jabbas jabbas.pl\>
-* Henning Glawe \<glaweh debian.org\>
-* Rémy C. \<shikamaru mandriva.org\>
-* Hiltjo Posthuma \<hiltjo codemadness.org\>
-* Hagen Schink \<troja84 googlemail.com\>
+* 0x5b \<dragen15051 gmail.com\>
+* Adam Lee \<adam8157 gmail.com\>
+* Alexander Koch \<lynix47 gmail.com\>
+* Amir Mohammad Saied \<amirsaied gmail.com\>
+* Andrea Scarpino \<me andreascarpino.it\>
+* Andreas Geisenhainer \<psycorama datenhalde.de\>
+* Andrew Merenbach \<andrew merenbach.com\>
+* Andrzej Bieniek \<andyhelp gmail.com\>
+* Arthur Axel 'fREW' Schmidt \<git frew.co\>
 * Arvydas Sidorenko \<asido4 gmail.com\>
+* Benedikt Sauer \<filmor gmail.com\>
+* Beniamin Kalinowski \<beniamin.kalinowski gmail.com\>
+* Benoît Zugmeyer \<bzugmeyer gmail.com\>
+* blastmaster \<blastmaster tuxcode.org\>
+* Brandon Hartshorn \<brandonhartshorn gmail.com\>
+* crondog \<patches crondog.com\>
+* David Udelson \<dru5 cornell.edu\>
 * Dodo The Last \<dodo.the.last gmail.com\>
-* …
-* Consult git log for a complete list of contributors
+* Elric Milon \<whirm gmx.com\>
+* Enric Morales \<me enric.me\>
+* getzze \<getzze gmail.com\>
+* Greg D. \<jabbas jabbas.pl\>
+* Hagen Schink \<troja84 googlemail.com\>
+* Henning Glawe \<glaweh debian.org\>
+* Hiltjo Posthuma \<hiltjo codemadness.org\>
+* [James Reed](https://github.com/supplantr)
+* Jay Kamat \<jaygkamat gmail.com\>
+* Jeremy \<jeremy.sainvil gmaill.com\>
+* jinleileiking \<jinleileiking gmail.com\>
+* joe di castro \<joe joedicastro.com\>
+* Joerg Jaspert \<joerg debian.org\>
+* Jonathan McCrohan \<jmccrohan gmail.com\>
+* [Juan Carlos Menonita](https://github.com/JuanKman94)
+* Juergen Descher \<jhdl gmx.net\>
+* Julian Volodia \<julianvolodia gmail.com\>
+* Keith Hughitt \<keith.hughitt gmail.com\>
+* Lorenzo Gaggini \<lg lgaggini.net\>
+* Lyderic Lefever \<lyderic.lefever gmail.com\>
+* Martin Striz \<striz raynet.cz\>
+* Martin Ueding \<dev martin-ueding.de\>
+* Mellich \<mellich gmx.net\>
+* Michael Kressibucher \<mkressibucher hotmail.com\>
+* Michael Unterkalmsteiner \<miciu gmx.de\>
+* niko \<nikomomo gmail.com\>
+* Noah Tilton \<code tilton.co\>
+* Normal Ra \<normalrawr gmail.com\>
+* Perry Hargrave \<perry.hargrave gmail.com\>
+* Rémy CLOUARD \<shikamaru shikamaru.fr\>
+* [Roberto](https://github.com/empijei)
+* Sébastien Luttringer \<seblu seblu.net\>
+* Shadowmourne G \<s10e live.com\>
+* starenka \<starenka0 gmail.com\>
+* Suseika \<wlasowegor gmail.com\>
+* Uli Schlachter \<psychon znc.in\>
+* Wtfcoder \<matt mattfreeman.co.uk\>
+* Xaver Hellauer \<xaver hellauer.bayern\>
+* zhrtz \<apaterson scramble.io\>
+* And many others

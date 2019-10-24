@@ -1,22 +1,29 @@
----------------------------------------------------
--- Licensed under the GNU General Public License v2
---  * (c) 2010, Adrian C. <anrxc@sysphere.org>
----------------------------------------------------
+-- widget type providing the count of total, old and new messages in mbox files
+-- Copyright (C) 2010  Adrian C. <anrxc@sysphere.org>
+-- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 -- {{{ Grab environment
 local io = { open = io.open }
-local setmetatable = setmetatable
-local string = { find = string.find }
+local helpers = require"vicious.helpers"
 -- }}}
 
-
--- Mboxc: provides the count of total, old and new messages in mbox files
--- vicious.widgets.mboxc
-local mboxc_all = {}
-
-
 -- {{{ Mbox count widget type
-local function worker(format, warg)
+return helpers.setcall(function (format, warg)
     if not warg then return end
 
     -- Initialize counters
@@ -34,15 +41,15 @@ local function worker(format, warg)
 
             -- Find all messages
             --  * http://www.jwz.org/doc/content-length.html
-            local _, from = string.find(lines, "^From[%s]")
+            local _, from = lines:find"^From[%s]"
             if from ~= nil then count.total = count.total + 1 end
 
             -- Read messages have the Status header
-            local _, status = string.find(lines, "^Status:[%s]RO$")
+            local _, status = lines:find"^Status:[%s]RO$"
             if status ~= nil then count.old = count.old + 1 end
 
             -- Skip the folder internal data
-            local _, int = string.find(lines, "^Subject:[%s].*FOLDER[%s]INTERNAL[%s]DATA")
+            local _, int = lines:find"^Subject:[%s].*FOLDER[%s]INTERNAL[%s]DATA"
             if int ~= nil then count.total = count.total - 1 end
         end
         f:close()
@@ -52,7 +59,5 @@ local function worker(format, warg)
     count.new = count.total - count.old
 
     return {count.total, count.old, count.new}
-end
+end)
 -- }}}
-
-return setmetatable(mboxc_all, { __call = function(_, ...) return worker(...) end })

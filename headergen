@@ -1,0 +1,100 @@
+#!/usr/bin/env lua
+-- copyright header generator
+-- Copyright (C) 2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
+
+local ipairs = ipairs
+local pairs = pairs
+local tonumber = tonumber
+local io = { open = io.open, popen = io.popen }
+local os = { exit = os.exit }
+local table = {
+    concat = table.concat,
+    insert = table.insert,
+    sort = table.sort
+}
+
+local HEADER = [[-- %s
+%s
+--
+-- This file is part of Vicious.
+--
+-- Vicious is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as
+-- published by the Free Software Foundation, either version 2 of the
+-- License, or (at your option) any later version.
+--
+-- Vicious is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
+
+%s]]
+local COMMAND = "git log --date=format:%Y --format='%ad %an <%ae>' "
+
+if #arg == 0 then
+    print'usage: headergen lua-source-files'
+    os.exit(1)
+end
+
+for _, filename in ipairs(arg) do
+    local fi = io.open(filename)
+    local content = fi:read'*a'
+    fi:close()
+
+    local holders = {}
+    local output = io.popen(COMMAND .. filename)
+    for line in output:lines() do
+        local year, author = line:match'(%d+)%s+(.+)'
+        if holders[author] == nil then holders[author] = {} end
+        holders[author][year] = true
+    end
+    output:close()
+
+    local copyrights = {}
+    for author, years in pairs(holders) do
+        local time = {}
+        for year, _ in pairs(years) do table.insert(time, tonumber(year)) end
+        table.sort(time)
+
+        local copyright = { 'Copyright (C) ' }
+        for _, current in ipairs(time) do
+            local prev = tonumber(copyright[#copyright])
+            if prev == nil then
+                table.insert(copyright, current)
+            elseif current - 1 ~= prev then
+                table.insert(copyright, ',')
+                table.insert(copyright, current)
+            elseif copyright[#copyright - 1] == '-' then
+                copyright[#copyright] = current
+            else
+                table.insert(copyright, '-')
+                table.insert(copyright, current)
+            end
+        end
+        table.insert(copyrights,
+            ('-- %s  %s'):format(table.concat(copyright), author))
+    end
+
+    local fo = io.open(filename, 'w')
+    table.sort(copyrights)
+    fo:write(HEADER:format(filename, table.concat(copyrights, '\n'), content))
+    fo:close()
+end
