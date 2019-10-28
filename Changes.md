@@ -8,7 +8,10 @@ IMPORTANT:
 
 Added:
 
-- [wifi_linux] Expose frequency and transmission power
+- notmuch_all, cpu_freebsd widget types.
+- [cmus_all] Promote to `widgets/`.
+- [wifiiw_linux] Expose BSSID.
+- [wifi_linux] Expose frequency and transmission power.
 - `spawn` as a fallback for `awful.spawn` in case Vicious is used as
   a stand-alone library. This wrapper, however, does NOT provide the facilities
   to asynchronously spawn new processes. It also lacks a few features such as
