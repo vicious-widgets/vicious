@@ -40,11 +40,11 @@ function mdir_all.async(format, warg, callback)
 
     local new, cur = 0, 0
     spawn.with_line_callback(
-        "find" .. starting_points .. " -type f -regex '.*/cur/.*2,[^S]*$';",
+        "find" .. starting_points .. " -type f -regex '.*/cur/.*2,[^S]*$'",
         { stdout = function (filename) cur = cur + 1 end,
           output_done = function ()
               spawn.with_line_callback(
-                  "find" .. starting_points .. " -type f -path '*/new/*';",
+                  "find" .. starting_points .. " -type f -path '*/new/*'",
                   { stdout = function (filename) new = new + 1 end,
                     output_done = function () callback{ new, cur } end })
           end })

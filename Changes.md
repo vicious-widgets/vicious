@@ -1,3 +1,9 @@
+# Changes in 2.4.1 (WIP)
+
+Fixed:
+
+- [mdir] Remove trailing semicolon at the end of command
+
 # Changes in 2.4.0
 
 IMPORTANT:
