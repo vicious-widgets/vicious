@@ -3,6 +3,8 @@
 Fixed:
 
 - [mdir] Remove trailing semicolon at the end of command
+- [pkg] Fix widget on Arch, Arch C, FreeBSD and Mandriva:
+  attempt to perform aithmetic on nil value (field 'sub')
 
 # Changes in 2.4.0
 

@@ -4,6 +4,7 @@
 -- Copyright (C) 2017  getzze <getzze@gmail.com>
 -- Copyright (C) 2017  mutlusun <mutlusun@github.com>
 -- Copyright (C) 2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
+-- Copyright (C) 2020  Elmeri Niemelä <niemela.elmeri@gmail.com>
 --
 -- This file is part of Vicious.
 --
@@ -30,14 +31,14 @@ local helpers = require("vicious.helpers")
 local pkg_all = {}
 
 local PKGMGR = {
-    ["Arch"] = { cmd = "pacman -Qu" },
-    ["Arch C"] = { cmd = "checkupdates" },
+    ["Arch"] = { cmd = "pacman -Qu", sub = 0 },
+    ["Arch C"] = { cmd = "checkupdates", sub = 0 },
     ["Arch S"] = { cmd = "yes | pacman -Sup", sub = 1 },
     ["Debian"] = { cmd = "apt list --upgradable", sub = 1 },
     ["Ubuntu"] = { cmd = "apt list --upgradable", sub = 1 },
     ["Fedora"] = { cmd = "dnf check-update", sub = 2 },
-    ["FreeBSD"] = { cmd = "pkg version -I -l '<'" },
-    ["Mandriva"] = { cmd = "urpmq --auto-select" }
+    ["FreeBSD"] = { cmd = "pkg version -I -l '<'", sub = 0 },
+    ["Mandriva"] = { cmd = "urpmq --auto-select", sub = 0 }
 }
 
 -- {{{ Packages widget type
