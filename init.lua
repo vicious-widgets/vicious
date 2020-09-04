@@ -334,5 +334,4 @@ end
 -- }}}
 
 return vicious
-
 -- }}}

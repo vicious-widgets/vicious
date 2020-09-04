@@ -1,3 +1,7 @@
+# Changes in 2.4.2
+
+Feature: [hwmontemp] Bring back sysfs path cache
+
 # Changes in 2.4.1
 
 Fixed:

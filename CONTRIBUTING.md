@@ -39,8 +39,8 @@ Please re-read your issue once again to avoid a couple of common mistakes
 1. [Fork this repository](https://github.com/vicious-widgets/vicious/fork)
 2. Check out the source code with:
 
-        git clone git@github.com:YOUR_GITHUB_USERNAME/vicious.git
-        cd vicious
+       git clone https://github.com/YOUR_GITHUB_USERNAME/vicious.git
+       cd vicious
 
 3. Start working on your patch.  If you want to add a new widget type,
    see the `templates` directory for a more detailed guide.
@@ -49,7 +49,7 @@ Please re-read your issue once again to avoid a couple of common mistakes
    with `luacheck`. This *should fail* at first, but you can continually
    re-run it until you're done.
 
-        luacheck --config .luacheckrc .
+       luacheck --config .luacheckrc .
 
 6. Make sure your code works under all Lua versions claimed supported
    by Vicious, namely 5.1, 5.2 and 5.3.
@@ -62,11 +62,11 @@ Please re-read your issue once again to avoid a couple of common mistakes
    [commit](https://git-scm.com/docs/git-commit) them
    and [push](https://git-scm.com/docs/git-push) the result, like this:
 
-        git add widgets/bar_baz.lua README.md
-        git commit -m '[bar_baz] Add widget type'
-        git add helpers.lua Changes.md
-        git commit -m '[helpers] Fix foo'
-        git push
+       git add widgets/bar_baz.lua README.md
+       git commit -m '[bar_baz] Add widget type'
+       git add helpers.lua Changes.md
+       git commit -m '[helpers] Fix foo'
+       git push
 
 10. Finally, [create a pull request](https://help.github.com/articles/creating-a-pull-request).
     We'll then review and merge it.
