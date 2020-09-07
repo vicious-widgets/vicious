@@ -16,7 +16,7 @@ description).
 ## Usage
 
 When provided by an operating system package, or installed from source
-into the Lua library path Vicious can be used as a regular Lua
+into the Lua library path Vicious, can be used as a regular Lua
 library, to be used stand-alone or to feed widgets of any window
 manager (e.g. Ion, WMII). It is compatible with Lua version 5.1 and above.
 
@@ -889,80 +889,14 @@ a compatible license.  All contributors retain their copyright to their code,
 so please make sure you add your name to the header of every file you touch.
 
 
-## Authors
+## Copying
 
-Wicked was written by:
+Vicious is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 2 of the
+License, or (at your option) any later version.
 
-* Lucas de Vries \<lucas glacicle.com\>
+Please refer to our documentation for the full [list of authors].
 
-Vicious was originally written by:
 
-* Adrian C. (anrxc) \<anrxc sysphere.org\>
-
-Current maintainers:
-
-* Jörg Thalheim (Mic92) \<joerg thalheim.io\>
-* [mutlusun](https://github.com/mutlusun) (especially the FreeBSD port)
-* Daniel Hahler (blueyed) \<github thequod.de\>
-* Nguyễn Gia Phong (McSinyx) \<vn.mcsinyx gmail.com\>
-
-Contributors, listed in alphabetic order:
-
-* 0x5b \<dragen15051 gmail.com\>
-* Adam Lee \<adam8157 gmail.com\>
-* Alexander Koch \<lynix47 gmail.com\>
-* Amir Mohammad Saied \<amirsaied gmail.com\>
-* Andrea Scarpino \<me andreascarpino.it\>
-* Andreas Geisenhainer \<psycorama datenhalde.de\>
-* Andrew Merenbach \<andrew merenbach.com\>
-* Andrzej Bieniek \<andyhelp gmail.com\>
-* Arthur Axel 'fREW' Schmidt \<git frew.co\>
-* Arvydas Sidorenko \<asido4 gmail.com\>
-* Benedikt Sauer \<filmor gmail.com\>
-* Beniamin Kalinowski \<beniamin.kalinowski gmail.com\>
-* Benoît Zugmeyer \<bzugmeyer gmail.com\>
-* blastmaster \<blastmaster tuxcode.org\>
-* Brandon Hartshorn \<brandonhartshorn gmail.com\>
-* crondog \<patches crondog.com\>
-* David Udelson \<dru5 cornell.edu\>
-* Dodo The Last \<dodo.the.last gmail.com\>
-* Elric Milon \<whirm gmx.com\>
-* Enric Morales \<me enric.me\>
-* getzze \<getzze gmail.com\>
-* Greg D. \<jabbas jabbas.pl\>
-* Hagen Schink \<troja84 googlemail.com\>
-* Henning Glawe \<glaweh debian.org\>
-* Hiltjo Posthuma \<hiltjo codemadness.org\>
-* [James Reed](https://github.com/supplantr)
-* Jay Kamat \<jaygkamat gmail.com\>
-* Jeremy \<jeremy.sainvil gmaill.com\>
-* jinleileiking \<jinleileiking gmail.com\>
-* joe di castro \<joe joedicastro.com\>
-* Joerg Jaspert \<joerg debian.org\>
-* Jonathan McCrohan \<jmccrohan gmail.com\>
-* [Juan Carlos Menonita](https://github.com/JuanKman94)
-* Juergen Descher \<jhdl gmx.net\>
-* Julian Volodia \<julianvolodia gmail.com\>
-* Keith Hughitt \<keith.hughitt gmail.com\>
-* Lorenzo Gaggini \<lg lgaggini.net\>
-* Lyderic Lefever \<lyderic.lefever gmail.com\>
-* Martin Striz \<striz raynet.cz\>
-* Martin Ueding \<dev martin-ueding.de\>
-* Mellich \<mellich gmx.net\>
-* Michael Kressibucher \<mkressibucher hotmail.com\>
-* Michael Unterkalmsteiner \<miciu gmx.de\>
-* niko \<nikomomo gmail.com\>
-* Noah Tilton \<code tilton.co\>
-* Normal Ra \<normalrawr gmail.com\>
-* Perry Hargrave \<perry.hargrave gmail.com\>
-* Rémy CLOUARD \<shikamaru shikamaru.fr\>
-* [Roberto](https://github.com/empijei)
-* Sébastien Luttringer \<seblu seblu.net\>
-* Shadowmourne G \<s10e live.com\>
-* starenka \<starenka0 gmail.com\>
-* Suseika \<wlasowegor gmail.com\>
-* Uli Schlachter \<psychon znc.in\>
-* Wtfcoder \<matt mattfreeman.co.uk\>
-* Xaver Hellauer \<xaver hellauer.bayern\>
-* zhrtz \<apaterson scramble.io\>
-* And many others
+[list of authors]: https://vicious.rtfd.io/copying.html
