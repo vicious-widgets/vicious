@@ -46,7 +46,7 @@ Once you create a widget (a textbox, graph or a progressbar) call
 
 ``interval``
    Number of seconds between updates of the widget (default: 2).
-   Read section [Power and Caching](#power) for more information.
+   Read section :ref:`caching` for more information.
 
 ``warg``
    Arguments to be passed to widget types, e.g. the battery ID.
