@@ -16,6 +16,8 @@ library, but may depend on additional system utilities.
    :maxdepth: 2
    :caption: Contents:
 
+   usage-lua
+   usage-awesome
    copying
 
 Indices and tables
