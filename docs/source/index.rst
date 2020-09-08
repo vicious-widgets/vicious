@@ -20,6 +20,8 @@ Table of Contents
 
    usage-lua
    usage-awesome
+   caching
+   security
    copying
 
 See Also
