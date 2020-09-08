@@ -751,16 +751,6 @@ mybattery:buttons(awful.util.table.join(
 ```
 
 
-## See also
-
-* Manual pages: [awesome(1)](https://awesomewm.org/doc/manpages/awesome),
-  [awesomerc(5)](https://awesomewm.org/doc/manpages/awesomerc.5.html)
-* [Awesome declarative layout system](https://awesomewm.org/apidoc/documentation/03-declarative-layout.md.html)
-* [Example *awesome* configuration](http://git.sysphere.org/awesome-configs/)
-  (outdated)
-* [My first awesome](https://awesomewm.org/doc/api/documentation/07-my-first-awesome.md.html)
-
-
 ## Contributing
 
 For details, see CONTRIBUTING.md.  Vicious is licensed under GNU GPLv2+,
