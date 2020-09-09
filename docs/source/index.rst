@@ -20,6 +20,7 @@ Table of Contents
 
    usage-lua
    usage-awesome
+   widgets
    caching
    security
    copying
