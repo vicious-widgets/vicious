@@ -1,7 +1,7 @@
 Usage within Awesome
 ====================
 
-To use Vicious with Awesome, install the package from your operating system
+To use Vicious with awesome_, install the package from your operating system
 provider, or download the source code and move it to your awesome
 configuration directory in ``$XDG_CONFIG_HOME`` (usually ``~/.config``)::
 
@@ -18,99 +18,123 @@ Then add the following to the top of your ``rc.lua``:
 
    local vicious = require("vicious")
 
-Register a Widget
------------------
+vicious.register
+----------------
 
-Once you create a widget (a textbox, graph or a progressbar) call
-``vicious.register()`` to register it with Vicious::
+Once you create a widget (a textbox, graph or a progressbar),
+call ``vicious.register`` to register it with Vicious:
 
-   vicious.register(widget, wtype, format, interval, warg)
+.. lua:function:: vicious.register(widget, wtype, format, interval, warg)
 
-``widget``
-   Awesome_ widget created with ``widget()`` or ``awful.widget()``
-   (in case of a graph or a progressbar).
+   Register a widget.
 
-``wtype`` of type Vicious widget or ``function``
-   * Vicious widget type: any of the available (default, or custom)
-     [widget type provided by Vicious](#widgets).
-   * function: custom function from your own *Awesome* configuration can be
-     registered as widget types (see [Custom widget types](#custom-widget)).
+   :param widget: awesome widget created from
+                  ``awful.widget`` or ``wibox.widget``
 
-``format`` of type ``string`` or ``function``
-   * string: ``$key`` will be replaced by respective value in the table ``t``
-     returned by the widget type. I.e. use ``$1``, ``$2``, etc. to retrieve data
-     from an integer-indexed table (a.k.a. array); ``${foo bar}`` will be
-     substituted by ``t["{foo bar}"]``.
-   * ``function (widget, args)`` can be used to manipulate data returned by the
-     widget type (see [Format functions](#format-func)).
+   :param wtype:
+      either of
 
-``interval``
-   Number of seconds between updates of the widget (default: 2).
-   Read section :ref:`caching` for more information.
+      * Vicious widget type: any widget type
+        :ref:`provided by Vicious <widgets>` or customly defined.
+      * ``function``: custom function from your own
+        awesome configuration can be registered as widget types
+        (see [Custom widget types](#custom-widget)).
 
-``warg``
-   Arguments to be passed to widget types, e.g. the battery ID.
+   :param format:
+      either of
+
+      * string: ``$key`` will be replaced by respective value in the table
+        ``t`` returned by the widget type, i.e. use ``$1``, ``$2``, etc.
+        to retrieve data from an integer-indexed table (a.k.a. array);
+        ``${foo bar}`` will be substituted by ``t["{foo bar}"]``.
+      * ``function (widget, args)`` can be used to manipulate data returned
+        by the widget type (see [Format functions](#format-func)).
+
+   :param interval: number of seconds between updates of the widget
+                    (default: 2).  See :ref:`caching` for more information.
+
+   :param warg: arguments to be passed to widget types, e.g. the battery ID.
 
 ``vicious.register`` alone is not much different from awful.widget.watch_,
 which has been added to Awesome since version 4.0.  However, Vicious offers
 more advanced control of widgets' behavior by providing the following functions.
 
-Unregister a Widget
--------------------
+vicious.unregister
+------------------
 
-::
+.. lua:function:: vicious.unregister(widget, keep)
 
-   vicious.unregister(widget, keep)
+   Unregister a widget.
 
-If ``keep == true``, ``widget`` will be suspended and wait for activation.
+   :param widget: awesome widget created from
+                  ``awful.widget`` or ``wibox.widget``
+   :param keep: if true suspend ``widget`` and wait for activation
+   :type keep: bool
 
-Suspend All Widgets
--------------------
+vicious.suspend
+---------------
 
-::
+.. lua:function:: vicious.suspend()
 
-   vicious.suspend()
+   Suspend all widgets.
 
 See `example automation script`_ for the "laptop-mode-tools" start-stop module.
 
-Restart Suspended Widgets
--------------------------
+vicious.activate
+----------------
 
-::
+.. lua:function:: vicious.activate([widget])
 
-   vicious.activate(widget)
+   Restart suspended widget(s).
 
-If ``widget`` is provided only that widget will be activated.
+   :param widget: if provided only that widget will be activated
 
-Enable Caching of a Widget Type
--------------------------------
+vicious.cache
+-------------
 
-::
+.. lua:function:: vicious.cache(wtype)
 
-   vicious.cache(wtype)
+   Enable caching of values returned by a widget type.
 
-Enable caching of values returned by a widget type.
+vicious.force
+--------------
 
-Force update of widgets
------------------------
+.. lua:function:: vicious.force(wtable)
 
-::
+   Force update of given widgets.
 
-   vicious.force(wtable)
+   :param wtable: table of one or more widgets to be updated
 
-where ``wtable`` is a table of one or more widgets to be updated.
+vicious.call
+------------
 
-Get Data from a Widget
-----------------------
+.. lua:function:: vicious.call(wtype, format, warg)
 
-::
+   Fetch data from the widget type to use it outside of the widget
+   ([example](#call-example)).
 
-   vicious.call(wtype, format, warg)
+   :param wtype:
+      either of
 
-Fetch data from ``wtype`` to use it outside from the wibox
-([example](#call-example)).
+      * Vicious widget type: any widget type
+        :ref:`provided by Vicious <widgets>` or customly defined.
+      * ``function``: custom function from your own
+        awesome configuration can be registered as widget types
+        (see [Custom widget types](#custom-widget)).
 
-.. _Awesome: https://awesomewm.org/
+   :param format:
+      either of
+
+      * string: ``$key`` will be replaced by respective value in the table
+        ``t`` returned by the widget type, i.e. use ``$1``, ``$2``, etc.
+        to retrieve data from an integer-indexed table (a.k.a. array);
+        ``${foo bar}`` will be substituted by ``t["{foo bar}"]``.
+      * ``function (widget, args)`` can be used to manipulate data returned
+        by the widget type (see [Format functions](#format-func)).
+
+   :param warg: arguments to be passed to widget types, e.g. the battery ID.
+
+.. _awesome: https://awesomewm.org/
 .. _awful.widget.watch:
    https://awesomewm.org/doc/api/classes/awful.widget.watch.html
 .. _example automation script:
