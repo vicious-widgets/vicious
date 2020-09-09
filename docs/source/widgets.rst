@@ -1,9 +1,12 @@
+.. _widgets:
+
 Officially Supported Widget Types
 =================================
 
-Widget types consist of worker functions that take two arguments ``format`` and
-``warg`` (in that order), which were previously passed to ``vicious.register``,
-and return a table of values to be formatted by ``format``.
+Widget types consist of worker functions that take two arguments
+``format`` and ``warg`` (in that order), which were previously
+passed to :lua:func:`vicious.register`, and return a table of values
+to be formatted by ``format``.
 
 vicious.widgets.bat
 -------------------
