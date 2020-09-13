@@ -26,7 +26,9 @@ Table of Contents
    format
    caching
    security
+   contributing
    copying
+   changelog
 
 See Also
 --------
