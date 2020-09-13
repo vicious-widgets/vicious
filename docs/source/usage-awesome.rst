@@ -38,7 +38,7 @@ call ``vicious.register`` to register it with Vicious:
         :ref:`provided by Vicious <widgets>` or customly defined.
       * ``function``: custom function from your own
         awesome configuration can be registered as widget types
-        (see [Custom widget types](#custom-widget)).
+        (see :ref:`custom-wtype`).
 
    :param format:
       either of
@@ -120,7 +120,7 @@ vicious.call
         :ref:`provided by Vicious <widgets>` or customly defined.
       * ``function``: custom function from your own
         awesome configuration can be registered as widget types
-        (see [Custom widget types](#custom-widget)).
+        (see :ref:`custom-wtype`).
 
    :param format:
       either of

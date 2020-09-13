@@ -21,6 +21,7 @@ Table of Contents
    usage-lua
    usage-awesome
    widgets
+   custom
    caching
    security
    copying
