@@ -48,7 +48,7 @@ call ``vicious.register`` to register it with Vicious:
         to retrieve data from an integer-indexed table (a.k.a. array);
         ``${foo bar}`` will be substituted by ``t["{foo bar}"]``.
       * ``function (widget, args)`` can be used to manipulate data returned
-        by the widget type (see [Format functions](#format-func)).
+        by the widget type (see :ref:`format-func`).
 
    :param interval: number of seconds between updates of the widget
                     (default: 2).  See :ref:`caching` for more information.
@@ -111,7 +111,7 @@ vicious.call
 .. lua:function:: vicious.call(wtype, format, warg)
 
    Fetch data from the widget type to use it outside of the widget
-   ([example](#call-example)).
+   (:ref:`example <call-example>`).
 
    :param wtype:
       either of
@@ -130,7 +130,7 @@ vicious.call
         to retrieve data from an integer-indexed table (a.k.a. array);
         ``${foo bar}`` will be substituted by ``t["{foo bar}"]``.
       * ``function (widget, args)`` can be used to manipulate data returned
-        by the widget type (see [Format functions](#format-func)).
+        by the widget type (see :ref:`format-func`).
 
    :param warg: arguments to be passed to widget types, e.g. the battery ID.
 

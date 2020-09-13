@@ -16,12 +16,13 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :maxdepth: 2
+   :titlesonly:
 
    usage-lua
    usage-awesome
    widgets
    custom
+   format
    caching
    security
    copying
