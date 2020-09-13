@@ -1,5 +1,5 @@
-Welcome to Vicious's documentation!
-===================================
+Welcome to Vicious' documentation!
+==================================
 
 Vicious is a modular widget library for window managers, but mostly catering
 to users of the `awesome window manager`_.  It was derived from the old
@@ -16,10 +16,11 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    usage-lua
    usage-awesome
+   examples
    widgets
    custom
    format
