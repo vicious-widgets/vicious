@@ -12,12 +12,10 @@ timers, suspend widgets and so on. Vicious doesn't depend on any third party
 Lua libraries, but may depend on additional system utilities (see widget
 description).
 
-## Contributing
+## Usage
 
-For details, see CONTRIBUTING.md.  Vicious is licensed under GNU GPLv2+,
-which require all code within the package to be released under
-a compatible license.  All contributors retain their copyright to their code,
-so please make sure you add your name to the header of every file you touch.
+Please see our [online documentation] for detail instructions.
+It is also available under the `docs` directory for offline reference.
 
 ## Copying
 
@@ -28,4 +26,5 @@ License, or (at your option) any later version.
 
 Please refer to our documentation for the full [list of authors].
 
+[online documentation]: https://vicious.rtfd.io
 [list of authors]: https://vicious.rtfd.io/copying.html
