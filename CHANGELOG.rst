@@ -4,6 +4,13 @@ Changelog
 Changes in 2.5.0 (WIP)
 ----------------------
 
+Moved:
+
+- Most of the documentation in READMEs to ``docs/``
+- ``Changes.md`` to ``CHANGELOG.rst``
+- ``CONTRIBUTING.md`` to ``CONTRIBUTING.rst``
+- Meta helpers to ``tools/``
+
 Changes in 2.4.2
 ----------------
 
