@@ -22,6 +22,7 @@ Table of Contents
    usage-awesome
    examples
    widgets
+   contrib
    custom
    format
    caching
