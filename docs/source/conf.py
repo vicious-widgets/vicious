@@ -28,10 +28,7 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # Options for HTML output
-html_theme = 'alabaster'
-html_theme_options = {
-    'github_user': 'vicious-widgets', 'github_repo': 'vicious',
-    'github_button': True, 'github_count': False}
+html_theme = 'sphinx_rtd_theme'
 html_show_copyright = False
 
 # Add any paths that contain custom static files (such as style sheets)

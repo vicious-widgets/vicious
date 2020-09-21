@@ -1,8 +1,16 @@
 Changelog
 =========
 
-Changes in 2.5.0 (WIP)
-----------------------
+Changes in 2.5.0
+----------------
+
+Fixed:
+
+- ``vicious.call`` freezing awesome when used with asynchronous widget types
+
+Added:
+
+- ``vicious.call_async`` asynchronous analogous to ``vicious.call``
 
 Moved:
 
