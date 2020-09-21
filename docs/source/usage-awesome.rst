@@ -31,8 +31,7 @@ call ``vicious.register`` to register it with Vicious:
    :param widget: awesome widget created from
                   ``awful.widget`` or ``wibox.widget``
 
-   :param wtype:
-      either of
+   :param wtype: either of
 
       * Vicious widget type: any widget type
         :ref:`provided by Vicious <widgets>` or customly defined.
@@ -40,8 +39,7 @@ call ``vicious.register`` to register it with Vicious:
         awesome configuration can be registered as widget types
         (see :ref:`custom-wtype`).
 
-   :param format:
-      either of
+   :param format: either of
 
       * string: ``$key`` will be replaced by respective value in the table
         ``t`` returned by the widget type, i.e. use ``$1``, ``$2``, etc.
@@ -105,25 +103,23 @@ vicious.force
 
    :param wtable: table of one or more widgets to be updated
 
-vicious.call
-------------
+vicious.call[_async]
+--------------------
 
 .. lua:function:: vicious.call(wtype, format, warg)
 
-   Fetch data from the widget type to use it outside of the widget
+   Get formatted data from a synchronous widget type
    (:ref:`example <call-example>`).
 
-   :param wtype:
-      either of
+   :param wtype: either of
 
-      * Vicious widget type: any widget type
+      * Vicious widget type: any synchronous widget type
         :ref:`provided by Vicious <widgets>` or customly defined.
       * ``function``: custom function from your own
         awesome configuration can be registered as widget types
         (see :ref:`custom-wtype`).
 
-   :param format:
-      either of
+   :param format: either of
 
       * string: ``$key`` will be replaced by respective value in the table
         ``t`` returned by the widget type, i.e. use ``$1``, ``$2``, etc.
@@ -132,7 +128,32 @@ vicious.call
       * ``function (widget, args)`` can be used to manipulate data returned
         by the widget type (see :ref:`format-func`).
 
-   :param warg: arguments to be passed to widget types, e.g. the battery ID.
+   :param warg: arguments to be passed to the widget type, e.g. the battery ID.
+
+   :return: ``nil`` if the widget type is asynchronous,
+            otherwise the formatted data from with widget type.
+
+.. lua:function:: vicious.call_async(wtype, format, warg, callback)
+
+   Get formatted data from an asynchronous widget type.
+
+   :param wtype: any asynchronous widget type
+                 :ref:`provided by Vicious <widgets>` or customly defined.
+
+   :param format: either of
+
+      * string: ``$key`` will be replaced by respective value in the table
+        ``t`` returned by the widget type, i.e. use ``$1``, ``$2``, etc.
+        to retrieve data from an integer-indexed table (a.k.a. array);
+        ``${foo bar}`` will be substituted by ``t["{foo bar}"]``.
+      * ``function (widget, args)`` can be used to manipulate data returned
+        by the widget type (see :ref:`format-func`).
+
+   :param warg: arguments to be passed to the widget type.
+
+   :param callback: function taking the formatted data from with widget type.
+                    If the given widget type happens to be synchronous,
+                    ``nil`` will be passed to ``callback``.
 
 .. _awesome: https://awesomewm.org/
 .. _awful.widget.watch:
