@@ -1,20 +1,16 @@
 -- Vicious module initialization
 -- Copyright (C) 2009  Lucas de Vries <lucas@glacicle.com>
 -- Copyright (C) 2009-2013  Adrian C. (anrxc) <anrxc@sysphere.org>
--- Copyright (C) 2011  Joerg T. (Mic92) <jthalheim@gmail.com>
+-- Copyright (C) 2011-2017  Joerg Thalheim <joerg@thalheim.io>
 -- Copyright (C) 2012  Arvydas Sidorenko <asido4@gmail.com>
--- Copyright (C) 2012  Jörg Thalheim <jthalheim@gmail.com>
 -- Copyright (C) 2013  Dodo <dodo.the.last@gmail.com>
--- Copyright (C) 2013-2014,2017  Jörg Thalheim <joerg@higgsboson.tk>
 -- Copyright (C) 2014  blastmaster <blastmaster@tuxcode.org>
--- Copyright (C) 2015  Daniel Hahler <git@thequod.de>
+-- Copyright (C) 2015,2019  Daniel Hahler <github@thequod.de>
 -- Copyright (C) 2017  James Reed <supplantr@users.noreply.github.com>
--- Copyright (C) 2017  Joerg Thalheim <joerg@thalheim.io>
 -- Copyright (C) 2017  getzze <getzze@gmail.com>
 -- Copyright (C) 2017  mutlusun <mutlusun@github.com>
 -- Copyright (C) 2018  Beniamin Kalinowski <beniamin.kalinowski@gmail.com>
--- Copyright (C) 2018  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
--- Copyright (C) 2019  Daniel Hahler <github@thequod.de>
+-- Copyright (C) 2018,2020  Nguyễn Gia Phong <mcsinyx@disroot.org>
 --
 -- This file is part of Vicious.
 --
@@ -322,14 +318,37 @@ function vicious.activate(widget)
 end
 -- }}}
 
--- {{{ Get custom widget format data
-function vicious.call(myw, format, warg)
-    local mydata = myw(format, warg)
+-- {{{ Get formatted data from a synchronous widget type
+function vicious.call(wtype, format, warg)
+    if wtype.async ~= nil then return nil end
+
+    local data = wtype(format, warg)
     if type(format) == "string" then
-        return helpers.format(format, mydata)
+        return helpers.format(format, data)
     elseif type(format) == "function" then
-        return format(myw, mydata)
+        return format(wtype, data)
     end
+end
+-- }}}
+
+-- {{{ Get formatted data from an asynchronous widget type
+function vicious.call_async(wtype, format, warg, callback)
+    if wtype.async == nil then
+        callback()
+        return
+    end
+
+    wtype.async(
+        format, warg,
+        function (data)
+            if type(format) == "string" then
+                callback(helpers.format(format, data))
+            elseif type(format) == "function" then
+                callback(format(wtype, data))
+            else
+                callback()
+            end
+        end)
 end
 -- }}}
 
