@@ -19,8 +19,6 @@
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 -- {{{ Grab environment
 local tonumber = tonumber
-local io = {popen = io.popen}
-local setmetatable = setmetatable
 local string = {match = string.match}
 local math = {ceil = math.ceil, floor = math.floor}
 local helpers = require "vicious.helpers"
