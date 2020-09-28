@@ -1,6 +1,7 @@
 -- contrib/openweather_all.lua
 -- Copyright (C) 2013  NormalRa <normalrawr gmail com>
 -- Copyright (C) 2017  Jörg Thalheim <joerg@higgsboson.tk>
+-- Copyright (C) 2020  Marcel Arpogaus <marcel.arpogaus gmail com>
 --
 -- This file is part of Vicious.
 --
@@ -22,6 +23,8 @@ local io = {popen = io.popen}
 local setmetatable = setmetatable
 local string = {match = string.match}
 local math = {ceil = math.ceil, floor = math.floor}
+local helpers = require "vicious.helpers"
+local spawn = require "vicious.spawn"
 -- }}}
 
 -- Openweather: provides weather information for a requested station
@@ -48,46 +51,34 @@ local _wdata = {
 }
 
 -- {{{ Openweather widget type
-local function worker(format, warg)
-    if not warg then return end
-
-    -- Get weather forceast using the city ID code, from:
-    -- * OpenWeatherMap.org
-    local openweather = "http://api.openweathermap.org/data/2.5/weather?id=" ..
-                            warg.city_id .. "&appid=" .. warg.app_id ..
-                            "&mode=json&units=metric"
-    local f =
-        io.popen("curl --connect-timeout 1 -fsm 3 '" .. openweather .. "'")
-    local ws = f:read("*all")
-    f:close()
-
+local function parse(stdout, stderr, exitreason, exitcode)
     -- Check if there was a timeout or a problem with the station
-    if ws == nil then return _wdata end
+    if stdout == nil or exitcode ~= 0 then return _wdata end
 
     _wdata["{city}"] = -- City name
-    string.match(ws, '"name":"([%a%s%-]+)"') or _wdata["{city}"]
+    string.match(stdout, '"name":"([%a%s%-]+)"') or _wdata["{city}"]
     _wdata["{wind deg}"] = -- Wind degrees
-    string.match(ws, '"deg":([%d]+)') or _wdata["{wind deg}"]
+    string.match(stdout, '"deg":([%d]+)') or _wdata["{wind deg}"]
     _wdata["{wind mps}"] = -- Wind speed in meters per second
-    string.match(ws, '"speed":([%d%.]+)') or _wdata["{wind mps}"]
+    string.match(stdout, '"speed":([%d%.]+)') or _wdata["{wind mps}"]
     _wdata["{sky}"] = -- Sky conditions
-    string.match(ws, '"main":"([%a]+)"') or _wdata["{sky}"]
+    string.match(stdout, '"main":"([%a]+)"') or _wdata["{sky}"]
     _wdata["{weather}"] = -- Weather description
-    string.match(ws, '"description":"([%a%s]+)"') or _wdata["{weather}"]
+    string.match(stdout, '"description":"([%a%s]+)"') or _wdata["{weather}"]
     _wdata["{temp c}"] = -- Temperature in celsius
-    string.match(ws, '"temp":([%-]?[%d%.]+)') or _wdata["{temp c}"]
+    string.match(stdout, '"temp":([%-]?[%d%.]+)') or _wdata["{temp c}"]
     _wdata["{temp min c}"] = -- Minimal Temperature in celsius
-    string.match(ws, '"temp_min":([%-]?[%d%.]+)') or _wdata["{temp min c}"]
+    string.match(stdout, '"temp_min":([%-]?[%d%.]+)') or _wdata["{temp min c}"]
     _wdata["{temp max c}"] = -- Maximal Temperature in celsius
-    string.match(ws, '"temp_max":([%-]?[%d%.]+)') or _wdata["{temp max c}"]
+    string.match(stdout, '"temp_max":([%-]?[%d%.]+)') or _wdata["{temp max c}"]
     _wdata["{humid}"] = -- Relative humidity in percent
-    string.match(ws, '"humidity":([%d]+)') or _wdata["{humid}"]
+    string.match(stdout, '"humidity":([%d]+)') or _wdata["{humid}"]
     _wdata["{sunrise}"] = -- Sunrise
-    tonumber(string.match(ws, '"sunrise":([%d]+)')) or _wdata["{sunrise}"]
+    tonumber(string.match(stdout, '"sunrise":([%d]+)')) or _wdata["{sunrise}"]
     _wdata["{sunset}"] = -- Sunset
-    tonumber(string.match(ws, '"sunset":([%d]+)')) or _wdata["{sunset}"]
+    tonumber(string.match(stdout, '"sunset":([%d]+)')) or _wdata["{sunset}"]
     _wdata["{press}"] = -- Pressure in hPa
-    string.match(ws, '"pressure":([%d%.]+)') or _wdata["{press}"]
+    string.match(stdout, '"pressure":([%d%.]+)') or _wdata["{press}"]
 
     -- Wind speed in km/h
     if _wdata["{wind mps}"] ~= "N/A" then
@@ -113,7 +104,20 @@ local function worker(format, warg)
 
     return _wdata
 end
+
+function openweather_all.async(format, warg, callback)
+    if not warg then return callback {} end
+    if type(warg) ~= "table" then return callback {} end
+
+    -- Get weather forceast using the city ID code, from:
+    -- * OpenWeatherMap.org
+    local openweather = "http://api.openweathermap.org/data/2.5/weather?id=" ..
+                            warg.city_id .. "&appid=" .. warg.app_id ..
+                            "&mode=json&units=metric"
+
+    spawn.easy_async("curl --connect-timeout 1 -fsm 3 '" .. openweather .. "'",
+                     function(...) callback(parse(...)) end)
+end
 -- }}}
 
-return setmetatable(openweather_all,
-                    {__call = function(_, ...) return worker(...) end})
+return helpers.setasyncall(openweather_all)
