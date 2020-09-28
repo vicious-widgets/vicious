@@ -133,12 +133,15 @@ vicious.contrib.net
 vicious.contrib.openweather
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Provides weather information for a requested city
+Provides weather information for a requested city from OpenWeatherMap (OWM)
 
-* Argument: OpenWeatherMap city ID, e.g. ``"1275339"``
-* Returns a table with string keys: ``${city}``, ``${wind deg}``,
-  ``${wind aim}``, ``${wind kmh}``, ``${wind mps}``, ``${sky}``,
-  ``${weather}``, ``${temp c}``, ``${humid}`` and ``${press}``
+* Argument: a table containing the fields ``city_id`` with the OWM city ID, e.g.
+  ``"2643743"`` and ``app_id`` with the the OWM app ID, e.g
+  ``"4c57f0c88d9844630327623633ce269cf826ab99"``
+* Returns a table with string keys: ``${city}``, ``${humid}``, ``${press}``,
+  ``${sky}``, ``${sunrise}``, ``${sunset}``, ``${temp c}``, ``${temp max c}``,
+  ``${temp min c}``, ``${weather}``, ``${wind aim}``, ``${wind deg}``,
+  ``${wind kmh}`` and ``${wind mps}``,
 
 vicious.contrib.nvinf
 ^^^^^^^^^^^^^^^^^^^^^
