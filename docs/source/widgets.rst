@@ -150,8 +150,9 @@ Provides count of new and subject of last e-mail on Gmail.
 Supported platform: platform independent, requiring ``curl``.
 
 This widget expects login information in your ``~/.netrc`` file, e.g.
-``machine mail.google.com login user password pass`` and you have to disable
-`two step verification`_.  `Allow access for less secure apps`_ afterwards.
+``machine mail.google.com login user password pass``. Use your `app 
+password`_  if you can, or disable `two step verification`_
+and `allow access for less secure apps`_.
 
 .. caution::
 
@@ -501,7 +502,8 @@ Supported platforms: GNU/Linux.
   and ``${sign}`` (signal level, in dBm)
 
 .. _strftime(3): https://linux.die.net/man/3/strftime
+.. _app password: https://support.google.com/accounts/answer/185833?hl=en
 .. _two step verification: https://support.google.com/accounts/answer/1064203
-.. _Allow access for less secure apps:
+.. _allow access for less secure apps:
    https://www.google.com/settings/security/lesssecureapps
 .. _amixer(1): https://linux.die.net/man/1/amixer
