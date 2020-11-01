@@ -150,7 +150,7 @@ Provides count of new and subject of last e-mail on Gmail.
 Supported platform: platform independent, requiring ``curl``.
 
 This widget expects login information in your ``~/.netrc`` file, e.g.
-``machine mail.google.com login user password pass``. Use your `app 
+``machine mail.google.com login user password pass``. Use your `app
 password`_  if you can, or disable `two step verification`_
 and `allow access for less secure apps`_.
 
