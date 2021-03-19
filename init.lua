@@ -353,13 +353,15 @@ end
 -- }}}
 
 -- {{{ Change the timer of a registered widget.
-function vicious.change_timer(reg, timer_)
+function vicious.change_timer(reg, timeout)
   if not reg then return end
-  if timer_ ~= reg.timer then
+  local cur = reg.timeout
+  if timeout ~= cur then
     vicious.unregister(nil, true, reg)
-    reg.timer = timer_
+    reg.timeout = timeout
     regregister(reg)
   end
+  return cur
 end
 -- }}}
 
