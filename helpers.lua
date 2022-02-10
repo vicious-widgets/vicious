@@ -4,13 +4,9 @@
 -- Copyright (C) 2009  Lucas de Vries <lucas@glacicle.com>
 -- Copyright (C) 2009  Rémy C. <shikamaru@mandriva.org>
 -- Copyright (C) 2009-2012  Adrian C. (anrxc) <anrxc@sysphere.org>
--- Copyright (C) 2011  Joerg T. (Mic92) <jthalheim@gmail.com>
+-- Copyright (C) 2011-2018  Jörg Thalheim <joerg@thalheim.io>
 -- Copyright (C) 2012  Arvydas Sidorenko <asido4@gmail.com>
--- Copyright (C) 2012  Jörg Thalheim <jthalheim@gmail.com>
--- Copyright (C) 2014-2015  Jörg Thalheim <joerg@higgsboson.tk>
--- Copyright (C) 2017  Joerg Thalheim <joerg@thalheim.io>
 -- Copyright (C) 2017,2019  mutlusun <mutlusun@github.com>
--- Copyright (C) 2017-2018  Jörg Thalheim <joerg@thalheim.io>
 -- Copyright (C) 2018-2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
 -- Copyright (C) 2019  Alexander Koch <lynix47@gmail.com>
 -- Copyright (C) 2019  Enric Morales <me@enric.me>

@@ -352,6 +352,7 @@ Provides operating system information.
 Supported platforms: platform independent.
 
 Returns an array containing:
+
 * ``$1``: Operating system in use
 * ``$2``: Release version
 * ``$3``: Username
