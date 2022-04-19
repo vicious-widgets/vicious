@@ -10,6 +10,7 @@
 -- Copyright (C) 2018-2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
 -- Copyright (C) 2019  Alexander Koch <lynix47@gmail.com>
 -- Copyright (C) 2019  Enric Morales <me@enric.me>
+-- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
 --
 -- This file is part of Vicious.
 --
@@ -33,6 +34,7 @@ local rawget = rawget
 local require = require
 local tonumber = tonumber
 local tostring = tostring
+local type = type
 local io = { open = io.open, popen = io.popen }
 local setmetatable = setmetatable
 local getmetatable = getmetatable
@@ -164,11 +166,12 @@ end
 -- {{{ Format a string with args
 function helpers.format(format, args)
     for var, val in pairs(args) do
-        format = format:gsub("$" .. (tonumber(var) and var or
-            var:gsub("[-+?*]", function(i) return "%"..i end)),
-        val)
+        if tonumber(var) == nil then
+            var = var:gsub("[-+?*]", function(i) return "%"..i end)
+        end
+        if type(val) == "string" then val = val:gsub("%%", "%%%%") end
+        format = format:gsub("$" .. var, val)
     end
-
     return format
 end
 -- }}}
