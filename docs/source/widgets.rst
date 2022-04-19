@@ -290,6 +290,11 @@ Supported platforms: platform independent (required tools: ``curl``).
   ``${random}``, ``${repeat}``, ``${state}``, ``${Artist}``, ``${Title}``,
   ``${Album}``, ``${Genre}`` and optionally ``${Name}`` and ``${file}``.
 
+In addition, some common mpd commands are available as functions:
+``playpause``, ``play``, ``pause``, ``stop``, ``next``, ``previous``.
+Arguments are of the same form as above, and no value is returned,
+e.g. ``vicious.widgets.mpd.playpause()``.
+
 vicious.widgets.net
 -------------------
 

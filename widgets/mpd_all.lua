@@ -5,6 +5,7 @@
 -- Copyright (C) 2018-2019  Nguyễn Gia Phong <vn.mcsinyx@gmail.com>
 -- Copyright (C) 2019  Juan Carlos Menonita <JuanKman94@users.noreply.github.com>
 -- Copyright (C) 2019  Lorenzo Gaggini <lg@lgaggini.net>
+-- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
 --
 -- This file is part of Vicious.
 --
@@ -75,6 +76,40 @@ local function format_progress_percentage(elapsed, duration)
 end
 -- }}}
 
+-- {{{ Build shell command from mpd command string
+local function build_cmd(warg, q)
+    -- Construct MPD client options, fallback to defaults when necessary
+    local query = ("printf 'password %s\n%sclose\n'"):format(
+        warg and (warg.password or warg[1]) or '""',
+        q)
+    local connect = ("curl --connect-timeout 1 -fsm 3 telnet://%s:%s"):format(
+        warg and (warg.host or warg[2]) or "127.0.0.1",
+        warg and (warg.port or warg[3]) or "6600")
+    return query .. "|" .. connect
+end
+-- }}}
+
+-- {{{ Common MPD commands
+function mpd_all.playpause(warg)
+    spawn.with_shell(build_cmd(warg, "pause\n"))
+end
+function mpd_all.play(warg)
+    spawn.with_shell(build_cmd(warg, "pause 0\n"))
+end
+function mpd_all.pause(warg)
+    spawn.with_shell(build_cmd(warg, "pause 1\n"))
+end
+function mpd_all.stop(warg)
+    spawn.with_shell(build_cmd(warg, "stop\n"))
+end
+function mpd_all.next(warg)
+    spawn.with_shell(build_cmd(warg, "next\n"))
+end
+function mpd_all.previous(warg)
+    spawn.with_shell(build_cmd(warg, "previous\n"))
+end
+-- }}}
+
 -- {{{ MPD widget type
 function mpd_all.async(format, warg, callback)
     -- Fallback values
@@ -83,8 +118,8 @@ function mpd_all.async(format, warg, callback)
         ["{bitrate}"]  = 0,
         ["{elapsed}"]  = 0,
         ["{duration}"] = 0,
-        ["{repeat}"]   = false,
-        ["{random}"]   = false,
+        ["{repeat}"]   = 0,
+        ["{random}"]   = 0,
         ["{state}"]    = "N/A",
         ["{Artist}"]   = "N/A",
         ["{Title}"]    = "N/A",
@@ -94,15 +129,10 @@ function mpd_all.async(format, warg, callback)
         --["{file}"]   = "N/A",
     }
 
-    -- Construct MPD client options, fallback to defaults when necessary
-    local query = ("printf 'password %s\nstatus\ncurrentsong\nclose\n'"):format(
-        warg and (warg.password or warg[1]) or '""')
-    local connect = ("curl --connect-timeout 1 -fsm 3 telnet://%s:%s"):format(
-        warg and (warg.host or warg[2]) or "127.0.0.1",
-        warg and (warg.port or warg[3]) or "6600")
+    local cmd = build_cmd(warg, "status\ncurrentsong\n")
 
     -- Get data from MPD server
-    spawn.with_line_callback_with_shell(query .. "|" .. connect, {
+    spawn.with_line_callback_with_shell(cmd, {
         stdout = function (line)
             for k, v in line:gmatch"([%w]+):[%s](.*)$" do
                 local key = "{" .. k .. "}"
