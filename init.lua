@@ -38,6 +38,13 @@ local table = {
     remove  = table.remove
 }
 local helpers = require("vicious.helpers")
+local dstatus, debug = pcall(require, "gears.debug")
+local warn
+if dstatus then
+  warn = debug.print_warning
+else
+  warn = function (msg) io.stderr:write('Warning (vicious): ', msg, '\n') end
+end
 
 -- Vicious: widgets for the awesome window manager
 local vicious = {}
@@ -132,7 +139,8 @@ local function update(widget, reg, disablecache)
                     reg.warg,
                     function(data)
                         update_cache(data, update_time, c)
-                        update_value(data)
+                        local status, res = pcall(update_value, data)
+                        if not status then warn(res) end
                         reg.lock=false
                     end)
             end
