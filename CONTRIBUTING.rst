@@ -44,7 +44,7 @@ Requesting for Merging a Patch
 #. `Fork this repository`_
 #. Check out the source code with::
 
-      git clone https://github.com/YOUR_GITHUB_USERNAME/vicious.git
+      git clone git@github.com:YOUR_GITHUB_USERNAME/vicious
       cd vicious
 
 #. Start working on your patch.  If you want to add a new widget type,
