@@ -11,6 +11,7 @@
 -- Copyright (C) 2017  mutlusun <mutlusun@github.com>
 -- Copyright (C) 2018  Beniamin Kalinowski <beniamin.kalinowski@gmail.com>
 -- Copyright (C) 2018,2020  Nguyễn Gia Phong <mcsinyx@disroot.org>
+-- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
 --
 -- This file is part of Vicious.
 --
@@ -39,11 +40,12 @@ local table = {
 }
 local helpers = require("vicious.helpers")
 local dstatus, debug = pcall(require, "gears.debug")
+local stderr = io.stderr
 local warn
 if dstatus then
   warn = debug.print_warning
 else
-  warn = function (msg) io.stderr:write('Warning (vicious): ', msg, '\n') end
+  warn = function (msg) stderr:write("Warning (vicious): ", msg, "\n") end
 end
 
 -- Vicious: widgets for the awesome window manager
