@@ -11,6 +11,7 @@
 -- Copyright (C) 2017  mutlusun <mutlusun@github.com>
 -- Copyright (C) 2018  Beniamin Kalinowski <beniamin.kalinowski@gmail.com>
 -- Copyright (C) 2018,2020  Nguyễn Gia Phong <mcsinyx@disroot.org>
+-- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
 --
 -- This file is part of Vicious.
 --
@@ -38,6 +39,14 @@ local table = {
     remove  = table.remove
 }
 local helpers = require("vicious.helpers")
+local dstatus, debug = pcall(require, "gears.debug")
+local stderr = io.stderr
+local warn
+if dstatus then
+  warn = debug.print_warning
+else
+  warn = function (msg) stderr:write("Warning (vicious): ", msg, "\n") end
+end
 
 -- Vicious: widgets for the awesome window manager
 local vicious = {}
@@ -132,7 +141,8 @@ local function update(widget, reg, disablecache)
                     reg.warg,
                     function(data)
                         update_cache(data, update_time, c)
-                        update_value(data)
+                        local status, res = pcall(update_value, data)
+                        if not status then warn(res) end
                         reg.lock=false
                     end)
             end
