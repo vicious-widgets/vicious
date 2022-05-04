@@ -1,6 +1,21 @@
 Changelog
 =========
 
+Changes in 2.5.1
+----------------
+
+Fixed:
+
+- Escaping of % in ``helpers.format``, which affects mpd widget ``${Progress}``
+- Possible deadlock of when ``update`` widgets
+- [contrib.openweather] New API compatibility, which requires an API key
+- [gmail] Authentication documentation
+
+Added:
+
+- [mpd] Support for sending arbitrary commands
+- [contrib.openweather] Various new return values
+
 Changes in 2.5.0
 ----------------
 
