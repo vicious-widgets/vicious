@@ -22,7 +22,7 @@ local tonumber = tonumber
 local math = { floor = math.floor }
 local os = { time = os.time }
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- Uptime: provides system uptime and load information

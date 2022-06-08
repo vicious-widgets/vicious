@@ -21,7 +21,7 @@
 local tonumber = tonumber
 local io = { open = io.open }
 local setmetatable = setmetatable
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 local string = {
     sub = string.sub,
     match = string.match,

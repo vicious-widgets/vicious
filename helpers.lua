@@ -48,7 +48,7 @@ local string = {
 local table = { concat = table.concat }
 local pcall = pcall
 local assert = assert
-local spawn = require("vicious.spawn")
+local spawn = require((...):match(".*vicious") .. ".spawn")
 -- }}}
 
 

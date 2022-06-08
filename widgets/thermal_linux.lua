@@ -22,7 +22,7 @@ local type = type
 local tonumber = tonumber
 local string = { match = string.match }
 local math = { floor = math.floor }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- {{{ Thermal widget type

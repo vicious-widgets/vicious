@@ -21,7 +21,7 @@
 local string = { match = string.match }
 local type = type
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- Thermal: provides temperature levels of ACPI and coretemp thermal zones

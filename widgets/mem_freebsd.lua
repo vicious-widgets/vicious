@@ -27,8 +27,8 @@ local string = {
     find = string.find
 }
 
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
+local helpers = require((...):match(".*vicious") .. ".helpers")
+local spawn = require((...):match(".*vicious") .. ".spawn")
 -- }}}
 
 -- Mem: provides RAM and Swap usage statistics

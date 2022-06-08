@@ -25,8 +25,8 @@ local math = { ceil = math.ceil }
 local os = { date = os.date, difftime = os.difftime, time = os.time }
 local string = { format = string.format }
 
-local spawn = require"vicious.spawn"
-local helpers = require"vicious.helpers"
+local spawn = require(...):match(".*vicious") .. ".spawn"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- Weather: provides weather information for a requested station

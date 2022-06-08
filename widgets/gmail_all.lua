@@ -24,8 +24,8 @@ local type = type
 local tonumber = tonumber
 local string = { match = string.match }
 
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
+local helpers = require((...):match(".*vicious") .. ".helpers")
+local spawn = require((...):match(".*vicious") .. ".spawn")
 -- }}}
 
 -- Gmail: provides count of new and subject of last e-mail on Gmail

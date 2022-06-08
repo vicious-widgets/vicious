@@ -21,7 +21,7 @@
 local tonumber = tonumber
 local io = { lines = io.lines }
 local string = { gmatch = string.gmatch }
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- {{{ CPU Information widget type

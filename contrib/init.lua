@@ -20,11 +20,11 @@
 
 -- {{{ Setup environment
 local setmetatable = setmetatable
-local wrequire = require("vicious.helpers").wrequire
+local wrequire = require((...):match(".*vicious") .. ".helpers").wrequire
 
 -- Vicious: widgets for the awesome window manager
 -- vicious.contrib
-local contrib = { _NAME = "vicious.contrib" }
+local contrib = { _NAME = (...):match(".*vicious") .. ".contrib" }
 -- }}}
 
 -- Load modules at runtime as needed

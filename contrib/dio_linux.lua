@@ -22,7 +22,7 @@ local ipairs = ipairs
 local setmetatable = setmetatable
 local table = { insert = table.insert }
 local string = { gmatch = string.gmatch }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 

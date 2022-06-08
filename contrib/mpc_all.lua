@@ -24,7 +24,7 @@ local type = type
 local io = { popen = io.popen }
 local setmetatable = setmetatable
 local string = { find = string.find }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 

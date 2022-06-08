@@ -19,6 +19,6 @@
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 local setmetatable = setmetatable
-local wrequire = require("vicious.helpers").wrequire
+local wrequire = require((...):match(".*vicious") .. ".helpers").wrequire
 
-return setmetatable({ _NAME = "vicious.widgets" }, { __index = wrequire })
+return setmetatable({ _NAME = (...):match(".*vicious") .. ".widgets" }, { __index = wrequire })

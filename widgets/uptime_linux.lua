@@ -21,7 +21,7 @@
 -- {{{ Grab environment
 local math = { floor = math.floor }
 local string = { match = string.match }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- {{{ Uptime widget type

@@ -25,8 +25,8 @@ local tonumber = tonumber
 local string = { match = string.match }
 local table  = { concat = table.concat }
 
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
+local helpers = require((...):match(".*vicious") .. ".helpers")
+local spawn = require((...):match(".*vicious") .. ".spawn")
 -- }}}
 
 -- Volume: provides volume levels and state of requested ALSA mixers

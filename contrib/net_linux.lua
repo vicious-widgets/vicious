@@ -27,7 +27,7 @@ local os = { time = os.time }
 local io = { lines = io.lines }
 local setmetatable = setmetatable
 local string = { match = string.match }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 

@@ -23,8 +23,8 @@
 -- {{{ Grab environment
 local tonumber = tonumber
 
-local helpers = require"vicious.helpers"
-local spawn = require"vicious.spawn"
+local helpers = require(...):match(".*vicious") .. ".helpers"
+local spawn = require(...):match(".*vicious") .. ".spawn"
 -- }}}
 
 -- Mebibyte and gibibyte respectively, because backward compatibility

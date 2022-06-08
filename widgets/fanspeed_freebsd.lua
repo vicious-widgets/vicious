@@ -21,7 +21,7 @@
 local tonumber = tonumber
 local type = type
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- fanspeed: provides speed level of fans

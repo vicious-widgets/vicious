@@ -21,7 +21,7 @@
 -- {{{ Grab environment
 local io = { lines = io.lines }
 local os = { time = os.time, date = os.date }
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- {{{ OrgMode widget type

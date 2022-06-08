@@ -28,7 +28,7 @@ local math = {
     floor = math.floor
 }
 
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- {{{ Battery widget type

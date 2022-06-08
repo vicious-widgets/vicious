@@ -17,8 +17,8 @@
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
 local tonumber = tonumber
-local helpers = require("vicious.helpers")
-local spawn = require("vicious.spawn")
+local helpers = require((...):match(".*vicious") .. ".helpers")
+local spawn = require((...):match(".*vicious") .. ".spawn")
 
 
 local notmuch = {}

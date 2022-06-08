@@ -21,7 +21,7 @@
 local tonumber = tonumber
 local setmetatable = setmetatable
 local string = { format = string.format }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 local math = {
     min = math.min,
     floor = math.floor

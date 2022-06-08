@@ -22,8 +22,8 @@ local type = type
 local tonumber = tonumber
 local io = { open = io.open }
 
-local helpers = require"vicious.helpers"
-local spawn = require"vicious.spawn"
+local helpers = require(...):match(".*vicious") .. ".helpers"
+local spawn = require(...):match(".*vicious") .. ".spawn"
 
 local pathcache = {}
 

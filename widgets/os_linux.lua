@@ -25,7 +25,7 @@ local math = { ceil = math.ceil }
 local los = { getenv = os.getenv }
 local string = { gsub = string.gsub }
 
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- {{{ Operating system widget type

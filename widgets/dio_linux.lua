@@ -23,7 +23,7 @@ local pairs = pairs
 local io = { lines = io.lines }
 local os = { time = os.time, difftime = os.difftime }
 
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 -- }}}
 
 -- Initialize function tables

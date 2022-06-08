@@ -38,7 +38,7 @@ local table = {
     insert  = table.insert,
     remove  = table.remove
 }
-local helpers = require("vicious.helpers")
+local helpers = require((...) .. ".helpers")
 local dstatus, debug = pcall(require, "gears.debug")
 local stderr = io.stderr
 local warn
@@ -50,8 +50,8 @@ end
 
 -- Vicious: widgets for the awesome window manager
 local vicious = {}
-vicious.widgets = require("vicious.widgets")
---vicious.contrib = require("vicious.contrib")
+vicious.widgets = require((...) .. ".widgets")
+--vicious.contrib = require((...) .. ".contrib")
 
 -- Initialize tables
 local timers       = {}

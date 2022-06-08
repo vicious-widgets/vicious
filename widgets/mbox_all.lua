@@ -21,7 +21,7 @@
 -- {{{ Grab environment
 local type = type
 local io = { open = io.open }
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- Initialize variables

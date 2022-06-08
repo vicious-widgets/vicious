@@ -21,8 +21,8 @@
 local tonumber = tonumber
 local string = {match = string.match}
 local math = {ceil = math.ceil, floor = math.floor}
-local helpers = require "vicious.helpers"
-local spawn = require "vicious.spawn"
+local helpers = require (...):match(".*vicious") .. ".helpers"
+local spawn = require (...):match(".*vicious") .. ".spawn"
 -- }}}
 
 -- Openweather: provides weather information for a requested station

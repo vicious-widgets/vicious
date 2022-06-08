@@ -22,7 +22,7 @@ local tonumber = tonumber
 local io = { popen = io.popen }
 local string = { gmatch = string.gmatch }
 local setmetatable = setmetatable
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 

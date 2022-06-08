@@ -201,7 +201,7 @@ For example,
 
    local awful = require("awful")
 
-   local helpers = require("vicious.helpers")
+   local helpers = require((...):match(".*vicious") .. ".helpers")
 
 String Quotes
 ^^^^^^^^^^^^^

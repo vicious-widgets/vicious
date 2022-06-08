@@ -21,7 +21,7 @@
 local math = { floor = math.floor }
 local string = { gmatch = string.gmatch }
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 -- Cpu: provides CPU usage for all available CPUs/cores

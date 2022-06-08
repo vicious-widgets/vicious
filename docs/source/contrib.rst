@@ -15,8 +15,8 @@ Or you can load them in your rc.lua after you require Vicious:
 
 .. code-block:: lua
 
-   local vicious = require"vicious"
-   vicious.contrib = require"vicious.contrib"
+   local vicious = require(...):match(".*vicious") .. ".
+   vicious.contrib = require(...):match(".*vicious") .. ".contrib"
 
 Widget Types
 ------------

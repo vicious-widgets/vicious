@@ -29,7 +29,7 @@ local math = {
     modf = math.modf
 }
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 -- }}}
 
 local bat_openbsd = {}

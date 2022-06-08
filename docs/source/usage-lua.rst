@@ -8,7 +8,7 @@ to be used stand-alone or to feed widgets of any window manager
 
 .. code-block:: lua
 
-   > widgets = require("vicious.widgets.init")
+   > widgets = require((...):match(".*vicious") .. ".widgets.init")
    > print(widgets.volume(nil, "Master")[1])
    100
 

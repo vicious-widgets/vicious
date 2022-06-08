@@ -21,7 +21,7 @@ local string = { gmatch = string.gmatch }
 local table = { insert = table.insert }
 local tonumber = tonumber
 
-local helpers = require("vicious.helpers")
+local helpers = require((...):match(".*vicious") .. ".helpers")
 
 
 -- cpu_openbsd: provides both a helper function that allows reading

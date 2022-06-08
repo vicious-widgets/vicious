@@ -16,7 +16,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 
-local helpers = require"vicious.helpers"
+local helpers = require(...):match(".*vicious") .. ".helpers"
 
 return helpers.setasyncall{
     async = function (format, warg, callback)

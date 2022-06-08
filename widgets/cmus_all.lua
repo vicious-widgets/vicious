@@ -23,8 +23,8 @@ local type = type
 local tonumber = tonumber
 local os = { getenv = os.getenv }
 
-local helpers = require"vicious.helpers"
-local spawn = require"vicious.spawn"
+local helpers = require(...):match(".*vicious") .. ".helpers"
+local spawn = require(...):match(".*vicious") .. ".spawn"
 -- }}}
 
 local CMUS_SOCKET = helpers.shellquote(os.getenv"CMUS_SOCKET")
