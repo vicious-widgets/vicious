@@ -2,7 +2,7 @@ Contrib Widget Types
 ====================
 
 Contrib libraries, or widget types, are extra snippets of code you can use.
-Some are for less common hardware, and other were contributed by Vicious users.
+Some are for less common hardware, and others were contributed by Vicious users.
 The contrib directory also holds widget types that were obsoleted or rewritten.
 Contrib widgets will not be imported by init unless you explicitly enable it,
 or load them in your ``rc.lua``.
@@ -158,9 +158,9 @@ Supported Platforms: platform independent
   * ``$2``: Usage of GPU memory
   * ``$3``: Usage of video engine
   * ``$4``: Usage of PCIe bandwidth
-  * ``$5``: Uemperature of requested graphics device
-  * ``$6``: Urequency of GPU core
-  * ``$7``: Uemory transfer rate
+  * ``$5``: Temperature of requested graphics device
+  * ``$6``: Frequency of GPU core
+  * ``$7``: Memory transfer rate
 
 vicious.contrib.nvsmi
 ^^^^^^^^^^^^^^^^^^^^^
