@@ -8,6 +8,16 @@ Widget types consist of worker functions that take two arguments
 passed to :lua:func:`vicious.register`, and return a table of values
 to be formatted by ``format``.
 
+vicious.widgets.amdgpu
+----------------------
+
+Provides GPU and VRAM usage statistics for AMD graphics cards.
+
+Supported platforms: GNU/Linux (require ``sysfs``)
+
+* ``warg`` (from now on will be called *argument*): card ID, e.g. ``"card0"``
+* Returns a table with string keys: ``${gpu_usage}``, ``${mem_usage}``
+
 vicious.widgets.bat
 -------------------
 
@@ -16,7 +26,7 @@ Provides state, charge, and remaining time for a requested battery.
 Supported platforms: GNU/Linux (require ``sysfs``),
 FreeBSD (require ``acpiconf``) and OpenBSD (no extra requirements).
 
-* ``warg`` (from now on will be called *argument*):
+* Argument:
 
   * On GNU/Linux: battery ID, e.g. ``"BAT0"``
   * On FreeBSD (optional): battery ID, e.g. ``"batt"`` or ``"0"``
