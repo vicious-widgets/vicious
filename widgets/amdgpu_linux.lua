@@ -16,15 +16,19 @@
 -- You should have received a copy of the GNU General Public License
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
 local io = { open = io.open }
+local tonumber = tonumber
+local string = { match = string.match }
 local helpers = require("vicious.helpers")
+
+local _mem = nil
 
 -- {{{ AMDGPU widget type
 return helpers.setcall(function (format, warg)
     if not warg then return end
 
+    -- see https://www.kernel.org/doc/html/v5.9/gpu/amdgpu.html#busy-percent
     local amdgpu = "/sys/class/drm/"..warg.."/device"
     local _data = {}
-    local _mem = nil
 
     local f = io.open(amdgpu .. "/gpu_busy_percent", "r")
     if f then
@@ -40,7 +44,7 @@ return helpers.setcall(function (format, warg)
         f = io.open(amdgpu .. "/mem_info_vram_total", "r")
         if f then
             for line in f:lines() do
-                _mem = line
+                _mem = tonumber(string.match(line, "([%d]+)"))
             end
             f:close()
         end
@@ -49,7 +53,12 @@ return helpers.setcall(function (format, warg)
     f = io.open(amdgpu .. "/mem_info_vram_used", "r")
     if f then
         for line in f:lines() do
-            _data["{mem_usage}"] = line/_mem*100
+            local _used = tonumber(string.match(line, "([%d]+)"))
+            if type(_used) == 'number' and type(_mem) == 'number' and _mem > 0 then
+                _data["{mem_usage}"] = line/_mem*100
+            else
+                _data["{mem_usage}"] = "N/A"
+            end
         end
         f:close()
     else
