@@ -32,9 +32,7 @@ return helpers.setcall(function (format, warg)
 
     local f = io.open(amdgpu .. "/gpu_busy_percent", "r")
     if f then
-        for line in f:lines() do
-            _data["{gpu_usage}"] = line
-        end
+        _data["{gpu_usage}"] = f:read("*line")
         f:close()
     else
         _data["{gpu_usage}"] = "N/A"
@@ -43,23 +41,19 @@ return helpers.setcall(function (format, warg)
     if _mem == nil then
         f = io.open(amdgpu .. "/mem_info_vram_total", "r")
         if f then
-            for line in f:lines() do
-                _mem = tonumber(string.match(line, "([%d]+)"))
-            end
+            _mem = tonumber(string.match(f:read("*line"), "([%d]+)"))
             f:close()
         end
     end
 
     f = io.open(amdgpu .. "/mem_info_vram_used", "r")
     if f then
-        for line in f:lines() do
-            local _used = tonumber(string.match(line, "([%d]+)"))
-            if type(_used) == 'number' and type(_mem) == 'number'
-               and _mem > 0 then
-                _data["{mem_usage}"] = line/_mem*100
-            else
-                _data["{mem_usage}"] = "N/A"
-            end
+        local _used = tonumber(string.match(f:read("*line"), "([%d]+)"))
+        if type(_used) == 'number' and type(_mem) == 'number'
+           and _mem > 0 then
+            _data["{mem_usage}"] = _used/_mem*100
+        else
+            _data["{mem_usage}"] = "N/A"
         end
         f:close()
     else
