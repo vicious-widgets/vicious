@@ -54,7 +54,8 @@ return helpers.setcall(function (format, warg)
     if f then
         for line in f:lines() do
             local _used = tonumber(string.match(line, "([%d]+)"))
-            if type(_used) == 'number' and type(_mem) == 'number' and _mem > 0 then
+            if type(_used) == 'number' and type(_mem) == 'number'
+               and _mem > 0 then
                 _data["{mem_usage}"] = line/_mem*100
             else
                 _data["{mem_usage}"] = "N/A"
