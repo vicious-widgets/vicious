@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Changes in 2.6.0
+----------------
+
+Added AMD GPU widget type for Linux.
+
+Fixed typos in contrib widgets documentation.
+
 Changes in 2.5.1
 ----------------
 

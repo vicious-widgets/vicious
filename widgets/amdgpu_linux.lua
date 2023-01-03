@@ -1,4 +1,4 @@
--- contrib/amdgpu_linux.lua
+-- AMD GPU widget type for Linux
 -- Copyright (C) 2022  Rémy Clouard <shikamaru shikamaru fr>
 --
 -- This file is part of Vicious.
@@ -15,9 +15,12 @@
 --
 -- You should have received a copy of the GNU General Public License
 -- along with Vicious.  If not, see <https://www.gnu.org/licenses/>.
+
 local io = { open = io.open }
-local tonumber = tonumber
 local string = { match = string.match }
+local tonumber = tonumber
+local type = type
+
 local helpers = require("vicious.helpers")
 
 local _mem = nil
