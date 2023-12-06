@@ -122,10 +122,11 @@ function mpd_all.async(format, warg, callback)
         ["{random}"]   = 0,
         ["{state}"]    = "N/A",
         ["{Artist}"]   = "N/A",
+        ["{Artists}"]   = "N/A",
         ["{Title}"]    = "N/A",
         ["{Album}"]    = "N/A",
         ["{Genre}"]    = "N/A",
-        ["{Artists}"]   = "N/A",
+        ["{Genres}"]    = "N/A",
     }
 
     local separator = warg and (warg.separator or warg[4]) or ", "
