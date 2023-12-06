@@ -6,6 +6,7 @@
 -- Copyright (C) 2019  Juan Carlos Menonita <JuanKman94@users.noreply.github.com>
 -- Copyright (C) 2019  Lorenzo Gaggini <lg@lgaggini.net>
 -- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
+-- Copyright (C) 2023  Cássio Ávila <cassioavila@autistici.org>
 --
 -- This file is part of Vicious.
 --
