@@ -156,7 +156,8 @@ function mpd_all.async(format, warg, callback)
                         if current_artists == "N/A" then
                             mpd_state["{Artists}"] = v
                         else
-                            mpd_state["{Artists}"] = append_with_separator(current_artists, v)
+                            mpd_state["{Artists}"] = append_with_separator(
+                                current_artists, v)
                         end
                     end
                     if k == "Genre" then
@@ -164,7 +165,8 @@ function mpd_all.async(format, warg, callback)
                         if current_generes == "N/A" then
                             mpd_state["{Generes}"] = v
                         else
-                            mpd_state["{Generes}"] = append_with_separator(current_generes, v)
+                            mpd_state["{Generes}"] = append_with_separator(
+                                current_generes, v)
                         end
                     end
                     mpd_state[key] = v
