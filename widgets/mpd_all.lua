@@ -125,11 +125,16 @@ function mpd_all.async(format, warg, callback)
         ["{Title}"]    = "N/A",
         ["{Album}"]    = "N/A",
         ["{Genre}"]    = "N/A",
-        --["{Name}"]   = "N/A",
-        --["{file}"]   = "N/A",
+        ["{Artists}"]   = "N/A",
     }
 
+    local separator = warg and (warg.separator or warg[4]) or ", "
+
     local cmd = build_cmd(warg, "status\ncurrentsong\n")
+
+    local function append_with_separator (current, value)
+        return ("%s%s%s"):format(current, separator, value)
+    end
 
     -- Get data from MPD server
     spawn.with_line_callback_with_shell(cmd, {
@@ -144,8 +149,23 @@ function mpd_all.async(format, warg, callback)
                 elseif k == "state" then
                     mpd_state[key] = helpers.capitalize(v)
                 elseif k == "Artist" or k == "Title" or
-                       --k == "Name" or k == "file" or
                        k == "Album" or k == "Genre" then
+                    if k == "Artist" then
+                        local current_artists = mpd_state["{Artists}"]
+                        if current_artists == "N/A" then
+                            mpd_state["{Artists}"] = v
+                        else
+                            mpd_state["{Artists}"] = append_with_separator(current_artists, v)
+                        end
+                    end
+                    if k == "Genre" then
+                        local current_generes = mpd_state["{Generes}"]
+                        if current_generes == "N/A" then
+                            mpd_state["{Generes}"] = v
+                        else
+                            mpd_state["{Generes}"] = append_with_separator(current_generes, v)
+                        end
+                    end
                     mpd_state[key] = v
                 end
             end
