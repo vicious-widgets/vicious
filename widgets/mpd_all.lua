@@ -123,11 +123,11 @@ function mpd_all.async(format, warg, callback)
         ["{random}"]   = 0,
         ["{state}"]    = "N/A",
         ["{Artist}"]   = "N/A",
-        ["{Artists}"]   = "N/A",
+        ["{Artists}"]  = "N/A",
         ["{Title}"]    = "N/A",
         ["{Album}"]    = "N/A",
         ["{Genre}"]    = "N/A",
-        ["{Genres}"]    = "N/A",
+        ["{Genres}"]   = "N/A",
     }
 
     local separator = warg and (warg.separator or warg[4]) or ", "
@@ -152,22 +152,14 @@ function mpd_all.async(format, warg, callback)
                     mpd_state[key] = helpers.capitalize(v)
                 elseif k == "Artist" or k == "Title" or
                        k == "Album" or k == "Genre" then
-                    if k == "Artist" then
-                        local current_artists = mpd_state["{Artists}"]
-                        if current_artists == "N/A" then
-                            mpd_state["{Artists}"] = v
+                    if k == "Artist" or k == "Genre" then
+                        local current_key = "{" .. k .. "s}"
+                        local current_state = mpd_state[current_key]
+                        if current_state == "N/A" then
+                            mpd_state[current_key] = v
                         else
-                            mpd_state["{Artists}"] = append_with_separator(
-                                current_artists, v)
-                        end
-                    end
-                    if k == "Genre" then
-                        local current_generes = mpd_state["{Generes}"]
-                        if current_generes == "N/A" then
-                            mpd_state["{Generes}"] = v
-                        else
-                            mpd_state["{Generes}"] = append_with_separator(
-                                current_generes, v)
+                            mpd_state[current_key] = append_with_separator(
+                                current_state, v)
                         end
                     end
                     mpd_state[key] = v
