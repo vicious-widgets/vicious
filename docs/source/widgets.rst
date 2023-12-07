@@ -290,7 +290,8 @@ Provides Music Player Daemon information.
 
 Supported platforms: platform independent (required tools: ``curl``).
 
-* Argument: an array including password, hostname, port and separator in that order, or a table with the previously mentioned fields.
+* Argument: an array including password, hostname, port and separator in that
+  order, or a table with the previously mentioned fields.
   ``nil`` fields will be fallen back to default
   (``localhost:6600`` without password and ``", "`` as a separator).
 * Returns a table with string keys: ``${volume}``, ``${bitrate}``,
@@ -298,8 +299,8 @@ Supported platforms: platform independent (required tools: ``curl``).
   ``${Elapsed}`` (formatted as [hh:]mm:ss),
   ``${Duration}`` (formatted as [hh:]mm:ss), ``${Progress}`` (in percentage),
   ``${random}``, ``${repeat}``, ``${state}``, ``${Artist}``, ``${Title}``,
-  ``${Artists}`` (All artists concatenated with the configured separator),
-  ``${Generes}`` (All generes concatenated with the configured separator),
+  ``${Artists}`` (all artists concatenated with the configured separator),
+  ``${Genres}`` (all genres concatenated with the configured separator),
   ``${Album}``, ``${Genre}`` and optionally ``${Name}`` and ``${file}``.
 
 In addition, some common mpd commands are available as functions:
