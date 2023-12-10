@@ -6,6 +6,7 @@
 -- Copyright (C) 2019  Juan Carlos Menonita <JuanKman94@users.noreply.github.com>
 -- Copyright (C) 2019  Lorenzo Gaggini <lg@lgaggini.net>
 -- Copyright (C) 2022  Constantin Piber <cp.piber@gmail.com>
+-- Copyright (C) 2023  Cássio Ávila <cassioavila@autistici.org>
 --
 -- This file is part of Vicious.
 --
@@ -122,14 +123,20 @@ function mpd_all.async(format, warg, callback)
         ["{random}"]   = 0,
         ["{state}"]    = "N/A",
         ["{Artist}"]   = "N/A",
+        ["{Artists}"]  = "N/A",
         ["{Title}"]    = "N/A",
         ["{Album}"]    = "N/A",
         ["{Genre}"]    = "N/A",
-        --["{Name}"]   = "N/A",
-        --["{file}"]   = "N/A",
+        ["{Genres}"]   = "N/A",
     }
 
+    local separator = warg and (warg.separator or warg[4]) or ", "
+
     local cmd = build_cmd(warg, "status\ncurrentsong\n")
+
+    local function append_with_separator (current, value)
+        return ("%s%s%s"):format(current, separator, value)
+    end
 
     -- Get data from MPD server
     spawn.with_line_callback_with_shell(cmd, {
@@ -144,8 +151,17 @@ function mpd_all.async(format, warg, callback)
                 elseif k == "state" then
                     mpd_state[key] = helpers.capitalize(v)
                 elseif k == "Artist" or k == "Title" or
-                       --k == "Name" or k == "file" or
                        k == "Album" or k == "Genre" then
+                    if k == "Artist" or k == "Genre" then
+                        local current_key = "{" .. k .. "s}"
+                        local current_state = mpd_state[current_key]
+                        if current_state == "N/A" then
+                            mpd_state[current_key] = v
+                        else
+                            mpd_state[current_key] = append_with_separator(
+                                current_state, v)
+                        end
+                    end
                     mpd_state[key] = v
                 end
             end
