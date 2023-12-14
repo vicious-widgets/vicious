@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Changes in 2.7.0
+----------------
+
+Added fields ``${Artists}`` and ``${Genres}`` for the mpd widget type.
+
 Changes in 2.6.0
 ----------------
 
