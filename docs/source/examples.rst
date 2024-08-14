@@ -63,7 +63,7 @@ and displays a progressbar, provides ``BAT0`` as battery ID:
    batwidget = wibox.widget.progressbar()
 
    -- Create wibox with batwidget
-   batbox = wibox.layout.margin(
+   batbox = wibox.container.margin(
        wibox.widget{ { max_value = 1, widget = batwidget,
                        border_width = 0.5, border_color = "#000000",
                        color = { type = "linear",
