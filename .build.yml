@@ -1,9 +1,0 @@
-image: alpine/edge
-packages:
-  - luacheck
-sources:
-  - https://github.com/vicious-widgets/vicious
-tasks:
-  - check: |
-      cd vicious
-      luacheck --config=tools/luacheckrc .
