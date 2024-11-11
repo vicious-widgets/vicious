@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Changes in 2.7.1
+----------------
+
+Fixed:
+
+- [bat_linux] Fallback to computing bat (dis)charge rate in some cases
+
 Changes in 2.7.0
 ----------------
 

@@ -4,6 +4,7 @@
 -- Copyright (C) 2017  David Udelson <dru5@cornell.edu>
 -- Copyright (C) 2017  Roberto <empijei@users.noreply.github.com>
 -- Copyright (C) 2017  mutlusun <mutlusun@github.com>
+-- Copyright (C) 2024  arch-stack <arch-stack@github.com>
 --
 -- This file is part of Vicious.
 --
@@ -46,8 +47,13 @@ return helpers.setcall(function (format, warg)
 
     -- Get current power usage in watt
     local curpower = "N/A"
+
     if battery.power_now then
         curpower = string.format("%.2f", tonumber(battery.power_now) /1000000)
+    elseif battery.current_now and battery.voltage_now then
+        local current = tonumber(battery.current_now)
+        local voltage = tonumber(battery.voltage_now)
+        curpower = string.format("%.2f", current * voltage / 10^12)
     end
 
     -- Check if the battery is present
