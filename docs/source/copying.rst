@@ -14,7 +14,7 @@ Vicious is released under `GNU GPLv2+`_ and is currently maintained by:
 * :github:`Jörg Thalheim <Mic92>` <joerg thalheim.io>
 * :github:`mutlusun` (especially the FreeBSD port)
 * :github:`Daniel Hahler <blueyed>` <github thequod.de>
-* :github:`Nguyễn Gia Phong <McSinyx>` <mcsinyx disroot.org>
+* :github:`Nguyễn Gia Phong <McSinyx>` <cnx loang.net>
 * :github:`Enric Morales <kiike>` <geekingaround enric.me>
   (especially the OpenBSD port)
 
@@ -29,6 +29,7 @@ from the following contributors, listed in alphabetic order:
 * Andreas Geisenhainer <psycorama datenhalde.de>
 * Andrew Merenbach <andrew merenbach.com>
 * Andrzej Bieniek <andyhelp gmail.com>
+* Arseniy Terekhin <senyai gmail.com>
 * Arthur Axel 'fREW' Schmidt <git frew.co>
 * Arvydas Sidorenko <asido4 gmail.com>
 * Benedikt Sauer <filmor gmail.com>
@@ -36,10 +37,14 @@ from the following contributors, listed in alphabetic order:
 * Benoît Zugmeyer <bzugmeyer gmail.com>
 * blastmaster <blastmaster tuxcode.org>
 * Brandon Hartshorn <brandonhartshorn gmail.com>
+* Cássio Ávila <cassioavila protonmail.com>
+* Constantin Piber <cp.piber gmail.com>
 * crondog <patches crondog.com>
 * David Udelson <dru5 cornell.edu>
 * Dodo The Last <dodo.the.last gmail.com>
+* :github:`Elmeri Niemelä <elmeriniemela>`
 * Elric Milon <whirm gmx.com>
+* :github:`feltcat <feltcat>`
 * getzze <getzze gmail.com>
 * Greg D. <jabbas jabbas.pl>
 * Hagen Schink <troja84 googlemail.com>
@@ -57,6 +62,7 @@ from the following contributors, listed in alphabetic order:
 * Julian Volodia <julianvolodia gmail.com>
 * Keith Hughitt <keith.hughitt gmail.com>
 * Lorenzo Gaggini <lg lgaggini.net>
+* :github:`lumpsoid <lumpsoid>`
 * Lyderic Lefever <lyderic.lefever gmail.com>
 * Martin Striz <striz raynet.cz>
 * Martin Ueding <dev martin-ueding.de>
@@ -68,7 +74,7 @@ from the following contributors, listed in alphabetic order:
 * Normal Ra <normalrawr gmail.com>
 * Perry Hargrave <perry.hargrave gmail.com>
 * Rémy CLOUARD <shikamaru shikamaru.fr>
-* :github:`Roberto <empijei>`
+* Roberto Clapis <empijei gmail.com>
 * Sébastien Luttringer <seblu seblu.net>
 * Shadowmourne G <s10e live.com>
 * starenka <starenka0 gmail.com>
