@@ -6,11 +6,11 @@
 
 # Project information
 project = 'Vicious'
-copyright = '2020-2023, vicious-widgets'
+copyright = '2020-2024, vicious-widgets'
 author = 'vicious-widgets'
 
 # The full version, including alpha/beta/rc tags
-release = '2.7.0'
+release = '2.7.1'
 
 # Add any Sphinx extension module names here, as strings.
 # They can be extensions coming with Sphinx (named 'sphinx.ext.*')
